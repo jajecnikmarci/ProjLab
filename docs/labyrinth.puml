@@ -1,0 +1,7 @@
+class Labyrinth
+class Room {
+}
+class Door {
+}
+Labyrinth *-- Door
+Labyrinth *-- Room

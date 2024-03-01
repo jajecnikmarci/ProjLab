@@ -1,0 +1,38 @@
+@startuml Main 
+' !theme cerulean-outline
+
+
+class Labyrinth
+class Room {
+}
+class Door {
+}
+Labyrinth *-- Door
+Labyrinth *-- Room
+
+
+
+abstract Item {
+
+}
+class FFP2 extends Item {}
+class Camembert extends Item {}
+class Transistor extends Item {}
+class Logarlec extends Item {}
+
+
+class Player {}
+class Oktato extends Player {}
+class Hallgato extends Player {}
+
+' Relationships
+
+Room "contains" *-- "0..*" Item
+Player "contains" *-- "*" Item
+
+Room o-- "in" Player
+
+
+
+
+@enduml

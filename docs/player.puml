@@ -1,0 +1,5 @@
+class Player {}
+class Oktato extends Player {
+}
+class Hallgato extends Player {
+}
