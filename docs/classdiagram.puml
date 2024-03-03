@@ -1,0 +1,38 @@
+@startuml Main 
+' !theme cerulean-outline
+
+
+class Labyrinth {
+
+}
+class Room {
+}
+class Door {
+}
+Labyrinth *-- Room
+Labyrinth *-- Door
+
+abstract Item {
+
+}
+
+abstract Player {
+
+}
+class Professor extends Player {}
+class Student extends Player {}
+
+' Relationships
+
+Room *-- "*" Item
+Player  *-- "*" Item
+
+Labyrinth *-- Professor
+Labyrinth *--    Student
+
+Room o--  Player
+
+
+
+
+@enduml

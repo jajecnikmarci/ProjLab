@@ -1,0 +1,33 @@
+abstract Item {
+ + ItemType type
+ + Item(ItemType type)
+ + void use(Room room, Player)
+}
+
+enum ItemType {
+    FFP2
+    Camembert
+    Transistor
+    SlideRule
+    TVSZ
+    Glass
+    Rug
+}
+
+class SlideRule extends Item {
+ + void use(Room room, Player)  
+}
+
+class TVSZ extends Item {
+ + int timesImmune
+ + void use(Room room, Player)
+}
+
+class Glass extends Item {
+ + void use(Room room, Player)
+}
+
+class Rug extends Item {
+ + Room room
+ + void use(Room room, Player)
+}

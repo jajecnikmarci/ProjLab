@@ -1,0 +1,26 @@
+class Player {
+    Room location
+    boolean poisonImmune
+    + void pickUp(Item item)
+    + void drop(Item item)
+    + void dropAll()
+    + void use(Item item)
+    + boolean goThroughDoor(Door door)
+    + void stun()
+    + void deleteItem(Item)
+    + void pairTransistors()
+}
+class Professor extends Player {
+    boolean damageStudent(Student student)
+    + void pairTransistors()
+}
+class Student extends Player {
+    int souls
+    boolean professorImmune
+    + void takeDamage()
+    + void pairTransistors()
+}
+
+Player  *--   "*" Item 
+
+Player "*" --o Room
