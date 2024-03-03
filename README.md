@@ -6,8 +6,8 @@
 
 # Feature hozzaadasanak a menete
 
-`git branch sajat-feature-neve`
-
+`git branch feature-neve`
+`git add .`
 `git commit`
 
 `git pull`
