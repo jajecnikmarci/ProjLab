@@ -1,7 +1,32 @@
-class Labyrinth
+class Labyrinth {
+    + void shake()
+    + void split(Room room)
+    + void merge(Room src, Room dst) 
+    + void teleport(Player player, Room room)
+}
+
 class Room {
+    int capacity
+    boolean poisonous
+    + void setPoisonous(Time duration)
+    + void onEnter(Student student)
+    + void onEnter(Professor professor)
+    + void onEnter(Player player)
+    + void onLeave(Player player)
+    + void addActiveItem(Item item)
+    + void deleteActiveItem(Item item) 
 }
 class Door {
+    Room to 
+    boolean visible
+    boolean cursed
+    boolean canGoThrough() 
 }
 Labyrinth *-- Door
 Labyrinth *-- Room
+Labyrinth *-- Hallgato
+Labyrinth *-- Oktato
+
+Room o-- "*"  Player 
+Room *-- "items"  Item 
+Room *-- "activeItems"  Item 

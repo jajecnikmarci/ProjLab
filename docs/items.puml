@@ -1,9 +1,44 @@
-
 abstract Item {
-
+ + ItemType type
+ + Item(ItemType type)
+ + void use(Room room, Player)
 }
-class FFP2 extends Item {}
-class Camembert extends Item {}
-class Transistor extends Item {}
-class Logarlec extends Item {}
-class Logarlec extends Item {}
+
+class FFP2 extends Item {
+ + Time immunityLength
+ + void use(Room room, Player)
+}
+class Camembert extends Item {
+ + void use(Room room, Player)
+}
+class Transistor extends Item {
+ + Transistor pair
+ + Room room
+ + void use(Room room, Player)
+}
+
+class SlideRule extends Item {
+ + void use(Room room, Player)
+}
+class TVSZ extends Item {
+ + int timesImmune
+ + void use(Room room, Player)
+}
+class Glass extends Item {
+ + Time immunityLength
+ + void use(Room room, Player)
+}
+class Rug extends Item {
+ + Room room
+ + void use(Room room, Player)
+}
+
+enum ItemType {
+    FFP2,
+    Camembert,
+    Transistor,
+    SlideRule,
+    TVSZ,
+    Glass,
+    Rug
+}
