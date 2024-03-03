@@ -1,0 +1,9 @@
+
+abstract Item {
+
+}
+class FFP2 extends Item {}
+class Camembert extends Item {}
+class Transistor extends Item {}
+class Logarlec extends Item {}
+class Logarlec extends Item {}
