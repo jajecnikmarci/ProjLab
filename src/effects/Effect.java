@@ -23,4 +23,11 @@ public abstract class Effect {
      *
      */
     abstract void activate();
+
+    /**
+     * @return
+     */
+    public boolean isActive() {
+        return active;
+    }
 }
