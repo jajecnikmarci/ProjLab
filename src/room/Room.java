@@ -58,19 +58,32 @@ public class Room {
     /**
      * @param professor
      */
-    void onEnter(Professor professor) {
+    public void onEnter(Professor professor) {
+        for (RoomEffect effect : this.effects) 
+            if(effect.isActive()) effect.affect(professor);
+        
+        for (Player player : this.players) {
+            player.meet(professor);
+        }
     }
 
     /**
      * @param student
      */
-    void onEnter(Student student) {
+    public void onEnter(Student student) {
+        for (RoomEffect effect : this.effects) 
+            if(effect.isActive()) effect.affect(student);
+        
+        for (Player player : this.players) {
+            player.meet(student);
+        }
     }
 
     /**
      *
      */
     void poisonPlayers() {
+        players.forEach(p -> p.poison());
     }
 
     /**

@@ -9,15 +9,17 @@ public class Professor extends Player {
     /**
      * @param student
      */
-    void meet(Student student) {
-
+    @Override
+    public void meet(Student student) {
+        student.kill();
     }
 
     /**
      * @param professor
      */
-    void meet(Professor professor) {
-
+    @Override
+    public void meet(Professor professor) {
+        // TODO: Leave room
     }
 
     /**
