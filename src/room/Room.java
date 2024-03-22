@@ -16,50 +16,57 @@ import java.util.stream.Collectors;
  */
 public class Room {
     /**
-     *
+     * Megadja, hogy hány játékos tartózkodhat a szobában.
      */
     private int capacity;
 
     /**
-     *
+     * A szobában tartózkodó játékosok listája.
      */
     private List<Player> players;
 
     /**
-     *
+     * A szobához tartozó ajtók listája.
      */
     private List<Door> doors;
 
     /**
-     *
+     * A szobában található tárgyak listája.
      */
     private List<Item> items;
 
     /**
-     *
+     * A szobában található hatások listája.
      */
     private List<RoomEffect> effects;
 
     /**
-     * @param item
+     * Kitörli a megadott tárgyat a szoba tárgyai közül.
+     * @param item a megadott tárgy
      */
-    void removeItem(Item item) {
+    public void removeItem(Item item) {
+        items.remove(item);
     }
 
     /**
-     * @param item
+     * Hozzáad egy tárgyat a szobában lévő tárgyak listájához.
+     * @param item a hozzáadandó tárgy
      */
-    void addItem(Item item) {
+    public void addItem(Item item) {
+        items.add(item);
     }
 
     /**
-     * @param item
+     * 
      */
-    void popItem(Item item) {
+    public void popItem(Player player) {
+
     }
 
     /**
-     * @param professor
+     * Amikor egy oktató belép a szobába, ez a függvény gyakorolja rá a szoba hatásait. 
+     * Interakcióba hozza a szobában található játékosokkal.
+     * @param professor a belépő oktató
      */
     public void onEnter(Professor professor) {
         for (RoomEffect effect : this.effects) 
@@ -71,9 +78,9 @@ public class Room {
     }
 
     /**
-     * Kezeli a szobába belépő hallgató eseményeit. 
-     * 
-     * @param student 
+     * Amikor egy hallgató belép a szobába, ez a függvény gyakorolja rá a szoba hatásait.
+     * Interakcióba hozza a szobában található játékosokkal.
+     * @param student a belépő hallgató
      */
     public void onEnter(Student student) {
         for (RoomEffect effect : this.effects) 
@@ -158,7 +165,6 @@ public class Room {
      */
     void removePlayer(Player player) {
         this.players.remove(player);
-
     }
 
     /**

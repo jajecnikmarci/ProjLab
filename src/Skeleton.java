@@ -3,29 +3,33 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-class Test {
-    private String title;
-    private Runnable test;
+import room.Room;
 
-    public Test(String name, Runnable test) {
-        this.title = name;
-        this.test = test;
-    }
-    public String getTitle() {
-        return title;
-    }
-    public void run() {
-        test.run(); 
-    }
-}
+
 
 /**
  * Szkeleton osztály. Tárolja a teszteseteket. 
  * Teszt hozzáadaása:
  * (1) Teszt függvény megírása az ostályon belül (lásd test 1)
  * (2) konstruktorban hozzáadás a tests listához.  
+ * 
  */
 public class Skeleton {
+    class Test {
+        private String title;
+        private Runnable test;
+    
+        public Test(String name, Runnable test) {
+            this.title = name;
+            this.test = test;
+        }
+        public String getTitle() {
+            return title;
+        }
+        public void run() {
+            test.run(); 
+        }
+    }
     List<Test> tests;
   
     public Skeleton() {
@@ -34,6 +38,8 @@ public class Skeleton {
          * Itt történik a tesztek hozzáadása (2)
          */
         // tests.add(new Test("Test 1", this::test1));
+
+        tests.add(new Test("Split room", this::split));
         
     }
     private void print(String string) {
@@ -80,8 +86,17 @@ public class Skeleton {
     /*
      * Példa teszt függvény. (1) 
      */
-    // public void test1() {
+    // private void test1() {
     //     print("Test 1 executed");
     // }
+
+
+    private void split() {
+        Room room = new Room();
+        print("room.split()");
+        
+        room.split();
+
+    }  
     
 }
