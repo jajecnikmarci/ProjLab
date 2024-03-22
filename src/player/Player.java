@@ -81,7 +81,7 @@ public abstract class Player implements PickUpVisitor {
     /**
      *
      */
-    void poison() {
+    public void poison() {
 
     }
 
@@ -89,6 +89,13 @@ public abstract class Player implements PickUpVisitor {
      * @param room
      */
     void goToRoom(Room room) {
+
+    }
+
+    public void meet(Student student) {
+        
+    }
+    public void meet(Professor professor) {
 
     }
 

@@ -19,7 +19,7 @@ public class PoisonEffect extends RoomEffect {
      * @param professor
      */
     @Override
-    void affect(Professor professor) {
+    public void affect(Professor professor) {
 
     }
 
@@ -27,7 +27,7 @@ public class PoisonEffect extends RoomEffect {
      * @param student
      */
     @Override
-    void affect(Student student) {
+    public void affect(Student student) {
 
     }
 }

@@ -102,4 +102,14 @@ public class Student extends Player {
     public boolean acceptItem(Rug rug) {
         return false;
     }
+
+    
+    @Override
+    public void meet(Professor professor) {
+        kill();
+    }
+
+    @Override
+    public void meet(Student student) {
+    }
 }
