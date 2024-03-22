@@ -1,5 +1,6 @@
 package items;
 
+import effects.PoisonImmunity;
 import player.Player;
 import player.Professor;
 import player.Student;
@@ -27,8 +28,11 @@ public class FFP2 extends Item {
      * @param player
      */
     @Override
-    void accept(Player player) {
-
+    public void accept(Player player) {
+        if(player.acceptItem(this)){
+            player.addItem(this);
+            player.addPoisonImmunity(new PoisonImmunity());
+        }
     }
 
     /**

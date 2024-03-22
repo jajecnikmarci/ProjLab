@@ -21,8 +21,8 @@ public class TVSZ extends Item {
     /**
      * @param player
      */
-    @Override
-    void accept(Player player) {
+    
+    public void accept(Player player) {
 
     }
 

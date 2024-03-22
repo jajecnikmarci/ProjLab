@@ -19,10 +19,12 @@ public abstract class Player implements PickUpVisitor {
      */
     List<PoisonImmunity> poisonImmunities;
 
+    Room location;
+
     /**
      * @param item
      */
-    void addItem(Item item) {
+    public void addItem(Item item) {
 
     }
 
@@ -37,7 +39,8 @@ public abstract class Player implements PickUpVisitor {
      * @param item
      */
     void pickUpItem(Item item) {
-
+        item.accept(this);
+        location.popItem();
     }
 
     /**
@@ -57,14 +60,14 @@ public abstract class Player implements PickUpVisitor {
     /**
      * @param poisonImmunity
      */
-    void addPoisonImmunity(PoisonImmunity poisonImmunity) {
+    public void addPoisonImmunity(PoisonImmunity poisonImmunity) {
 
     }
 
     /**
      * @param poisonImmunity
      */
-    void removePoisonImmunity(PoisonImmunity poisonImmunity) {
+    public void removePoisonImmunity(PoisonImmunity poisonImmunity) {
 
     }
 

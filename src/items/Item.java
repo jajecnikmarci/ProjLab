@@ -18,7 +18,7 @@ public abstract class Item {
     /**
      * @param player
      */
-    abstract void accept(Player player);
+    public abstract void accept(Player player);
 
     /**
      * @param student

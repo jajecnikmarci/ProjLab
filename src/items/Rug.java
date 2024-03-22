@@ -22,8 +22,10 @@ public class Rug extends Item {
      * @param player
      */
     @Override
-    void accept(Player player) {
-
+    public void accept(Player player) {
+        if(player.acceptItem(this)){
+            player.addItem(this);
+        }
     }
 
     /**

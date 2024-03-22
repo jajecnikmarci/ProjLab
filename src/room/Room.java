@@ -50,9 +50,11 @@ public class Room {
     }
 
     /**
+     * 
      * @param item
      */
-    void popItem(Item item) {
+    public void popItem() {
+
     }
 
     /**
