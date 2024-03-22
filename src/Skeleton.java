@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -20,12 +19,21 @@ class Test {
     }
 }
 
+/**
+ * Szkeleton osztály. Tárolja a teszteseteket. 
+ * Teszt hozzáadaása:
+ * (1) Teszt függvény megírása az ostályon belül (lásd test 1)
+ * (2) konstruktorban hozzáadás a tests listához.  
+ */
 public class Skeleton {
     List<Test> tests;
   
     public Skeleton() {
         tests = new ArrayList<>();
-        tests.add(new Test("Test 1", this::test1));
+        /**
+         * Itt történik a tesztek hozzáadása (2)
+         */
+        // tests.add(new Test("Test 1", this::test1));
         
     }
     private void print(String string) {
@@ -69,8 +77,11 @@ public class Skeleton {
         scanner.close();
     }
 
-    public void test1() {
-        print("Test 1 executed");
-    }
+    /*
+     * Példa teszt függvény. (1) 
+     */
+    // public void test1() {
+    //     print("Test 1 executed");
+    // }
     
 }
