@@ -22,7 +22,7 @@ public abstract class Effect {
     /**
      *
      */
-    abstract void activate();
+    public abstract void activate();
 
     /**
      * @return

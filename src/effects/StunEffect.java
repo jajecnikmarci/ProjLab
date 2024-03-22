@@ -11,7 +11,7 @@ public class StunEffect extends RoomEffect {
      *
      */
     @Override
-    void activate() {
+    public void activate() {
 
     }
 

@@ -9,7 +9,7 @@ public class PoisonImmunity extends Effect {
      *
      */
     @Override
-    void activate() {
+    public void activate() {
 
     }
 }

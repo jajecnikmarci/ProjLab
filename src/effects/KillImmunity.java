@@ -8,7 +8,7 @@ public class KillImmunity extends Effect {
      *
      */
     @Override
-    void activate() {
+    public void activate() {
 
     }
 }

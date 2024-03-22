@@ -3,6 +3,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import room.Room;
+import player.Student;
+import items.*;
+
 class Test {
     private String title;
     private Runnable test;
@@ -34,6 +38,11 @@ public class Skeleton {
          * Itt történik a tesztek hozzáadása (2)
          */
         // tests.add(new Test("Test 1", this::test1));
+
+        tests.add(new Test("use Camembert", this::useCamembert));
+        tests.add(new Test("pair Transistors", this::pairTransistors));
+        tests.add(new Test("drop Transistor", this::dropTransistor));
+        tests.add(new Test("teleport with Transistors", this::teleportWithTransistors));
         
     }
     private void print(String string) {
@@ -49,6 +58,9 @@ public class Skeleton {
             System.out.println(i + 1 + ". " + tests.get(i).getTitle());
         }
     }
+
+
+
     public void menu() {
         Scanner scanner = new Scanner(System.in);
         do  {
@@ -83,5 +95,67 @@ public class Skeleton {
     // public void test1() {
     //     print("Test 1 executed");
     // }
+
+    public void useCamembert(){
+
+        Student student = new Student();
+        Item camembert = new Camembert();
+        student.addItem(camembert);
+        Room room = new Room(10);
+        room.addPlayer(student);
+
+        student.useItem(camembert);
+    }
+
+    public void pairTransistors(){
+
+        Student student = new Student();
+        Item transistor1 = new Transistor();
+        Item transistor2 = new Transistor();
+
+        student.addItem(transistor1);
+        student.addItem(transistor2);
+
+        student.useItem(transistor1);
+    }
+
+    public void dropTransistor(){
+
+        //ilyenkor is kiíródnak a függvények, de ilyenkor nem kellene
+        Student student = new Student();
+        Transistor transistor1 = new Transistor();
+        Transistor transistor2 = new Transistor();
+
+        student.addItem(transistor1);
+        student.addItem(transistor2);
+
+        transistor1.setPair(transistor2);
+        transistor2.setPair(transistor1);
+
+        student.useItem(transistor1);
+
+    }
+
+    public void teleportWithTransistors(){
+
+        Student student = new Student();
+        Transistor transistor1 = new Transistor();
+        Transistor transistor2 = new Transistor();
+
+        student.addItem(transistor1);
+
+        transistor1.setPair(transistor2);
+        transistor2.setPair(transistor1);
+
+        Room room1 = new Room(10);
+        Room room2 = new Room(10);
+
+        transistor2.setRoom(room2);
+        room1.addPlayer(student);
+
+        student.useItem(transistor1);
+        
+    }
+
     
 }

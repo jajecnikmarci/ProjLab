@@ -6,6 +6,7 @@ import player.Player;
 import player.Professor;
 import player.Student;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,16 @@ import java.util.stream.Collectors;
  *
  */
 public class Room {
+
+
+     public Room(int capacity) {
+        this.capacity = capacity;
+        this.players = new ArrayList<>();
+        this.doors = new ArrayList<>();
+        this.items = new ArrayList<>();
+        this.effects = new ArrayList<>();
+    }
+    
     /**
      *
      */
@@ -100,7 +111,7 @@ public class Room {
      */
     public void split() {
         if (capacity < 4) return;
-        Room room = new Room();
+        Room room = new Room(10);
         
         for (int i = 0; i < doors.size(); i += 2) {
             room.doors.add(doors.remove(i));
@@ -148,7 +159,8 @@ public class Room {
     /**
      * @param player
      */
-    void addPlayer(Player player) {
+    public void addPlayer(Player player) {
+        System.out.println("addPlayer(Player)");
         this.players.add(player);
 
     }
@@ -156,7 +168,8 @@ public class Room {
     /**
      * @param player
      */
-    void removePlayer(Player player) {
+    public void removePlayer(Player player) {
+        System.out.println("removePlayer(Player)");
         this.players.remove(player);
 
     }
@@ -164,7 +177,8 @@ public class Room {
     /**
      * @param effect
      */
-    void addEffect(RoomEffect effect) {
+    public void addEffect(RoomEffect effect) {
+        System.out.println("Room.addEffect(RoomEffect)");
         this.effects.add(effect);
     }
 
