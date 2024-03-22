@@ -107,18 +107,16 @@ public class Skeleton {
         int capacity = getInt("Mekkora szobát legyen a szoba kapacitása");
         Room room = new Room(capacity);
         room.split();
-        print("Room.split()");
         
         
     }
-    
+
     private void merge() {
         int capacity1 = getInt("Mekkora legyen az 1. szoba kapacitása?");
         int capacity2 = getInt("Mekkora legyen az 2. szoba kapacitása?");
         Room room1 = new Room(capacity1);
         Room room2 = new Room(capacity2);
         room1.mergeWithRoom(room2);
-        print("Room.merge()");
     }
 
 }

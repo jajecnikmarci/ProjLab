@@ -7,9 +7,7 @@ import player.Professor;
 import player.Student;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -62,6 +60,7 @@ public class Room {
      * @param item a hozzáadandó tárgy
      */
     public void addItem(Item item) {
+        System.out.println("Room.addItem(Item)");
         items.add(item);
     }
 
@@ -78,6 +77,7 @@ public class Room {
      * @param professor a belépő oktató
      */
     public void onEnter(Professor professor) {
+        System.out.println("Room.onEnter(Professor)");
         for (RoomEffect effect : this.effects) 
             if(effect.isActive()) effect.affect(professor);
         
@@ -92,6 +92,7 @@ public class Room {
      * @param student a belépő hallgató
      */
     public void onEnter(Student student) {
+        System.out.println("Room.onEnter(Student)");
         for (RoomEffect effect : this.effects) 
             if(effect.isActive()) effect.affect(student);
         
@@ -104,6 +105,7 @@ public class Room {
      * Megmérgez minden játékost aki a szobában tartózkodik. 
      */
     public void poisonPlayers() {
+        System.out.println("Room.poisonPlayers()");
         players.forEach(p -> p.poison());
     }
 
@@ -116,6 +118,7 @@ public class Room {
      * 
      */
     public void split() {
+        System.out.println("Room.split()");
         if (capacity < 4) return;
         if (!players.isEmpty()) return;
         
@@ -146,6 +149,7 @@ public class Room {
      * @param room a szoba amit beleolvasztunk ebbe a szobába
      */
     public void mergeWithRoom(Room room) {
+        System.out.println("Room.mergeWithRoom(Room)");
         if (!players.isEmpty() && !room.players.isEmpty()) return;
         this.capacity = Math.max(this.capacity, room.capacity); 
         this.players.addAll(room.players);
