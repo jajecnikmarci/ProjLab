@@ -71,7 +71,9 @@ public class Room {
     }
 
     /**
-     * @param student
+     * Kezeli a szobába belépő hallgató eseményeit. 
+     * 
+     * @param student 
      */
     public void onEnter(Student student) {
         for (RoomEffect effect : this.effects) 
@@ -83,12 +85,11 @@ public class Room {
     }
 
     /**
-     *
+     * Megmérgez minden játékost aki a szobában tartózkodik. 
      */
     public void poisonPlayers() {
         players.forEach(p -> p.poison());
     }
-
 
     /**
      * Kettéosztja ezt a szobát.
