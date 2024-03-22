@@ -6,6 +6,7 @@ import player.Player;
 import player.Professor;
 import player.Student;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,14 @@ import java.util.stream.Collectors;
  *
  */
 public class Room {
+
+    public Room(int capacity) {
+        this.capacity = capacity;
+        this.players = new ArrayList<>();
+        this.doors = new ArrayList<>();
+        this.items = new ArrayList<>();
+        this.effects = new ArrayList<>();
+    }
     /**
      * Megadja, hogy hány játékos tartózkodhat a szobában.
      */
@@ -99,16 +108,18 @@ public class Room {
     }
 
     /**
-     * Kettéosztja ezt a szobát.
-     * Az újonnan létrehozott szobák megosztoznak az eredeti szoba tulajdonságain.
-     * A szoba szomszédai mostantól az új szobáknak csak egyikével lesznek szomszédosak.
-     * A szobának legalább 4 kapacitásúnak kell lennie a szétosztáshoz.
-     * Az újonnan létrehozott szobák egymással szomszédosak lesznek.
+     * Kettéosztja ezt a szobát, ha kapacitása 4 vagy nagyobb és nincs benne játékos.
+     * Az újonnan létrehozott szobával megosztoznak az eredeti szoba tulajdonságain.
+     * A szoba szomszédai mostantól ennek, vagy az új szobáknak csak egyikével lesznek szomszédosak.
+     * Az újonnan létrehozott szoba szomszédos ezzel a szobával. 
+     * A létrejövő szoba kapacitása alsó egészrésze az eredeti szoba kapacitásának felének.
+     * 
      */
     public void split() {
         if (capacity < 4) return;
-        Room room = new Room();
+        if (!players.isEmpty()) return;
         
+        Room room = new Room(capacity / 2);
         for (int i = 0; i < doors.size(); i += 2) {
             room.doors.add(doors.remove(i));
         }
@@ -127,7 +138,7 @@ public class Room {
     }
 
     /**
-     * Beleolvasztja akapott szobát ebbe a szobába.
+     * Beleolvasztja a kapott szobát ebbe a szobába, ha nincs bennük játékos.
      * A kapacitás a két szoba kapacitásának maximuma lesz.
      * A játékosok, tárgyak és hatások összeadódnak.
      * Az ajtók összegyűjtésekor azokat az ajtókat eldobjuk, amik a két szoba között vannak.
@@ -135,6 +146,7 @@ public class Room {
      * @param room a szoba amit beleolvasztunk ebbe a szobába
      */
     public void mergeWithRoom(Room room) {
+        if (!players.isEmpty() && !room.players.isEmpty()) return;
         this.capacity = Math.max(this.capacity, room.capacity); 
         this.players.addAll(room.players);
         this.items.addAll(room.items);
@@ -153,7 +165,7 @@ public class Room {
     }
 
     /**
-     * @param player
+     * @param player 
      */
     void addPlayer(Player player) {
         this.players.add(player);
