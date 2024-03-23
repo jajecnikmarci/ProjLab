@@ -1,5 +1,6 @@
 package room;
 
+import effects.Effect;
 import effects.RoomEffect;
 import items.Item;
 import player.Player;
@@ -7,6 +8,8 @@ import player.Professor;
 import player.Student;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +50,14 @@ public class Room {
     /**
      * A szobában található hatások listája.
      */
-    private List<RoomEffect> effects;
+    private ArrayList<RoomEffect> effects;
+
+    public Room(){
+        players = new ArrayList<Player>();
+        items = new ArrayList<Item>();
+        effects = new ArrayList<RoomEffect>();
+        doors = new ArrayList<Door>();
+    }
 
     /**
      * Kitörli a megadott tárgyat a szoba tárgyai közül.
@@ -69,9 +79,12 @@ public class Room {
 
     /**
      * 
+     * @param player 
      */
     public void popItem(Player player) {
-
+        System.out.println("Room.popItem(Player)");
+        if(items.isEmpty()) return;
+        items.get(items.size()-1).accept(player);
     }
 
     /**
@@ -173,8 +186,8 @@ public class Room {
     }
 
     /**
-     * Hozzáadja a játékost a szobához.
-     * @param player a hozzáadandó játékos
+     * Hozzáad egy Player-t a szobában tartózkodó Player-ek közé
+     * @param player a hozzáadandó player
      */
     public void addPlayer(Player player) {
         System.out.println("Room.addPlayer(Player)");
