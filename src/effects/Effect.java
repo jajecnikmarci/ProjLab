@@ -13,7 +13,7 @@ public abstract class Effect {
     /**
      *
      */
-    private boolean active;
+    protected boolean active;
     /**
      *
      */
@@ -38,5 +38,12 @@ public abstract class Effect {
      */
     public boolean isActive() {
         return active;
+    }
+
+    /**
+     * @return
+     */
+    public int getDuration() {
+        return duration;
     }
 }
