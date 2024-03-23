@@ -52,6 +52,7 @@ public class Room {
      * @param item a megadott tárgy
      */
     public void removeItem(Item item) {
+        System.out.println("Room.removeItem(Item)");
         items.remove(item);
     }
 
@@ -146,6 +147,7 @@ public class Room {
      * A játékosok, tárgyak és hatások összeadódnak.
      * Az ajtók összegyűjtésekor azokat az ajtókat eldobjuk, amik a két szoba között vannak.
      * Az ajtók közül azokat, amik a kapott szobához vezetnek, átállítjuk, hogy erre a szobára vezessenek.
+     * A hívó dolga a beolvasztandó szoba megsemmisítése.
      * @param room a szoba amit beleolvasztunk ebbe a szobába
      */
     public void mergeWithRoom(Room room) {
@@ -169,24 +171,26 @@ public class Room {
     }
 
     /**
-     * @param player 
+     * @param player Hozzáadja a játékost a szobához
      */
     public void addPlayer(Player player) {
+        System.out.println("Room.addPlayer(Player)");
         this.players.add(player);
 
     }
 
     /**
-     * @param player
+     * @param player Kitörli a játékost a szobából.
      */
-    void removePlayer(Player player) {
+    public void removePlayer(Player player) {
+        System.out.println("Room.removePlayer(Player)");
         this.players.remove(player);
     }
 
     /**
      * @param effect
      */
-    void addEffect(RoomEffect effect) {
+    public void addEffect(RoomEffect effect) {
         this.effects.add(effect);
     }
 

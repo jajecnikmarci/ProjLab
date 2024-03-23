@@ -41,8 +41,8 @@ public class Skeleton {
          */
         // tests.add(new Test("Test 1", this::test1));
 
-        tests.add(new Test("Split room", this::split));
-        tests.add(new Test("Merge rooms", this::merge));
+        tests.add(new Test("Split room", this::testSplitRoom));
+        tests.add(new Test("Merge rooms", this::testMergeRooms));
     }
 
     private void print(String string) {
@@ -70,7 +70,10 @@ public class Skeleton {
             return getInt(msg);
         }
     }
-
+    /*
+     * Bekér egy booleant a felhasználótól.
+     * @param msg kiírandó üzenet
+     */
     private boolean getBoolean(String msg) throws NoSuchElementException {
         print(msg + " (y/n)");;
         String str = scanner.nextLine();
@@ -78,7 +81,9 @@ public class Skeleton {
         if(str.toLowerCase().equals("n")) return false;
         return getBoolean(msg);
     }
-
+    /**
+     * Kiírja a teszteket.
+     */
     private void printTests() {
         System.out.println("Válasszon tesztet: (q - kilépés)");
         for (int i = 0; i < tests.size(); i++) {
@@ -87,6 +92,10 @@ public class Skeleton {
         System.out.println();
     }
     Scanner scanner;
+
+    /**
+     * Elindítja a Skeleton menüt.
+     */
     public void menu() {
         scanner = new Scanner(System.in);
         printTests();
@@ -118,7 +127,7 @@ public class Skeleton {
     // print("Test 1 executed");
     // }
 
-    private void split() {
+    private void testSplitRoom() {
         int capacity = getInt("Mekkora szobát legyen a szoba kapacitása");
         
         boolean hasPlayer = getBoolean("Legyen játékos a szobában?");
@@ -129,7 +138,7 @@ public class Skeleton {
         room.split();
     }
 
-    private void merge() {
+    private void testMergeRooms() {
         int capacity1 = getInt("Mekkora legyen az 1. szoba kapacitása?");
         int capacity2 = getInt("Mekkora legyen az 2. szoba kapacitása?");
         boolean hasPlayer = getBoolean("Legyen játékos a szobákban?");
