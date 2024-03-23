@@ -14,7 +14,7 @@ public class SlideRule extends Item {
      * @param player
      */
     @Override
-    void use(Room room, Player player) {
+    public void use(Room room, Player player) {
 
     }
 

@@ -20,6 +20,7 @@ public class Rug extends Item {
         System.out.println("Rug.use(Room, Player)");
         room.addEffect(new StunEffect());
         player.removeItem(this);
+
     }
 
     /**

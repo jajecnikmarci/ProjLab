@@ -15,7 +15,7 @@ public class Glass extends Item {
      * @param player
      */
     @Override
-    void use(Room room, Player player) {
+    public void use(Room room, Player player) {
 
     }
 

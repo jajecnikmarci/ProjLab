@@ -1,5 +1,6 @@
 package effects;
 
+import items.Item;
 import player.Professor;
 import player.Student;
 
@@ -7,12 +8,20 @@ import player.Student;
  *
  */
 public class PoisonEffect extends RoomEffect {
+    public PoisonEffect(Item givenBy, int duration) {
+        super(givenBy, duration);
+    }
+
     /**
      *
      */
     @Override
-    void activate() {
-
+    public void activate() {
+        System.out.println("PoisonEffect.activate()");
+        Timer timer = new Timer();
+        active = true;
+        timer.start(duration);
+        //TODO notify metódus fewliatkozás majd active = false
     }
 
     /**

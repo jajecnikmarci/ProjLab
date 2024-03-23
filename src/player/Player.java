@@ -16,7 +16,7 @@ public abstract class Player implements PickUpVisitor {
      *
      */
     List<Item> inventory;
-    
+
     /**
      *
      */
@@ -29,6 +29,12 @@ public abstract class Player implements PickUpVisitor {
         inventory = new ArrayList<Item>();
         poisonImmunities=new ArrayList<PoisonImmunity>();
     }
+     /**
+     * @param item
+     */
+    public void addItem(Item item) {
+        System.out.println("Player.addItem(Item)");
+    }
 
     
     /**
@@ -38,6 +44,7 @@ public abstract class Player implements PickUpVisitor {
     public void addItem(Item item) {
         System.out.println("Player.addItem(Item)");
         inventory.add(item);
+
     }
 
     /**
@@ -69,8 +76,8 @@ public abstract class Player implements PickUpVisitor {
     /**
      * @param item
      */
-    void useItem(Item item) {
-
+    public void useItem(Item item) {
+        item.use(room, this);
     }
 
     /**
