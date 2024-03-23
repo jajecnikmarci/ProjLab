@@ -11,6 +11,13 @@ public class KillImmunity extends Effect {
     }
 
     /**
+     * @param givenBy
+     */
+    KillImmunity(Item givenBy) {
+        super(givenBy);
+    }
+
+    /**
      *
      */
     @Override
