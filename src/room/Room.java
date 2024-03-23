@@ -171,7 +171,8 @@ public class Room {
     }
 
     /**
-     * @param player Hozzáadja a játékost a szobához
+     * Hozzáadja a játékost a szobához.
+     * @param player a hozzáadandó játékos
      */
     public void addPlayer(Player player) {
         System.out.println("Room.addPlayer(Player)");
@@ -180,7 +181,8 @@ public class Room {
     }
 
     /**
-     * @param player Kitörli a játékost a szobából.
+     * Kitörli a játékost a szobából.
+     * @param player a kitörölni kívánt játékos
      */
     public void removePlayer(Player player) {
         System.out.println("Room.removePlayer(Player)");
@@ -188,7 +190,8 @@ public class Room {
     }
 
     /**
-     * @param effect
+     * Hozzáadja a hatást a szobához.
+     * @param effect a hozzáadandó hatás
      */
     public void addEffect(RoomEffect effect) {
         this.effects.add(effect);
