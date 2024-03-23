@@ -16,10 +16,12 @@ public class Professor extends Player {
     
     
     /**
+     *
      * @param student
      */
     @Override
     public void meet(Student student) {
+        System.out.println("Professor.meet(Student)");
         student.kill();
     }
 
@@ -27,7 +29,8 @@ public class Professor extends Player {
      * @param professor
      */
     @Override
-    public void meet(Professor professor) {
+    public void meet(Professor professor, Room room) {
+        System.out.println("Professor.meet(Professor, Room)");
         // TODO: Leave room
     }
 

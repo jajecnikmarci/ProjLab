@@ -118,10 +118,18 @@ public abstract class Player implements PickUpVisitor {
 
     }
 
+    /**
+     * @param student
+     */
     public void meet(Student student) {
         
     }
-    public void meet(Professor professor) {
+
+    /**
+     * @param professor
+     * @param room
+     */
+    public void meet(Professor professor, Room room) {
 
     }
 

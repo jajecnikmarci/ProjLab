@@ -8,6 +8,7 @@ import player.Student;
  *
  */
 public class PoisonEffect extends RoomEffect {
+
     public PoisonEffect(Item givenBy, int duration) {
         super(givenBy, duration);
     }

@@ -6,18 +6,22 @@ import items.Item;
  *
  */
 public abstract class Effect {
+    Effect(Item givenBy) {
+        this.givenBy = givenBy;
+    }
+
     /**
      *
      */
-    boolean active;
+    private boolean active;
     /**
      *
      */
-    int duration;
+    private int duration;
     /**
      *
      */
-    Item givenBy;
+    private Item givenBy;
 
     public Effect(Item givenBy, int duration) {
         this.givenBy = givenBy; 
