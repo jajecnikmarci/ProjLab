@@ -75,7 +75,7 @@ public class Student extends Player {
     public void acceptItem(FFP2 ffp2) {
         System.out.println("Student.acceptItem(FFP2)");
         this.addItem(ffp2);
-        this.addPoisonImmunity(new PoisonImmunity());
+        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength()));
         location.removeItem(ffp2);
     }
 
@@ -124,7 +124,9 @@ public class Student extends Player {
     public void acceptItem(TVSZ tvsz) {
         System.out.println("Student.acceptItem(TVSZ)");
         this.addItem(tvsz);
-        this.addKillImmunity(new KillImmunity());
+        KillImmunity killImmunity = new KillImmunity(tvsz, 10);
+        killImmunity.activate();
+        this.addKillImmunity(killImmunity);
         location.removeItem(tvsz);
     }
 
@@ -137,7 +139,7 @@ public class Student extends Player {
     public void acceptItem(Glass glass) {
         System.out.println("Student.acceptItem(Glass)");
         this.addItem(glass);
-        this.addKillImmunity(new KillImmunity());
+        this.addKillImmunity(new KillImmunity(glass,10));
         location.removeItem(glass);
     }
 

@@ -10,6 +10,14 @@ import room.Room;
  *
  */
 public class FFP2 extends Item {
+
+    /**
+     * @return
+     */
+    public int getImmunityLength() {
+        return immunityLength;
+    }
+
     /**
      *
      */
@@ -35,21 +43,4 @@ public class FFP2 extends Item {
         player.acceptItem(this);
     }
 
-    /**
-     * @param student
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Student student) {
-        return true;
-    }
-
-    /**
-     * @param professor
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Professor professor) {
-        return true;
-    }
 }
