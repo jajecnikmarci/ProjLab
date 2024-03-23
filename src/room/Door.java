@@ -42,7 +42,11 @@ public class Door {
      * @param room1Open
      * @param room2Open
      */
-    Door(Room room1, Room room2, boolean room1Open, boolean room2Open) {
+    public Door(Room room1, Room room2, boolean room1Open, boolean room2Open) {
+        this.room1 = room1;
+        this.room2 = room2;
+        this.room1Open = room1Open;
+        this.room2Open = room2Open;
     }
 
     /**
@@ -52,10 +56,18 @@ public class Door {
      * van még legalább 1 hely a szobában, amelyikbe menni próbál a játékos.
      * @param player
      */
-    void goThrough(Player player) {
+    public void goThrough(Player player) {
         System.out.println("Door.goThrough(Player)");
-        if(player.getLocation() == room1 && room2Open && room2.canPlayerGoIn()) player.setLocation(room2);
-        else if(player.getLocation() == room2 && room1Open && room1.canPlayerGoIn()) player.setLocation(room1);
+        if(player.getLocation() == room1 && room2Open && room2.canPlayerGoIn()) {
+            room1.removePlayer(player);
+            room2.addPlayer(player);
+            player.setLocation(room2);
+        }
+        else if(player.getLocation() == room2 && room1Open && room1.canPlayerGoIn()) {
+            room2.removePlayer(player);
+            room1.addPlayer(player);
+            player.setLocation(room1);
+        }
         //else { } //Ha játékos nem tud a másik szobába menni
     }
 

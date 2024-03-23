@@ -61,20 +61,25 @@ public class Skeleton {
          * Itt történik a tesztek hozzáadása (2)
          */
         // tests.add(new Test("Test 1", this::test1));
-        tests.add(new Test("pickup ffp2",this::testPickUpFFP2));
-        tests.add(new Test("pickup camembert",this::testPickUpCamembert));
-        tests.add(new Test("pickup glass",this::testPickUpGlass));
-        tests.add(new Test("pickup Rug",this::testPickUpRug));
-        tests.add(new Test("pickup sliderule",this::testPickUpSlideRule));
-        tests.add(new Test("pickup transistor",this::testPickUpTransistor));
-        tests.add(new Test("pickup tvsz",this::testPickUpTVSZ));
-        tests.add(new Test("use rug",this::testUseRug));
+        tests.add(new Test("Pickup FFP2",this::testPickUpFFP2));
+        tests.add(new Test("Pickup Camembert",this::testPickUpCamembert));
+        tests.add(new Test("Pickup Glass",this::testPickUpGlass));
+        tests.add(new Test("Pickup Rug",this::testPickUpRug));
+        tests.add(new Test("Pickup Sliderule",this::testPickUpSlideRule));
+        tests.add(new Test("Pickup Transistor",this::testPickUpTransistor));
+        tests.add(new Test("Pickup TVSZ",this::testPickUpTVSZ));
+        tests.add(new Test("Use Rug",this::testUseRug));
         tests.add(new Test("Use Camembert", this::testUseCamembert));
         tests.add(new Test("Pair Transistors", this::testPairTransistors));
         tests.add(new Test("Drop Transistor", this::testDropTransistor));
-        tests.add(new Test("Teleport With Transistors", this::testTeleportWithTransistors));
-        tests.add(new Test("Split room", this::testSplitRoom));
-        tests.add(new Test("Merge rooms", this::testMergeRooms));
+        tests.add(new Test("Teleport with Transistors", this::testTeleportWithTransistors));
+        tests.add(new Test("Split Room", this::testSplitRoom));
+        tests.add(new Test("Merge Rooms", this::testMergeRooms));
+        tests.add(new Test("Move to Room", this::testMoveToRoom));
+        tests.add(new Test("Use Glass", this::testUseGlass));
+        tests.add(new Test("Player Gets poisoned", this::testPlayerGetsPoisoned));
+        tests.add(new Test("Student Gets Defended from Professor with Glass", this::testStudentGetsDefendedFromProfessorWithGlass));
+        tests.add(new Test("Player Gets Defended from Poison", this::testPlayerGetsDefendedFromPoison));
     }
 
     private void print(String string) {
@@ -162,7 +167,7 @@ public class Skeleton {
 
     public void testUseCamembert(){
 
-        Student student = new Student();
+        Student student = new Student(null);
         Item camembert = new Camembert();
         student.addItem(camembert);
         Room room = new Room(10);
@@ -172,8 +177,7 @@ public class Skeleton {
     }
 
     public void testPairTransistors(){
-
-        Student student = new Student();
+        Student student = new Student(null);
         Item transistor1 = new Transistor();
         Item transistor2 = new Transistor();
 
@@ -186,7 +190,7 @@ public class Skeleton {
     public void testDropTransistor(){
 
         //ilyenkor is kiíródnak a függvények, de ilyenkor nem kellene
-        Student student = new Student();
+        Student student = new Student(null);
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
 
@@ -202,7 +206,7 @@ public class Skeleton {
 
     public void testTeleportWithTransistors(){
 
-        Student student = new Student();
+        Student student = new Student(null);
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
 
@@ -324,7 +328,7 @@ public class Skeleton {
         boolean hasPlayer = getBoolean("Legyen játékos a szobában?");
         Room room = new Room(capacity);
         if (hasPlayer) {
-            room.addPlayer(new Student());
+            room.addPlayer(new Student(null));
         }
         room.split();
     }
@@ -335,9 +339,59 @@ public class Skeleton {
         boolean hasPlayer = getBoolean("Legyen játékos a szobákban?");
         Room room1 = new Room(capacity1);
         if (hasPlayer) {
-            room1.addPlayer(new Student());
+            room1.addPlayer(new Student(null));
         }
         Room room2 = new Room(capacity2);
         room1.mergeWithRoom(room2);
+    }
+
+    private void testMoveToRoom() {
+        Room room1 = new Room(4);
+        Room room2 = new Room(4);
+        Door door = new Door(room1, room2, true, true);
+        Student student = new Student(room1);
+        room1.addPlayer(student);
+        door.goThrough(student);
+    }
+
+    private void testUseGlass() {
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        Glass glass = new Glass();
+        student.addItem(glass);
+        student.useItem(glass);
+    }
+
+    private void testPlayerGetsPoisoned() {
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        Rug rug = new Rug();
+        Glass glass = new Glass();
+        student.addItem(rug);
+        student.addItem(glass);
+        student.poison();
+    }
+
+    private void testStudentGetsDefendedFromProfessorWithGlass() {
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        Glass glass = new Glass();
+        student.addItem(glass);
+        student.useItem(glass);
+        Professor professor = new Professor(room);
+        room.addPlayer(professor);
+    }
+
+    private void testPlayerGetsDefendedFromPoison() {
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        TVSZ tvsz = new TVSZ();
+        student.addItem(tvsz);
+        student.useItem(tvsz);
+        student.poison();
     }
 }
