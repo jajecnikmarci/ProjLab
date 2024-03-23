@@ -2,6 +2,7 @@ package player;
 
 import effects.PoisonImmunity;
 import items.Item;
+import room.Door;
 import room.Room;
 
 import java.util.List;
@@ -93,7 +94,6 @@ public abstract class Player implements PickUpVisitor {
      * @param room
      */
     void goToRoom(Room room) {
-
     }
 
     public void meet(Student student) {

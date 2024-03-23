@@ -49,6 +49,7 @@ public class Door {
      * @param player
      */
     void goThrough(Player player) {
+        System.out.println("Door.goThrough(Player)");
     }
 
     /**
