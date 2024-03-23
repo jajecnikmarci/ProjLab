@@ -171,7 +171,7 @@ public class Room {
     /**
      * @param player 
      */
-    void addPlayer(Player player) {
+    public void addPlayer(Player player) {
         this.players.add(player);
 
     }

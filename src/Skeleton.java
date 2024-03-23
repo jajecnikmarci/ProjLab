@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import player.Student;
 import room.Room;
 
 /**
@@ -52,6 +53,12 @@ public class Skeleton {
         System.err.println(string);
     }
 
+    /**
+     * Segédfüggvény bekér ehy számot a felhasználótól.
+     * @param msg kiírandó üzenet
+     * @return
+     * @throws NoSuchElementException
+     */
     private int getInt(String msg) throws NoSuchElementException {
         print(msg);
         try {
@@ -62,6 +69,14 @@ public class Skeleton {
             err("Nem számot adott meg!");
             return getInt(msg);
         }
+    }
+
+    private boolean getBoolean(String msg) throws NoSuchElementException {
+        print(msg + " (y/n)");;
+        String str = scanner.nextLine();
+        if(str.toLowerCase().equals("y")) return true;
+        if(str.toLowerCase().equals("n")) return false;
+        return getBoolean(msg);
     }
 
     private void printTests() {
@@ -105,18 +120,24 @@ public class Skeleton {
 
     private void split() {
         int capacity = getInt("Mekkora szobát legyen a szoba kapacitása");
+        
+        boolean hasPlayer = getBoolean("Legyen játékos a szobában?");
         Room room = new Room(capacity);
+        if (hasPlayer) {
+            room.addPlayer(new Student());
+        }
         room.split();
-        
-        
     }
 
     private void merge() {
         int capacity1 = getInt("Mekkora legyen az 1. szoba kapacitása?");
         int capacity2 = getInt("Mekkora legyen az 2. szoba kapacitása?");
+        boolean hasPlayer = getBoolean("Legyen játékos a szobákban?");
         Room room1 = new Room(capacity1);
+        if (hasPlayer) {
+            room1.addPlayer(new Student());
+        }
         Room room2 = new Room(capacity2);
         room1.mergeWithRoom(room2);
     }
-
 }
