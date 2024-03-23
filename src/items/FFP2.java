@@ -34,22 +34,11 @@ public class FFP2 extends Item {
         System.out.println("FFP2.accept(Player)");
         player.acceptItem(this);
     }
-
-    /**
-     * @param student
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Student student) {
-        return true;
-    }
-
-    /**
-     * @param professor
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Professor professor) {
-        return true;
-    }
+    
+     /**
+      * @return
+      */
+     public int getImmunityLength() {
+         return immunityLength;
+     }
 }
