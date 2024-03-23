@@ -1,7 +1,7 @@
 package effects;
 
 /**
- *
+ * Időzítő osztály. Elindítása után a megadott időtartamig várakozik, majd értesíti a hívó objektumot.
  */
 public class Timer {
 

@@ -12,7 +12,8 @@ public class FFP2 extends Item {
     /**
      *
      */
-    private int immunityLength;
+    private int immunityLength = 10;
+    
 
     /**
      * @param room
@@ -20,7 +21,7 @@ public class FFP2 extends Item {
      */
     @Override
     public void use(Room room, Player player) {
-
+        immunityLength -= 2;
     }
 
     /**
