@@ -28,22 +28,4 @@ public class Glass extends Item {
         System.out.println("Glass.accept(Player)");
         player.acceptItem(this);
     }
-
-    /**
-     * @param student
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Student student) {
-        return true;
-    }
-
-    /**
-     * @param professor
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Professor professor) {
-        return false;
-    }
 }

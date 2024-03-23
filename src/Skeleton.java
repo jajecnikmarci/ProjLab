@@ -58,14 +58,14 @@ public class Skeleton {
          * Itt történik a tesztek hozzáadása (2)
          */
         // tests.add(new Test("Test 1", this::test1));
-        tests.add(new Test("pickup ffp2",this::testPickUpFFP2));
-        tests.add(new Test("pickup camembert",this::testPickUpCamembert));
-        tests.add(new Test("pickup glass",this::testPickUpGlass));
-        tests.add(new Test("pickup Rug",this::testPickUpRug));
-        tests.add(new Test("pickup sliderule",this::testPickUpSlideRule));
-        tests.add(new Test("pickup transistor",this::testPickUpTransistor));
-        tests.add(new Test("pickup tvsz",this::testPickUpTVSZ));
-        tests.add(new Test("use rug",this::testUseRug));
+        tests.add(new Test("Pickup FFP2",this::testPickUpFFP2));
+        tests.add(new Test("Pickup Camembert",this::testPickUpCamembert));
+        tests.add(new Test("Pickup Glass",this::testPickUpGlass));
+        tests.add(new Test("Pickup Rug",this::testPickUpRug));
+        tests.add(new Test("Pickup Sliderule",this::testPickUpSlideRule));
+        tests.add(new Test("Pickup Transistor",this::testPickUpTransistor));
+        tests.add(new Test("Pickup TVSZ",this::testPickUpTVSZ));
+        tests.add(new Test("Use Rug",this::testUseRug));
         tests.add(new Test("Use Camembert", this::testUseCamembert));
         tests.add(new Test("Pair Transistors", this::testPairTransistors));
         tests.add(new Test("Drop Transistor", this::testDropTransistor));

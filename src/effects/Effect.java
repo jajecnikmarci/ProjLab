@@ -13,15 +13,15 @@ public abstract class Effect {
     /**
      *
      */
-    private boolean active;
+    protected boolean active;
     /**
      *
      */
-    private int duration;
+    protected int duration;
     /**
      *
      */
-    private Item givenBy;
+    protected Item givenBy;
 
     public Effect(Item givenBy, int duration) {
         this.givenBy = givenBy; 

@@ -22,7 +22,7 @@ public class PoisonEffect extends RoomEffect {
         Timer timer = new Timer();
         active = true;
         timer.start(duration);
-        //TODO notify metódus fewliatkozás majd active = false
+        //TODO notify metódus feliratkozás majd active = false
     }
 
     /**
