@@ -3,6 +3,26 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import room.Room;
+import player.Student;
+import items.*;
+
+class Test {
+    private String title;
+    private Runnable test;
+
+    public Test(String name, Runnable test) {
+        this.title = name;
+        this.test = test;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void run() {
+        test.run(); 
+    }
+}
+=======
 import player.Student;
 import room.Room;
 
@@ -41,6 +61,10 @@ public class Skeleton {
          */
         // tests.add(new Test("Test 1", this::test1));
 
+        tests.add(new Test("Use Camembert", this::testUseCamembert));
+        tests.add(new Test("Pair Transistors", this::testPairTransistors));
+        tests.add(new Test("Drop Transistor", this::testDropTransistor));
+        tests.add(new Test("Teleport With Transistors", this::testTeleportWithTransistors));
         tests.add(new Test("Split room", this::testSplitRoom));
         tests.add(new Test("Merge rooms", this::testMergeRooms));
     }
@@ -91,6 +115,7 @@ public class Skeleton {
         }
         System.out.println();
     }
+
     Scanner scanner;
 
     /**
@@ -127,6 +152,68 @@ public class Skeleton {
     // print("Test 1 executed");
     // }
 
+    public void testUseCamembert(){
+
+        Student student = new Student();
+        Item camembert = new Camembert();
+        student.addItem(camembert);
+        Room room = new Room(10);
+        room.addPlayer(student);
+
+        student.useItem(camembert);
+    }
+
+    public void testPairTransistors(){
+
+        Student student = new Student();
+        Item transistor1 = new Transistor();
+        Item transistor2 = new Transistor();
+
+        student.addItem(transistor1);
+        student.addItem(transistor2);
+
+        student.useItem(transistor1);
+    }
+
+    public void testDropTransistor(){
+
+        //ilyenkor is kiíródnak a függvények, de ilyenkor nem kellene
+        Student student = new Student();
+        Transistor transistor1 = new Transistor();
+        Transistor transistor2 = new Transistor();
+
+        student.addItem(transistor1);
+        student.addItem(transistor2);
+
+        transistor1.setPair(transistor2);
+        transistor2.setPair(transistor1);
+
+        student.useItem(transistor1);
+
+    }
+
+    public void testTeleportWithTransistors(){
+
+        Student student = new Student();
+        Transistor transistor1 = new Transistor();
+        Transistor transistor2 = new Transistor();
+
+        student.addItem(transistor1);
+
+        transistor1.setPair(transistor2);
+        transistor2.setPair(transistor1);
+
+        Room room1 = new Room(10);
+        Room room2 = new Room(10);
+
+        transistor2.setRoom(room2);
+        room1.addPlayer(student);
+
+        student.useItem(transistor1);
+        
+    }
+
+    
     private void testSplitRoom() {
         int capacity = getInt("Mekkora szobát legyen a szoba kapacitása");
         

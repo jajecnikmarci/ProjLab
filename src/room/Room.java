@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
  */
 public class Room {
 
+
     public Room(int capacity) {
         this.capacity = capacity;
         this.players = new ArrayList<>();
@@ -22,6 +23,7 @@ public class Room {
         this.items = new ArrayList<>();
         this.effects = new ArrayList<>();
     }
+    
     /**
      * Megadja, hogy hány játékos tartózkodhat a szobában.
      */
@@ -177,7 +179,6 @@ public class Room {
     public void addPlayer(Player player) {
         System.out.println("Room.addPlayer(Player)");
         this.players.add(player);
-
     }
 
     /**

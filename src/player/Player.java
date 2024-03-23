@@ -14,6 +14,12 @@ public abstract class Player implements PickUpVisitor {
      *
      */
     List<Item> inventory;
+
+    /**
+     * A Játékos aktuális szobája
+     */
+    Room room=new Room(10);
+
     /**
      *
      */
@@ -22,15 +28,16 @@ public abstract class Player implements PickUpVisitor {
     /**
      * @param item
      */
-    void addItem(Item item) {
-
+    public void addItem(Item item) {
+        System.out.println("Player.addItem(Item)");
     }
 
     /**
+     * Tárgy eltávolítása a játékostól
      * @param item
      */
-    void removeItem(Item item) {
-
+    public void removeItem(Item item) {
+        System.out.println("Player.removeItem(Item)");
     }
 
     /**
@@ -50,8 +57,8 @@ public abstract class Player implements PickUpVisitor {
     /**
      * @param item
      */
-    void useItem(Item item) {
-
+    public void useItem(Item item) {
+        item.use(room, this);
     }
 
     /**
