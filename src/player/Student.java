@@ -124,7 +124,9 @@ public class Student extends Player {
     public void acceptItem(TVSZ tvsz) {
         System.out.println("Student.acceptItem(TVSZ)");
         this.addItem(tvsz);
-        this.addKillImmunity(new KillImmunity(tvsz, 0));
+        KillImmunity killImmunity = new KillImmunity(tvsz, 10);
+        killImmunity.activate();
+        this.addKillImmunity(killImmunity);
         location.removeItem(tvsz);
     }
 
