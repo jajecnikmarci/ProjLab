@@ -14,16 +14,18 @@ public class SlideRule extends Item {
      * @param player
      */
     @Override
-    void use(Room room, Player player) {
+    public void use(Room room, Player player) {
 
     }
 
     /**
-     * @param player
+     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     * @param player a játékos aki próbálja felvenni a tárgyat
      */
     @Override
-    void accept(Player player) {
-
+    public void accept(Player player) {
+        System.out.println("SlideRule.accept(Player)");
+        player.acceptItem(this);
     }
 
     /**
@@ -31,8 +33,8 @@ public class SlideRule extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Student student) {
-        return false;
+    public boolean canPickUp(Student student) {
+        return true;
     }
 
     /**
@@ -40,7 +42,7 @@ public class SlideRule extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Professor professor) {
+    public boolean canPickUp(Professor professor) {
         return false;
     }
 }

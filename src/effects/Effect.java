@@ -23,6 +23,11 @@ public abstract class Effect {
      */
     private Item givenBy;
 
+    public Effect(Item givenBy, int duration) {
+        this.givenBy = givenBy; 
+        this.duration = duration;
+    }
+
     /**
      *
      */

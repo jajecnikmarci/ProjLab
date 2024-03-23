@@ -8,8 +8,9 @@ import player.Student;
  *
  */
 public class PoisonEffect extends RoomEffect {
-    PoisonEffect(Item givenBy) {
-        super(givenBy);
+
+    public PoisonEffect(Item givenBy, int duration) {
+        super(givenBy, duration);
     }
 
     /**
@@ -17,7 +18,11 @@ public class PoisonEffect extends RoomEffect {
      */
     @Override
     public void activate() {
-
+        System.out.println("PoisonEffect.activate()");
+        Timer timer = new Timer();
+        active = true;
+        timer.start(duration);
+        //TODO notify metódus fewliatkozás majd active = false
     }
 
     /**

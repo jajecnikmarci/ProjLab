@@ -8,8 +8,8 @@ import player.Student;
  *
  */
 public abstract class RoomEffect extends Effect {
-    RoomEffect(Item givenBy) {
-        super(givenBy);
+    public RoomEffect(Item givenBy, int duration) {
+        super(givenBy, duration);
     }
 
     /**

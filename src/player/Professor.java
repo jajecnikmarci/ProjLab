@@ -1,5 +1,6 @@
 package player;
 
+import effects.PoisonImmunity;
 import items.*;
 import room.Room;
 
@@ -7,6 +8,13 @@ import room.Room;
  *
  */
 public class Professor extends Player {
+    
+    public Professor(Room r){
+        super(r);
+        location=r;
+    }
+    
+    
     /**
      *
      * @param student
@@ -27,65 +35,72 @@ public class Professor extends Player {
     }
 
     /**
-     * @param ffp2
-     * @return
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param ffp2 a hozzáadandó tárgy
      */
     @Override
-    public boolean acceptItem(FFP2 ffp2) {
-        return false;
+    public void acceptItem(FFP2 ffp2) {
+        System.out.println("Professor.acceptItem(FFP2)");
+        this.addItem(ffp2);
+        this.addPoisonImmunity(new PoisonImmunity());
+        location.removeItem(ffp2);
     }
 
     /**
-     * @param camembert
-     * @return
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param camembert a hozzáadandó tárgy
      */
     @Override
-    public boolean acceptItem(Camembert camembert) {
-        return false;
+    public void acceptItem(Camembert camembert) {
+        System.out.println("Professor.acceptItem(Camembert)");
+        this.addItem(camembert);
+        location.removeItem(camembert);
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param transistor
-     * @return
      */
     @Override
-    public boolean acceptItem(Transistor transistor) {
-        return false;
+    public void acceptItem(Transistor transistor) {
+        return;
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param slideRule
-     * @return
      */
     @Override
-    public boolean acceptItem(SlideRule slideRule) {
-        return false;
+    public void acceptItem(SlideRule slideRule) {
+        return;
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param tvsz
-     * @return
      */
     @Override
-    public boolean acceptItem(TVSZ tvsz) {
-        return false;
+    public void acceptItem(TVSZ tvsz) {
+        return;
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param glass
-     * @return
      */
     @Override
-    public boolean acceptItem(Glass glass) {
-        return false;
+    public void acceptItem(Glass glass) {
+        return;
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param rug
-     * @return
      */
     @Override
-    public boolean acceptItem(Rug rug) {
-        return false;
+    public void acceptItem(Rug rug) {
+        return;
     }
 }

@@ -1,5 +1,6 @@
 package items;
 
+import effects.PoisonEffect;
 import player.Player;
 import player.Professor;
 import player.Student;
@@ -10,20 +11,29 @@ import room.Room;
  */
 public class Camembert extends Item {
     /**
+     * A Camembert használata. Eltávolítja a játékos tárgyai közül a Camembert-et, 
+     * és a szobához hozzáad egy PoisonEffect-et, valamint aktiválja azt.
      * @param room
      * @param player
      */
     @Override
-    void use(Room room, Player player) {
-
+    public void use(Room room, Player player) {
+        System.out.println("Camembert.use(Room, Player)");
+        PoisonEffect camembertEffect = new PoisonEffect(this, 30);
+        room.addEffect(camembertEffect);
+        camembertEffect.activate();
+        room.poisonPlayers();
+        player.removeItem(this);
     }
 
     /**
-     * @param player
+     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     * @param player a játékos aki próbálja felvenni a tárgyat
      */
     @Override
-    void accept(Player player) {
-
+    public void accept(Player player) {
+        System.out.println("Camembert.accept(Player)");
+        player.acceptItem(this);
     }
 
     /**
@@ -31,8 +41,8 @@ public class Camembert extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Student student) {
-        return false;
+    public boolean canPickUp(Student student) {
+        return true;
     }
 
     /**
@@ -40,7 +50,7 @@ public class Camembert extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Professor professor) {
-        return false;
+    public boolean canPickUp(Professor professor) {
+        return true;
     }
 }

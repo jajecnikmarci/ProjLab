@@ -8,8 +8,8 @@ import player.Student;
  *
  */
 public class StunEffect extends RoomEffect {
-    StunEffect(Item givenBy) {
-        super(givenBy);
+    public StunEffect(Item givenBy, int duration) {
+        super(givenBy, duration);
     }
 
     /**

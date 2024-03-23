@@ -7,8 +7,8 @@ import items.Item;
  */
 public class PoisonImmunity extends Effect {
 
-    PoisonImmunity(Item givenBy) {
-        super(givenBy);
+    public PoisonImmunity(Item givenBy, int duration) {
+        super(givenBy, duration);
     }
 
     /**
