@@ -22,22 +22,24 @@ public class PoisonEffect extends RoomEffect {
         Timer timer = new Timer();
         active = true;
         timer.start(duration);
-        //TODO notify metódus fewliatkozás majd active = false
+        //TODO notify metódus feliratkozás majd active = false
     }
 
     /**
+     * Az oktatót megmérgezi.
      * @param professor
      */
     @Override
     public void affect(Professor professor) {
-
+        professor.poison();
     }
 
     /**
+     * A hallgatót megmérgezi.
      * @param student
      */
     @Override
     public void affect(Student student) {
-
+        student.poison();
     }
 }

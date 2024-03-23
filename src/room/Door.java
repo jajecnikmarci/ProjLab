@@ -46,10 +46,17 @@ public class Door {
     }
 
     /**
+     * Amikor egy játékos megpróbál átmenni az ajtón, itt ellenőrzi az ajtó,
+     * hogy átmehet-e. Az elégséges feltétele, hogy átmehessen a játékos az
+     * ajtón: átmehet az ajtón abból a szobából, amelyikben a játékos van és
+     * van még legalább 1 hely a szobában, amelyikbe menni próbál a játékos.
      * @param player
      */
     void goThrough(Player player) {
         System.out.println("Door.goThrough(Player)");
+        if(player.getLocation() == room1 && room2Open && room2.canPlayerGoIn()) player.setLocation(room2);
+        else if(player.getLocation() == room2 && room1Open && room1.canPlayerGoIn()) player.setLocation(room1);
+        //else { } //Ha játékos nem tud a másik szobába menni
     }
 
     /**

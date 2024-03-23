@@ -1,6 +1,7 @@
 package player;
 
 import effects.Effect;
+import effects.KillImmunity;
 import effects.PoisonImmunity;
 import items.Item;
 import room.Door;
@@ -68,17 +69,27 @@ public abstract class Player implements PickUpVisitor {
     }
 
     /**
+     * A paraméterül kapott item-et eldobja a játékos, nem
+     * tartozik többé a játékoshoz az item.
      * @param item
      */
     void dropItem(Item item) {
+        inventory.remove(item);
+    }
 
+    /**
+     * A játékos elejti az összes nála lévő item-et, egy
+     * item sem fog a játékoshoz tartozni.
+     */
+    void dropAll() {
+        inventory.clear();
     }
 
     /**
      * @param item
      */
     public void useItem(Item item) {
-        item.use(room, this);
+        item.use(location, this);
     }
 
     /**
@@ -99,17 +110,29 @@ public abstract class Player implements PickUpVisitor {
     }
 
     /**
-     *
+     * A játékos duration ideig nem tud mozogni.
      */
-    void stun() {
+    void stun(int duration) {
 
     }
 
     /**
-     *
+     * A játékost ha mérgezés éri és nincs védettsége a méreg
+     * ellen a játékosnak, mozgásképtelenné válik a játékos 5
+     * másodpercre és elejti az összes nála lévő tárgyat. Ha
+     * a játékos tud védekezni a méreg ellen, a játékos nem
+     * válik mozgásképtelenni és nem ejti el a nála lévő
+     * tárgyakat.
      */
     public void poison() {
-
+        System.out.println("Player.poison()");
+        if (poisonImmunities.isEmpty()) {
+            this.dropAll();
+            this.stun(5);
+            return;
+        }
+        if (poisonImmunities.stream().anyMatch(PoisonImmunity::isActive)) return;
+        poisonImmunities.get(0).activate();
     }
 
     /**
@@ -133,4 +156,18 @@ public abstract class Player implements PickUpVisitor {
 
     }
 
+    /**
+     * Visszaadja, hogy melyik szobában van a játékos.
+     */
+    public Room getLocation() {
+        return this.location;
+    }
+
+    /**
+     * Beállítja, hogy a játékos melyik szobában lesz (szobaváltásnál).
+     * @param room
+     */
+    public void setLocation(Room room) {
+        this.location = room;
+    }
 }

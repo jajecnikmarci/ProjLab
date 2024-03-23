@@ -39,4 +39,18 @@ public abstract class Effect {
     public boolean isActive() {
         return active;
     }
+
+    /**
+     * @return
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /**
+     * @return
+     */
+    public int getDuration() {
+        return duration;
+    }
 }

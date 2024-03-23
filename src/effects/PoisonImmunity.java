@@ -12,10 +12,16 @@ public class PoisonImmunity extends Effect {
     }
 
     /**
-     *
+     * A méreg immunitás aktiválásakor, egy időzítő indul el,
+     * az időzítő lejártáig a játékosnak mérgezés elleni
+     * védettséget nyújt.
      */
     @Override
     public void activate() {
-
+        System.out.println("PoisonImmunity.activate()");
+        Timer timer = new Timer();
+        setActive(true);
+        timer.start(getDuration());
+        //TODO notify metódus feliratkozás majd active = false
     }
 }
