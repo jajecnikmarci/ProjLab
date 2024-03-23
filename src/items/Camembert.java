@@ -19,11 +19,11 @@ public class Camembert extends Item {
     @Override
     public void use(Room room, Player player) {
         System.out.println("Camembert.use(Room, Player)");
-        player.removeItem(this);
         PoisonEffect camembertEffect = new PoisonEffect(this, 30);
         room.addEffect(camembertEffect);
         camembertEffect.activate();
         room.poisonPlayers();
+        player.removeItem(this);
     }
 
     /**
