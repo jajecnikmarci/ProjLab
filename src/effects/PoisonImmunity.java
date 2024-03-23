@@ -20,7 +20,7 @@ public class PoisonImmunity extends Effect {
     public void activate() {
         System.out.println("PoisonImmunity.activate()");
         Timer timer = new Timer();
-        setActive(true);
+        active = true;
         timer.start(getDuration());
         //TODO notify metódus feliratkozás majd active = false
     }

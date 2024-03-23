@@ -21,7 +21,7 @@ public class PoisonEffect extends RoomEffect {
         System.out.println("PoisonEffect.activate()");
         Timer timer = new Timer();
         active = true;
-        timer.start(duration);
+        timer.start(getDuration());
         //TODO notify metódus feliratkozás majd active = false
     }
 
