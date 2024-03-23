@@ -35,22 +35,4 @@ public class Camembert extends Item {
         System.out.println("Camembert.accept(Player)");
         player.acceptItem(this);
     }
-
-    /**
-     * @param student
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Student student) {
-        return true;
-    }
-
-    /**
-     * @param professor
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Professor professor) {
-        return true;
-    }
 }
