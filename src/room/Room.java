@@ -194,13 +194,15 @@ public class Room {
      * @param effect a hozzáadandó hatás
      */
     public void addEffect(RoomEffect effect) {
+        System.out.println("Room.addEffect(RoomEffect)");
         this.effects.add(effect);
     }
 
     /**
      * @param effect
      */
-    void removeEffect(RoomEffect effect) {
+    public void removeEffect(RoomEffect effect) {
+        System.out.println("Room.removeEffect(RoomEffect)");
         this.effects.remove(effect);
     }
 }
