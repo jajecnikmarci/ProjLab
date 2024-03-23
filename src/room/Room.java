@@ -219,4 +219,12 @@ public class Room {
         System.out.println("Room.removeEffect(RoomEffect)");
         this.effects.remove(effect);
     }
+
+    /**
+     * Ha egy játékos befér még a szobába, igaz értékkel tér vissza.
+     */
+    public boolean canPlayerGoIn() {
+        if(capacity > players.size()) return true;
+        return false;
+    }
 }

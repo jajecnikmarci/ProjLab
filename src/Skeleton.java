@@ -24,6 +24,7 @@ class Test {
     }
 }
 
+
 /**
  * Szkeleton osztály. Tárolja a teszteseteket. Kiírja a menüt.
  * Teszt hozzáadaása:
@@ -69,9 +70,14 @@ public class Skeleton {
         tests.add(new Test("Use Camembert", this::testUseCamembert));
         tests.add(new Test("Pair Transistors", this::testPairTransistors));
         tests.add(new Test("Drop Transistor", this::testDropTransistor));
-        tests.add(new Test("Teleport With Transistors", this::testTeleportWithTransistors));
-        tests.add(new Test("Split room", this::testSplitRoom));
-        tests.add(new Test("Merge rooms", this::testMergeRooms));
+        tests.add(new Test("Teleport with Transistors", this::testTeleportWithTransistors));
+        tests.add(new Test("Split Room", this::testSplitRoom));
+        tests.add(new Test("Merge Rooms", this::testMergeRooms));
+        tests.add(new Test("Move to Room", this::testMoveToRoom));
+        tests.add(new Test("Use Glass", this::testUseGlass));
+        tests.add(new Test("Player Gets poisoned", this::testPlayerGetsPoisoned));
+        tests.add(new Test("Student Gets Defended from Professor with Glass", this::testStudentGetsDefendedFromProfessorWithGlass));
+        tests.add(new Test("Player Gets Defended from Poison", this::testPlayerGetsDefendedFromPoison));
     }
 
     private void print(String string) {
@@ -335,5 +341,55 @@ public class Skeleton {
         }
         Room room2 = new Room(capacity2);
         room1.mergeWithRoom(room2);
+    }
+
+    private void testMoveToRoom() {
+        Room room1 = new Room(4);
+        Room room2 = new Room(4);
+        Door door = new Door(room1, room2, true, true);
+        Student student = new Student(room1);
+        room1.addPlayer(student);
+        door.goThrough(student);
+    }
+
+    private void testUseGlass() {
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        Glass glass = new Glass();
+        student.addItem(glass);
+        student.useItem(glass);
+    }
+
+    private void testPlayerGetsPoisoned() {
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        Rug rug = new Rug();
+        Glass glass = new Glass();
+        student.addItem(rug);
+        student.addItem(glass);
+        student.poison();
+    }
+
+    private void testStudentGetsDefendedFromProfessorWithGlass() {
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        Glass glass = new Glass();
+        student.addItem(glass);
+        student.useItem(glass);
+        Professor professor = new Professor(room);
+        room.addPlayer(professor);
+    }
+
+    private void testPlayerGetsDefendedFromPoison() {
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        TVSZ tvsz = new TVSZ();
+        student.addItem(tvsz);
+        student.useItem(tvsz);
+        student.poison();
     }
 }

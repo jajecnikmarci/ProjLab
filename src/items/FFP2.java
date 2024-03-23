@@ -10,14 +10,6 @@ import room.Room;
  *
  */
 public class FFP2 extends Item {
-
-    /**
-     * @return
-     */
-    public int getImmunityLength() {
-        return immunityLength;
-    }
-
     /**
      *
      */
@@ -42,5 +34,11 @@ public class FFP2 extends Item {
         System.out.println("FFP2.accept(Player)");
         player.acceptItem(this);
     }
-
+    
+     /**
+      * @return
+      */
+     public int getImmunityLength() {
+         return immunityLength;
+     }
 }

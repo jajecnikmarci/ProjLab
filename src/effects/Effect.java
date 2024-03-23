@@ -17,11 +17,11 @@ public abstract class Effect {
     /**
      *
      */
-    protected int duration;
+    private int duration;
     /**
      *
      */
-    protected Item givenBy;
+    private Item givenBy;
 
     public Effect(Item givenBy, int duration) {
         this.givenBy = givenBy; 
@@ -38,5 +38,12 @@ public abstract class Effect {
      */
     public boolean isActive() {
         return active;
+    }
+
+    /**
+     * @return
+     */
+    public int getDuration() {
+        return duration;
     }
 }
