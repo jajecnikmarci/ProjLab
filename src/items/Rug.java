@@ -1,5 +1,6 @@
 package items;
 
+import effects.StunEffect;
 import player.Player;
 import player.Professor;
 import player.Student;
@@ -10,12 +11,16 @@ import room.Room;
  */
 public class Rug extends Item {
     /**
+     * A hallgató használja a Rug tárgyat és a hallgató tartózkodási szobájához hozzáadódik a rongy effektje.
+     * 
      * @param room
      * @param player
      */
     @Override
-    void use(Room room, Player player) {
-
+    public void use(Room room, Player player) {
+        System.out.println("Rug.use(Room, Player)");
+        room.addEffect(new StunEffect());
+        player.removeItem(this);
     }
 
     /**
@@ -23,9 +28,8 @@ public class Rug extends Item {
      */
     @Override
     public void accept(Player player) {
-        if(player.acceptItem(this)){
-            player.addItem(this);
-        }
+        System.out.println("Rug.accept(Player)");
+        player.acceptItem(this);
     }
 
     /**
@@ -33,8 +37,8 @@ public class Rug extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Student student) {
-        return false;
+    public boolean canPickUp(Student student) {
+        return true;
     }
 
     /**
@@ -42,7 +46,7 @@ public class Rug extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Professor professor) {
+    public boolean canPickUp(Professor professor) {
         return false;
     }
 }

@@ -23,7 +23,8 @@ public class TVSZ extends Item {
      */
     
     public void accept(Player player) {
-
+        System.out.println("TVSZ.accept(Player)");
+        player.acceptItem(this);
     }
 
     /**
@@ -31,8 +32,8 @@ public class TVSZ extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Student student) {
-        return false;
+    public boolean canPickUp(Student student) {
+        return true;
     }
 
     /**
@@ -40,7 +41,7 @@ public class TVSZ extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Professor professor) {
+    public boolean canPickUp(Professor professor) {
         return false;
     }
 }

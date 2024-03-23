@@ -1,8 +1,11 @@
 package player;
 
 import effects.KillImmunity;
+import effects.PoisonImmunity;
 import items.*;
+import room.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,9 +18,16 @@ public class Student extends Player {
     private int souls;
 
     /**
-     *
+     * 
      */
     List<KillImmunity> killImmunities;
+
+    public Student(Room r){
+        super(r);
+        souls = 3;
+        killImmunities=new ArrayList<KillImmunity>();
+    }
+
 
     /**
      *
@@ -27,80 +37,93 @@ public class Student extends Player {
     }
 
     /**
+     * Hozzáadja a killImmunities-hez a paraméterként kapott immuntitást.
      * @param killImmunity
      */
     void addKillImmunity(KillImmunity killImmunity) {
-
+        System.out.println("Student.addKillImmunity(KillImmunity)");
+        killImmunities.add(killImmunity);
     }
 
     /**
+     * Kitörli a killImmunities-ből a paraméterként kapott immuntitást.
      * @param killImmunity
      */
     void removeKillImmunity(KillImmunity killImmunity) {
-
+        killImmunities.remove(killImmunity);
     }
 
     /**
      * @param ffp2
-     * @return
      */
     @Override
-    public boolean acceptItem(FFP2 ffp2) {
-        return false;
+    public void acceptItem(FFP2 ffp2) {
+        System.out.println("Student.acceptItem(FFP2)");
+        this.addItem(ffp2);
+        this.addPoisonImmunity(new PoisonImmunity());
+        location.removeItem(ffp2);
     }
 
     /**
      * @param camembert
-     * @return
      */
     @Override
-    public boolean acceptItem(Camembert camembert) {
-        return false;
+    public void acceptItem(Camembert camembert) {
+        System.out.println("Student.acceptItem(Camembert)");
+        this.addItem(camembert);
+        location.removeItem(camembert);
     }
 
     /**
      * @param transistor
-     * @return
      */
     @Override
-    public boolean acceptItem(Transistor transistor) {
-        return false;
+    public void acceptItem(Transistor transistor) {
+        System.out.println("Student.acceptItem(Transistor)");
+        this.addItem(transistor);
+        location.removeItem(transistor);
     }
 
     /**
      * @param slideRule
-     * @return
      */
     @Override
-    public boolean acceptItem(SlideRule slideRule) {
-        return false;
+    public void acceptItem(SlideRule slideRule) {
+        System.out.println("Student.acceptItem(SlideRule)");
+        this.addItem(slideRule);
+        location.removeItem(slideRule);
     }
 
     /**
      * @param tvsz
-     * @return
      */
     @Override
-    public boolean acceptItem(TVSZ tvsz) {
-        return false;
+    public void acceptItem(TVSZ tvsz) {
+        System.out.println("Student.acceptItem(TVSZ)");
+        this.addItem(tvsz);
+        this.addKillImmunity(new KillImmunity());
+        location.removeItem(tvsz);
     }
 
     /**
      * @param glass
-     * @return
      */
     @Override
-    public boolean acceptItem(Glass glass) {
-        return false;
+    public void acceptItem(Glass glass) {
+        System.out.println("Student.acceptItem(Glass)");
+        this.addItem(glass);
+        this.addKillImmunity(new KillImmunity());
+        location.removeItem(glass);
     }
 
     /**
      * @param rug
-     * @return
      */
     @Override
-    public boolean acceptItem(Rug rug) {
-        return false;
+    public void acceptItem(Rug rug) {
+        System.out.println("Student.acceptItem(Rug)");
+        this.addItem(rug);
+        location.removeItem(rug);
     }
 
     

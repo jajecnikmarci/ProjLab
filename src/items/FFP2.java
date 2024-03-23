@@ -29,10 +29,8 @@ public class FFP2 extends Item {
      */
     @Override
     public void accept(Player player) {
-        if(player.acceptItem(this)){
-            player.addItem(this);
-            player.addPoisonImmunity(new PoisonImmunity());
-        }
+        System.out.println("FFP2.accept(Player)");
+        player.acceptItem(this);
     }
 
     /**
@@ -40,8 +38,8 @@ public class FFP2 extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Student student) {
-        return false;
+    public boolean canPickUp(Student student) {
+        return true;
     }
 
     /**
@@ -49,7 +47,7 @@ public class FFP2 extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Professor professor) {
-        return false;
+    public boolean canPickUp(Professor professor) {
+        return true;
     }
 }

@@ -1,11 +1,20 @@
 package player;
 
+import effects.PoisonImmunity;
 import items.*;
+import room.Room;
 
 /**
  *
  */
 public class Professor extends Player {
+    
+    public Professor(Room r){
+        super(r);
+        location=r;
+    }
+    
+    
     /**
      * @param student
      */
@@ -24,20 +33,23 @@ public class Professor extends Player {
 
     /**
      * @param ffp2
-     * @return
      */
     @Override
-    public boolean acceptItem(FFP2 ffp2) {
-        return false;
+    public void acceptItem(FFP2 ffp2) {
+        System.out.println("Professor.acceptItem(FFP2)");
+        this.addItem(ffp2);
+        this.addPoisonImmunity(new PoisonImmunity());
+        location.removeItem(ffp2);
     }
 
     /**
      * @param camembert
-     * @return
      */
     @Override
-    public boolean acceptItem(Camembert camembert) {
-        return false;
+    public void acceptItem(Camembert camembert) {
+        System.out.println("Professor.acceptItem(Camembert)");
+        this.addItem(camembert);
+        location.removeItem(camembert);
     }
 
     /**
@@ -45,8 +57,8 @@ public class Professor extends Player {
      * @return
      */
     @Override
-    public boolean acceptItem(Transistor transistor) {
-        return false;
+    public void acceptItem(Transistor transistor) {
+        return;
     }
 
     /**
@@ -54,8 +66,8 @@ public class Professor extends Player {
      * @return
      */
     @Override
-    public boolean acceptItem(SlideRule slideRule) {
-        return false;
+    public void acceptItem(SlideRule slideRule) {
+        return;
     }
 
     /**
@@ -63,8 +75,8 @@ public class Professor extends Player {
      * @return
      */
     @Override
-    public boolean acceptItem(TVSZ tvsz) {
-        return false;
+    public void acceptItem(TVSZ tvsz) {
+        return;
     }
 
     /**
@@ -72,8 +84,8 @@ public class Professor extends Player {
      * @return
      */
     @Override
-    public boolean acceptItem(Glass glass) {
-        return false;
+    public void acceptItem(Glass glass) {
+        return;
     }
 
     /**
@@ -81,7 +93,7 @@ public class Professor extends Player {
      * @return
      */
     @Override
-    public boolean acceptItem(Rug rug) {
-        return false;
+    public void acceptItem(Rug rug) {
+        return;
     }
 }

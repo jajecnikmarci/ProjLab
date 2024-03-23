@@ -8,44 +8,37 @@ import items.*;
 public interface PickUpVisitor {
     /**
      * @param ffp2
-     * @return
      */
-    boolean acceptItem(FFP2 ffp2);
+    void acceptItem(FFP2 ffp2);
 
     /**
      * @param camembert
-     * @return
      */
-    boolean acceptItem(Camembert camembert);
+    void acceptItem(Camembert camembert);
 
     /**
      * @param transistor
-     * @return
      */
-    boolean acceptItem(Transistor transistor);
+    void acceptItem(Transistor transistor);
 
     /**
      * @param slideRule
-     * @return
      */
-    boolean acceptItem(SlideRule slideRule);
+    void acceptItem(SlideRule slideRule);
 
     /**
      * @param tvsz
-     * @return
      */
-    boolean acceptItem(TVSZ tvsz);
+    void acceptItem(TVSZ tvsz);
 
     /**
      * @param glass
-     * @return
      */
-    boolean acceptItem(Glass glass);
+    void acceptItem(Glass glass);
 
     /**
      * @param rug
-     * @return
      */
-    boolean acceptItem(Rug rug);
+    void acceptItem(Rug rug);
 
 }

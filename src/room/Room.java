@@ -1,11 +1,13 @@
 package room;
 
+import effects.Effect;
 import effects.RoomEffect;
 import items.Item;
 import player.Player;
 import player.Professor;
 import player.Student;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,26 +40,39 @@ public class Room {
     /**
      *
      */
-    private List<RoomEffect> effects;
+    private ArrayList<RoomEffect> effects;
 
-    /**
-     * @param item
-     */
-    void removeItem(Item item) {
+    public Room(){
+        players = new ArrayList<Player>();
+        items = new ArrayList<Item>();
+        effects = new ArrayList<RoomEffect>();
+        doors = new ArrayList<Door>();
     }
 
     /**
      * @param item
      */
-    void addItem(Item item) {
+    public void removeItem(Item item) {
+        System.out.println("Room.removeItem(Item)");
+        items.remove(item);
+    }
+
+    /**
+     * @param item
+     */
+    public void addItem(Item item) {
+        items.add(item);
     }
 
     /**
      * 
      * @param item
      */
-    public void popItem() {
-
+    public void popItem(Player player) {
+        System.out.println("Room.popItem(Player)");
+        //items.remove(items.size()-1);
+        if(items.isEmpty()) return;
+        items.get(items.size()-1).accept(player);
     }
 
     /**
@@ -150,8 +165,9 @@ public class Room {
     /**
      * @param player
      */
-    void addPlayer(Player player) {
-        this.players.add(player);
+    public void addPlayer(Player player) {
+        
+        if(player != null) players.add(player);
 
     }
 
@@ -166,7 +182,8 @@ public class Room {
     /**
      * @param effect
      */
-    void addEffect(RoomEffect effect) {
+    public void addEffect(RoomEffect effect) {
+        System.out.println("Rug.addEffect(Effect)");
         this.effects.add(effect);
     }
 

@@ -3,6 +3,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import items.*;
+import player.*;
+import room.*;
+
 class Test {
     private String title;
     private Runnable test;
@@ -34,7 +38,15 @@ public class Skeleton {
          * Itt történik a tesztek hozzáadása (2)
          */
         // tests.add(new Test("Test 1", this::test1));
-        
+        tests.add(new Test("pickup ffp2",this::testPickUpFFP2));
+        tests.add(new Test("pickup camembert",this::testPickUpCamembert));
+        tests.add(new Test("pickup glass",this::testPickUpGlass));
+        tests.add(new Test("pickup Rug",this::testPickUpRug));
+        tests.add(new Test("pickup sliderule",this::testPickUpSlideRule));
+        tests.add(new Test("pickup transistor",this::testPickUpTransistor));
+        tests.add(new Test("pickup tvsz",this::testPickUpTVSZ));
+        tests.add(new Test("use rug",this::testUseRug));
+
     }
     private void print(String string) {
         System.out.println(string);
@@ -83,5 +95,101 @@ public class Skeleton {
     // public void test1() {
     //     print("Test 1 executed");
     // }
+    
+    public void testPickUpFFP2() {
+        Room room = new Room();
+        Student student = new Student(room);
+        FFP2 item = new FFP2();
+        room.addPlayer(student);
+        room.addItem(item);
+
+        student.pickUpItem();
+
+        print("Test ffp2 pick up executed");
+    }
+
+    public void testPickUpCamembert() {
+        Room r = new Room();
+        Student s = new Student(r);
+        Camembert i = new Camembert();
+        r.addPlayer(s);
+        r.addItem(i);
+
+        s.pickUpItem();
+
+        print("Test camembert pick up executed");
+    }
+    
+    public void testPickUpGlass() {
+        Room r = new Room();
+        Student s = new Student(r);
+        Glass i = new Glass();
+        r.addPlayer(s);
+        r.addItem(i);
+
+        s.pickUpItem();
+
+        print("Test glass pick up executed");
+    }
+
+    public void testPickUpTVSZ() {
+        Room r = new Room();
+        Student s = new Student(r);
+        TVSZ i = new TVSZ();
+        r.addPlayer(s);
+        r.addItem(i);
+
+        s.pickUpItem();
+
+        print("Test tvsz pick up executed");
+    }
+
+    public void testPickUpTransistor() {
+        Room r = new Room();
+        Student s = new Student(r);
+        Transistor i = new Transistor();
+        r.addPlayer(s);
+        r.addItem(i);
+
+        s.pickUpItem();
+
+        print("Test transistor pick up executed");
+    }
+
+    public void testPickUpRug() {
+        Room r = new Room();
+        Student s = new Student(r);
+        Rug i = new Rug();
+        r.addPlayer(s);
+        r.addItem(i);
+
+        s.pickUpItem();
+
+        print("Test rug pick up executed");
+    }
+
+    public void testPickUpSlideRule() {
+        Room r = new Room();
+        Student s = new Student(r);
+        SlideRule i = new SlideRule();
+        r.addPlayer(s);
+        r.addItem(i);
+
+        s.pickUpItem();
+
+        print("Test sliderule pick up executed");
+    }
+
+    public void testUseRug() {
+        Room r = new Room();
+        Student s = new Student(r);
+        Rug i = new Rug();
+        r.addPlayer(s);
+        s.addItem(i);
+
+        i.use(r,s);
+
+        print("Test use rug executed");
+    }
     
 }

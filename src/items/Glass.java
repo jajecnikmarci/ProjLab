@@ -23,8 +23,9 @@ public class Glass extends Item {
      * @param player
      */
     @Override
-    void accept(Player player) {
-
+    public void accept(Player player) {
+        System.out.println("Glass.accept(Player)");
+        player.acceptItem(this);
     }
 
     /**
@@ -32,8 +33,8 @@ public class Glass extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Student student) {
-        return false;
+    public boolean canPickUp(Student student) {
+        return true;
     }
 
     /**
@@ -41,7 +42,7 @@ public class Glass extends Item {
      * @return
      */
     @Override
-    boolean canPickUp(Professor professor) {
+    public boolean canPickUp(Professor professor) {
         return false;
     }
 }

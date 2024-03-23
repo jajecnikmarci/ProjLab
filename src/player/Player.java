@@ -1,9 +1,11 @@
 package player;
 
+import effects.Effect;
 import effects.PoisonImmunity;
 import items.Item;
 import room.Room;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +16,7 @@ public abstract class Player implements PickUpVisitor {
      *
      */
     List<Item> inventory;
+    
     /**
      *
      */
@@ -21,26 +24,37 @@ public abstract class Player implements PickUpVisitor {
 
     Room location;
 
+    public Player(Room r){
+        location=r;
+        inventory = new ArrayList<Item>();
+        poisonImmunities=new ArrayList<PoisonImmunity>();
+    }
+
+    
     /**
      * @param item
      */
     public void addItem(Item item) {
-
+        System.out.println("Player.addItem(Item)");
+        inventory.add(item);
     }
 
     /**
      * @param item
      */
-    void removeItem(Item item) {
-
+    public void removeItem(Item item) {
+        System.out.println("Player.removeItem(Item)");
+        inventory.remove(item);
     }
 
     /**
+     * A jelenlegi szobából felveszi a legfelső tárgyat.
      * @param item
      */
-    void pickUpItem(Item item) {
-        item.accept(this);
-        location.popItem();
+    public void pickUpItem() {
+        System.out.println("Player.pickUpItem()");
+        // if (item.canPickUp(this)) 
+        location.popItem(this);
     }
 
     /**
@@ -58,17 +72,20 @@ public abstract class Player implements PickUpVisitor {
     }
 
     /**
+     * Hozzáadja a poisonImmunities-hez a paraméterként kapott immuntitást.
      * @param poisonImmunity
      */
     public void addPoisonImmunity(PoisonImmunity poisonImmunity) {
-
+        System.out.println("Player.addPoisonImmunity(PoisonImmunity)");
+        poisonImmunities.add(poisonImmunity);
     }
 
     /**
+     * Kitörli a poisonImmunities-ból a paraméterként kapott immuntitást.
      * @param poisonImmunity
      */
     public void removePoisonImmunity(PoisonImmunity poisonImmunity) {
-
+        poisonImmunities.remove(poisonImmunity);
     }
 
     /**
