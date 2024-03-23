@@ -18,7 +18,7 @@ public class Rug extends Item {
     @Override
     public void use(Room room, Player player) {
         System.out.println("Rug.use(Room, Player)");
-        room.addEffect(new StunEffect());
+        room.addEffect(new StunEffect(this,30   ));
         player.removeItem(this);
 
     }
