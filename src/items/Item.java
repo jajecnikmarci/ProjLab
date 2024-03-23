@@ -19,16 +19,4 @@ public abstract class Item {
      * @param player
      */
     public abstract void accept(Player player);
-
-    /**
-     * @param student
-     * @return
-     */
-    public abstract boolean canPickUp(Student student);
-
-    /**
-     * @param professor
-     * @return
-     */
-    public abstract boolean canPickUp(Professor professor);
 }
