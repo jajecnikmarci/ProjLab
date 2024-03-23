@@ -82,6 +82,7 @@ public abstract class Player implements PickUpVisitor {
      * item sem fog a játékoshoz tartozni.
      */
     void dropAll() {
+        inventory.forEach(item -> location.addItem(item));
         inventory.clear();
     }
 
