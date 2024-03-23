@@ -1,5 +1,6 @@
 package effects;
 
+import items.Item;
 import player.Professor;
 import player.Student;
 
@@ -7,11 +8,15 @@ import player.Student;
  *
  */
 public class PoisonEffect extends RoomEffect {
+    PoisonEffect(Item givenBy) {
+        super(givenBy);
+    }
+
     /**
      *
      */
     @Override
-    void activate() {
+    public void activate() {
 
     }
 

@@ -6,23 +6,27 @@ import items.Item;
  *
  */
 public abstract class Effect {
-    /**
-     *
-     */
-    boolean active;
-    /**
-     *
-     */
-    int duration;
-    /**
-     *
-     */
-    Item givenBy;
+    Effect(Item givenBy) {
+        this.givenBy = givenBy;
+    }
 
     /**
      *
      */
-    abstract void activate();
+    private boolean active;
+    /**
+     *
+     */
+    private int duration;
+    /**
+     *
+     */
+    private Item givenBy;
+
+    /**
+     *
+     */
+    public abstract void activate();
 
     /**
      * @return

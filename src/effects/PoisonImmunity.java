@@ -1,15 +1,21 @@
 package effects;
 
+import items.Item;
+
 /**
  *
  */
 public class PoisonImmunity extends Effect {
 
+    PoisonImmunity(Item givenBy) {
+        super(givenBy);
+    }
+
     /**
      *
      */
     @Override
-    void activate() {
+    public void activate() {
 
     }
 }

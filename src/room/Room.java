@@ -66,7 +66,7 @@ public class Room {
             if(effect.isActive()) effect.affect(professor);
         
         for (Player player : this.players) {
-            player.meet(professor);
+            player.meet(professor,this);
         }
     }
 

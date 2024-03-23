@@ -2,6 +2,7 @@ package player;
 
 import effects.KillImmunity;
 import items.*;
+import room.Room;
 
 import java.util.List;
 
@@ -17,26 +18,37 @@ public class Student extends Player {
     /**
      *
      */
-    List<KillImmunity> killImmunities;
+    private List<KillImmunity> killImmunities;
 
     /**
-     *
+     * Egy professzor hívja meg ha egy szobába került egy diákkal
      */
-    void kill() {
+    public void kill() {
+        System.out.println("Student.kill()");
+        if (killImmunities.isEmpty()) {
+            souls--;
+            return;
+        }
+        for (KillImmunity killImmunity : killImmunities) {
+            if (killImmunity.isActive()) {
+                return;
+            }
+        }
+        killImmunities.get(0).activate();
 
     }
 
     /**
      * @param killImmunity
      */
-    void addKillImmunity(KillImmunity killImmunity) {
+    public void addKillImmunity(KillImmunity killImmunity) {
 
     }
 
     /**
      * @param killImmunity
      */
-    void removeKillImmunity(KillImmunity killImmunity) {
+    public void removeKillImmunity(KillImmunity killImmunity) {
 
     }
 
@@ -103,12 +115,19 @@ public class Student extends Player {
         return false;
     }
 
-    
+    /**
+     * @param professor
+     * @param room
+     */
     @Override
-    public void meet(Professor professor) {
+    public void meet(Professor professor, Room room) {
+        System.out.println("Student.meet(Professor, Room)");
         kill();
     }
 
+    /**
+     * @param student
+     */
     @Override
     public void meet(Student student) {
     }
