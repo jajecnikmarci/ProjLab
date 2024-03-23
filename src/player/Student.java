@@ -54,7 +54,9 @@ public class Student extends Player {
     }
 
     /**
-     * @param ffp2
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param ffp2 a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(FFP2 ffp2) {
@@ -65,7 +67,9 @@ public class Student extends Player {
     }
 
     /**
-     * @param camembert
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param camembert a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(Camembert camembert) {
@@ -74,8 +78,10 @@ public class Student extends Player {
         location.removeItem(camembert);
     }
 
-    /**
-     * @param transistor
+    /**     *
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param transistor a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(Transistor transistor) {
@@ -85,7 +91,9 @@ public class Student extends Player {
     }
 
     /**
-     * @param slideRule
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param slideRule a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(SlideRule slideRule) {
@@ -95,7 +103,9 @@ public class Student extends Player {
     }
 
     /**
-     * @param tvsz
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.s
+     * @param tvsz a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(TVSZ tvsz) {
@@ -106,7 +116,9 @@ public class Student extends Player {
     }
 
     /**
-     * @param glass
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param glass a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(Glass glass) {
@@ -117,7 +129,9 @@ public class Student extends Player {
     }
 
     /**
-     * @param rug
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param rug a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(Rug rug) {

@@ -19,9 +19,9 @@ public class TVSZ extends Item {
     }
 
     /**
-     * @param player
+     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     * @param player a játékos aki próbálja felvenni a tárgyat
      */
-    
     public void accept(Player player) {
         System.out.println("TVSZ.accept(Player)");
         player.acceptItem(this);

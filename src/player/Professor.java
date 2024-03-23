@@ -32,7 +32,9 @@ public class Professor extends Player {
     }
 
     /**
-     * @param ffp2
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param ffp2 a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(FFP2 ffp2) {
@@ -43,7 +45,9 @@ public class Professor extends Player {
     }
 
     /**
-     * @param camembert
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param camembert a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(Camembert camembert) {
@@ -53,8 +57,8 @@ public class Professor extends Player {
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param transistor
-     * @return
      */
     @Override
     public void acceptItem(Transistor transistor) {
@@ -62,8 +66,8 @@ public class Professor extends Player {
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param slideRule
-     * @return
      */
     @Override
     public void acceptItem(SlideRule slideRule) {
@@ -71,8 +75,8 @@ public class Professor extends Player {
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param tvsz
-     * @return
      */
     @Override
     public void acceptItem(TVSZ tvsz) {
@@ -80,8 +84,8 @@ public class Professor extends Player {
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param glass
-     * @return
      */
     @Override
     public void acceptItem(Glass glass) {
@@ -89,8 +93,8 @@ public class Professor extends Player {
     }
 
     /**
+     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param rug
-     * @return
      */
     @Override
     public void acceptItem(Rug rug) {

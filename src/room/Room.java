@@ -50,7 +50,8 @@ public class Room {
     }
 
     /**
-     * @param item
+     * Kitöröl egy tárgyat a szoba tárgyai közül.
+     * @param item a kitörlendő item
      */
     public void removeItem(Item item) {
         System.out.println("Room.removeItem(Item)");
@@ -58,7 +59,8 @@ public class Room {
     }
 
     /**
-     * @param item
+     * Hozzáad egy tárgyat a szoba tárgyai közé.
+     * @param item a hozzáadandó item
      */
     public void addItem(Item item) {
         items.add(item);
@@ -66,11 +68,10 @@ public class Room {
 
     /**
      * 
-     * @param item
+     * @param player 
      */
     public void popItem(Player player) {
         System.out.println("Room.popItem(Player)");
-        //items.remove(items.size()-1);
         if(items.isEmpty()) return;
         items.get(items.size()-1).accept(player);
     }
@@ -163,12 +164,11 @@ public class Room {
     }
 
     /**
-     * @param player
+     * Hozzáad egy Player-t a szobában tartózkodó Player-ek közé
+     * @param player a hozzáadandó player
      */
     public void addPlayer(Player player) {
-        
-        if(player != null) players.add(player);
-
+        players.add(player);
     }
 
     /**

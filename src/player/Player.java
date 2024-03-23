@@ -32,7 +32,8 @@ public abstract class Player implements PickUpVisitor {
 
     
     /**
-     * @param item
+     * Hozzáadja a player tárgylistájához a paraméterként kapott tárgyat.
+     * @param item a hozzáadandó tárgy
      */
     public void addItem(Item item) {
         System.out.println("Player.addItem(Item)");
@@ -40,7 +41,8 @@ public abstract class Player implements PickUpVisitor {
     }
 
     /**
-     * @param item
+     * Kitörli a player tárgylistájából a paraméterként kapott tárgyat.
+     * @param item a kitörlendő tárgy
      */
     public void removeItem(Item item) {
         System.out.println("Player.removeItem(Item)");
@@ -48,8 +50,8 @@ public abstract class Player implements PickUpVisitor {
     }
 
     /**
-     * A jelenlegi szobából felveszi a legfelső tárgyat.
-     * @param item
+     * A jelenlegi szobára meghívja a popItem függvényt. 
+     * Ezzel elindítja a Visitor működést, mely végén felveszi a szoba tárgylistájának legfelső tárgyát.
      */
     public void pickUpItem() {
         System.out.println("Player.pickUpItem()");

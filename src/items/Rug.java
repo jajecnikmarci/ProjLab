@@ -12,9 +12,8 @@ import room.Room;
 public class Rug extends Item {
     /**
      * A hallgató használja a Rug tárgyat és a hallgató tartózkodási szobájához hozzáadódik a rongy effektje.
-     * 
-     * @param room
-     * @param player
+     * @param room a szoba amihez az effektet kell adni
+     * @param player játékos aki használta az itemet 
      */
     @Override
     public void use(Room room, Player player) {
@@ -24,7 +23,8 @@ public class Rug extends Item {
     }
 
     /**
-     * @param player
+     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     * @param player a játékos aki próbálja felvenni a tárgyat
      */
     @Override
     public void accept(Player player) {
