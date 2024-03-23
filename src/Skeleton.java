@@ -23,9 +23,7 @@ class Test {
         test.run(); 
     }
 }
-=======
-import player.Student;
-import room.Room;
+
 
 /**
  * Szkeleton osztály. Tárolja a teszteseteket. Kiírja a menüt.
