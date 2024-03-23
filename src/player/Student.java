@@ -37,6 +37,7 @@ public class Student extends Player {
         System.out.println("Student.kill()");
         if (killImmunities.isEmpty()) {
             souls--;
+            //TODO Check-olni, hogy meghalt-ée
             return;
         }
         for (KillImmunity killImmunity : killImmunities) {
