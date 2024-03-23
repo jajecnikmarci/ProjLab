@@ -18,7 +18,7 @@ public class Rug extends Item {
     @Override
     public void use(Room room, Player player) {
         System.out.println("Rug.use(Room, Player)");
-        room.addEffect(new StunEffect());
+        room.addEffect(new StunEffect(this,30   ));
         player.removeItem(this);
 
     }
@@ -31,23 +31,5 @@ public class Rug extends Item {
     public void accept(Player player) {
         System.out.println("Rug.accept(Player)");
         player.acceptItem(this);
-    }
-
-    /**
-     * @param student
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Student student) {
-        return true;
-    }
-
-    /**
-     * @param professor
-     * @return
-     */
-    @Override
-    public boolean canPickUp(Professor professor) {
-        return false;
     }
 }
