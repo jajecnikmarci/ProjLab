@@ -23,9 +23,6 @@ class Test {
         test.run(); 
     }
 }
-=======
-import player.Student;
-import room.Room;
 
 /**
  * Szkeleton osztály. Tárolja a teszteseteket. Kiírja a menüt.
@@ -162,7 +159,7 @@ public class Skeleton {
 
     public void testUseCamembert(){
 
-        Student student = new Student();
+        Student student = new Student(null);
         Item camembert = new Camembert();
         student.addItem(camembert);
         Room room = new Room(10);
@@ -172,8 +169,7 @@ public class Skeleton {
     }
 
     public void testPairTransistors(){
-
-        Student student = new Student();
+        Student student = new Student(null);
         Item transistor1 = new Transistor();
         Item transistor2 = new Transistor();
 
@@ -186,7 +182,7 @@ public class Skeleton {
     public void testDropTransistor(){
 
         //ilyenkor is kiíródnak a függvények, de ilyenkor nem kellene
-        Student student = new Student();
+        Student student = new Student(null);
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
 
@@ -202,7 +198,7 @@ public class Skeleton {
 
     public void testTeleportWithTransistors(){
 
-        Student student = new Student();
+        Student student = new Student(null);
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
 
@@ -324,7 +320,7 @@ public class Skeleton {
         boolean hasPlayer = getBoolean("Legyen játékos a szobában?");
         Room room = new Room(capacity);
         if (hasPlayer) {
-            room.addPlayer(new Student());
+            room.addPlayer(new Student(null));
         }
         room.split();
     }
@@ -335,7 +331,7 @@ public class Skeleton {
         boolean hasPlayer = getBoolean("Legyen játékos a szobákban?");
         Room room1 = new Room(capacity1);
         if (hasPlayer) {
-            room1.addPlayer(new Student());
+            room1.addPlayer(new Student(null));
         }
         Room room2 = new Room(capacity2);
         room1.mergeWithRoom(room2);

@@ -43,7 +43,7 @@ public class Professor extends Player {
     public void acceptItem(FFP2 ffp2) {
         System.out.println("Professor.acceptItem(FFP2)");
         this.addItem(ffp2);
-        this.addPoisonImmunity(new PoisonImmunity());
+        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength()));
         location.removeItem(ffp2);
     }
 
