@@ -17,7 +17,8 @@ public class StunEffect extends RoomEffect {
      */
     @Override
     public void activate() {
-
+        System.out.println("StunEffect.activate()");
+        active = true;
     }
 
     /**
@@ -25,7 +26,8 @@ public class StunEffect extends RoomEffect {
      */
     @Override
     public void affect(Professor professor) {
-
+        System.out.println("StunEffect.affect(Professor)");
+        professor.stun(10);
     }
 
     /**
@@ -33,6 +35,5 @@ public class StunEffect extends RoomEffect {
      */
     @Override
     public void affect(Student student) {
-
     }
 }
