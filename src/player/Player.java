@@ -130,10 +130,10 @@ public abstract class Player implements PickUpVisitor {
     }
 
     /**
-     * @param room
+     * Belép a szobába, ha tud és közli a szobával, hogy belépett a játékos.
+     * @param room 
      */
-    public void goToRoom(Room room) {
-    }
+    public abstract void goToRoom(Room room);
 
     /**
      * @param student

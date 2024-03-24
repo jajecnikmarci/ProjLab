@@ -59,6 +59,7 @@ public class Room {
         doors = new ArrayList<Door>();
     }
 
+    public List<Door> getDoors() {return doors;};
     /**
      * Kitörli a megadott tárgyat a szoba tárgyai közül.
      * @param item a megadott tárgy
@@ -223,7 +224,7 @@ public class Room {
     /**
      * Ha egy játékos befér még a szobába, igaz értékkel tér vissza.
      */
-    public boolean canPlayerGoIn() {
+    public boolean canPlayerEnter() {
         if(capacity > players.size()) return true;
         return false;
     }
