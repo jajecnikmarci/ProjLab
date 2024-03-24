@@ -378,6 +378,7 @@ public class Skeleton {
         student.useItem(glass);
         Professor professor = new Professor(room);
         room.addPlayer(professor);
+        room.onEnter(professor);
     }
 
     private void testPlayerGetsDefendedFromPoison() {

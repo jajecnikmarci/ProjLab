@@ -24,6 +24,7 @@ public class Glass extends Item {
         System.out.println("Glass.use(Room, Player)");
         KillImmunity killImmunity = new KillImmunity(this, 10);
         killImmunity.activate();
+        player.removeItem(this);
     }
 
     /**
