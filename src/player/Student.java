@@ -75,6 +75,8 @@ public class Student extends Player {
         System.out.println("Student.pairTransistors(transistor1, transistor2)");
         transistor1.setPair(transistor2);
         transistor2.setPair(transistor1);
+        transistor1.setOwner(this);
+        transistor2.setOwner(this);
     }
 
     

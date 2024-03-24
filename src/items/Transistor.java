@@ -19,6 +19,7 @@ public class Transistor extends Item {
      */
     private Room room;
 
+    private Student owner;
     /**
      * @param room
      */
@@ -35,6 +36,15 @@ public class Transistor extends Item {
         System.out.println("Transistor.setPair(Transistor)");
         this.pair = transistor;
     }
+
+    /**
+     * Beállítja atranzisztor tulajdonosát a megadott hallgatóra.
+     * @param student a megadott halglató
+     */
+    public void setOwner(Student student) {
+        System.out.println("Transistor.setOwner(Student)");
+        this.owner = student;
+    } 
 
     /**
      * A transzisztor használatánál, ha a játékosnál 2 párosított tranzisztor van, 
@@ -61,6 +71,7 @@ public class Transistor extends Item {
                 room.removePlayer(player);
 
                 this.pair.room.addPlayer(player);
+                this.pair.room.onEnter(owner);
 
                 this.setRoom(room);
                 this.pair.room= null;
