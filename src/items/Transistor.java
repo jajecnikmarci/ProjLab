@@ -37,7 +37,12 @@ public class Transistor extends Item {
     }
 
     /**
-     * A transzisztor használata
+     * A transzisztor használatánál, ha a játékosnál 2 párosított tranzisztor van, 
+     * akkor a tranzisztort a szobához kapcsolja és eltávolítja a játékos tárgyai közül.
+     * ha a játékosnál 1 párosított tranzisztor van, akkor megpróbálja a teleportálást
+     * ha ez lehetséges, akkor a játékost a másik szobába teleportálja és felcseréli a tranzisztorokat 
+     * (eredeti eltávolítása, szoba beállítása, másik tranzisztor hozzáadása)
+     * különben nem történik semmi
      * @param room
      * @param player
      */
@@ -45,27 +50,25 @@ public class Transistor extends Item {
     public void use(Room room, Player player) {
         System.out.println("Transistor.use(Room, Player)");
 
-        
-        //1 eset: A játékosnál 2 párosított tranzisztor van: az egyik tranzisztor a szobához kapcsolóik
         if(this.pair != null && this.pair.room == null) {
 
             this.setRoom(room);
             player.removeItem(this);
         
-        //2 eset: A játékosnál 1 párosított tranzisztor van: megtörténik a teleportálás
         }else if(this.pair != null){
 
-            room.removePlayer(player); //Játékos eltávolítása a szobából
+            if(this.pair.room.canPlayerGoIn()) {
+                room.removePlayer(player);
 
-            this.pair.room.addPlayer(player); //Játékos hozzáadása a másik szobához
+                this.pair.room.addPlayer(player);
 
-            //A tranzisztorok szobájának beállítása
-            this.setRoom(room);
-            this.pair.room= null;
+                this.setRoom(room);
+                this.pair.room= null;
 
-            //Egyik transzisztor eltávolítása, másik hozzáadása
-            player.removeItem(this);
-            player.addItem(this.pair);
+                player.removeItem(this);
+                player.addItem(this.pair);
+            }
+
         }
     }
 
