@@ -23,7 +23,10 @@ public abstract class Player implements PickUpVisitor {
      *
      */
     List<PoisonImmunity> poisonImmunities;
-
+    
+    /**
+     * A szoba amelyben a player jelenleg tartózkodik.
+     */
     Room location;
 
     public Player(Room r){
@@ -100,6 +103,7 @@ public abstract class Player implements PickUpVisitor {
      * @param poisonImmunity
      */
     public void removePoisonImmunity(PoisonImmunity poisonImmunity) {
+        System.out.println("Player.removePoisonImmunity(PoisonImmunity)");
         poisonImmunities.remove(poisonImmunity);
     }
 
