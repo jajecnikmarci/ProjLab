@@ -289,92 +289,112 @@ public class Skeleton {
     }
 
     public void testPickUpFFP2() {
+        verbose = false;
         Room room = new Room();
         Student student = new Student(room);
         FFP2 item = new FFP2();
         room.addPlayer(student);
         room.addItem(item);
+        verbose = true;
         student.pickUpItem();
     }
 
     public void testPickUpCamembert() {
+        verbose = false;
         Room r = new Room();
         Student s = new Student(r);
         Camembert i = new Camembert();
         r.addPlayer(s);
         r.addItem(i);
-
+        verbose = true;
+        
         s.pickUpItem();
     }
 
     public void testPickUpGlass() {
+        verbose = false;
         Room r = new Room();
         Student s = new Student(r);
         Glass i = new Glass();
         r.addPlayer(s);
         r.addItem(i);
+        verbose = true;
 
         s.pickUpItem();
     }
 
     public void testPickUpTVSZ() {
+        verbose = false;
         Room r = new Room();
         Student s = new Student(r);
         TVSZ i = new TVSZ();
         r.addPlayer(s);
         r.addItem(i);
-
+        verbose = true;
+        
         s.pickUpItem();
     }
-
+    
     public void testPickUpTransistor() {
+        verbose = false;
         Room r = new Room();
         Student s = new Student(r);
         Transistor i = new Transistor();
         r.addPlayer(s);
         r.addItem(i);
+        verbose = true;
 
         s.pickUpItem();
     }
 
     public void testPickUpRug() {
+        verbose = false;
         Room r = new Room();
         Student s = new Student(r);
         Rug i = new Rug();
         r.addPlayer(s);
         r.addItem(i);
+        verbose = true;
 
         s.pickUpItem();
     }
 
     public void testPickUpSlideRule() {
+        verbose = false;
         Room r = new Room();
         Student s = new Student(r);
         SlideRule i = new SlideRule();
         r.addPlayer(s);
         r.addItem(i);
-
+        verbose = true;
+        
         s.pickUpItem();
     }
 
     public void testUseRug() {
+        verbose = false;
         Room r = new Room();
         Student s = new Student(r);
         Rug i = new Rug();
         r.addPlayer(s);
         s.addItem(i);
 
+        verbose = true;
         i.use(r, s);
     }
 
     private void testSplitRoom() {
+
         int capacity = getInt("Mekkora szobát legyen a szoba kapacitása");
 
         boolean hasPlayer = getBoolean("Legyen játékos a szobában?");
+
+        verbose = false;
         Room room = new Room(capacity);
         if (hasPlayer) {
             room.addPlayer(new Student(null));
         }
+        verbose = true;
         room.split();
     }
 
@@ -382,33 +402,44 @@ public class Skeleton {
         int capacity1 = getInt("Mekkora legyen az 1. szoba kapacitása?");
         int capacity2 = getInt("Mekkora legyen az 2. szoba kapacitása?");
         boolean hasPlayer = getBoolean("Legyen játékos a szobákban?");
+        verbose = false;
         Room room1 = new Room(capacity1);
         if (hasPlayer) {
             room1.addPlayer(new Student(null));
         }
         Room room2 = new Room(capacity2);
+        verbose = true;
+
         room1.mergeWithRoom(room2);
     }
 
     private void testMoveToRoom() {
+        verbose = false; 
         Room room1 = new Room(4);
         Room room2 = new Room(4);
         Door door = new Door(room1, room2, true, true);
         Student student = new Student(room1);
         room1.addPlayer(student);
+        verbose = true; 
         door.goThrough(student);
     }
 
     private void testUseGlass() {
+        verbose = false;
         Room room = new Room();
         Student student = new Student(room);
         room.addPlayer(student);
         Glass glass = new Glass();
         student.addItem(glass);
+        verbose = true;
         student.useItem(glass);
     }
 
+    /**
+     * A tárgyak elvétele a játékostól nem íródik ki, mert a tárgyak listáján a clear metódus lett meghívva.
+     */
     private void testPlayerGetsPoisoned() {
+        verbose = false;
         Room room = new Room();
         Student student = new Student(room);
         room.addPlayer(student);
@@ -416,15 +447,18 @@ public class Skeleton {
         Glass glass = new Glass();
         student.addItem(rug);
         student.addItem(glass);
+        verbose = true;
         student.poison();
     }
 
     private void testStudentGetsDefendedFromProfessorWithGlass() {
+        verbose = false;
         Room room = new Room();
         Student student = new Student(room);
         room.addPlayer(student);
         Glass glass = new Glass();
         student.addItem(glass);
+        verbose = true;
         student.useItem(glass);
         Professor professor = new Professor(room);
         room.addPlayer(professor);
@@ -432,31 +466,36 @@ public class Skeleton {
     }
 
     private void testPlayerGetsDefendedFromPoison() {
+        verbose = false;
         Room room = new Room();
         Student student = new Student(room);
         room.addPlayer(student);
-        TVSZ tvsz = new TVSZ();
-        student.addItem(tvsz);
-        student.useItem(tvsz);
+        FFP2 ffp2 = new FFP2();
+        verbose = true;
+        student.addItem(ffp2);
         student.poison();
     }
 
     private void testStudentGetsDefendedWithTVSZ() {
+        verbose = false;
         Room room = new Room();
         Student student = new Student(room);
         room.addPlayer(student);
         TVSZ tvsz = new TVSZ();
+        verbose = true;
         student.addItem(tvsz);
         student.kill();
     }
 
     private void testProfessorEntersRoomWithRug() {
+        verbose = true;
         Room room = new room.Room();
         Professor professor = new Professor(room);
         Rug rug = new Rug();
         StunEffect stunEffect = new StunEffect(rug, 30, room);
         room.addEffect(stunEffect);
         stunEffect.activate();
+        verbose = false;
         room.onEnter(professor);
     }
 }
