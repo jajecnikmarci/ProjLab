@@ -1,0 +1,70 @@
+
+interface Visitor {
+    + bool visit(Item item)
+}
+
+interface StudentVisitor extends Visitor{
+    + bool visit(Rug)
+    + bool visit(Cup)
+    + bool visit(FFP2)
+    + bool visit(TVSZ)
+}
+interface ProfessorVisitor extends Visitor{
+    + bool visit(Rug)
+    + bool visit(Cup)
+    + bool visit(FFP2)
+    + bool visit(TVSZ)
+}
+
+class Player {
+    List<Item> items;
+    UseItemVisitor UseItemVisitor;
+    + void useItem(Item item)
+}
+class Student extends Player implements StudentVisitor {
+    + bool acceptItem(Item item){
+        if(this.visit(item)){
+             items.add(item)
+            return true
+        } else return false;
+    }
+    + void pickUp(){
+        room.popItem(this);
+    }
+}
+class room {
+    + void popItem(Player player){
+        if(player.acceptItem(Item item))
+            items.pop()
+    }
+}
+
+class UseItemVisitor {
+    Player player;
+    + void use(FFP2 ffp2){
+        ffp2.use(Player)
+    }
+    + void use(Rug rug){
+        rug.use(player.getRoom());
+    }
+    + void use()
+    + void use()
+    + void use()
+    + void use()
+    + void use()
+}
+
+class Item {
+
+}
+
+class FFP2 extends Item {
+    + void use(Player){
+
+    }
+}
+class Rug extends Item {
+    + void use(room){
+
+}
+
