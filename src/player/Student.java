@@ -8,6 +8,7 @@ import room.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -168,6 +169,7 @@ public class Student extends Player {
     }
 
     /**
+     * Interakcióba lép egy Oktatóval, elszipolyozódik a lelke. 
      * @param professor
      * @param room
      */
@@ -178,9 +180,22 @@ public class Student extends Player {
     }
 
     /**
-     * @param student
+     * Interakcióba lép egy másik hallgatóval, azaz nem csinál semmit.
+     * @param student 
      */
     @Override
     public void meet(Student student) {
+    }
+
+    public void goToRoom(Room room) {
+        Optional<Door> door = location.getDoors()
+                .stream()
+                .filter(d -> d.isBetween(location, room))
+                .findFirst();
+
+        if(door.isPresent()) {
+            door.get().goThrough(this);
+            room.onEnter(this);
+        }
     }
 }
