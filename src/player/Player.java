@@ -31,13 +31,6 @@ public abstract class Player implements PickUpVisitor {
         inventory = new ArrayList<Item>();
         poisonImmunities=new ArrayList<PoisonImmunity>();
     }
-     /**
-     * @param item
-     */
-    public void addItem(Item item) {
-        System.out.println("Player.addItem(Item)");
-    }
-
     
     /**
      * Hozzáadja a player tárgylistájához a paraméterként kapott tárgyat.
