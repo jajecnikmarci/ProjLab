@@ -67,6 +67,18 @@ public class Student extends Player {
     }
 
     /**
+     * Összepárosítja a két tranzisztort
+     * @param transistor1
+     * @param transistor2
+     */
+    public void pairTransistors(Transistor transistor1, Transistor transistor2) {
+        System.out.println("Student.pairTransistors(transistor1, transistor2)");
+        transistor1.setPair(transistor2);
+        transistor2.setPair(transistor1);
+    }
+
+    
+    /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * @param ffp2 a hozzáadandó tárgy

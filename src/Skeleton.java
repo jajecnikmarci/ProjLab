@@ -71,8 +71,7 @@ public class Skeleton {
         tests.add(new Test("Use Rug", this::testUseRug));
         tests.add(new Test("Use Camembert", this::testUseCamembert));
         tests.add(new Test("Pair Transistors", this::testPairTransistors));
-        tests.add(new Test("Drop Transistor", this::testDropTransistor));
-        tests.add(new Test("Teleport with Transistors", this::testTeleportWithTransistors));
+        tests.add(new Test("Use Transistor", this::testUseTransistor));
         tests.add(new Test("Split Room", this::testSplitRoom));
         tests.add(new Test("Merge Rooms", this::testMergeRooms));
         tests.add(new Test("Move to Room", this::testMoveToRoom));
@@ -181,59 +180,53 @@ public class Skeleton {
 
     public void testUseCamembert() {
 
-        Student student = new Student(null);
+        
+        Room room = new Room(10);
+        Student student = new Student(room);
         Item camembert = new Camembert();
         student.addItem(camembert);
-        Room room = new Room(10);
         room.addPlayer(student);
 
         student.useItem(camembert);
     }
 
-    public void testPairTransistors() {
-        Student student = new Student(null);
-        Item transistor1 = new Transistor();
-        Item transistor2 = new Transistor();
+    public void testPairTransistors(){
 
-        student.addItem(transistor1);
-        student.addItem(transistor2);
-
-        student.useItem(transistor1);
-    }
-
-    public void testDropTransistor() {
-        // ilyenkor is kiíródnak a függvények, de ilyenkor nem kellene
-        Room room = new Room(1);
-        Student student = new Student(room);
-        Transistor transistor1 = new Transistor();
-        transistor1.setRoom(room);
-        Transistor transistor2 = new Transistor();
-        transistor2.setRoom(room);
-
-        student.addItem(transistor1);
-        student.addItem(transistor2);
-
-        transistor1.setPair(transistor2);
-        transistor2.setPair(transistor1);
-
-        student.useItem(transistor1);
-    }
-
-    public void testTeleportWithTransistors() {
         Student student = new Student(null);
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
 
         student.addItem(transistor1);
+        student.addItem(transistor2);
 
-        transistor1.setPair(transistor2);
-        transistor2.setPair(transistor1);
+        student.pairTransistors(transistor1, transistor2);
+    }
+    public void testUseTransistor(){
 
+        //ilyenkor is kiíródnak a függvények, de ilyenkor nem kellene
         Room room1 = new Room(10);
         Room room2 = new Room(10);
 
-        transistor2.setRoom(room2);
+        Student student = new Student(room1);
         room1.addPlayer(student);
+        Transistor transistor1 = new Transistor();
+        Transistor transistor2 = new Transistor();
+
+        student.addItem(transistor1);
+
+        transistor1.setPair(transistor2);
+        transistor2.setPair(transistor1);
+
+
+        boolean oneTransistor = getBoolean("A játékosnál 1 tranzisztor van?");
+
+        if(oneTransistor){
+            transistor2.setRoom(room2);
+
+        }else{
+            student.addItem(transistor2);
+        }
+
 
         student.useItem(transistor1);
 
