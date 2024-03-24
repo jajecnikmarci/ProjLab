@@ -187,15 +187,19 @@ public class Student extends Player {
     public void meet(Student student) {
     }
 
+    /**
+     * A hallgató belép egy szobába, ha a szoba befogadja, közli a szobával, ha belépett.
+     */
     public void goToRoom(Room room) {
-        Optional<Door> door = location.getDoors()
+        location.getDoors()
                 .stream()
                 .filter(d -> d.isBetween(location, room))
-                .findFirst();
-
-        if(door.isPresent()) {
-            door.get().goThrough(this);
-            room.onEnter(this);
-        }
+                .findFirst()
+                .ifPresent(
+                    d ->{
+                        if(d.goThrough(this)) 
+                            room.onEnter(this);
+                    } 
+                );
     }
 }

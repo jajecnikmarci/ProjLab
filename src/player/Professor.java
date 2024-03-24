@@ -108,19 +108,20 @@ public class Professor extends Player {
     }
 
     /**
-     * Belép a megadott szobába, ha a szoba befogadja a játékost.
+     * Belép a megadott szobába, ha a szoba befogadja a játékost. 
      * @param room a szoba, amibe a játékos be kíván lépni
      */
     @Override
     public void goToRoom(Room room) {
-        Optional<Door> door = location.getDoors()
+        location.getDoors()
                 .stream()
                 .filter(d -> d.isBetween(location, room))
-                .findFirst();
-
-        if(door.isPresent()) {
-            door.get().goThrough(this);
-            room.onEnter(this);
-        }
+                .findFirst()
+                .ifPresent(
+                    d ->{
+                        if(d.goThrough(this)) 
+                            room.onEnter(this);
+                    } 
+                );
     }
 }
