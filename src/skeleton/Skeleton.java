@@ -24,8 +24,8 @@ import room.*;
  * Az összes függvény minden lehetséges visszatérése előtt meg kell hívni az endCall függvényt.
  * 
  * A verbose változóval lehet ki-be kapcsolni a kiírást. Ha igaz, akkor kiírja a függvényeket, ha hamis, akkor nem.
- * A teszt függvényekben a verbose változót ki kell kapcsolni az inivilizáláskor, mert ott is hívódhatnak függvények, de
- * ott azokat nem kell kiírni. Az inivilizálásnál után igazra kell állítani a verbose változót.
+ * A teszt függvényekben a verbose változót ki kell kapcsolni az iniciálásnál, mert ott is hívódhatnak függvények, de
+ * ott azokat nem kell kiírni. Az iniciálás után igazra kell állítani a verbose változót.
  */
 public class Skeleton {
     class Test {
