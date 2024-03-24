@@ -2,9 +2,8 @@ package items;
 
 import effects.KillImmunity;
 import player.Player;
-import player.Professor;
-import player.Student;
 import room.Room;
+import skeleton.Skeleton;
 
 /**
  *
@@ -21,9 +20,10 @@ public class Glass extends Item {
      */
     @Override
     public void use(Room room, Player player) {
-        System.out.println("Glass.use(Room, Player)");
+        Skeleton.startCall("Glass.use(Room, Player)");
         KillImmunity killImmunity = new KillImmunity(this, 10);
         killImmunity.activate();
+        Skeleton.endCall();
     }
 
     /**
@@ -32,7 +32,8 @@ public class Glass extends Item {
      */
     @Override
     public void accept(Player player) {
-        System.out.println("Glass.accept(Player)");
+        Skeleton.startCall("Glass.accept(Player)");
         player.acceptItem(this);
+        Skeleton.endCall();
     }
 }
