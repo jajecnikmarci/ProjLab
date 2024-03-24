@@ -68,19 +68,25 @@ public class Skeleton {
         tests.add(new Test("Pickup Sliderule", this::testPickUpSlideRule));
         tests.add(new Test("Pickup Transistor", this::testPickUpTransistor));
         tests.add(new Test("Pickup TVSZ", this::testPickUpTVSZ));
-        tests.add(new Test("Use Rug", this::testUseRug));
+
         tests.add(new Test("Use Camembert", this::testUseCamembert));
+        tests.add(new Test("Use Glass", this::testUseGlass));
+        tests.add(new Test("Use Rug", this::testUseRug));
+
         tests.add(new Test("Pair Transistors", this::testPairTransistors));
         tests.add(new Test("Drop Transistor", this::testDropTransistor));
         tests.add(new Test("Teleport with Transistors", this::testTeleportWithTransistors));
+        
         tests.add(new Test("Split Room", this::testSplitRoom));
         tests.add(new Test("Merge Rooms", this::testMergeRooms));
         tests.add(new Test("Move to Room", this::testMoveToRoom));
-        tests.add(new Test("Use Glass", this::testUseGlass));
-        tests.add(new Test("Player Gets poisoned", this::testPlayerGetsPoisoned));
-        tests.add(new Test("Student Gets Defended from Professor with Glass",
-                this::testStudentGetsDefendedFromProfessorWithGlass));
+
+        tests.add(new Test("Player gets Poisoned", this::testPlayerGetsPoisoned));
         tests.add(new Test("Player Gets Defended from Poison", this::testPlayerGetsDefendedFromPoison));
+        // TODO: Student gets defended from Professor with TVSZ
+        tests.add(new Test("Student gets Defended from Professor with Glass",
+                this::testStudentGetsDefendedFromProfessorWithGlass));  
+        // TODO: Professor enters room with rug in it
     }
 
     private void print(String string) {
