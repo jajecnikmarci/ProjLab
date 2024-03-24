@@ -66,7 +66,7 @@ public abstract class Player implements PickUpVisitor {
      * tartozik többé a játékoshoz az item.
      * @param item
      */
-    void dropItem(Item item) {
+    public void dropItem(Item item) {
         inventory.remove(item);
     }
 
@@ -74,7 +74,7 @@ public abstract class Player implements PickUpVisitor {
      * A játékos elejti az összes nála lévő item-et, egy
      * item sem fog a játékoshoz tartozni.
      */
-    void dropAll() {
+    public void dropAll() {
         inventory.forEach(item -> location.addItem(item));
         inventory.clear();
     }
@@ -106,8 +106,8 @@ public abstract class Player implements PickUpVisitor {
     /**
      * A játékos duration ideig nem tud mozogni.
      */
-    void stun(int duration) {
-
+    public void stun(int duration) {
+        System.out.println("Player.stun()");
     }
 
     /**
@@ -132,7 +132,7 @@ public abstract class Player implements PickUpVisitor {
     /**
      * @param room
      */
-    void goToRoom(Room room) {
+    public void goToRoom(Room room) {
     }
 
     /**

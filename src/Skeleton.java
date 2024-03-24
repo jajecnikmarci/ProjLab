@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import effects.StunEffect;
 import items.*;
 import player.*;
 import room.*;
@@ -82,11 +83,11 @@ public class Skeleton {
         tests.add(new Test("Move to Room", this::testMoveToRoom));
 
         tests.add(new Test("Player gets Poisoned", this::testPlayerGetsPoisoned));
-        tests.add(new Test("Player Gets Defended from Poison", this::testPlayerGetsDefendedFromPoison));
-        // TODO: Student gets defended from Professor with TVSZ
+        tests.add(new Test("Player gets Defended from Poison", this::testPlayerGetsDefendedFromPoison));
+        tests.add(new Test("Student gets Defended from Professor with TVSZ", this::testStudentGetsDefendedWithTVSZ));
         tests.add(new Test("Student gets Defended from Professor with Glass",
                 this::testStudentGetsDefendedFromProfessorWithGlass));  
-        // TODO: Professor enters room with rug in it
+        tests.add(new Test("Professor enters Room with Rug", this::testProfessorEntersRoomWithRug));
     }
 
     private void print(String string) {
@@ -395,5 +396,24 @@ public class Skeleton {
         student.addItem(tvsz);
         student.useItem(tvsz);
         student.poison();
+    }
+
+    private void testStudentGetsDefendedWithTVSZ() {
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        TVSZ tvsz = new TVSZ();
+        student.addItem(tvsz);
+        student.kill();
+    }
+
+    private void testProfessorEntersRoomWithRug() {
+        Room room = new room.Room();
+        Professor professor = new Professor(room);
+        Rug rug = new Rug();
+        StunEffect stunEffect = new StunEffect(rug, 30);
+        room.addEffect(stunEffect);
+        stunEffect.activate();
+        room.onEnter(professor);
     }
 }
