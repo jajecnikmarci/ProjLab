@@ -7,7 +7,6 @@ import items.*;
 import player.*;
 import room.*;
 
-
 class Test {
     private String title;
     private Runnable test;
@@ -16,14 +15,15 @@ class Test {
         this.title = name;
         this.test = test;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void run() {
-        test.run(); 
+        test.run();
     }
 }
-
 
 /**
  * Szkeleton osztály. Tárolja a teszteseteket. Kiírja a menüt.
@@ -47,7 +47,9 @@ public class Skeleton {
         }
 
         public void run() {
+            print("Running Test: " + title);
             test.run();
+            print("End of test: " + title + "\n");
         }
     }
 
@@ -59,14 +61,14 @@ public class Skeleton {
          * Itt történik a tesztek hozzáadása (2)
          */
         // tests.add(new Test("Test 1", this::test1));
-        tests.add(new Test("Pickup FFP2",this::testPickUpFFP2));
-        tests.add(new Test("Pickup Camembert",this::testPickUpCamembert));
-        tests.add(new Test("Pickup Glass",this::testPickUpGlass));
-        tests.add(new Test("Pickup Rug",this::testPickUpRug));
-        tests.add(new Test("Pickup Sliderule",this::testPickUpSlideRule));
-        tests.add(new Test("Pickup Transistor",this::testPickUpTransistor));
-        tests.add(new Test("Pickup TVSZ",this::testPickUpTVSZ));
-        tests.add(new Test("Use Rug",this::testUseRug));
+        tests.add(new Test("Pickup FFP2", this::testPickUpFFP2));
+        tests.add(new Test("Pickup Camembert", this::testPickUpCamembert));
+        tests.add(new Test("Pickup Glass", this::testPickUpGlass));
+        tests.add(new Test("Pickup Rug", this::testPickUpRug));
+        tests.add(new Test("Pickup Sliderule", this::testPickUpSlideRule));
+        tests.add(new Test("Pickup Transistor", this::testPickUpTransistor));
+        tests.add(new Test("Pickup TVSZ", this::testPickUpTVSZ));
+        tests.add(new Test("Use Rug", this::testUseRug));
         tests.add(new Test("Use Camembert", this::testUseCamembert));
         tests.add(new Test("Pair Transistors", this::testPairTransistors));
         tests.add(new Test("Drop Transistor", this::testDropTransistor));
@@ -76,7 +78,8 @@ public class Skeleton {
         tests.add(new Test("Move to Room", this::testMoveToRoom));
         tests.add(new Test("Use Glass", this::testUseGlass));
         tests.add(new Test("Player Gets poisoned", this::testPlayerGetsPoisoned));
-        tests.add(new Test("Student Gets Defended from Professor with Glass", this::testStudentGetsDefendedFromProfessorWithGlass));
+        tests.add(new Test("Student Gets Defended from Professor with Glass",
+                this::testStudentGetsDefendedFromProfessorWithGlass));
         tests.add(new Test("Player Gets Defended from Poison", this::testPlayerGetsDefendedFromPoison));
     }
 
@@ -90,6 +93,7 @@ public class Skeleton {
 
     /**
      * Segédfüggvény bekér ehy számot a felhasználótól.
+     * 
      * @param msg kiírandó üzenet
      * @return
      * @throws NoSuchElementException
@@ -100,27 +104,35 @@ public class Skeleton {
             String str = scanner.nextLine();
             return Integer.parseInt(str);
 
-        } catch(NumberFormatException numberFormat) {
+        } catch (NumberFormatException numberFormat) {
             err("Nem számot adott meg!");
             return getInt(msg);
         }
     }
+
     /*
      * Bekér egy booleant a felhasználótól.
+     * 
      * @param msg kiírandó üzenet
      */
     private boolean getBoolean(String msg) throws NoSuchElementException {
-        print(msg + " (y/n)");;
+        print(msg + " (y/n)");
+        ;
         String str = scanner.nextLine();
-        if(str.toLowerCase().equals("y")) return true;
-        if(str.toLowerCase().equals("n")) return false;
+        if (str.toLowerCase().equals("y"))
+            return true;
+        if (str.toLowerCase().equals("n"))
+            return false;
         return getBoolean(msg);
     }
+
     /**
      * Kiírja a teszteket.
      */
     private void printTests() {
-        System.out.println("Válasszon tesztet: (q - kilépés)");
+        System.out.println("m - Menü");
+        System.out.println("q - Kilépés");
+        System.out.println("Válasszon tesztet: ");
         for (int i = 0; i < tests.size(); i++) {
             System.out.println(i + 1 + ". " + tests.get(i).getTitle());
         }
@@ -139,7 +151,12 @@ public class Skeleton {
             String input;
             try {
                 input = scanner.nextLine();
-                if (input.equals("q")) break;
+                if (input.equals("q"))
+                    break;
+                else if (input.equals("m")) {
+                    printTests();
+                    continue;
+                }
                 int index = Integer.parseInt(input) - 1;
                 if (index >= 0 && index < tests.size())
                     tests.get(index).run();
@@ -150,7 +167,6 @@ public class Skeleton {
             } catch (NoSuchElementException e) {
                 break;
             }
-            printTests();
 
         } while (scanner.hasNextLine());
         scanner.close();
@@ -163,7 +179,7 @@ public class Skeleton {
     // print("Test 1 executed");
     // }
 
-    public void testUseCamembert(){
+    public void testUseCamembert() {
 
         Student student = new Student(null);
         Item camembert = new Camembert();
@@ -174,7 +190,7 @@ public class Skeleton {
         student.useItem(camembert);
     }
 
-    public void testPairTransistors(){
+    public void testPairTransistors() {
         Student student = new Student(null);
         Item transistor1 = new Transistor();
         Item transistor2 = new Transistor();
@@ -185,12 +201,14 @@ public class Skeleton {
         student.useItem(transistor1);
     }
 
-    public void testDropTransistor(){
-
-        //ilyenkor is kiíródnak a függvények, de ilyenkor nem kellene
-        Student student = new Student(null);
+    public void testDropTransistor() {
+        // ilyenkor is kiíródnak a függvények, de ilyenkor nem kellene
+        Room room = new Room(1);
+        Student student = new Student(room);
         Transistor transistor1 = new Transistor();
+        transistor1.setRoom(room);
         Transistor transistor2 = new Transistor();
+        transistor2.setRoom(room);
 
         student.addItem(transistor1);
         student.addItem(transistor2);
@@ -199,11 +217,9 @@ public class Skeleton {
         transistor2.setPair(transistor1);
 
         student.useItem(transistor1);
-
     }
 
-    public void testTeleportWithTransistors(){
-
+    public void testTeleportWithTransistors() {
         Student student = new Student(null);
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
@@ -220,20 +236,16 @@ public class Skeleton {
         room1.addPlayer(student);
 
         student.useItem(transistor1);
-        
+
     }
 
-    
     public void testPickUpFFP2() {
         Room room = new Room();
         Student student = new Student(room);
         FFP2 item = new FFP2();
         room.addPlayer(student);
         room.addItem(item);
-
         student.pickUpItem();
-
-        print("Test ffp2 pick up executed");
     }
 
     public void testPickUpCamembert() {
@@ -244,10 +256,8 @@ public class Skeleton {
         r.addItem(i);
 
         s.pickUpItem();
-
-        print("Test camembert pick up executed");
     }
-    
+
     public void testPickUpGlass() {
         Room r = new Room();
         Student s = new Student(r);
@@ -256,8 +266,6 @@ public class Skeleton {
         r.addItem(i);
 
         s.pickUpItem();
-
-        print("Test glass pick up executed");
     }
 
     public void testPickUpTVSZ() {
@@ -268,8 +276,6 @@ public class Skeleton {
         r.addItem(i);
 
         s.pickUpItem();
-
-        print("Test tvsz pick up executed");
     }
 
     public void testPickUpTransistor() {
@@ -280,8 +286,6 @@ public class Skeleton {
         r.addItem(i);
 
         s.pickUpItem();
-
-        print("Test transistor pick up executed");
     }
 
     public void testPickUpRug() {
@@ -292,8 +296,6 @@ public class Skeleton {
         r.addItem(i);
 
         s.pickUpItem();
-
-        print("Test rug pick up executed");
     }
 
     public void testPickUpSlideRule() {
@@ -304,8 +306,6 @@ public class Skeleton {
         r.addItem(i);
 
         s.pickUpItem();
-
-        print("Test sliderule pick up executed");
     }
 
     public void testUseRug() {
@@ -315,14 +315,12 @@ public class Skeleton {
         r.addPlayer(s);
         s.addItem(i);
 
-        i.use(r,s);
-
-        print("Test use rug executed");
+        i.use(r, s);
     }
-    
+
     private void testSplitRoom() {
         int capacity = getInt("Mekkora szobát legyen a szoba kapacitása");
-        
+
         boolean hasPlayer = getBoolean("Legyen játékos a szobában?");
         Room room = new Room(capacity);
         if (hasPlayer) {
