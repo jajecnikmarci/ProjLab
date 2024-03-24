@@ -45,27 +45,15 @@ public class Transistor extends Item {
     public void use(Room room, Player player) {
         System.out.println("Transistor.use(Room, Player)");
 
-        //A másik tranzisztor megtalálása
-        //Itt egyenlőre gondban állok, mert megkéne kapni a másik tranzisztort
-        Transistor transistor2=null;
-
-        //1 eset: A játékosnál 2 párosítatlan tranzisztor van: párosítás
-        if(this.pair == null && transistor2!=null) {
-            this.setPair(transistor2);
-            transistor2.setPair(this);
-        }
-
-        //2 eset: A játékosnál 2 párosított tranzisztor van: az egyik tranzisztor a szobhoz kapcsolóik
-        else if(this.pair != null && transistor2!=null) {
+        
+        //1 eset: A játékosnál 2 párosított tranzisztor van: az egyik tranzisztor a szobához kapcsolóik
+        if(this.pair != null && this.pair.room == null) {
 
             this.setRoom(room);
             player.removeItem(this);
         
-        //3 eset: A játékosnál 1 tranzisztor van: megtörténik a teleportálás
-        }else if(this.pair != null && transistor2==null){
-            
-            //felhasználó megkérdezése, hogy van-e hely room2-ben, ezt majd még megcsinálom
-
+        //2 eset: A játékosnál 1 párosított tranzisztor van: megtörténik a teleportálás
+        }else if(this.pair != null){
 
             room.removePlayer(player); //Játékos eltávolítása a szobából
 
