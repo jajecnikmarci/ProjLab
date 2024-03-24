@@ -5,22 +5,23 @@ import effects.PoisonImmunity;
 import items.*;
 
 import room.*;
+import skeleton.Skeleton;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- *
+ * A Hallgató viselkedését megvalósító osztály. 
  */
 public class Student extends Player {
     /**
-     *
+     * A hallgató lelkeinek számát tárolja. 
      */
-    private int souls;
+    private int souls = 3;
 
     /**
-     * 
+     * Nyilvántartja, hogy melyik tárgyak által immunis a halálra.
      */
     private List<KillImmunity> killImmunities;
 
@@ -32,21 +33,27 @@ public class Student extends Player {
 
 
     /**
-     * Egy professzor hívja meg ha egy szobába került egy diákkal
+     * Megpróbálja elszipolyozni a hallgató lelkét. Ha van neki immunitása, akkor nem sikerül.
      */
     public void kill() {
-        System.out.println("Student.kill()");
+        Skeleton.startCall("Student.kill()");
         if (killImmunities.isEmpty()) {
             souls--;
-            //TODO Check-olni, hogy meghalt-ée
+            if (souls == 0) {
+                Skeleton.endCall(" A játékos meghalt");
+                return;
+            }
+            Skeleton.endCall("A hallgató lelkét elszipolyozták.");
             return;
         }
         for (KillImmunity killImmunity : killImmunities) {
             if (killImmunity.isActive()) {
+                Skeleton.endCall("A hallgatót megvédte egy már aktív tárgya.");
                 return;
             }
         }
         killImmunities.get(0).activate();
+        Skeleton.endCall("A hallgatót megvédte egy most aktiválódott tárgya.");
 
     }
 
@@ -55,8 +62,9 @@ public class Student extends Player {
      * @param killImmunity
      */
     public void addKillImmunity(KillImmunity killImmunity) {
-        System.out.println("Student.addKillImmunity(KillImmunity)");
+        Skeleton.startCall("Student.addKillImmunity(KillImmunity)");
         killImmunities.add(killImmunity);
+        Skeleton.endCall();
     }
 
     /**
@@ -64,18 +72,23 @@ public class Student extends Player {
      * @param killImmunity
      */
     public void removeKillImmunity(KillImmunity killImmunity) {
+        Skeleton.startCall("Student.removeKillImmunity(KillImmunity)");
         killImmunities.remove(killImmunity);
+        Skeleton.endCall();
     }
 
     /**
-     * Összepárosítja a két tranzisztort
+     * Összepárosítja a két kapott tranzisztort. Ez egy új függvény, a tervben nem szerepelt.
      * @param transistor1
      * @param transistor2
      */
     public void pairTransistors(Transistor transistor1, Transistor transistor2) {
-        System.out.println("Student.pairTransistors(transistor1, transistor2)");
+        Skeleton.startCall("Student.pairTransistors(transistor1, transistor2)");
         transistor1.setPair(transistor2);
         transistor2.setPair(transistor1);
+        transistor1.setOwner(this);
+        transistor2.setOwner(this);
+        Skeleton.endCall();
     }
 
     
@@ -86,10 +99,11 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(FFP2 ffp2) {
-        System.out.println("Student.acceptItem(FFP2)");
+        Skeleton.startCall("Student.acceptItem(FFP2)");
         this.addItem(ffp2);
         this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength()));
         location.removeItem(ffp2);
+        Skeleton.endCall();
     }
 
     /**
@@ -99,21 +113,24 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(Camembert camembert) {
-        System.out.println("Student.acceptItem(Camembert)");
+        Skeleton.startCall("Student.acceptItem(Camembert)");
         this.addItem(camembert);
         location.removeItem(camembert);
+        Skeleton.endCall();
     }
 
-    /**     *
+
+    /**   
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * @param transistor a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(Transistor transistor) {
-        System.out.println("Student.acceptItem(Transistor)");
+        Skeleton.startCall("Student.acceptItem(Transistor)");
         this.addItem(transistor);
         location.removeItem(transistor);
+        Skeleton.endCall();
     }
 
     /**
@@ -123,9 +140,10 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(SlideRule slideRule) {
-        System.out.println("Student.acceptItem(SlideRule)");
+        Skeleton.startCall("Student.acceptItem(SlideRule)");
         this.addItem(slideRule);
         location.removeItem(slideRule);
+        Skeleton.endCall();
     }
 
     /**
@@ -135,12 +153,13 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(TVSZ tvsz) {
-        System.out.println("Student.acceptItem(TVSZ)");
+        Skeleton.startCall("Student.acceptItem(TVSZ)");
         this.addItem(tvsz);
         KillImmunity killImmunity = new KillImmunity(tvsz, 10);
         killImmunity.activate();
         this.addKillImmunity(killImmunity);
         location.removeItem(tvsz);
+        Skeleton.endCall();
     }
 
     /**
@@ -150,10 +169,11 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(Glass glass) {
-        System.out.println("Student.acceptItem(Glass)");
+        Skeleton.startCall("Student.acceptItem(Glass)");
         this.addItem(glass);
         this.addKillImmunity(new KillImmunity(glass,10));
         location.removeItem(glass);
+        Skeleton.endCall();
     }
 
     /**
@@ -163,9 +183,10 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(Rug rug) {
-        System.out.println("Student.acceptItem(Rug)");
+        Skeleton.startCall("Student.acceptItem(Rug)");
         this.addItem(rug);
         location.removeItem(rug);
+        Skeleton.endCall();
     }
 
     /**
@@ -175,8 +196,9 @@ public class Student extends Player {
      */
     @Override
     public void meet(Professor professor, Room room) {
-        System.out.println("Student.meet(Professor, Room)");
+        Skeleton.startCall("Student.meet(Professor, Room)");
         kill();
+        Skeleton.endCall();
     }
 
     /**
@@ -187,19 +209,20 @@ public class Student extends Player {
     public void meet(Student student) {
     }
 
-    /**
-     * A hallgató belép egy szobába, ha a szoba befogadja, közli a szobával, ha belépett.
-     */
     public void goToRoom(Room room) {
-        location.getDoors()
+        Skeleton.startCall("Student.goToRoom(Room)");
+        Optional<Door> door = location.getDoors()
                 .stream()
                 .filter(d -> d.isBetween(location, room))
-                .findFirst()
-                .ifPresent(
-                    d ->{
-                        if(d.goThrough(this)) 
-                            room.onEnter(this);
-                    } 
-                );
+                .findFirst();
+
+        if(door.isPresent()) {
+            door.get().goThrough(this);
+            room.onEnter(this);
+            Skeleton.endCall("A hallgató átment a szobába."); 
+            return;
+        }
+        Skeleton.endCall("A hallgató nem ment át a szobába."); 
+        return;
     }
 }

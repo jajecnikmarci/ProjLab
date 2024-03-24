@@ -1,6 +1,7 @@
 package room;
 
 import player.Player;
+import skeleton.Skeleton;
 
 /**
  *
@@ -50,7 +51,7 @@ public class Door {
     }
 
     /**
-     * Megmondja, hogy az ajtó room1 és room2 között van-e.
+     * Segédfüggvény. Megmondja, hogy az ajtó room1 és room2 között van-e.
      */
     public boolean isBetween(Room room1, Room room2) {
         return (this.room1 == room1 && this.room2 == room2) || (this.room1 == room2 && this.room2 == room1);
@@ -65,19 +66,22 @@ public class Door {
      * @return true, ha a játékos átment az ajtón, false egyébként (VÁLTOZÁS: void -> boolean)
      */
     public boolean goThrough(Player player) {
-        System.out.println("Door.goThrough(Player)");
+        Skeleton.startCall("Door.goThrough(Player)");
         if(player.getLocation() == room1 && room2Open && room2.canPlayerEnter()) {
             room1.removePlayer(player);
             room2.addPlayer(player);
             player.setLocation(room2);
+            Skeleton.endCall("A játékos átment az ajtón.");
             return true;
         }
         else if(player.getLocation() == room2 && room1Open && room1.canPlayerEnter()) {
             room2.removePlayer(player);
             room1.addPlayer(player);
             player.setLocation(room1);
+            Skeleton.endCall("A játékos átment az ajtón.");
             return true;
         }
+        Skeleton.endCall("A játékos nem tudott átmenni az ajtón.");
         return false;
     }
 
@@ -92,7 +96,7 @@ public class Door {
      * @param room1
      */
     public void setRoom1(Room room1) {
-
+        this.room1 = room1;
     }
 
     /**

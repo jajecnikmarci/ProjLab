@@ -1,15 +1,12 @@
 package player;
 
-import effects.Effect;
-import effects.KillImmunity;
 import effects.PoisonImmunity;
 import items.Item;
-import room.Door;
 import room.Room;
+import skeleton.Skeleton;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  *
  */
@@ -23,7 +20,10 @@ public abstract class Player implements PickUpVisitor {
      *
      */
     List<PoisonImmunity> poisonImmunities;
-
+    
+    /**
+     * A szoba amelyben a player jelenleg tartózkodik.
+     */
     Room location;
 
     public Player(Room r){
@@ -37,9 +37,9 @@ public abstract class Player implements PickUpVisitor {
      * @param item a hozzáadandó tárgy
      */
     public void addItem(Item item) {
-        System.out.println("Player.addItem(Item)");
+        Skeleton.startCall("Player.addItem(Item)");
         inventory.add(item);
-
+        Skeleton.endCall();
     }
 
     /**
@@ -47,8 +47,9 @@ public abstract class Player implements PickUpVisitor {
      * @param item a kitörlendő tárgy
      */
     public void removeItem(Item item) {
-        System.out.println("Player.removeItem(Item)");
+        Skeleton.startCall("Player.removeItem(Item)");
         inventory.remove(item);
+        Skeleton.endCall();
     }
 
     /**
@@ -56,9 +57,10 @@ public abstract class Player implements PickUpVisitor {
      * Ezzel elindítja a Visitor működést, mely végén felveszi a szoba tárgylistájának legfelső tárgyát.
      */
     public void pickUpItem() {
-        System.out.println("Player.pickUpItem()");
+        Skeleton.startCall("Player.pickUpItem()");
         // if (item.canPickUp(this)) 
         location.popItem(this);
+        Skeleton.endCall();
     }
 
     /**
@@ -67,7 +69,10 @@ public abstract class Player implements PickUpVisitor {
      * @param item
      */
     public void dropItem(Item item) {
+        Skeleton.startCall("Player.dropItem(Item)");
         inventory.remove(item);
+        location.addItem(item);
+        Skeleton.endCall();
     }
 
     /**
@@ -75,15 +80,19 @@ public abstract class Player implements PickUpVisitor {
      * item sem fog a játékoshoz tartozni.
      */
     public void dropAll() {
+        Skeleton.startCall("Player.dropAll()");
         inventory.forEach(item -> location.addItem(item));
         inventory.clear();
+        Skeleton.endCall();
     }
 
     /**
      * @param item
      */
     public void useItem(Item item) {
+        Skeleton.startCall("Player.useItem(Item)");
         item.use(location, this);
+        Skeleton.endCall();
     }
 
     /**
@@ -91,8 +100,9 @@ public abstract class Player implements PickUpVisitor {
      * @param poisonImmunity
      */
     public void addPoisonImmunity(PoisonImmunity poisonImmunity) {
-        System.out.println("Player.addPoisonImmunity(PoisonImmunity)");
+        Skeleton.startCall("Player.addPoisonImmunity(PoisonImmunity)");
         poisonImmunities.add(poisonImmunity);
+        Skeleton.endCall();
     }
 
     /**
@@ -100,14 +110,18 @@ public abstract class Player implements PickUpVisitor {
      * @param poisonImmunity
      */
     public void removePoisonImmunity(PoisonImmunity poisonImmunity) {
+        Skeleton.startCall("Player.removePoisonImmunity(PoisonImmunity)");
         poisonImmunities.remove(poisonImmunity);
+        Skeleton.endCall();
     }
 
     /**
      * A játékos duration ideig nem tud mozogni.
      */
     public void stun(int duration) {
-        System.out.println("Player.stun()");
+        Skeleton.startCall("Player.stun(Duration)");
+        // TODO: implement
+        Skeleton.endCall("A játékos lebénult.");
     }
 
     /**
@@ -119,14 +133,19 @@ public abstract class Player implements PickUpVisitor {
      * tárgyakat.
      */
     public void poison() {
-        System.out.println("Player.poison()");
+        Skeleton.startCall("Player.poison()");
         if (poisonImmunities.isEmpty()) {
             this.dropAll();
             this.stun(5);
+            Skeleton.endCall("A játékos megmérgeződött.");
             return;
         }
-        if (poisonImmunities.stream().anyMatch(PoisonImmunity::isActive)) return;
+        if (poisonImmunities.stream().anyMatch(PoisonImmunity::isActive)) {
+            Skeleton.endCall("A játékos nem mérgeződött meg, mert volt aktív immunitása.");
+            return;
+        }
         poisonImmunities.get(0).activate();
+        Skeleton.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
     }
 
     /**
@@ -139,7 +158,6 @@ public abstract class Player implements PickUpVisitor {
      * @param student
      */
     public void meet(Student student) {
-        
     }
 
     /**
