@@ -67,7 +67,7 @@ public class Transistor extends Item {
         
         }else if(this.pair != null){
 
-            if(this.pair.room.canPlayerGoIn()) {
+            if(this.pair.room.canPlayerEnter()) {
                 room.removePlayer(player);
 
                 this.pair.room.addPlayer(player);

@@ -22,6 +22,10 @@ import room.*;
  * Az endCallnak a függvény visszatérési értékét kell átadni, vagy hogy mi történt, 
  * amiért visszatért a függvény. (Ha nem egyértelmű)
  * Az összes függvény minden lehetséges visszatérése előtt meg kell hívni az endCall függvényt.
+ * 
+ * A verbose változóval lehet ki-be kapcsolni a kiírást. Ha igaz, akkor kiírja a függvényeket, ha hamis, akkor nem.
+ * A teszt függvényekben a verbose változót ki kell kapcsolni az inivilizáláskor, mert ott is hívódhatnak függvények, de
+ * ott azokat nem kell kiírni. Az inivilizálásnál után igazra kell állítani a verbose változót.
  */
 public class Skeleton {
     class Test {
@@ -47,19 +51,29 @@ public class Skeleton {
     }
 
     private static int indentCounter = 0;
+    private static boolean verbose = true;
+
     public static void startCall(String methodHeader) {
       
-        print(methodHeader);
-        indentCounter++;
+        if(verbose){
+            print(methodHeader);
+            indentCounter++;
+        }
     }
     public static void endCall(String result) {
-        indentCounter--;
-        print("<--" + result);
+
+        if(verbose){
+            indentCounter--;
+            print("<--" + result);
+        }
 
     }
     public static void endCall() {
-        indentCounter--;
-        print("<-- void");
+
+        if(verbose){
+            indentCounter--;
+            print("<-- void");
+        }
     }
     public static void print(String string) {
         for(int i = 0; i < indentCounter-1; i++) {
@@ -212,6 +226,7 @@ public class Skeleton {
 
     public void testPairTransistors(){
 
+        verbose = false;
         Student student = new Student(null);
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
@@ -219,11 +234,13 @@ public class Skeleton {
         student.addItem(transistor1);
         student.addItem(transistor2);
 
+        verbose = true;
         student.pairTransistors(transistor1, transistor2);
     }
 
     public void testDropTransistor(){
 
+        verbose = false;
         Room room1 = new Room(10);
 
         Student student = new Student(room1);
@@ -237,12 +254,14 @@ public class Skeleton {
         transistor1.setPair(transistor2);
         transistor2.setPair(transistor1);
 
+        verbose = true;
         student.useItem(transistor1);
     
     }
 
     public void testTeleportWithTransistor(){
 
+        verbose = false;
         Room room1 = new Room(10);
         Room room2;
 
@@ -265,6 +284,7 @@ public class Skeleton {
 
         transistor2.setRoom(room2);
 
+        verbose = true;
         student.useItem(transistor1);
     }
 
