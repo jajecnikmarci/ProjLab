@@ -41,6 +41,7 @@ public class Student extends Player {
         if (killImmunities.isEmpty()) {
             souls--;
             if (souls == 0) {
+                //TODO: Meghal a hallgató
                 Skeleton.endCall(" A játékos meghalt");
                 return;
             }
@@ -61,7 +62,7 @@ public class Student extends Player {
 
     /**
      * Hozzáadja a killImmunities-hez a paraméterként kapott immuntitást.
-     * @param killImmunity
+     * @param killImmunity A hozzáadadndó killImmunity
      */
     @Override
     public void addKillImmunity(KillImmunity killImmunity) {
@@ -84,8 +85,8 @@ public class Student extends Player {
 
     /**
      * Összepárosítja a két kapott tranzisztort. Ez egy új függvény, a tervben nem szerepelt.
-     * @param transistor1
-     * @param transistor2
+     * @param transistor1 Az egyik tranzisztor
+     * @param transistor2 A másik tranzisztor
      */
     public void pairTransistors(Transistor transistor1, Transistor transistor2) {
         Skeleton.startCall("Student.pairTransistors(transistor1, transistor2)");
@@ -196,8 +197,8 @@ public class Student extends Player {
 
     /**
      * Interakcióba lép egy Oktatóval, elszipolyozódik a lelke. 
-     * @param professor
-     * @param room
+     * @param professor A hallgatóval interakcióba lépő oktató
+     * @param room A szoba, ahol az interakció történik
      */
     @Override
     public void meet(Professor professor, Room room) {
@@ -212,6 +213,8 @@ public class Student extends Player {
      */
     @Override
     public void meet(Student student) {
+        Skeleton.startCall("Student.meet(Student)");
+        Skeleton.endCall();
     }
 
     public void goToRoom(Room room) {
@@ -250,7 +253,6 @@ public class Student extends Player {
                 item.use(location, this);
             }
         }
-
         Skeleton.endCall();
     }
 }

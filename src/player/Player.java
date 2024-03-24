@@ -51,7 +51,6 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      */
     public void removeItem(Item item) {
         Skeleton.startCall("Player.removeItem(Item)");
-
         inventory.remove(item);
         Skeleton.endCall();
     }
@@ -62,7 +61,6 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      */
     public void pickUpItem() {
         Skeleton.startCall("Player.pickUpItem()");
-        // if (item.canPickUp(this)) 
         location.popItem(this);
         Skeleton.endCall();
     }

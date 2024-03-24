@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
+ * A játékban szereplő szobákat reprezentáló osztály.
  */
 public class Room implements EffectConsumedObserver {
 
@@ -84,8 +84,8 @@ public class Room implements EffectConsumedObserver {
     }
 
     /**
-     * 
-     * @param player 
+     * Hozzáad a szobában lévő táryak közül a legfelső tárgyat a játékos tárgyaihoz.
+     * @param player A játékos, aki a tárgyat fel akarja venni
      */
     public void popItem(Player player) {
         Skeleton.startCall("Room.popItem(Player)");
@@ -122,11 +122,10 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Student student) {
         Skeleton.startCall("Room.onEnter(Student)");
-        for (RoomEffect effect : this.effects) 
-            if(effect.isActive()) effect.affect(student);
-
+        for (RoomEffect effect : this.effects) {
+            if (effect.isActive()) effect.affect(student);
+        }
         players.forEach(player -> player.meet(student));
-
         Skeleton.endCall();
     }
 
@@ -256,6 +255,10 @@ public class Room implements EffectConsumedObserver {
         return capacity > players.size();
     }
 
+    /**
+     * Megkeresi a paraméterként kapott tárgyhoz tartozó KillImmunity-t a killImmunities listában.
+     * @param item a tárgy, amelyhez tartozó KillImmunity-t keresi
+     */
     private RoomEffect findRoomEffectByItem(Item item) {
         for (RoomEffect effect : effects) {
             if (effect.getItem().equals(item)) {

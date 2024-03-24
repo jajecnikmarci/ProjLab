@@ -4,45 +4,39 @@ import player.Player;
 import skeleton.Skeleton;
 
 /**
- *
+ * Az ajtókat reprezentáló osztály.
  */
 public class Door {
     /**
-     *
+     * Az ajtó egyik szobája.
      */
     private Room room1;
 
     /**
-     *
+     * Az ajtó másik szobája.
      */
     private Room room2;
 
     /**
-     *
+     * Az ajtó első szobából a másodikba nyitva van-e.
      */
     private boolean room1Open;
 
     /**
-     *
+     * Az ajtó második szobából az elsőbe nyitva van-e.
      */
     private boolean room2Open;
 
     /**
-     *
+     * Az ajtó látható-e.
      */
     private boolean visible;
 
     /**
-     *
+     * Az ajtó el van-e átkozva.
      */
     private boolean cursed;
 
-    /**
-     * @param room1
-     * @param room2
-     * @param room1Open
-     * @param room2Open
-     */
     public Door(Room room1, Room room2, boolean room1Open, boolean room2Open) {
         this.room1 = room1;
         this.room2 = room2;
@@ -52,6 +46,8 @@ public class Door {
 
     /**
      * Segédfüggvény. Megmondja, hogy az ajtó room1 és room2 között van-e.
+     * @param room1 az egyik szoba
+     * @param room2 a másik szoba
      */
     public boolean isBetween(Room room1, Room room2) {
         return (this.room1 == room1 && this.room2 == room2) || (this.room1 == room2 && this.room2 == room1);
@@ -62,7 +58,7 @@ public class Door {
      * hogy átmehet-e. Az elégséges feltétele, hogy átmehessen a játékos az
      * ajtón: átmehet az ajtón abból a szobából, amelyikben a játékos van és
      * van még legalább 1 hely a szobában, amelyikbe menni próbál a játékos.
-     * @param player
+     * @param player a játékos, aki átmegy az ajtón
      * @return true, ha a játékos átment az ajtón, false egyébként (VÁLTOZÁS: void -> boolean)
      */
     public boolean goThrough(Player player) {
@@ -85,30 +81,18 @@ public class Door {
         return false;
     }
 
-    /**
-     * @return
-     */
     public Room getRoom1() {
         return room1;
     }
 
-    /**
-     * @param room1
-     */
     public void setRoom1(Room room1) {
         this.room1 = room1;
     }
 
-    /**
-     * @return
-     */
     public Room getRoom2() {
         return room2;
     }
 
-    /**
-     * @param room2
-     */
     public void setRoom2(Room room2) {
     }
 }
