@@ -49,7 +49,7 @@ public class Professor extends Player {
     public void acceptItem(FFP2 ffp2) {
         Skeleton.startCall("Professor.acceptItem(FFP2)");
         this.addItem(ffp2);
-        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength()));
+        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength(),this));
         location.removeItem(ffp2);
         Skeleton.endCall();
     }

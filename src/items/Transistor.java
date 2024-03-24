@@ -6,22 +6,27 @@ import room.Room;
 import skeleton.Skeleton;
 
 /**
- *
+ * Tranzisztor tárgyat reprezentáló osztály
  */
 public class Transistor extends Item {
     /**
-     *
+     * A tranzisztor párja mellyel összekapcsolásra kerül
      */
     private Transistor pair;
 
     /**
-     *
+     * A szoba ahol a tranzisztor található eldobás után
      */
     private Room room;
 
-    private Student owner;
     /**
-     * @param room
+     * A tranzisztor tulajdonosa
+     */
+    private Student owner;
+
+    /**
+     * Beállítja a tranzisztor szobáját ahol eldobták
+     * @param room a szoba ahol a tranzisztor található
      */
     public void setRoom(Room room) {
         Skeleton.startCall("Transistor.setRoom(Room)");
@@ -31,7 +36,7 @@ public class Transistor extends Item {
 
     /**
      * A tranzisztor párának megadása
-     * @param transistor
+     * @param transistor a tranzisztor párja
      */
     public void setPair(Transistor transistor) {
         Skeleton.startCall("Transistor.setPair(Transistor)");
@@ -54,8 +59,8 @@ public class Transistor extends Item {
      * ha ez lehetséges, akkor a játékost a másik szobába teleportálja és felcseréli a tranzisztorokat 
      * (eredeti eltávolítása, szoba beállítása, másik tranzisztor hozzáadása)
      * különben nem történik semmi
-     * @param room
-     * @param player
+     * @param room a szoba, ahol a tranzisztor használva lett
+     * @param player a játékos aki használja a tranzisztort
      */
     @Override
     public void use(Room room, Player player) {

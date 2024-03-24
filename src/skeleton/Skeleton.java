@@ -454,7 +454,7 @@ public class Skeleton {
         Room room = new room.Room();
         Professor professor = new Professor(room);
         Rug rug = new Rug();
-        StunEffect stunEffect = new StunEffect(rug, 30);
+        StunEffect stunEffect = new StunEffect(rug, 30, room);
         room.addEffect(stunEffect);
         stunEffect.activate();
         room.onEnter(professor);

@@ -1,14 +1,15 @@
 package effects;
 
 import items.Item;
+import skeleton.Skeleton;
 
 /**
- *
+ * A méreg elleni védettséget biztosító hatás.
  */
 public class PoisonImmunity extends Effect {
 
-    public PoisonImmunity(Item givenBy, int duration) {
-        super(givenBy, duration);
+    public PoisonImmunity(Item givenBy, int duration, EffectConsumedObserver observer) {
+        super(givenBy, duration, observer);
     }
 
     /**
@@ -18,10 +19,10 @@ public class PoisonImmunity extends Effect {
      */
     @Override
     public void activate() {
-        System.out.println("PoisonImmunity.activate()");
-        Timer timer = new Timer();
+        Skeleton.startCall("PoisonImmunity.activate()");
+        timer = new Timer(this);
         active = true;
         timer.start(getDuration());
-        //TODO notify metódus feliratkozás majd active = false
+        Skeleton.endCall();
     }
 }

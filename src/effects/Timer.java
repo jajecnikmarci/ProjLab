@@ -1,20 +1,48 @@
 package effects;
 
+import skeleton.Skeleton;
+
+import java.util.TimerTask;
+
 /**
  * Időzítő osztály. Elindítása után a megadott időtartamig várakozik, majd értesíti a hívó objektumot.
  */
 public class Timer {
 
     /**
-     * @param duration
+     * Az időzítőt tulajdonló Item.
      */
-    void start(int duration) {
-        System.out.println("Timer.start(int)");
-    }
+    private Effect ownerEffect;
 
     /**
-     *
+     * Az időzítést megvalósító java.util.Timer.
      */
-    void Notify() {
+    private java.util.Timer timer;
+
+    public Timer(Effect ownerEffect) {
+        this.ownerEffect = ownerEffect;
+    }
+    /**
+     * Az időzítő elindítását megvalósító metódus.
+     * @param duration Az időzítő időtartama.
+     */
+    void start(int duration) {
+        Skeleton.startCall("Timer.start(int)");
+        timer = new java.util.Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                ownerEffect.timeIsUp();
+            }
+        }, duration);
+        Skeleton.endCall();
+    }
+    /**
+     * Az időzítő leállítását megvalósító metódus.
+     */
+    public void cancel() {
+        Skeleton.startCall("Timer.cancel()");
+        timer.cancel();
+        Skeleton.endCall();
     }
 }

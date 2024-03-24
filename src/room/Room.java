@@ -1,6 +1,7 @@
 package room;
 
 import effects.Effect;
+import effects.EffectConsumedObserver;
 import effects.RoomEffect;
 import items.Item;
 import player.Player;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  *
  */
-public class Room {
+public class Room implements EffectConsumedObserver {
 
 
     public Room(int capacity) {
@@ -253,5 +254,10 @@ public class Room {
      */
     public boolean canPlayerEnter() {
         return capacity > players.size();
+    }
+
+
+    public void effectConsumed(Effect effect) {
+
     }
 }

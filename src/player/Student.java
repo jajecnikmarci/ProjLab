@@ -1,5 +1,6 @@
 package player;
 
+import effects.Effect;
 import effects.KillImmunity;
 import effects.PoisonImmunity;
 import items.*;
@@ -68,12 +69,13 @@ public class Student extends Player {
     }
 
     /**
-     * Kitörli a killImmunities-ből a paraméterként kapott immuntitást.
-     * @param killImmunity
+     * Kitörli a killImmunities-ből a paraméterként kapott tárgyhoz tartozó immunitást.
+     * @param item A tárgy ami az immunitást adja
      */
-    public void removeKillImmunity(KillImmunity killImmunity) {
+    public void removeKillImmunity(Item item) {
         Skeleton.startCall("Student.removeKillImmunity(KillImmunity)");
-        killImmunities.remove(killImmunity);
+        KillImmunity killImmunityToRemove = findKillImmunityByItem(item);
+        killImmunities.remove(killImmunityToRemove);
         Skeleton.endCall();
     }
 
@@ -101,7 +103,7 @@ public class Student extends Player {
     public void acceptItem(FFP2 ffp2) {
         Skeleton.startCall("Student.acceptItem(FFP2)");
         this.addItem(ffp2);
-        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength()));
+        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength(),this));
         location.removeItem(ffp2);
         Skeleton.endCall();
     }
@@ -155,7 +157,7 @@ public class Student extends Player {
     public void acceptItem(TVSZ tvsz) {
         Skeleton.startCall("Student.acceptItem(TVSZ)");
         this.addItem(tvsz);
-        KillImmunity killImmunity = new KillImmunity(tvsz, 10);
+        KillImmunity killImmunity = new KillImmunity(tvsz, 10,this);
         killImmunity.activate();
         this.addKillImmunity(killImmunity);
         location.removeItem(tvsz);
@@ -171,7 +173,7 @@ public class Student extends Player {
     public void acceptItem(Glass glass) {
         Skeleton.startCall("Student.acceptItem(Glass)");
         this.addItem(glass);
-        this.addKillImmunity(new KillImmunity(glass,10));
+        this.addKillImmunity(new KillImmunity(glass,10,this));
         location.removeItem(glass);
         Skeleton.endCall();
     }
@@ -222,7 +224,20 @@ public class Student extends Player {
             Skeleton.endCall("A hallgató átment a szobába."); 
             return;
         }
-        Skeleton.endCall("A hallgató nem ment át a szobába."); 
-        return;
+        Skeleton.endCall("A hallgató nem ment át a szobába.");
+    }
+    public KillImmunity findKillImmunityByItem(Item item) {
+        for (KillImmunity killImmunity : killImmunities) {
+            if (killImmunity.getItem().equals(item)) {
+                return killImmunity;
+            }
+        }
+        return null;
+    }
+    @Override
+    public void effectConsumed(Effect effect) {
+        Skeleton.startCall("Student.effectConsumed()");
+
+
     }
 }

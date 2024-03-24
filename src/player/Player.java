@@ -1,5 +1,7 @@
 package player;
 
+import effects.Effect;
+import effects.EffectConsumedObserver;
 import effects.PoisonImmunity;
 import items.Item;
 import room.Room;
@@ -10,7 +12,7 @@ import java.util.List;
 /**
  *
  */
-public abstract class Player implements PickUpVisitor {
+public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
     /**
      *
      */
@@ -48,6 +50,7 @@ public abstract class Player implements PickUpVisitor {
      */
     public void removeItem(Item item) {
         Skeleton.startCall("Player.removeItem(Item)");
+
         inventory.remove(item);
         Skeleton.endCall();
     }
@@ -106,12 +109,13 @@ public abstract class Player implements PickUpVisitor {
     }
 
     /**
-     * Kitörli a poisonImmunities-ból a paraméterként kapott immuntitást.
-     * @param poisonImmunity
+     * Kitörli a poisonImmunities-ból a paraméterként kapott tárgyhoz tartozó immunitást.
+     * @param item A tárgy ami az immunitást adja
      */
-    public void removePoisonImmunity(PoisonImmunity poisonImmunity) {
-        Skeleton.startCall("Player.removePoisonImmunity(PoisonImmunity)");
-        poisonImmunities.remove(poisonImmunity);
+    public void removePoisonImmunity(Item item) {
+        Skeleton.startCall("Player.removePoisonImmunity(Item)");
+        Effect effectToRemove = findPoisonImmunityByItem(item);
+        poisonImmunities.remove(effectToRemove);
         Skeleton.endCall();
     }
 
@@ -181,5 +185,18 @@ public abstract class Player implements PickUpVisitor {
      */
     public void setLocation(Room room) {
         this.location = room;
+    }
+
+    protected PoisonImmunity findPoisonImmunityByItem(Item item){
+        for (PoisonImmunity poisonImmunity : poisonImmunities) {
+            if (poisonImmunity.getItem().equals(item)) {
+                return poisonImmunity;
+            }
+        }
+        return null;
+    }
+
+    public void effectConsumed(Effect effect) {
+        poisonImmunities.remove(findPoisonImmunityByItem(effect.getItem()));
     }
 }
