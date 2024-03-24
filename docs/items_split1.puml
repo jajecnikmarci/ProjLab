@@ -1,20 +1,20 @@
 abstract Item {
  + ItemType type
  + Item(ItemType type)
- + void use(Room room, Player)
+ + void use(room room, Player)
 }
 
 class FFP2 extends Item {
  + Time immunityLength
- + void use(Room room, Player)
+ + void use(room room, Player)
 }
 class Camembert extends Item {
- + void use(Room room, Player)
+ + void use(room room, Player)
 }
 class Transistor extends Item {
  + Transistor pair
- + Room room
- + void use(Room room, Player)
+ + room room
+ + void use(room room, Player)
 }
 
 

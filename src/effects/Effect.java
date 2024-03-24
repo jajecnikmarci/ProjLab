@@ -57,7 +57,7 @@ public abstract class Effect  implements TimerObserver{
 
     public void timeIsUp() {
         Skeleton.startCall("PoisonImmunity.timeIsUp()");
-
+        observer.effectConsumed(this);
         Skeleton.endCall();
     }
     public void cancelTimer() {

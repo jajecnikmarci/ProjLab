@@ -23,6 +23,7 @@ public class PoisonImmunity extends Effect {
         timer = new Timer(this);
         active = true;
         timer.start(getDuration());
+
         Skeleton.endCall();
     }
 }

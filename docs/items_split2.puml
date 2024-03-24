@@ -1,7 +1,7 @@
 abstract Item {
  + ItemType type
  + Item(ItemType type)
- + void use(Room room, Player)
+ + void use(room room, Player)
 }
 
 enum ItemType {
@@ -15,19 +15,19 @@ enum ItemType {
 }
 
 class SlideRule extends Item {
- + void use(Room room, Player)  
+ + void use(room room, Player)
 }
 
 class TVSZ extends Item {
  + int timesImmune
- + void use(Room room, Player)
+ + void use(room room, Player)
 }
 
 class Glass extends Item {
- + void use(Room room, Player)
+ + void use(room room, Player)
 }
 
 class Rug extends Item {
- + Room room
- + void use(Room room, Player)
+ + room room
+ + void use(room room, Player)
 }

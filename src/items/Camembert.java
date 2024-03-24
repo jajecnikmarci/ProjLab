@@ -22,6 +22,7 @@ public class Camembert extends Item {
         PoisonEffect camembertEffect = new PoisonEffect(this, 30, room);
         room.addEffect(camembertEffect);
         camembertEffect.activate();
+        effect = camembertEffect;
         room.poisonPlayers(); //Azért itt mert itt ismerjük a szobát
         player.removeItem(this);
         Skeleton.endCall();

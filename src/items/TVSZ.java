@@ -1,5 +1,6 @@
 package items;
 
+import effects.KillImmunity;
 import player.Player;
 import room.Room;
 import skeleton.Skeleton;
@@ -20,7 +21,8 @@ public class TVSZ extends Item {
     @Override
     public void use(Room room, Player player) {
         Skeleton.startCall("TVSZ.use(Room, Player)");
-
+        KillImmunity killImmunity = new KillImmunity(this,0, player);
+        player.addKillImmunity(killImmunity);
         timesImmune--;
 
         if (timesImmune == 0) {

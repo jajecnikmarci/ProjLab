@@ -2,6 +2,7 @@ package player;
 
 import effects.Effect;
 import effects.EffectConsumedObserver;
+import effects.KillImmunity;
 import effects.PoisonImmunity;
 import items.Item;
 import room.Room;
@@ -10,16 +11,16 @@ import skeleton.Skeleton;
 import java.util.ArrayList;
 import java.util.List;
 /**
- *
+ * A játékost reprezentáló osztály
  */
 public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
     /**
-     *
+     * A játékos tárgylistája.
      */
     List<Item> inventory;
 
     /**
-     *
+     * A játékos által használható mérgezés elleni immunitások listája.
      */
     List<PoisonImmunity> poisonImmunities;
     
@@ -90,7 +91,8 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
     }
 
     /**
-     * @param item
+     * A paraméterként kapott tárgyat használja a játékos.
+     * @param item a használandó tárgy
      */
     public void useItem(Item item) {
         Skeleton.startCall("Player.useItem(Item)");
@@ -148,7 +150,8 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
             Skeleton.endCall("A játékos nem mérgeződött meg, mert volt aktív immunitása.");
             return;
         }
-        poisonImmunities.get(0).activate();
+        PoisonImmunity poisonImmunity = poisonImmunities.get(0);
+        poisonImmunity.activate();
         Skeleton.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
     }
 
@@ -159,18 +162,17 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
     public abstract void goToRoom(Room room);
 
     /**
-     * @param student
+     * A játékos találkozik egy hallgatóval.
+     * @param student a hallgató, akivel találkozik
      */
-    public void meet(Student student) {
-    }
+    public abstract void meet(Student student);
 
     /**
-     * @param professor
-     * @param room
+     * Professzorral való találkozás esetén a játékos
+     * @param professor a professzor, akivel találkozik
+     * @param room a szoba, ahol a találkozás történik
      */
-    public void meet(Professor professor, Room room) {
-
-    }
+    public abstract void meet(Professor professor, Room room);
 
     /**
      * Visszaadja, hogy melyik szobában van a játékos.
@@ -187,6 +189,11 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
         this.location = room;
     }
 
+    /**
+     * Megkeresi a paraméterként kapott tárgyhoz tartozó immunitást a poisonImmunities-ból.
+     * @param item a tárgy, aminek az immunitását keresi
+     * @return a tárgyhoz tartozó immunitás
+     */
     protected PoisonImmunity findPoisonImmunityByItem(Item item){
         for (PoisonImmunity poisonImmunity : poisonImmunities) {
             if (poisonImmunity.getItem().equals(item)) {
@@ -196,7 +203,35 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
         return null;
     }
 
+    /**
+     * Hozzáad egy KillImmunity-t a játékoshoz.
+     * Professor nem overide-olja mivel számára nem szükséges
+     * @param killImmunity a hozzáadandó immunitás
+     */
+    public void addKillImmunity(KillImmunity killImmunity){}
+
+    /**
+     * Kitörli a paraméterként kapott tárgyhoz tartozó KillImmunity-t a játékosból.
+     * Professor nem overide-olja mivel számára nem szükséges
+     * @param item a tárgy, aminek az immunitását törli
+     */
+    public void removeKillImmunity(Item item) {}
+
+    /**
+     * Ha elhasználódott egy effekt akkor a játékosnak törölnie kell az effektet a listájából.
+     * @param effect az elhasznált effekt
+     */
     public void effectConsumed(Effect effect) {
-        poisonImmunities.remove(findPoisonImmunityByItem(effect.getItem()));
+        Skeleton.startCall("Player.effectConsumed(Effect)");
+        Item item = effect.getItem();
+        PoisonImmunity poisonImmunity = findPoisonImmunityByItem(item);
+        if (poisonImmunity != null) {
+            poisonImmunities.remove(poisonImmunity);
+            item.removeEffect();
+            if (inventory.contains(item)) {
+                item.use(location, this);
+            }
+        }
+        Skeleton.endCall();
     }
 }

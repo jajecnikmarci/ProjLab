@@ -53,7 +53,8 @@ public class Student extends Player {
                 return;
             }
         }
-        killImmunities.get(0).activate();
+        KillImmunity killImmunity = killImmunities.get(0);
+        killImmunity.activate();
         Skeleton.endCall("A hallgatót megvédte egy most aktiválódott tárgya.");
 
     }
@@ -62,6 +63,7 @@ public class Student extends Player {
      * Hozzáadja a killImmunities-hez a paraméterként kapott immuntitást.
      * @param killImmunity
      */
+    @Override
     public void addKillImmunity(KillImmunity killImmunity) {
         Skeleton.startCall("Student.addKillImmunity(KillImmunity)");
         killImmunities.add(killImmunity);
@@ -72,6 +74,7 @@ public class Student extends Player {
      * Kitörli a killImmunities-ből a paraméterként kapott tárgyhoz tartozó immunitást.
      * @param item A tárgy ami az immunitást adja
      */
+    @Override
     public void removeKillImmunity(Item item) {
         Skeleton.startCall("Student.removeKillImmunity(KillImmunity)");
         KillImmunity killImmunityToRemove = findKillImmunityByItem(item);
@@ -237,7 +240,17 @@ public class Student extends Player {
     @Override
     public void effectConsumed(Effect effect) {
         Skeleton.startCall("Student.effectConsumed()");
+        super.effectConsumed(effect);
+        Item item = effect.getItem();
+        KillImmunity killImmunity = findKillImmunityByItem(item);
+        if (killImmunity != null) {
+            killImmunities.remove(killImmunity);
+            item.removeEffect();
+            if (inventory.contains(item)) {
+                item.use(location, this);
+            }
+        }
 
-
+        Skeleton.endCall();
     }
 }

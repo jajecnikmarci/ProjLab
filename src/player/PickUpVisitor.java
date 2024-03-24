@@ -3,10 +3,12 @@ package player;
 import items.*;
 
 /**
- *
+ * A játékos által felvihető tárgyakat reprezentáló interfész
+ * Visitor design pattern implementációja
  */
 public interface PickUpVisitor {
     /**
+     *
      * @param ffp2
      */
     void acceptItem(FFP2 ffp2);

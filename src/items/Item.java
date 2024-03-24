@@ -1,5 +1,6 @@
 package items;
 
+import effects.Effect;
 import player.Player;
 import room.Room;
 
@@ -7,6 +8,8 @@ import room.Room;
  * Egy tárgyat reprezentáló osztály
  */
 public abstract class Item {
+    protected Effect effect;
+
     /**
      *  A tárgy használata
      * @param room a szoba, ahol a tárgyat használják
@@ -19,4 +22,11 @@ public abstract class Item {
      * @param player a játékos aki próbálja felvenni a tárgyat
      */
     public abstract void accept(Player player);
+
+    /**
+     * Null-ra állítja a tárgyhoz tartozó Effect-et
+     */
+    public void removeEffect() {
+        effect = null;
+    }
 }

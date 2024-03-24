@@ -23,6 +23,7 @@ public class Glass extends Item {
         Skeleton.startCall("Glass.use(Room, Player)");
         KillImmunity killImmunity = new KillImmunity(this, 10, player);
         killImmunity.activate();
+        effect = killImmunity;
         player.removeItem(this);
         Skeleton.endCall();
     }

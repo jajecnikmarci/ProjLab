@@ -2,6 +2,7 @@ package room;
 
 import effects.Effect;
 import effects.EffectConsumedObserver;
+import effects.KillImmunity;
 import effects.RoomEffect;
 import items.Item;
 import player.Player;
@@ -60,7 +61,6 @@ public class Room implements EffectConsumedObserver {
         effects = new ArrayList<RoomEffect>();
         doors = new ArrayList<Door>();
     }
-
 
     public List<Door> getDoors() {return doors;};
     /**
@@ -256,8 +256,20 @@ public class Room implements EffectConsumedObserver {
         return capacity > players.size();
     }
 
+    private RoomEffect findRoomEffectByItem(Item item) {
+        for (RoomEffect effect : effects) {
+            if (effect.getItem().equals(item)) {
+                return effect;
+            }
+        }
+        return null;
+    }
 
     public void effectConsumed(Effect effect) {
-
+        Skeleton.startCall("Room.effectConsumed()");
+        Item item = effect.getItem();
+        effects.remove(findRoomEffectByItem(item));
+        item.removeEffect();
+        Skeleton.endCall();
     }
 }

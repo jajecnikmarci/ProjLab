@@ -12,7 +12,10 @@ public class Rug extends Item {
     @Override
     public void use(Room room, Player player) {
         Skeleton.startCall("Rug.use(Room, Player)");
-        room.addEffect(new StunEffect(this,30   ,room));
+        StunEffect stunEffect = new StunEffect(this,30   ,room);
+
+        room.addEffect(stunEffect);
+        effect = stunEffect;
         player.removeItem(this);
         Skeleton.endCall();
     }

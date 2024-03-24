@@ -20,6 +20,15 @@ public class FFP2 extends Item {
     @Override
     public void use(Room room, Player player) {
         Skeleton.startCall("FFP2.use(Room, Player)");
+        if (immunityLength<=0) {
+            player.removeItem(this);
+            //TODO Mérgezni a player-t ha elhasználódott a maszk
+            Skeleton.endCall("A tárgy elhasználódott");
+            return;
+        }
+        PoisonImmunity poisonImmunity = new PoisonImmunity(this, immunityLength, player);
+        player.addPoisonImmunity(poisonImmunity);
+        effect = poisonImmunity;
         immunityLength -= 2;
         Skeleton.endCall();
     }
