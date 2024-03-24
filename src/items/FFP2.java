@@ -5,6 +5,7 @@ import player.Player;
 import player.Professor;
 import player.Student;
 import room.Room;
+import skeleton.Skeleton;
 
 /**
  *
@@ -22,7 +23,9 @@ public class FFP2 extends Item {
      */
     @Override
     public void use(Room room, Player player) {
+        Skeleton.startCall("FFP2.use(Room, Player)");
         immunityLength -= 2;
+        Skeleton.endCall();
     }
 
     /**
@@ -31,14 +34,15 @@ public class FFP2 extends Item {
      */
     @Override
     public void accept(Player player) {
-        System.out.println("FFP2.accept(Player)");
+        Skeleton.startCall("FFP2.accept(Player)");
         player.acceptItem(this);
+        Skeleton.endCall();
     }
     
      /**
       * @return
       */
-     public int getImmunityLength() {
-         return immunityLength;
-     }
+    public int getImmunityLength() {
+        return immunityLength;
+    }
 }

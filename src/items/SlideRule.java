@@ -4,6 +4,7 @@ import player.Player;
 import player.Professor;
 import player.Student;
 import room.Room;
+import skeleton.Skeleton;
 
 /**
  *
@@ -23,7 +24,8 @@ public class SlideRule extends Item {
      */
     @Override
     public void accept(Player player) {
-        System.out.println("SlideRule.accept(Player)");
+        Skeleton.startCall("SlideRule.accept(Player)");
         player.acceptItem(this);
+        Skeleton.endCall();
     }
 }

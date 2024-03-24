@@ -60,14 +60,16 @@ public class Room {
         doors = new ArrayList<Door>();
     }
 
+
     public List<Door> getDoors() {return doors;};
     /**
      * Kitörli a megadott tárgyat a szoba tárgyai közül.
      * @param item a megadott tárgy
      */
     public void removeItem(Item item) {
-        System.out.println("Room.removeItem(Item)");
+        Skeleton.startCall("Room.removeItem(Item)");
         items.remove(item);
+        Skeleton.endCall();
     }
 
     /**
@@ -85,9 +87,13 @@ public class Room {
      * @param player 
      */
     public void popItem(Player player) {
-        System.out.println("Room.popItem(Player)");
-        if(items.isEmpty()) return;
+        Skeleton.startCall("Room.popItem(Player)");
+        if(items.isEmpty()){
+            Skeleton.endCall("Nincs több tárgy a szobában.");
+            return;
+        } 
         items.get(items.size()-1).accept(player);
+        Skeleton.endCall();
     }
 
     /**
@@ -97,13 +103,14 @@ public class Room {
      * @param professor a belépő oktató
      */
     public void onEnter(Professor professor) {
-        System.out.println("Room.onEnter(Professor)");
+        Skeleton.startCall("Room.onEnter(Professor)");
         for (RoomEffect effect : this.effects) 
             if(effect.isActive()) effect.affect(professor);
         
         for (Player player : this.players) {
             player.meet(professor,this);
         }
+        Skeleton.endCall();
     }
 
     /**
@@ -113,21 +120,22 @@ public class Room {
      * @param student a belépő hallgató
      */
     public void onEnter(Student student) {
-        System.out.println("Room.onEnter(Student)");
+        Skeleton.startCall("Room.onEnter(Student)");
         for (RoomEffect effect : this.effects) 
             if(effect.isActive()) effect.affect(student);
-        
-        for (Player player : this.players) {
-            player.meet(student);
-        }
+
+        players.forEach(player -> player.meet(student));
+
+        Skeleton.endCall();
     }
 
     /**
      * Megmérgez minden játékost aki a szobában tartózkodik. 
      */
     public void poisonPlayers() {
-        System.out.println("Room.poisonPlayers()");
+        Skeleton.startCall("Room.poisonPlayers()");
         players.forEach(p -> p.poison());
+        Skeleton.endCall();
     }
 
     /**
@@ -139,9 +147,15 @@ public class Room {
      * 
      */
     public void split() {
-        System.out.println("Room.split()");
-        if (capacity < 4) return;
-        if (!players.isEmpty()) return;
+        Skeleton.startCall("Room.split()");
+        if (capacity < 4) {
+            Skeleton.endCall("A szoba nem osztódott, mert kapacitása 4-nél kisebb volt.");
+            return;
+        };
+        if (!players.isEmpty()) {
+            Skeleton.endCall("A szoba nem osztódott, mert volt benne játékos.");
+            return;
+        } 
         
         Room room = new Room(capacity / 2);
         for (int i = 0; i < doors.size(); i += 2) {
@@ -159,6 +173,7 @@ public class Room {
         Door door = new Door(this, room, true, true);
         doors.add(door);
         room.doors.add(door);
+        Skeleton.endCall("A szoba osztódott.");
     }
 
     /**
@@ -171,8 +186,11 @@ public class Room {
      * @param room a szoba amit beleolvasztunk ebbe a szobába
      */
     public void mergeWithRoom(Room room) {
-        System.out.println("Room.mergeWithRoom(Room)");
-        if (!players.isEmpty() && !room.players.isEmpty()) return;
+        Skeleton.startCall("Room.mergeWithRoom(Room)");
+        if (!players.isEmpty() && !room.players.isEmpty())  {
+            Skeleton.endCall("A szobák nem olvadtak össze, mert volt bennük játékos.");
+            return;
+        }
         this.capacity = Math.max(this.capacity, room.capacity); 
         this.players.addAll(room.players);
         this.items.addAll(room.items);
@@ -188,6 +206,7 @@ public class Room {
             if(d.getRoom1() == room) d.setRoom1(this);
             if(d.getRoom2() == room) d.setRoom2(this);
         });
+        Skeleton.endCall("A szobák összeolvadtak.");
     }
 
     /**
@@ -205,8 +224,9 @@ public class Room {
      * @param player a kitörölni kívánt játékos
      */
     public void removePlayer(Player player) {
-        System.out.println("Room.removePlayer(Player)");
+        Skeleton.startCall("Room.removePlayer(Player)");
         this.players.remove(player);
+        Skeleton.endCall();
     }
 
     /**
@@ -214,23 +234,24 @@ public class Room {
      * @param effect a hozzáadandó hatás
      */
     public void addEffect(RoomEffect effect) {
-        System.out.println("Room.addEffect(RoomEffect)");
+        Skeleton.startCall("Room.addEffect(RoomEffect)");
         this.effects.add(effect);
+        Skeleton.endCall();
     }
 
     /**
      * @param effect
      */
     public void removeEffect(RoomEffect effect) {
-        System.out.println("Room.removeEffect(RoomEffect)");
+        Skeleton.startCall("Room.removeEffect(RoomEffect)");
         this.effects.remove(effect);
+        Skeleton.endCall();
     }
 
     /**
      * Ha egy játékos befér még a szobába, igaz értékkel tér vissza.
      */
     public boolean canPlayerEnter() {
-        if(capacity > players.size()) return true;
-        return false;
+        return capacity > players.size();
     }
 }

@@ -51,7 +51,7 @@ public class Door {
     }
 
     /**
-     * Megmondja, hogy az ajtó room1 és room2 között van-e.
+     * Segédfüggvény. Megmondja, hogy az ajtó room1 és room2 között van-e.
      */
     public boolean isBetween(Room room1, Room room2) {
         return (this.room1 == room1 && this.room2 == room2) || (this.room1 == room2 && this.room2 == room1);
@@ -96,7 +96,7 @@ public class Door {
      * @param room1
      */
     public void setRoom1(Room room1) {
-
+        this.room1 = room1;
     }
 
     /**

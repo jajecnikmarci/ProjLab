@@ -1,9 +1,9 @@
 package items;
 
 import player.Player;
-import player.Professor;
 import player.Student;
 import room.Room;
+import skeleton.Skeleton;
 
 /**
  *
@@ -24,8 +24,9 @@ public class Transistor extends Item {
      * @param room
      */
     public void setRoom(Room room) {
-        System.out.println("Transistor.setRoom(Room)");
+        Skeleton.startCall("Transistor.setRoom(Room)");
         this.room = room;
+        Skeleton.endCall();
     }
 
     /**
@@ -33,8 +34,9 @@ public class Transistor extends Item {
      * @param transistor
      */
     public void setPair(Transistor transistor) {
-        System.out.println("Transistor.setPair(Transistor)");
+        Skeleton.startCall("Transistor.setPair(Transistor)");
         this.pair = transistor;
+        Skeleton.endCall();
     }
 
     /**
@@ -42,7 +44,6 @@ public class Transistor extends Item {
      * @param student a megadott halglató
      */
     public void setOwner(Student student) {
-        System.out.println("Transistor.setOwner(Student)");
         this.owner = student;
     } 
 
@@ -58,16 +59,14 @@ public class Transistor extends Item {
      */
     @Override
     public void use(Room room, Player player) {
-        System.out.println("Transistor.use(Room, Player)");
-
+        Skeleton.startCall("Transistor.use(Room, Player)");
         if(this.pair != null && this.pair.room == null) {
 
             this.setRoom(room);
             player.removeItem(this);
+            Skeleton.endCall("A tranzisztor a szobához lett hozzáadva.");
         
-        }else if(this.pair != null){
-
-            if(this.pair.room.canPlayerGoIn()) {
+        }else if(this.pair != null && this.pair.room.canPlayerEnter()) {
                 room.removePlayer(player);
 
                 this.pair.room.addPlayer(player);
@@ -78,9 +77,8 @@ public class Transistor extends Item {
 
                 player.removeItem(this);
                 player.addItem(this.pair);
-            }
-
-        }
+                Skeleton.endCall("A játékos át lett teleportálva a másik szobába.");
+        } else Skeleton.endCall("A játékos nem lett elteleportálva a másik szobába.");
     }
 
     /**
@@ -89,7 +87,8 @@ public class Transistor extends Item {
      */
     @Override
     public void accept(Player player) {
-        System.out.println("Transistor.accept(Player)");
+        Skeleton.startCall("Transistor.accept(Player)");
         player.acceptItem(this);
+        Skeleton.endCall();
     }
 }

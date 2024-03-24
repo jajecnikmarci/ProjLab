@@ -17,7 +17,7 @@ import room.*;
  * (1) Teszt függvény megírása az ostályon belül (lásd test 1)
  * (2) konstruktorban hozzáadás a tests listához.
  * 
- * Az összes függvénynek meg kell hívnia a startCall és endCall függvényeket.
+ * Az összes lényeges függvénynek meg kell hívnia a startCall és endCall függvényeket.
  * A startCall-nak a függvény fejlécét kell átadni.
  * Az endCallnak a függvény visszatérési értékét kell átadni, vagy hogy mi történt, 
  * amiért visszatért a függvény. (Ha nem egyértelmű)

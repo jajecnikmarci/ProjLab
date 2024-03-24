@@ -2,9 +2,8 @@ package items;
 
 import effects.StunEffect;
 import player.Player;
-import player.Professor;
-import player.Student;
 import room.Room;
+import skeleton.Skeleton;
 
 /**
  *
@@ -17,10 +16,10 @@ public class Rug extends Item {
      */
     @Override
     public void use(Room room, Player player) {
-        System.out.println("Rug.use(Room, Player)");
+        Skeleton.startCall("Rug.use(Room, Player)");
         room.addEffect(new StunEffect(this,30   ));
         player.removeItem(this);
-
+        Skeleton.endCall();
     }
 
     /**
@@ -29,7 +28,8 @@ public class Rug extends Item {
      */
     @Override
     public void accept(Player player) {
-        System.out.println("Rug.accept(Player)");
+        Skeleton.startCall("Rug.accept(Player)");
         player.acceptItem(this);
+        Skeleton.endCall();
     }
 }
