@@ -1,8 +1,6 @@
 package items;
 
 import player.Player;
-import player.Professor;
-import player.Student;
 import room.Room;
 
 /**

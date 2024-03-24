@@ -1,8 +1,12 @@
 package player;
 
+import java.util.Optional;
+
 import effects.PoisonImmunity;
 import items.*;
+import room.Door;
 import room.Room;
+import skeleton.Skeleton;
 
 /**
  *
@@ -21,8 +25,9 @@ public class Professor extends Player {
      */
     @Override
     public void meet(Student student) {
-        System.out.println("Professor.meet(Student)");
+        Skeleton.startCall("Professor.meet(Student)");
         student.kill();
+        Skeleton.endCall();
     }
 
     /**
@@ -30,8 +35,9 @@ public class Professor extends Player {
      */
     @Override
     public void meet(Professor professor, Room room) {
-        System.out.println("Professor.meet(Professor, Room)");
+        Skeleton.startCall("Professor.meet(Professor, Room)");
         // TODO: Leave room
+        Skeleton.endCall("A professzor elhagyta a szobát.");
     }
 
     /**
@@ -41,10 +47,11 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(FFP2 ffp2) {
-        System.out.println("Professor.acceptItem(FFP2)");
+        Skeleton.startCall("Professor.acceptItem(FFP2)");
         this.addItem(ffp2);
         this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength()));
         location.removeItem(ffp2);
+        Skeleton.endCall();
     }
 
     /**
@@ -54,9 +61,10 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(Camembert camembert) {
-        System.out.println("Professor.acceptItem(Camembert)");
+        Skeleton.startCall("Professor.acceptItem(Camembert)");
         this.addItem(camembert);
         location.removeItem(camembert);
+        Skeleton.endCall();
     }
 
     /**
@@ -67,6 +75,8 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(Transistor transistor) {
+        Skeleton.startCall("Professor.acceptItem(Transistor)");
+        Skeleton.endCall("A professzor nem tudja felvenni a tranzisztort.");
         return;
     }
 
@@ -78,6 +88,8 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(SlideRule slideRule) {
+        Skeleton.startCall("Professor.acceptItem(SlideRule)");
+        Skeleton.endCall("A professzor nem tudja felvenni a logarlécet.");
         return;
     }
 
@@ -89,6 +101,8 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(TVSZ tvsz) {
+        Skeleton.startCall("Professor.acceptItem(TVSZ)");
+        Skeleton.endCall("A professzor nem tudja felvenni a TVSZ-t.");
         return;
     }
 
@@ -100,6 +114,8 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(Glass glass) {
+        Skeleton.startCall("Professor.acceptItem(Glass)");
+        Skeleton.endCall("A professzor nem tudja felvenni a Szent Söröspoharat.");
         return;
     }
 
@@ -111,6 +127,29 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(Rug rug) {
+        Skeleton.startCall("Professor.acceptItem(Rug)");
+        Skeleton.endCall("A professzor nem tudja felvenni a Nedves Táblatörlő Rongyot.");
         return;
+    }
+
+    /**
+     * Belép a megadott szobába, ha a szoba befogadja a játékost.
+     * @param room a szoba, amibe a játékos be kíván lépni
+     */
+    @Override
+    public void goToRoom(Room room) {
+        Skeleton.startCall("Professor.goToRoom(Room)");
+        Optional<Door> door = location.getDoors()
+                .stream()
+                .filter(d -> d.isBetween(location, room))
+                .findFirst();
+
+        if(door.isPresent()) {
+            door.get().goThrough(this);
+            room.onEnter(this);
+            Skeleton.endCall("A professzor belépett a szobába."); 
+            return;
+        }
+        Skeleton.endCall("A professzor nem lépett be a szobába.");
     }
 }

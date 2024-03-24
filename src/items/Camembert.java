@@ -2,9 +2,8 @@ package items;
 
 import effects.PoisonEffect;
 import player.Player;
-import player.Professor;
-import player.Student;
 import room.Room;
+import skeleton.Skeleton;
 
 /**
  *
@@ -18,12 +17,13 @@ public class Camembert extends Item {
      */
     @Override
     public void use(Room room, Player player) {
-        System.out.println("Camembert.use(Room, Player)");
+        Skeleton.startCall("Camembert.use(Room, Player)");
         PoisonEffect camembertEffect = new PoisonEffect(this, 30);
         room.addEffect(camembertEffect);
         camembertEffect.activate();
         room.poisonPlayers();
         player.removeItem(this);
+        Skeleton.endCall();
     }
 
     /**
@@ -32,7 +32,8 @@ public class Camembert extends Item {
      */
     @Override
     public void accept(Player player) {
-        System.out.println("Camembert.accept(Player)");
+        Skeleton.startCall("Camembert.accept(Player)");
         player.acceptItem(this);
+        Skeleton.endCall();
     }
 }
