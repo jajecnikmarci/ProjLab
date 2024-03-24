@@ -93,6 +93,7 @@ public class Room {
     /**
      * Amikor egy oktató belép a szobába, ez a függvény gyakorolja rá a szoba hatásait. 
      * Interakcióba hozza a szobában található játékosokkal.
+     * A beléptető objektum felelőssége meghívni ezt a függvényt.
      * @param professor a belépő oktató
      */
     public void onEnter(Professor professor) {
@@ -108,6 +109,7 @@ public class Room {
     /**
      * Amikor egy hallgató belép a szobába, ez a függvény gyakorolja rá a szoba hatásait.
      * Interakcióba hozza a szobában található játékosokkal.
+     * A beléptető objektum felelőssége meghívni ezt a függvényt.
      * @param student a belépő hallgató
      */
     public void onEnter(Student student) {

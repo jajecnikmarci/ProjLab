@@ -89,7 +89,8 @@ public class Skeleton {
         tests.add(new Test("Use Rug", this::testUseRug));
 
         tests.add(new Test("Pair Transistors", this::testPairTransistors));
-        tests.add(new Test("Use Transistor", this::testUseTransistor));
+        tests.add(new Test("Drop Transistor", this::testDropTransistor));
+        tests.add(new Test("Teleport with Transistor", this::testTeleportWithTransistor));
         tests.add(new Test("Split Room", this::testSplitRoom));
         tests.add(new Test("Merge Rooms", this::testMergeRooms));
         tests.add(new Test("Move to Room", this::testMoveToRoom));
@@ -220,11 +221,37 @@ public class Skeleton {
 
         student.pairTransistors(transistor1, transistor2);
     }
-    public void testUseTransistor(){
 
-        //ilyenkor is kiíródnak a függvények, de ilyenkor nem kellene
+    public void testDropTransistor(){
+
         Room room1 = new Room(10);
-        Room room2 = new Room(10);
+
+        Student student = new Student(room1);
+        room1.addPlayer(student);
+        Transistor transistor1 = new Transistor();
+        Transistor transistor2 = new Transistor();
+
+        student.addItem(transistor1);
+        student.addItem(transistor2);
+
+        transistor1.setPair(transistor2);
+        transistor2.setPair(transistor1);
+
+        student.useItem(transistor1);
+    
+    }
+
+    public void testTeleportWithTransistor(){
+
+        Room room1 = new Room(10);
+        Room room2;
+
+        boolean hasPlace = getBoolean("Van hely a másik szobában?");
+        if(hasPlace){
+            room2 = new Room(10);
+        }else{
+            room2 = new Room(0);
+        }
 
         Student student = new Student(room1);
         room1.addPlayer(student);
@@ -236,19 +263,9 @@ public class Skeleton {
         transistor1.setPair(transistor2);
         transistor2.setPair(transistor1);
 
-
-        boolean oneTransistor = getBoolean("A játékosnál 1 tranzisztor van?");
-
-        if(oneTransistor){
-            transistor2.setRoom(room2);
-
-        }else{
-            student.addItem(transistor2);
-        }
-
+        transistor2.setRoom(room2);
 
         student.useItem(transistor1);
-
     }
 
     public void testPickUpFFP2() {
