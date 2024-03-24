@@ -6,6 +6,7 @@ import items.Item;
 import player.Player;
 import player.Professor;
 import player.Student;
+import skeleton.Skeleton;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -74,8 +75,9 @@ public class Room {
      * @param item a hozzáadandó tárgy
      */
     public void addItem(Item item) {
-        System.out.println("Room.addItem(Item)");
+        Skeleton.startCall("Room.addItem(Item)");
         items.add(item);
+        Skeleton.endCall();
     }
 
     /**
@@ -191,8 +193,9 @@ public class Room {
      * @param player a hozzáadandó player
      */
     public void addPlayer(Player player) {
-        System.out.println("Room.addPlayer(Player)");
+        Skeleton.startCall("Room.addPlayer(Player)");
         this.players.add(player);
+        Skeleton.endCall();
     }
 
     /**

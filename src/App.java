@@ -1,3 +1,4 @@
+import skeleton.Skeleton;
 
 public class App {
     public static Skeleton skeleton = new Skeleton();
