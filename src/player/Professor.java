@@ -1,7 +1,10 @@
 package player;
 
+import java.util.Optional;
+
 import effects.PoisonImmunity;
 import items.*;
+import room.Door;
 import room.Room;
 
 /**
@@ -112,5 +115,22 @@ public class Professor extends Player {
     @Override
     public void acceptItem(Rug rug) {
         return;
+    }
+
+    /**
+     * Belép a megadott szobába, ha a szoba befogadja a játékost.
+     * @param room a szoba, amibe a játékos be kíván lépni
+     */
+    @Override
+    public void goToRoom(Room room) {
+        Optional<Door> door = location.getDoors()
+                .stream()
+                .filter(d -> d.isBetween(location, room))
+                .findFirst();
+
+        if(door.isPresent()) {
+            door.get().goThrough(this);
+            room.onEnter(this);
+        }
     }
 }

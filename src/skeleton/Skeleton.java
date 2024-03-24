@@ -1,3 +1,5 @@
+package skeleton;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -8,23 +10,6 @@ import items.*;
 import player.*;
 import room.*;
 
-class Test {
-    private String title;
-    private Runnable test;
-
-    public Test(String name, Runnable test) {
-        this.title = name;
-        this.test = test;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void run() {
-        test.run();
-    }
-}
 
 /**
  * Szkeleton osztály. Tárolja a teszteseteket. Kiírja a menüt.
@@ -32,6 +17,11 @@ class Test {
  * (1) Teszt függvény megírása az ostályon belül (lásd test 1)
  * (2) konstruktorban hozzáadás a tests listához.
  * 
+ * Az összes függvénynek meg kell hívnia a startCall és endCall függvényeket.
+ * A startCall-nak a függvény fejlécét kell átadni.
+ * Az endCallnak a függvény visszatérési értékét kell átadni, vagy hogy mi történt, 
+ * amiért visszatért a függvény. (Ha nem egyértelmű)
+ * Az összes függvény minden lehetséges visszatérése előtt meg kell hívni az endCall függvényt.
  */
 public class Skeleton {
     class Test {
@@ -49,9 +39,33 @@ public class Skeleton {
 
         public void run() {
             print("Running Test: " + title);
+            indentCounter++;
             test.run();
+            indentCounter--;
             print("End of test: " + title + "\n");
         }
+    }
+
+    private static int indentCounter = 0;
+    public static void startCall(String methodHeader) {
+      
+        print(methodHeader);
+        indentCounter++;
+    }
+    public static void endCall(String result) {
+        indentCounter--;
+        print("<--" + result);
+
+    }
+    public static void endCall() {
+        indentCounter--;
+        print("<-- void");
+    }
+    public static void print(String string) {
+        for(int i = 0; i < indentCounter-1; i++) {
+            System.out.print("\t");
+        }
+        System.out.println(" " + string);
     }
 
     List<Test> tests;
@@ -89,11 +103,9 @@ public class Skeleton {
         tests.add(new Test("Professor enters Room with Rug", this::testProfessorEntersRoomWithRug));
     }
 
-    private void print(String string) {
-        System.out.println(string);
-    }
+    
 
-    private void err(String string) {
+    public static void err(String string) {
         System.err.println(string);
     }
 
@@ -164,8 +176,9 @@ public class Skeleton {
                     continue;
                 }
                 int index = Integer.parseInt(input) - 1;
-                if (index >= 0 && index < tests.size())
+                if (index >= 0 && index < tests.size()) // run test
                     tests.get(index).run();
+                
                 else
                     print("Nincs ilyen teszt!");
             } catch (NumberFormatException e) {

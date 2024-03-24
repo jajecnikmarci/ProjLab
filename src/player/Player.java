@@ -6,10 +6,10 @@ import effects.PoisonImmunity;
 import items.Item;
 import room.Door;
 import room.Room;
+import skeleton.Skeleton;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  *
  */
@@ -40,9 +40,9 @@ public abstract class Player implements PickUpVisitor {
      * @param item a hozzáadandó tárgy
      */
     public void addItem(Item item) {
-        System.out.println("Player.addItem(Item)");
+        Skeleton.startCall("Player.addItem(Item)");
         inventory.add(item);
-
+        Skeleton.endCall();
     }
 
     /**
@@ -94,8 +94,9 @@ public abstract class Player implements PickUpVisitor {
      * @param poisonImmunity
      */
     public void addPoisonImmunity(PoisonImmunity poisonImmunity) {
-        System.out.println("Player.addPoisonImmunity(PoisonImmunity)");
+        Skeleton.startCall("Player.addPoisonImmunity(PoisonImmunity)");
         poisonImmunities.add(poisonImmunity);
+        Skeleton.endCall();
     }
 
     /**
@@ -111,7 +112,8 @@ public abstract class Player implements PickUpVisitor {
      * A játékos duration ideig nem tud mozogni.
      */
     public void stun(int duration) {
-        System.out.println("Player.stun()");
+        Skeleton.startCall("Player.stun(Duration)");
+        Skeleton.endCall("Player.stun(Duration)");
     }
 
     /**
@@ -123,27 +125,31 @@ public abstract class Player implements PickUpVisitor {
      * tárgyakat.
      */
     public void poison() {
-        System.out.println("Player.poison()");
+        Skeleton.startCall("Player.poison()");
         if (poisonImmunities.isEmpty()) {
             this.dropAll();
             this.stun(5);
+            Skeleton.endCall("A játékos megmérgeződött.");
             return;
         }
-        if (poisonImmunities.stream().anyMatch(PoisonImmunity::isActive)) return;
+        if (poisonImmunities.stream().anyMatch(PoisonImmunity::isActive)) {
+            Skeleton.endCall("A játékos nem mérgeződött meg, mert volt aktív immunitása.");
+            return;
+        }
         poisonImmunities.get(0).activate();
+        Skeleton.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
     }
 
     /**
-     * @param room
+     * Belép a szobába, ha tud és közli a szobával, hogy belépett a játékos.
+     * @param room 
      */
-    public void goToRoom(Room room) {
-    }
+    public abstract void goToRoom(Room room);
 
     /**
      * @param student
      */
     public void meet(Student student) {
-        
     }
 
     /**
