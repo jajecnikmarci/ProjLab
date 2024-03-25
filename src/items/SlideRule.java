@@ -7,21 +7,17 @@ import room.Room;
 import skeleton.Skeleton;
 
 /**
- *
+ * Logarléc tárgyat reprezentáló osztály
  */
 public class SlideRule extends Item {
+
     /**
-     * @param room
-     * @param player
+     * A logarléc használata. Felvételekor véget ér a játék így nem felhasználható
      */
     @Override
     public void use(Room room, Player player) {
     }
 
-    /**
-     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
-     * @param player a játékos aki próbálja felvenni a tárgyat
-     */
     @Override
     public void accept(Player player) {
         Skeleton.startCall("SlideRule.accept(Player)");

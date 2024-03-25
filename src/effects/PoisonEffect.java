@@ -3,14 +3,15 @@ package effects;
 import items.Item;
 import player.Professor;
 import player.Student;
+import skeleton.Skeleton;
 
 /**
  *
  */
 public class PoisonEffect extends RoomEffect {
 
-    public PoisonEffect(Item givenBy, int duration) {
-        super(givenBy, duration);
+    public PoisonEffect(Item givenBy, int duration, EffectConsumedObserver observer) {
+        super(givenBy, duration, observer);
     }
 
     /**
@@ -18,11 +19,11 @@ public class PoisonEffect extends RoomEffect {
      */
     @Override
     public void activate() {
-        System.out.println("PoisonEffect.activate()");
-        Timer timer = new Timer();
+        Skeleton.startCall("PoisonEffect.activate()");
+        timer = new Timer(this);
         active = true;
         timer.start(getDuration());
-        //TODO notify metódus feliratkozás majd active = false
+        Skeleton.endCall();
     }
 
     /**
@@ -31,7 +32,9 @@ public class PoisonEffect extends RoomEffect {
      */
     @Override
     public void affect(Professor professor) {
+        Skeleton.startCall("PoisonEffect.affect(Professor)");
         professor.poison();
+        Skeleton.endCall();
     }
 
     /**
@@ -40,6 +43,8 @@ public class PoisonEffect extends RoomEffect {
      */
     @Override
     public void affect(Student student) {
+        Skeleton.startCall("PoisonEffect.affect(Student)");
         student.poison();
+        Skeleton.endCall();
     }
 }

@@ -1,5 +1,5 @@
 class Player {
-    Room location
+    room location
     boolean poisonImmune
     + void pickUp(Item item)
     + void drop(Item item)
@@ -23,4 +23,4 @@ class Student extends Player {
 
 Player  *--   "*" Item 
 
-Player "*" --o Room
+Player "*" --o room

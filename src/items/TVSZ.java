@@ -1,29 +1,36 @@
 package items;
 
+import effects.KillImmunity;
 import player.Player;
 import room.Room;
 import skeleton.Skeleton;
 
 /**
- *
+ * TVSZ Denevér Bőrre Nyomtatott Példánya tárgyat reprezentáló osztály
  */
 public class TVSZ extends Item {
-    private int timesImmune = 3;
     /**
-     * @param room
-     * @param player
+     * A tárgy hátralévő immunitást adásainak száma
      */
+    private int timesImmune;
+
+    public TVSZ() {
+        timesImmune = 3;
+    }
+
     @Override
     public void use(Room room, Player player) {
-        Skeleton.startCall("TVSZ.use(Room, Player)"); 
-        timesImmune--;    
+        Skeleton.startCall("TVSZ.use(Room, Player)");
+        KillImmunity killImmunity = new KillImmunity(this,Integer.MAX_VALUE, player);
+        player.addKillImmunity(killImmunity);
+        timesImmune--;
+
+        if (timesImmune == 0) {
+            player.removeItem(this);
+        }
         Skeleton.endCall();   
     }
 
-    /**
-     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
-     * @param player a játékos aki próbálja felvenni a tárgyat
-     */
     public void accept(Player player) {
         Skeleton.startCall("TVSZ.accept(Player)");
         player.acceptItem(this);

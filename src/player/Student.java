@@ -1,5 +1,6 @@
 package player;
 
+import effects.Effect;
 import effects.KillImmunity;
 import effects.PoisonImmunity;
 import items.*;
@@ -40,6 +41,7 @@ public class Student extends Player {
         if (killImmunities.isEmpty()) {
             souls--;
             if (souls == 0) {
+                //TODO: Meghal a hallgató
                 Skeleton.endCall(" A játékos meghalt");
                 return;
             }
@@ -52,15 +54,17 @@ public class Student extends Player {
                 return;
             }
         }
-        killImmunities.get(0).activate();
+        KillImmunity killImmunity = killImmunities.get(0);
+        killImmunity.activate();
         Skeleton.endCall("A hallgatót megvédte egy most aktiválódott tárgya.");
 
     }
 
     /**
      * Hozzáadja a killImmunities-hez a paraméterként kapott immuntitást.
-     * @param killImmunity
+     * @param killImmunity A hozzáadadndó killImmunity
      */
+    @Override
     public void addKillImmunity(KillImmunity killImmunity) {
         Skeleton.startCall("Student.addKillImmunity(KillImmunity)");
         killImmunities.add(killImmunity);
@@ -68,19 +72,21 @@ public class Student extends Player {
     }
 
     /**
-     * Kitörli a killImmunities-ből a paraméterként kapott immuntitást.
-     * @param killImmunity
+     * Kitörli a killImmunities-ből a paraméterként kapott tárgyhoz tartozó immunitást.
+     * @param item A tárgy ami az immunitást adja
      */
-    public void removeKillImmunity(KillImmunity killImmunity) {
+    @Override
+    public void removeKillImmunity(Item item) {
         Skeleton.startCall("Student.removeKillImmunity(KillImmunity)");
-        killImmunities.remove(killImmunity);
+        KillImmunity killImmunityToRemove = findKillImmunityByItem(item);
+        killImmunities.remove(killImmunityToRemove);
         Skeleton.endCall();
     }
 
     /**
      * Összepárosítja a két kapott tranzisztort. Ez egy új függvény, a tervben nem szerepelt.
-     * @param transistor1
-     * @param transistor2
+     * @param transistor1 Az egyik tranzisztor
+     * @param transistor2 A másik tranzisztor
      */
     public void pairTransistors(Transistor transistor1, Transistor transistor2) {
         Skeleton.startCall("Student.pairTransistors(transistor1, transistor2)");
@@ -101,7 +107,7 @@ public class Student extends Player {
     public void acceptItem(FFP2 ffp2) {
         Skeleton.startCall("Student.acceptItem(FFP2)");
         this.addItem(ffp2);
-        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength()));
+        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength(),this));
         location.removeItem(ffp2);
         Skeleton.endCall();
     }
@@ -155,7 +161,7 @@ public class Student extends Player {
     public void acceptItem(TVSZ tvsz) {
         Skeleton.startCall("Student.acceptItem(TVSZ)");
         this.addItem(tvsz);
-        KillImmunity killImmunity = new KillImmunity(tvsz, 10);
+        KillImmunity killImmunity = new KillImmunity(tvsz, 10,this);
         killImmunity.activate();
         this.addKillImmunity(killImmunity);
         location.removeItem(tvsz);
@@ -171,7 +177,7 @@ public class Student extends Player {
     public void acceptItem(Glass glass) {
         Skeleton.startCall("Student.acceptItem(Glass)");
         this.addItem(glass);
-        this.addKillImmunity(new KillImmunity(glass,10));
+        this.addKillImmunity(new KillImmunity(glass,10,this));
         location.removeItem(glass);
         Skeleton.endCall();
     }
@@ -191,8 +197,8 @@ public class Student extends Player {
 
     /**
      * Interakcióba lép egy Oktatóval, elszipolyozódik a lelke. 
-     * @param professor
-     * @param room
+     * @param professor A hallgatóval interakcióba lépő oktató
+     * @param room A szoba, ahol az interakció történik
      */
     @Override
     public void meet(Professor professor, Room room) {
@@ -207,6 +213,8 @@ public class Student extends Player {
      */
     @Override
     public void meet(Student student) {
+        Skeleton.startCall("Student.meet(Student)");
+        Skeleton.endCall();
     }
 
     public void goToRoom(Room room) {
@@ -222,7 +230,29 @@ public class Student extends Player {
             Skeleton.endCall("A hallgató átment a szobába."); 
             return;
         }
-        Skeleton.endCall("A hallgató nem ment át a szobába."); 
-        return;
+        Skeleton.endCall("A hallgató nem ment át a szobába.");
+    }
+    public KillImmunity findKillImmunityByItem(Item item) {
+        for (KillImmunity killImmunity : killImmunities) {
+            if (killImmunity.getItem().equals(item)) {
+                return killImmunity;
+            }
+        }
+        return null;
+    }
+    @Override
+    public void effectConsumed(Effect effect) {
+        Skeleton.startCall("Student.effectConsumed()");
+        super.effectConsumed(effect);
+        Item item = effect.getItem();
+        KillImmunity killImmunity = findKillImmunityByItem(item);
+        if (killImmunity != null) {
+            killImmunities.remove(killImmunity);
+            item.removeEffect();
+            if (inventory.contains(item)) {
+                item.use(location, this);
+            }
+        }
+        Skeleton.endCall();
     }
 }

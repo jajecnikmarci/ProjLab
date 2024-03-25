@@ -5,11 +5,11 @@
 class Labyrinth {
 
 }
-class Room {
+class room {
 }
 class Door {
 }
-Labyrinth *-- Room
+Labyrinth *-- room
 Labyrinth *-- Door
 
 abstract Item {
@@ -24,13 +24,13 @@ class Student extends Player {}
 
 ' Relationships
 
-Room *-- "*" Item
+room *-- "*" Item
 Player  *-- "*" Item
 
 Labyrinth *-- Professor
 Labyrinth *--    Student
 
-Room o--  Player
+room o--  Player
 
 
 

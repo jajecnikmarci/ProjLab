@@ -9,7 +9,7 @@ import room.Room;
 import skeleton.Skeleton;
 
 /**
- *
+ * A professzort reprezentáló osztály
  */
 public class Professor extends Player {
     
@@ -20,8 +20,8 @@ public class Professor extends Player {
     
     
     /**
-     *
-     * @param student
+     * Professzor találkozik egy diákkal, akit megöl.
+     * @param student a diák, aki meg fog halni
      */
     @Override
     public void meet(Student student) {
@@ -31,7 +31,8 @@ public class Professor extends Player {
     }
 
     /**
-     * @param professor
+     * Professzor találkozik egy professzorral, akivel találkozik
+     * @param professor a professzor, akivel találkozik
      */
     @Override
     public void meet(Professor professor, Room room) {
@@ -43,13 +44,13 @@ public class Professor extends Player {
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * @param ffp2 a hozzáadandó tárgy
+     * @param ffp2 a felvevendő tárgy
      */
     @Override
     public void acceptItem(FFP2 ffp2) {
         Skeleton.startCall("Professor.acceptItem(FFP2)");
         this.addItem(ffp2);
-        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength()));
+        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength(),this));
         location.removeItem(ffp2);
         Skeleton.endCall();
     }
@@ -57,7 +58,7 @@ public class Professor extends Player {
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * @param camembert a hozzáadandó tárgy
+     * @param camembert a felvevendő tárgy
      */
     @Override
     public void acceptItem(Camembert camembert) {
@@ -71,65 +72,60 @@ public class Professor extends Player {
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
-     * @param transistor
+     * @param transistor a felvevendő tárgy
      */
     @Override
     public void acceptItem(Transistor transistor) {
         Skeleton.startCall("Professor.acceptItem(Transistor)");
         Skeleton.endCall("A professzor nem tudja felvenni a tranzisztort.");
-        return;
     }
 
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
-     * @param slideRule
+     * @param slideRule a felvevendő tárgy
      */
     @Override
     public void acceptItem(SlideRule slideRule) {
         Skeleton.startCall("Professor.acceptItem(SlideRule)");
         Skeleton.endCall("A professzor nem tudja felvenni a logarlécet.");
-        return;
     }
 
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
-     * @param tvsz
+     * @param tvsz a felvevendő tárgy
      */
     @Override
     public void acceptItem(TVSZ tvsz) {
         Skeleton.startCall("Professor.acceptItem(TVSZ)");
         Skeleton.endCall("A professzor nem tudja felvenni a TVSZ-t.");
-        return;
     }
 
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
-     * @param glass
+     * @param glass a felvevendő tárgy
      */
     @Override
     public void acceptItem(Glass glass) {
         Skeleton.startCall("Professor.acceptItem(Glass)");
         Skeleton.endCall("A professzor nem tudja felvenni a Szent Söröspoharat.");
-        return;
     }
 
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
-     * @param rug
+     * @param rug a felvevendő tárgy
      */
     @Override
     public void acceptItem(Rug rug) {
         Skeleton.startCall("Professor.acceptItem(Rug)");
         Skeleton.endCall("A professzor nem tudja felvenni a Nedves Táblatörlő Rongyot.");
-        return;
     }
 
     /**

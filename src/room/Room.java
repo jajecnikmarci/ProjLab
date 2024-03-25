@@ -1,6 +1,8 @@
 package room;
 
 import effects.Effect;
+import effects.EffectConsumedObserver;
+import effects.KillImmunity;
 import effects.RoomEffect;
 import items.Item;
 import player.Player;
@@ -15,9 +17,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
+ * A játékban szereplő szobákat reprezentáló osztály.
  */
-public class Room {
+public class Room implements EffectConsumedObserver {
 
 
     public Room(int capacity) {
@@ -60,7 +62,6 @@ public class Room {
         doors = new ArrayList<Door>();
     }
 
-
     public List<Door> getDoors() {return doors;};
     /**
      * Kitörli a megadott tárgyat a szoba tárgyai közül.
@@ -83,8 +84,8 @@ public class Room {
     }
 
     /**
-     * 
-     * @param player 
+     * Hozzáad a szobában lévő táryak közül a legfelső tárgyat a játékos tárgyaihoz.
+     * @param player A játékos, aki a tárgyat fel akarja venni
      */
     public void popItem(Player player) {
         Skeleton.startCall("Room.popItem(Player)");
@@ -104,9 +105,9 @@ public class Room {
      */
     public void onEnter(Professor professor) {
         Skeleton.startCall("Room.onEnter(Professor)");
-        for (RoomEffect effect : this.effects) 
-            if(effect.isActive()) effect.affect(professor);
-        
+        for (RoomEffect effect : this.effects) {
+            if (effect.isActive()) effect.affect(professor);
+        }
         for (Player player : this.players) {
             player.meet(professor,this);
         }
@@ -121,11 +122,10 @@ public class Room {
      */
     public void onEnter(Student student) {
         Skeleton.startCall("Room.onEnter(Student)");
-        for (RoomEffect effect : this.effects) 
-            if(effect.isActive()) effect.affect(student);
-
+        for (RoomEffect effect : this.effects) {
+            if (effect.isActive()) effect.affect(student);
+        }
         players.forEach(player -> player.meet(student));
-
         Skeleton.endCall();
     }
 
@@ -187,7 +187,7 @@ public class Room {
      */
     public void mergeWithRoom(Room room) {
         Skeleton.startCall("Room.mergeWithRoom(Room)");
-        if (!players.isEmpty() && !room.players.isEmpty())  {
+        if (!players.isEmpty() || !room.players.isEmpty())  {
             Skeleton.endCall("A szobák nem olvadtak össze, mert volt bennük játékos.");
             return;
         }
@@ -253,5 +253,26 @@ public class Room {
      */
     public boolean canPlayerEnter() {
         return capacity > players.size();
+    }
+
+    /**
+     * Megkeresi a paraméterként kapott tárgyhoz tartozó KillImmunity-t a killImmunities listában.
+     * @param item a tárgy, amelyhez tartozó KillImmunity-t keresi
+     */
+    private RoomEffect findRoomEffectByItem(Item item) {
+        for (RoomEffect effect : effects) {
+            if (effect.getItem().equals(item)) {
+                return effect;
+            }
+        }
+        return null;
+    }
+
+    public void effectConsumed(Effect effect) {
+        Skeleton.startCall("Room.effectConsumed()");
+        Item item = effect.getItem();
+        effects.remove(findRoomEffectByItem(item));
+        item.removeEffect();
+        Skeleton.endCall();
     }
 }

@@ -6,7 +6,7 @@ import room.Room;
 import skeleton.Skeleton;
 
 /**
- *
+ * Szent Sörös Pohár tárgyat reprezentáló osztály
  */
 public class Glass extends Item {
 
@@ -15,14 +15,15 @@ public class Glass extends Item {
      * állapotba kerül az oktatók támadásaival szemben a Glass használatától
      * kezdve 10 másodpercig. A védettség egy KillImmunity, ami aktiválódik
      * amint aktiválja a hallgató a tárgyat.
-     * @param room
-     * @param player
+     * @param room a szoba, ahol a tárgyat használják
+     * @param player a játékos, aki használja a tárgyat
      */
     @Override
     public void use(Room room, Player player) {
         Skeleton.startCall("Glass.use(Room, Player)");
-        KillImmunity killImmunity = new KillImmunity(this, 10);
+        KillImmunity killImmunity = new KillImmunity(this, 10, player);
         killImmunity.activate();
+        effect = killImmunity;
         player.removeItem(this);
         Skeleton.endCall();
     }
