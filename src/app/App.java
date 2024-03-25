@@ -1,3 +1,4 @@
+package app;
 import skeleton.Skeleton;
 
 public class App {
