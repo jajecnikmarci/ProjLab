@@ -16,7 +16,9 @@ public class StunEffect extends RoomEffect {
     @Override
     public void activate() {
         Skeleton.startCall("StunEffect.activate()");
+        timer = new Timer(this);
         active = true;
+        timer.start(getDuration());
         Skeleton.endCall();
     }
 

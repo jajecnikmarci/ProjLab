@@ -24,9 +24,10 @@ public class Timer {
     }
     /**
      * Az időzítő elindítását megvalósító metódus.
-     * @param duration Az időzítő időtartama.
+     *
+     * @param durationInSeconds Az időzítő időtartama.
      */
-    void start(int duration) {
+    void start(int durationInSeconds) {
         Skeleton.startCall("Timer.start(int)");
         timer = new java.util.Timer();
         timer.schedule(new TimerTask() {
@@ -34,7 +35,7 @@ public class Timer {
             public void run() {
                 ownerEffect.timeIsUp();
             }
-        }, duration);
+        }, durationInSeconds /*1000L*/); //TODO *1000L élesben
         Skeleton.endCall();
     }
     /**

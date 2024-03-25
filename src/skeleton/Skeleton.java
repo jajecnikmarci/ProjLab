@@ -217,7 +217,8 @@ public class Skeleton {
         Room room = new Room(10);
         Student student = new Student(room);
         Item camembert = new Camembert();
-        student.addItem(camembert);
+        room.addItem(camembert);
+        student.pickUpItem();
         room.addPlayer(student);
 
         verbose = true;
@@ -301,91 +302,91 @@ public class Skeleton {
 
     public void testPickUpCamembert() {
         verbose = false;
-        Room r = new Room();
-        Student s = new Student(r);
-        Camembert i = new Camembert();
-        r.addPlayer(s);
-        r.addItem(i);
+        Room room = new Room();
+        Student student = new Student(room);
+        Camembert camembert = new Camembert();
+        room.addPlayer(student);
+        room.addItem(camembert);
         verbose = true;
         
-        s.pickUpItem();
+        student.pickUpItem();
     }
 
     public void testPickUpGlass() {
         verbose = false;
-        Room r = new Room();
-        Student s = new Student(r);
-        Glass i = new Glass();
-        r.addPlayer(s);
-        r.addItem(i);
+        Room room = new Room();
+        Student student = new Student(room);
+        Glass glass = new Glass();
+        room.addPlayer(student);
+        room.addItem(glass);
         verbose = true;
 
-        s.pickUpItem();
+        student.pickUpItem();
     }
 
     public void testPickUpTVSZ() {
         verbose = false;
-        Room r = new Room();
-        Student s = new Student(r);
-        TVSZ i = new TVSZ();
-        r.addPlayer(s);
-        r.addItem(i);
+        Room room = new Room();
+        Student student = new Student(room);
+        TVSZ tvsz = new TVSZ();
+        room.addPlayer(student);
+        room.addItem(tvsz);
         verbose = true;
         
-        s.pickUpItem();
+        student.pickUpItem();
     }
     
     public void testPickUpTransistor() {
         verbose = false;
-        Room r = new Room();
-        Student s = new Student(r);
-        Transistor i = new Transistor();
-        r.addPlayer(s);
-        r.addItem(i);
+        Room room = new Room();
+        Student student = new Student(room);
+        Transistor transistor = new Transistor();
+        room.addPlayer(student);
+        room.addItem(transistor);
         verbose = true;
 
-        s.pickUpItem();
+        student.pickUpItem();
     }
 
     public void testPickUpRug() {
         verbose = false;
-        Room r = new Room();
-        Student s = new Student(r);
-        Rug i = new Rug();
-        r.addPlayer(s);
-        r.addItem(i);
+        Room room = new Room();
+        Student student = new Student(room);
+        Rug rug = new Rug();
+        room.addPlayer(student);
+        room.addItem(rug);
         verbose = true;
 
-        s.pickUpItem();
+        student.pickUpItem();
     }
 
     public void testPickUpSlideRule() {
         verbose = false;
-        Room r = new Room();
-        Student s = new Student(r);
-        SlideRule i = new SlideRule();
-        r.addPlayer(s);
-        r.addItem(i);
+        Room room = new Room();
+        Student student = new Student(room);
+        SlideRule slideRule = new SlideRule();
+        room.addPlayer(student);
+        room.addItem(slideRule);
         verbose = true;
         
-        s.pickUpItem();
+        student.pickUpItem();
     }
 
     public void testUseRug() {
         verbose = false;
-        Room r = new Room();
-        Student s = new Student(r);
-        Rug i = new Rug();
-        r.addPlayer(s);
-        s.addItem(i);
+        Room room = new Room();
+        Student student = new Student(room);
+        Rug rug = new Rug();
+        room.addPlayer(student);
+        student.addItem(rug);
 
         verbose = true;
-        i.use(r, s);
+        rug.use(room, student);
     }
 
     private void testSplitRoom() {
 
-        int capacity = getInt("Mekkora szobát legyen a szoba kapacitása");
+        int capacity = getInt("Mekkora legyen a szoba kapacitása");
 
         boolean hasPlayer = getBoolean("Legyen játékos a szobában?");
 
@@ -457,7 +458,8 @@ public class Skeleton {
         Student student = new Student(room);
         room.addPlayer(student);
         Glass glass = new Glass();
-        student.addItem(glass);
+        room.addItem(glass);
+        student.pickUpItem();
         verbose = true;
         student.useItem(glass);
         Professor professor = new Professor(room);
@@ -471,8 +473,9 @@ public class Skeleton {
         Student student = new Student(room);
         room.addPlayer(student);
         FFP2 ffp2 = new FFP2();
+        room.addItem(ffp2);
         verbose = true;
-        student.addItem(ffp2);
+        student.pickUpItem();
         student.poison();
     }
 
@@ -482,20 +485,22 @@ public class Skeleton {
         Student student = new Student(room);
         room.addPlayer(student);
         TVSZ tvsz = new TVSZ();
+        room.addItem(tvsz);
         verbose = true;
-        student.addItem(tvsz);
+        student.pickUpItem();
         student.kill();
     }
 
     private void testProfessorEntersRoomWithRug() {
-        verbose = true;
-        Room room = new room.Room();
-        Professor professor = new Professor(room);
+        verbose = false;
+        Room room = new Room();
+        Room room2 = new Room();
+        Professor professor = new Professor(room2);
         Rug rug = new Rug();
         StunEffect stunEffect = new StunEffect(rug, 30, room);
         room.addEffect(stunEffect);
         stunEffect.activate();
-        verbose = false;
+        verbose = true;
         room.onEnter(professor);
     }
 }

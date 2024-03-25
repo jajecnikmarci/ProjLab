@@ -105,9 +105,9 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Professor professor) {
         Skeleton.startCall("Room.onEnter(Professor)");
-        for (RoomEffect effect : this.effects) 
-            if(effect.isActive()) effect.affect(professor);
-        
+        for (RoomEffect effect : this.effects) {
+            if (effect.isActive()) effect.affect(professor);
+        }
         for (Player player : this.players) {
             player.meet(professor,this);
         }
@@ -187,7 +187,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void mergeWithRoom(Room room) {
         Skeleton.startCall("Room.mergeWithRoom(Room)");
-        if (!players.isEmpty() && !room.players.isEmpty())  {
+        if (!players.isEmpty() || !room.players.isEmpty())  {
             Skeleton.endCall("A szobák nem olvadtak össze, mert volt bennük játékos.");
             return;
         }

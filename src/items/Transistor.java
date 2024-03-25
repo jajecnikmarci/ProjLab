@@ -78,6 +78,7 @@ public class Transistor extends Item {
                 this.pair.room.onEnter(owner);
 
                 this.setRoom(room);
+                this.pair.room.removeItem(this.pair); //TODO: ez nem biztos hogy így kéne
                 this.pair.room= null;
 
                 player.removeItem(this);

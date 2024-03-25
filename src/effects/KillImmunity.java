@@ -17,6 +17,7 @@ public class KillImmunity extends Effect {
     public void activate() {
         Skeleton.startCall("KillImmunity.activate()");
         timer = new Timer(this);
+        active = true;
         timer.start(getDuration());
         Skeleton.endCall();
     }

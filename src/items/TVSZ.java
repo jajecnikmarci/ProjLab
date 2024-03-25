@@ -21,7 +21,7 @@ public class TVSZ extends Item {
     @Override
     public void use(Room room, Player player) {
         Skeleton.startCall("TVSZ.use(Room, Player)");
-        KillImmunity killImmunity = new KillImmunity(this,0, player);
+        KillImmunity killImmunity = new KillImmunity(this,Integer.MAX_VALUE, player);
         player.addKillImmunity(killImmunity);
         timesImmune--;
 
