@@ -96,35 +96,6 @@ public class Student extends Player {
         Skeleton.endCall();
     }
 
-    
-    /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * @param ffp2 a hozzáadandó tárgy
-     */
-    @Override
-    public void acceptItem(FFP2 ffp2) {
-        Skeleton.startCall("Student.acceptItem(FFP2)");
-        this.addItem(ffp2);
-        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength(),this));
-        location.removeItem(ffp2);
-        Skeleton.endCall();
-    }
-
-    /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * @param camembert a hozzáadandó tárgy
-     */
-    @Override
-    public void acceptItem(Camembert camembert) {
-        Skeleton.startCall("Student.acceptItem(Camembert)");
-        this.addItem(camembert);
-        location.removeItem(camembert);
-        Skeleton.endCall();
-    }
-
-
     /**   
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.

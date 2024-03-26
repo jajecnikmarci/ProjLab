@@ -4,6 +4,8 @@ import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.effects.PoisonImmunity;
+import kevesse_kokanyolo_kod.items.Camembert;
+import kevesse_kokanyolo_kod.items.FFP2;
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.skeleton.Skeleton;
@@ -232,4 +234,33 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
         }
         Skeleton.endCall();
     }
+
+    /**
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param ffp2 a hozzáadandó tárgy
+     */
+    @Override
+    public void acceptItem(FFP2 ffp2) {
+        Skeleton.startCall("Player.acceptItem(FFP2)");
+        this.addItem(ffp2);
+        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength(),this));
+        location.removeItem(ffp2);
+        Skeleton.endCall();
+    }
+
+
+    /**
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * @param camembert a felvevendő tárgy
+     */
+    @Override
+    public void acceptItem(Camembert camembert) {
+        Skeleton.startCall("Player.acceptItem(Camembert)");
+        this.addItem(camembert);
+        location.removeItem(camembert);
+        Skeleton.endCall();
+    }
+
 }

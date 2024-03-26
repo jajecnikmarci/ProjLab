@@ -44,33 +44,6 @@ public class Professor extends Player {
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * @param ffp2 a felvevendő tárgy
-     */
-    @Override
-    public void acceptItem(FFP2 ffp2) {
-        Skeleton.startCall("Professor.acceptItem(FFP2)");
-        this.addItem(ffp2);
-        this.addPoisonImmunity(new PoisonImmunity(ffp2,ffp2.getImmunityLength(),this));
-        location.removeItem(ffp2);
-        Skeleton.endCall();
-    }
-
-    /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * @param camembert a felvevendő tárgy
-     */
-    @Override
-    public void acceptItem(Camembert camembert) {
-        Skeleton.startCall("Professor.acceptItem(Camembert)");
-        this.addItem(camembert);
-        location.removeItem(camembert);
-        Skeleton.endCall();
-    }
-
-    /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      * @param transistor a felvevendő tárgy
      */
