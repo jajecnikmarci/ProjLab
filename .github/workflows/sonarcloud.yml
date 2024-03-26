@@ -30,7 +30,7 @@ name: SonarCloud
 on:
   push:
     branches:
-      - main
+      - sonarcloud
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
