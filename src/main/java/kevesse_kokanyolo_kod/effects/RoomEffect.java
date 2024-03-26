@@ -9,7 +9,7 @@ import kevesse_kokanyolo_kod.skeleton.Skeleton;
  * Egy hatás, ami egy szobában lévő játékosokra hat.
  */
 public abstract class RoomEffect extends Effect {
-    public RoomEffect(Item givenBy, int duration, EffectConsumedObserver observer) {
+    protected RoomEffect(Item givenBy, int duration, EffectConsumedObserver observer) {
         super(givenBy, duration, observer);
     }
 

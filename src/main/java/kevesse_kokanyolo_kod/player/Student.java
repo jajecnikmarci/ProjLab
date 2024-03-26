@@ -18,7 +18,7 @@ public class Student extends Player {
     /**
      * A hallgató lelkeinek számát tárolja. 
      */
-    private int souls = 3;
+    private int souls;
 
     /**
      * Nyilvántartja, hogy melyik tárgyak által immunis a halálra.
@@ -28,7 +28,7 @@ public class Student extends Player {
     public Student(Room r){
         super(r);
         souls = 3;
-        killImmunities=new ArrayList<KillImmunity>();
+        killImmunities=new ArrayList<>();
     }
 
 

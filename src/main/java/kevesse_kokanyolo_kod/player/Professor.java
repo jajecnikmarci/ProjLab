@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.player;
 
 import java.util.Optional;
 
-import kevesse_kokanyolo_kod.effects.PoisonImmunity;
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.skeleton.Skeleton;
 import kevesse_kokanyolo_kod.room.Door;

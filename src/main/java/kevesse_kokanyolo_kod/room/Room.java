@@ -54,13 +54,13 @@ public class Room implements EffectConsumedObserver {
     private ArrayList<RoomEffect> effects;
 
     public Room(){
-        players = new ArrayList<Player>();
-        items = new ArrayList<Item>();
-        effects = new ArrayList<RoomEffect>();
-        doors = new ArrayList<Door>();
+        players = new ArrayList<>();
+        items = new ArrayList<>();
+        effects = new ArrayList<>();
+        doors = new ArrayList<>();
     }
 
-    public List<Door> getDoors() {return doors;};
+    public List<Door> getDoors() {return doors;}
     /**
      * Kitörli a megadott tárgyat a szoba tárgyai közül.
      * @param item a megadott tárgy
@@ -149,7 +149,7 @@ public class Room implements EffectConsumedObserver {
         if (capacity < 4) {
             Skeleton.endCall("A szoba nem osztódott, mert kapacitása 4-nél kisebb volt.");
             return;
-        };
+        }
         if (!players.isEmpty()) {
             Skeleton.endCall("A szoba nem osztódott, mert volt benne játékos.");
             return;

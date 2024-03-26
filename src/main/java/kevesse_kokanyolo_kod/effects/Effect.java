@@ -28,7 +28,7 @@ public abstract class Effect  implements TimerObserver{
      */
     EffectConsumedObserver observer;
 
-    public Effect(Item givenBy, int duration, EffectConsumedObserver observer) {
+    protected Effect(Item givenBy, int duration, EffectConsumedObserver observer) {
         this.givenBy = givenBy; 
         this.duration = duration;
         this.observer = observer;

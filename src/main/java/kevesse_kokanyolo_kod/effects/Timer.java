@@ -17,7 +17,7 @@ public class Timer {
     /**
      * Az időzítést megvalósító java.util.Timer.
      */
-    private java.util.Timer timer;
+    private java.util.Timer innerTimer;
 
     public Timer(Effect ownerEffect) {
         this.ownerEffect = ownerEffect;
@@ -29,8 +29,8 @@ public class Timer {
      */
     void start(int durationInSeconds) {
         Skeleton.startCall("Timer.start(int)");
-        timer = new java.util.Timer();
-        timer.schedule(new TimerTask() {
+        innerTimer = new java.util.Timer();
+        innerTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 ownerEffect.timeIsUp();
@@ -43,7 +43,7 @@ public class Timer {
      */
     public void cancel() {
         Skeleton.startCall("Timer.cancel()");
-        timer.cancel();
+        innerTimer.cancel();
         Skeleton.endCall();
     }
 }

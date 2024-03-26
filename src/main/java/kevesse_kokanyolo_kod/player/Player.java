@@ -31,10 +31,10 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      */
     Room location;
 
-    public Player(Room r){
+    protected Player(Room r){
         location=r;
-        inventory = new ArrayList<Item>();
-        poisonImmunities=new ArrayList<PoisonImmunity>();
+        inventory = new ArrayList<>();
+        poisonImmunities=new ArrayList<>();
     }
     
     /**
