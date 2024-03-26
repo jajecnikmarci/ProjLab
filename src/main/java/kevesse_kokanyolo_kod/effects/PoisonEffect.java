@@ -15,18 +15,6 @@ public class PoisonEffect extends RoomEffect {
     }
 
     /**
-     *
-     */
-    @Override
-    public void activate() {
-        Skeleton.startCall("PoisonEffect.activate()");
-        timer = new Timer(this);
-        active = true;
-        timer.start(getDuration());
-        Skeleton.endCall();
-    }
-
-    /**
      * Az oktatót megmérgezi.
      * @param professor
      */

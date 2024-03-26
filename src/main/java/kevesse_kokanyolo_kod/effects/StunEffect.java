@@ -13,15 +13,6 @@ public class StunEffect extends RoomEffect {
         super(givenBy, duration, observer);
     }
 
-    @Override
-    public void activate() {
-        Skeleton.startCall("StunEffect.activate()");
-        timer = new Timer(this);
-        active = true;
-        timer.start(getDuration());
-        Skeleton.endCall();
-    }
-
     /**
      * Lebénít egy oktatót
      * @param professor Sokkolandó oktató
