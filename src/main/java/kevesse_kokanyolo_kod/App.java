@@ -21,6 +21,7 @@ public class App {
             }
         } else if (args.length == 0) {
             Skeleton.setFromAndToFile(false);
+            System.out.println("Console usage");
             configGood = true;
         }
         if (!configGood) {

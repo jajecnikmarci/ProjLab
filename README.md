@@ -13,3 +13,7 @@
 `git pull`
 `git push`
 
+Compile and run on linux
+javac -d bin src/main/**/*.java
+jar cfm labyrinth.jar manifest.mf -C bin/ .     
+java -jar labyrinth.jar -f -i src/test/resources/input.txt  -o src/test/tstOutput/output.txt
