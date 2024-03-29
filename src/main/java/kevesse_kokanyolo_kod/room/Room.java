@@ -34,11 +34,11 @@ public class Room implements EffectConsumedObserver {
     /**
      * A szobában található tárgyak listája.
      */
-    private final List<Item> items;
+    private List<Item> items;
     /**
      * A szobában található hatások listája.
      */
-    private final ArrayList<RoomEffect> effects;
+    private ArrayList<RoomEffect> effects;
 
     public Room(int capacity) {
         this.capacity = capacity;

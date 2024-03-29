@@ -81,15 +81,7 @@ public class Skeleton {
                 this::testStudentGetsDefendedFromProfessorWithGlass));
         tests.add(new Test("Professor enters Room with Rug", this::testProfessorEntersRoomWithRug));
     }
-
-    public static void setVerbose(boolean b) {
-        verbose = b;
-    }
-
-    public static boolean isFromAndToFile() {
-        return fromAndToFile;
-    }
-
+    
     public static void setFromAndToFile(boolean fromAndToFile) {
         Skeleton.fromAndToFile = fromAndToFile;
     }
@@ -121,7 +113,7 @@ public class Skeleton {
 
     public static void printLn(String string) {
         for (int i = 0; i < indentCounter - 1; i++) {
-            if (isFromAndToFile()) {
+            if (fromAndToFile) {
                 try {
                     fileWriter.write("\t");
                 } catch (IOException e) {
@@ -131,7 +123,7 @@ public class Skeleton {
                 System.out.print("\t");
             }
         }
-        if (isFromAndToFile()) {
+        if (fromAndToFile) {
             try {
                 fileWriter.write(" " + string + "\n");
 
@@ -144,7 +136,7 @@ public class Skeleton {
     }
 
     public static void printLn() {
-        if (isFromAndToFile()) {
+        if (fromAndToFile) {
             try {
                 fileWriter.write("\n");
 
@@ -234,7 +226,7 @@ public class Skeleton {
      */
     public void menu() {
         try {
-            if (isFromAndToFile()) {
+            if (fromAndToFile) {
                 fileWriter = new FileWriter(outputFileName);
 
                 scanner = new Scanner(new File(inputFileName));
@@ -247,7 +239,7 @@ public class Skeleton {
             String input;
             try {
                 input = scanner.nextLine();
-                if (isFromAndToFile()) printLn(input);
+                if (fromAndToFile) printLn(input);
                 if (input.equals("q"))
                     break;
                 else if (input.equals("m")) {
@@ -263,7 +255,7 @@ public class Skeleton {
 
         } while (scanner.hasNextLine());
         scanner.close();
-        if (isFromAndToFile()){
+        if (fromAndToFile){
             try {
                 fileWriter.close();
             } catch (IOException e) {
