@@ -1,6 +1,8 @@
 package kevesse_kokanyolo_kod.menus;
 
 
+import java.io.IOException;
+
 /**
  * A prototípus menü osztálya.
  * A tesztelő nyelv értelmezését végzi.
@@ -14,11 +16,17 @@ package kevesse_kokanyolo_kod.menus;
  *  ... 
  * 
  */
-public class ProtoMenu implements Printer {
-    public void println(String msg) {
-
+public class ProtoMenu extends Printer {
+    public ProtoMenu() {
+        super();
     }
-    public void print(String msg) {
+    public ProtoMenu(String inputFileName, String outputFileName) throws IOException {
+        super(inputFileName, outputFileName);
+    }
 
-    }    
+    public void printState() {
+        println("ProtoMenu:");
+        printWithIndents(" ");
+        println("Nincs belső állapot.");
+    }
 }
