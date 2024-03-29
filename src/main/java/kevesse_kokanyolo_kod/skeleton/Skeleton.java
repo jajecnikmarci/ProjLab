@@ -1,15 +1,17 @@
 package kevesse_kokanyolo_kod.skeleton;
 
-import java.io.OutputStream;
+import kevesse_kokanyolo_kod.effects.StunEffect;
+import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.player.Professor;
+import kevesse_kokanyolo_kod.player.Student;
+import kevesse_kokanyolo_kod.room.Door;
+import kevesse_kokanyolo_kod.room.Room;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import kevesse_kokanyolo_kod.effects.StunEffect;
-import kevesse_kokanyolo_kod.items.*;
-import kevesse_kokanyolo_kod.player.*;
-import kevesse_kokanyolo_kod.room.*;
 
 
 /**
@@ -17,18 +19,34 @@ import kevesse_kokanyolo_kod.room.*;
  * Teszt hozzáadaása:
  * (1) Teszt függvény megírása az ostályon belül (lásd test 1)
  * (2) konstruktorban hozzáadás a tests listához.
- * 
+ *
  * Az összes lényeges függvénynek meg kell hívnia a startCall és endCall függvényeket.
  * A startCall-nak a függvény fejlécét kell átadni.
- * Az endCallnak a függvény visszatérési értékét kell átadni, vagy hogy mi történt, 
+ * Az endCallnak a függvény visszatérési értékét kell átadni, vagy hogy mi történt,
  * amiért visszatért a függvény. (Ha nem egyértelmű)
  * Az összes függvény minden lehetséges visszatérése előtt meg kell hívni az endCall függvényt.
- * 
+ *
  * A verbose változóval lehet ki-be kapcsolni a kiírást. Ha igaz, akkor kiírja a függvényeket, ha hamis, akkor nem.
  * A teszt függvényekben a verbose változót ki kell kapcsolni az iniciálásnál, mert ott is hívódhatnak függvények, de
  * ott azokat nem kell kiírni. Az iniciálás után igazra kell állítani a verbose változót.
  */
 public class Skeleton {
+    public static void setVerbose(boolean b) {
+        verbose = b;
+    }
+
+    public static boolean isFromAndToFile() {
+        return fromAndToFile;
+    }
+
+    public static void setFromAndToFile(boolean fromAndToFile) {
+        Skeleton.fromAndToFile = fromAndToFile;
+    }
+
+    static boolean fromAndToFile;
+    static OutputStream os;
+    static ObjectOutputStream oos;
+
     class Test {
         private String title;
         private Runnable test;
@@ -42,49 +60,81 @@ public class Skeleton {
             return title;
         }
 
-        public void run() {
-            print("Running Test: " + title);
+        public void run() throws IOException {
+            printLn("Running Test: " + title);
             indentCounter++;
             test.run();
             indentCounter--;
-            print("End of test: " + title + "\n");
+            printLn("End of test: " + title + "\n");
         }
     }
 
     private static int indentCounter = 0;
     private static boolean verbose = true;
-    public static void startCall(String methodHeader) {
-      
+    public static void startCall(String methodHeader){
+
         if(verbose){
-            print(methodHeader);
+            printLn(methodHeader);
             indentCounter++;
         }
     }
-    public static void endCall(String result) {
-        
+    public static void endCall(String result){
+
         if(verbose){
             indentCounter--;
-            print("<--" + result);
+            printLn("<--" + result);
         }
 
     }
     public static void endCall() {
-        
+
         if(verbose){
             indentCounter--;
-            print("<-- void");
+            printLn("<-- void");
         }
     }
-    public static void print(String string) {
+    static FileWriter fileWriter;
+    public static void printLn(String string){
         for(int i = 0; i < indentCounter-1; i++) {
-            System.out.print("\t");
+            if (isFromAndToFile()){
+                try {
+                    fileWriter.write("\t");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                System.out.print("\t");
+            }
         }
-        System.out.println(" " + string);
+        if (isFromAndToFile()) {
+            try {
+                fileWriter.write(" " + string + "\n");
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println(string);
+        }
     }
 
-    List<Test> tests;
+    public static void printLn() {
+        if (isFromAndToFile()) {
+            try {
+                fileWriter.write("\n");
 
-    public Skeleton() {
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println();
+        }
+    }
+
+        List<Test> tests;
+
+    public Skeleton() throws IOException {
         tests = new ArrayList<>();
         /**
          * Itt történik a tesztek hozzáadása (2)
@@ -113,27 +163,28 @@ public class Skeleton {
         tests.add(new Test("Player gets Defended from Poison", this::testPlayerGetsDefendedFromPoison));
         tests.add(new Test("Student gets Defended from Professor with TVSZ", this::testStudentGetsDefendedWithTVSZ));
         tests.add(new Test("Student gets Defended from Professor with Glass",
-                this::testStudentGetsDefendedFromProfessorWithGlass));  
+                this::testStudentGetsDefendedFromProfessorWithGlass));
         tests.add(new Test("Professor enters Room with Rug", this::testProfessorEntersRoomWithRug));
     }
 
-    
+
 
     public static void err(String string) {
-        System.err.println(string);
+        printLn(string);
     }
 
     /**
      * Segédfüggvény bekér ehy számot a felhasználótól.
-     * 
+     *
      * @param msg kiírandó üzenet
      * @return
      * @throws NoSuchElementException
      */
     private int getInt(String msg) throws NoSuchElementException {
-        print(msg);
+        printLn(msg);
         try {
-            String str = scanner.nextLine();
+            String str;
+            str =scanner.nextLine();
             return Integer.parseInt(str);
 
         } catch (NumberFormatException numberFormat) {
@@ -144,13 +195,13 @@ public class Skeleton {
 
     /*
      * Bekér egy booleant a felhasználótól.
-     * 
+     *
      * @param msg kiírandó üzenet
      */
     private boolean getBoolean(String msg) throws NoSuchElementException {
-        print(msg + " (y/n)");
-        ;
-        String str = scanner.nextLine();
+        printLn(msg + " (y/n)");
+
+        String str= scanner.nextLine();
         if (str.toLowerCase().equals("y"))
             return true;
         if (str.toLowerCase().equals("n"))
@@ -162,39 +213,67 @@ public class Skeleton {
      * Kiírja a teszteket.
      */
     private void printTests() {
-        System.out.println("m - Menü");
-        System.out.println("q - Kilépés");
-        System.out.println("Válasszon tesztet: ");
+        printLn("m - Menü");
+        printLn("q - Kilépés");
+        printLn("Válasszon tesztet: ");
         for (int i = 0; i < tests.size(); i++) {
-            System.out.println(i + 1 + ". " + tests.get(i).getTitle());
+            printLn(i + 1 + ". " + tests.get(i).getTitle());
         }
-        System.out.println();
+        printLn();
+    }
+    public void executeAllTests() {
+        for (Test test : tests) {
+            try {
+                test.run();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
-    Scanner scanner;
+    public void executeTest(String input){
+        int index = Integer.parseInt(input) - 1;
+        if (index >= 0 && index < tests.size()) // run test
+        {
+            try {
+                tests.get(index).run();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            printLn("Nincs ilyen teszt!");
+        }
+    }
+
+    static Scanner scanner;
 
     /**
      * Elindítja a Skeleton menüt.
      */
     public void menu() {
-        scanner = new Scanner(System.in);
+        try {
+            if (isFromAndToFile()) {
+                fileWriter = new FileWriter("src/test/tstOutput/output.txt");
+
+                scanner = new Scanner(new File("src/test/resources/input.txt"));
+            } else scanner = new Scanner(System.in);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         printTests();
         do {
             String input;
             try {
                 input = scanner.nextLine();
+                printLn(input);
                 if (input.equals("q"))
                     break;
                 else if (input.equals("m")) {
                     printTests();
                     continue;
                 }
-                int index = Integer.parseInt(input) - 1;
-                if (index >= 0 && index < tests.size()) // run test
-                    tests.get(index).run();
-                
-                else
-                    print("Nincs ilyen teszt!");
+                executeTest(input);
             } catch (NumberFormatException e) {
                 err("Adjon meg számot!");
             } catch (NoSuchElementException e) {
@@ -203,6 +282,11 @@ public class Skeleton {
 
         } while (scanner.hasNextLine());
         scanner.close();
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /*
@@ -258,7 +342,7 @@ public class Skeleton {
 
         verbose = true;
         student.useItem(transistor1);
-    
+
     }
 
     public void testTeleportWithTransistor(){
@@ -267,7 +351,10 @@ public class Skeleton {
         Room room1 = new Room(10);
         Room room2;
 
-        boolean hasPlace = getBoolean("Van hely a másik szobában?");
+        boolean hasPlace = false;
+
+        hasPlace = getBoolean("Van hely a másik szobában?");
+
         if(hasPlace){
             room2 = new Room(10);
         }else{
@@ -309,7 +396,7 @@ public class Skeleton {
         room.addPlayer(student);
         room.addItem(camembert);
         verbose = true;
-        
+
         student.pickUpItem();
     }
 
@@ -333,10 +420,10 @@ public class Skeleton {
         room.addPlayer(student);
         room.addItem(tvsz);
         verbose = true;
-        
+
         student.pickUpItem();
     }
-    
+
     public void testPickUpTransistor() {
         verbose = false;
         Room room = new Room();
@@ -369,7 +456,7 @@ public class Skeleton {
         room.addPlayer(student);
         room.addItem(slideRule);
         verbose = true;
-        
+
         student.pickUpItem();
     }
 
@@ -416,13 +503,13 @@ public class Skeleton {
     }
 
     private void testMoveToRoom() {
-        verbose = false; 
+        verbose = false;
         Room room1 = new Room(4);
         Room room2 = new Room(4);
         Door door = new Door(room1, room2, true, true);
         Student student = new Student(room1);
         room1.addPlayer(student);
-        verbose = true; 
+        verbose = true;
         door.goThrough(student);
     }
 

@@ -40,7 +40,7 @@ public class SkeletonTest {
     }
 
     public static void setFromAndToFile(boolean fromAndToFile) {
-        SkeletonTest.fromAndToFile = fromAndToFile;
+        Skeleton.fromAndToFile = fromAndToFile;
     }
 
     static boolean fromAndToFile;

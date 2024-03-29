@@ -1,19 +1,17 @@
 package kevesse_kokanyolo_kod;
 
 import junit.framework.TestCase;
-import kevesse_kokanyolo_kod.skeleton.SkeletonTest;
-import org.junit.Test;
+import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class AppTest extends TestCase {
-    public SkeletonTest skeletonTest;
+    public Skeleton skeleton;
     public void testMainTest() {
         try {
-            skeletonTest = new SkeletonTest();
-            skeletonTest.setFromAndToFile(true);
+            skeleton = new Skeleton();
+            skeleton.setFromAndToFile(true);
 
 
         } catch (FileNotFoundException e) {
@@ -21,7 +19,7 @@ public class AppTest extends TestCase {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String next=null;
-        skeletonTest.menu();
+
+        skeleton.menu();
     }
 }
