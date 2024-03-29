@@ -21,14 +21,14 @@ public class TVSZ extends Item {
     @Override
     public void use(Room room, Player player) {
         Skeleton.startCall("TVSZ.use(Room, Player)");
-        KillImmunity killImmunity = new KillImmunity(this,Integer.MAX_VALUE, player);
+        KillImmunity killImmunity = new KillImmunity(this, Integer.MAX_VALUE, player);
         player.addKillImmunity(killImmunity);
         timesImmune--;
 
         if (timesImmune == 0) {
             player.removeItem(this);
         }
-        Skeleton.endCall();   
+        Skeleton.endCall();
     }
 
     public void accept(Player player) {

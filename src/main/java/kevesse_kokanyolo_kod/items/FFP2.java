@@ -18,7 +18,7 @@ public class FFP2 extends Item {
     @Override
     public void use(Room room, Player player) {
         Skeleton.startCall("FFP2.use(Room, Player)");
-        if (immunityLength<=0) {
+        if (immunityLength <= 0) {
             player.removeItem(this);
             //TODO Mérgezni a player-t ha elhasználódott a maszk
             Skeleton.endCall("A tárgy elhasználódott");
@@ -37,11 +37,12 @@ public class FFP2 extends Item {
         player.acceptItem(this);
         Skeleton.endCall();
     }
-    
-     /**
-      * Visszaadja az immunitás hosszát.
-      * @return az immunitás hossza
-      */
+
+    /**
+     * Visszaadja az immunitás hosszát.
+     *
+     * @return az immunitás hossza
+     */
     public int getImmunityLength() {
         return immunityLength;
     }

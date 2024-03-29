@@ -8,7 +8,6 @@ import kevesse_kokanyolo_kod.items.*;
  */
 public interface PickUpVisitor {
     /**
-     *
      * @param ffp2
      */
     void acceptItem(FFP2 ffp2);

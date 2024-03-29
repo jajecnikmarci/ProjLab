@@ -6,41 +6,40 @@ import kevesse_kokanyolo_kod.skeleton.Skeleton;
 /**
  * Effektek megvalósítására szolgáló osztály. Az effektumokat a játékosokra és szobákra lehet alkalmazni.
  */
-public abstract class Effect  implements TimerObserver{
+public abstract class Effect implements TimerObserver {
     protected Timer timer;
 
     /**
      * Ha egy effekt aktiválása került már akkorr igaz
      */
     protected boolean active;
+    /*
+     * Az effektet figyelő osztály
+     */
+    EffectConsumedObserver observer;
     /**
      * Az effektum időtartama, ha van neki. Ha nincs akkor 0
      */
-    private int duration;
-
+    private final int duration;
     /**
      * Az az item aminek a hatására az effekt létrejött
      */
-    private Item givenBy;
-
-    /*
-    * Az effektet figyelő osztály
-     */
-    EffectConsumedObserver observer;
+    private final Item givenBy;
 
     protected Effect(Item givenBy, int duration, EffectConsumedObserver observer) {
-        this.givenBy = givenBy; 
+        this.givenBy = givenBy;
         this.duration = duration;
         this.observer = observer;
     }
 
     /**
-     *A már létrehozott effekt aktiválása, adott esetben ez hívja meg a tárgy use függvényét
+     * A már létrehozott effekt aktiválása, adott esetben ez hívja meg a tárgy use függvényét
      */
     public abstract void activate();
 
     /**
      * Az effekt aktívságának lekérő függvénye
+     *
      * @return az effekt aktívságát adja vissza
      */
     public boolean isActive() {
@@ -49,6 +48,7 @@ public abstract class Effect  implements TimerObserver{
 
     /**
      * Az effekt hosszát lekérő függvény
+     *
      * @return az effekt hosszát adja vissza
      */
     public int getDuration() {
@@ -60,6 +60,7 @@ public abstract class Effect  implements TimerObserver{
         observer.effectConsumed(this);
         Skeleton.endCall();
     }
+
     public void cancelTimer() {
         Skeleton.startCall("Effect.cancelTimer()");
         timer.cancel();

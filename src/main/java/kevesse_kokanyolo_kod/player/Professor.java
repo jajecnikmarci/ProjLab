@@ -1,25 +1,26 @@
 package kevesse_kokanyolo_kod.player;
 
-import java.util.Optional;
-
 import kevesse_kokanyolo_kod.items.*;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
+import kevesse_kokanyolo_kod.skeleton.Skeleton;
+
+import java.util.Optional;
 
 /**
  * A professzort reprezentáló osztály
  */
 public class Professor extends Player {
-    
-    public Professor(Room r){
+
+    public Professor(Room r) {
         super(r);
-        location=r;
+        location = r;
     }
-    
-    
+
+
     /**
      * Professzor találkozik egy diákkal, akit megöl.
+     *
      * @param student a diák, aki meg fog halni
      */
     @Override
@@ -31,6 +32,7 @@ public class Professor extends Player {
 
     /**
      * Professzor találkozik egy professzorral, akivel találkozik
+     *
      * @param professor a professzor, akivel találkozik
      */
     @Override
@@ -41,9 +43,10 @@ public class Professor extends Player {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     *
      * @param transistor a felvevendő tárgy
      */
     @Override
@@ -53,9 +56,10 @@ public class Professor extends Player {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     *
      * @param slideRule a felvevendő tárgy
      */
     @Override
@@ -65,9 +69,10 @@ public class Professor extends Player {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     *
      * @param tvsz a felvevendő tárgy
      */
     @Override
@@ -77,9 +82,10 @@ public class Professor extends Player {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     *
      * @param glass a felvevendő tárgy
      */
     @Override
@@ -89,9 +95,10 @@ public class Professor extends Player {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     *
      * @param rug a felvevendő tárgy
      */
     @Override
@@ -102,6 +109,7 @@ public class Professor extends Player {
 
     /**
      * Belép a megadott szobába, ha a szoba befogadja a játékost.
+     *
      * @param room a szoba, amibe a játékos be kíván lépni
      */
     @Override
@@ -112,10 +120,10 @@ public class Professor extends Player {
                 .filter(d -> d.isBetween(location, room))
                 .findFirst();
 
-        if(door.isPresent()) {
+        if (door.isPresent()) {
             door.get().goThrough(this);
             room.onEnter(this);
-            Skeleton.endCall("A professzor belépett a szobába."); 
+            Skeleton.endCall("A professzor belépett a szobába.");
             return;
         }
         Skeleton.endCall("A professzor nem lépett be a szobába.");

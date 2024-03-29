@@ -7,5 +7,5 @@ public interface EffectConsumedObserver {
     /**
      * Az effektum lejártakor meghívódó metódus
      */
-    public void effectConsumed(Effect effect);
+    void effectConsumed(Effect effect);
 }

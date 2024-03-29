@@ -15,7 +15,8 @@ public class Glass extends Item {
      * állapotba kerül az oktatók támadásaival szemben a Glass használatától
      * kezdve 10 másodpercig. A védettség egy KillImmunity, ami aktiválódik
      * amint aktiválja a hallgató a tárgyat.
-     * @param room a szoba, ahol a tárgyat használják
+     *
+     * @param room   a szoba, ahol a tárgyat használják
      * @param player a játékos, aki használja a tárgyat
      */
     @Override
@@ -30,6 +31,7 @@ public class Glass extends Item {
 
     /**
      * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     *
      * @param player a játékos aki próbálja felvenni a tárgyat
      */
     @Override

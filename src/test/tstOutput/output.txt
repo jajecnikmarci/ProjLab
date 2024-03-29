@@ -41,4 +41,54 @@
  <-- void
  End of test: Pickup FFP2
 
+ 2
+ Running Test: Pickup Camembert
+ Player.pickUpItem()
+	 Room.popItem(Player)
+		 Camembert.accept(Player)
+			 Player.acceptItem(Camembert)
+				 Player.addItem(Item)
+				 <-- void
+				 Room.removeItem(Item)
+				 <-- void
+			 <-- void
+		 <-- void
+	 <-- void
+ <-- void
+ End of test: Pickup Camembert
+
+ 3
+ Running Test: Pickup Glass
+ Player.pickUpItem()
+	 Room.popItem(Player)
+		 Glass.accept(Player)
+			 Student.acceptItem(Glass)
+				 Player.addItem(Item)
+				 <-- void
+				 Student.addKillImmunity(KillImmunity)
+				 <-- void
+				 Room.removeItem(Item)
+				 <-- void
+			 <-- void
+		 <-- void
+	 <-- void
+ <-- void
+ End of test: Pickup Glass
+
+ 4
+ Running Test: Pickup Rug
+ Player.pickUpItem()
+	 Room.popItem(Player)
+		 Rug.accept(Player)
+			 Student.acceptItem(Rug)
+				 Player.addItem(Item)
+				 <-- void
+				 Room.removeItem(Item)
+				 <-- void
+			 <-- void
+		 <-- void
+	 <-- void
+ <-- void
+ End of test: Pickup Rug
+
  q

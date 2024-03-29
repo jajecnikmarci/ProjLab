@@ -16,6 +16,7 @@ public class PoisonEffect extends RoomEffect {
 
     /**
      * Az oktatót megmérgezi.
+     *
      * @param professor
      */
     @Override
@@ -27,6 +28,7 @@ public class PoisonEffect extends RoomEffect {
 
     /**
      * A hallgatót megmérgezi.
+     *
      * @param student
      */
     @Override

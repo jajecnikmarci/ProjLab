@@ -1,7 +1,7 @@
 package kevesse_kokanyolo_kod.room;
 
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 import kevesse_kokanyolo_kod.player.Player;
+import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 /**
  * Az ajtókat reprezentáló osztály.
@@ -15,17 +15,17 @@ public class Door {
     /**
      * Az ajtó másik szobája.
      */
-    private Room room2;
+    private final Room room2;
 
     /**
      * Az ajtó első szobából a másodikba nyitva van-e.
      */
-    private boolean room1Open;
+    private final boolean room1Open;
 
     /**
      * Az ajtó második szobából az elsőbe nyitva van-e.
      */
-    private boolean room2Open;
+    private final boolean room2Open;
 
     /**
      * Az ajtó látható-e.
@@ -46,6 +46,7 @@ public class Door {
 
     /**
      * Segédfüggvény. Megmondja, hogy az ajtó room1 és room2 között van-e.
+     *
      * @param room1 az egyik szoba
      * @param room2 a másik szoba
      */
@@ -58,19 +59,19 @@ public class Door {
      * hogy átmehet-e. Az elégséges feltétele, hogy átmehessen a játékos az
      * ajtón: átmehet az ajtón abból a szobából, amelyikben a játékos van és
      * van még legalább 1 hely a szobában, amelyikbe menni próbál a játékos.
+     *
      * @param player a játékos, aki átmegy az ajtón
      * @return true, ha a játékos átment az ajtón, false egyébként (VÁLTOZÁS: void -> boolean)
      */
     public boolean goThrough(Player player) {
         Skeleton.startCall("Door.goThrough(Player)");
-        if(player.getLocation() == room1 && room2Open && room2.canPlayerEnter()) {
+        if (player.getLocation() == room1 && room2Open && room2.canPlayerEnter()) {
             room1.removePlayer(player);
             room2.addPlayer(player);
             player.setLocation(room2);
             Skeleton.endCall("A játékos átment az ajtón.");
             return true;
-        }
-        else if(player.getLocation() == room2 && room1Open && room1.canPlayerEnter()) {
+        } else if (player.getLocation() == room2 && room1Open && room1.canPlayerEnter()) {
             room2.removePlayer(player);
             room1.addPlayer(player);
             player.setLocation(room1);
