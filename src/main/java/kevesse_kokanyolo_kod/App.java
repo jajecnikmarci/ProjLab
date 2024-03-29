@@ -3,12 +3,13 @@ package kevesse_kokanyolo_kod;
 import java.io.IOException;
 
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.player.Student;
 
 public class App {
     public static SkeletonMenu skeleton;
 
     public static void main(String[] args) {
-
+        // TODO: Implement proto mode (disable skeleton menu)
         if (args.length == 3 && args[0].equals("-f")) {
             SkeletonMenu.setFromAndToFile(true);
             System.out.println("File usage");

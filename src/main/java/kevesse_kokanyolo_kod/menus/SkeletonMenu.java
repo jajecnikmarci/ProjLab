@@ -31,6 +31,7 @@ import java.util.Scanner;
  * ott azokat nem kell kiírni. Az iniciálás után igazra kell állítani a verbose változót.
  */
 public class SkeletonMenu {
+    static boolean disablePrint = false;
     static boolean fromAndToFile;
     static FileWriter fileWriter;
     static Scanner scanner;
@@ -110,6 +111,7 @@ public class SkeletonMenu {
     }
 
     public static void printLn(String string) {
+        if (disablePrint) return;
         try {
             for (int i = 0; i < indentCounter - 1; i++) {
                 if (fromAndToFile) fileWriter.write("\t");
