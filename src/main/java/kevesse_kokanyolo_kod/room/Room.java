@@ -132,7 +132,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void poisonPlayers() {
         Skeleton.startCall("Room.poisonPlayers()");
-        players.forEach(p -> p.poison());
+        players.forEach(Player::poison);
         Skeleton.endCall();
     }
 
