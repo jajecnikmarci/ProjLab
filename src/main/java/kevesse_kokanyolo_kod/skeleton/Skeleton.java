@@ -157,7 +157,7 @@ public class Skeleton {
     }
 
     public static void err(String string) {
-        printLn(string);
+        System.err.println(string);
     }
 
     /**
