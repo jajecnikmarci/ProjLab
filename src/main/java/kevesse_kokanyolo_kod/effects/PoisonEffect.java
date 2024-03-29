@@ -1,9 +1,9 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.player.Professor;
 import kevesse_kokanyolo_kod.player.Student;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 /**
  * Mérgezés hatású effektum.
@@ -21,9 +21,9 @@ public class PoisonEffect extends RoomEffect {
      */
     @Override
     public void affect(Professor professor) {
-        Skeleton.startCall("PoisonEffect.affect(Professor)");
+        SkeletonMenu.startCall("PoisonEffect.affect(Professor)");
         professor.poison();
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -33,8 +33,8 @@ public class PoisonEffect extends RoomEffect {
      */
     @Override
     public void affect(Student student) {
-        Skeleton.startCall("PoisonEffect.affect(Student)");
+        SkeletonMenu.startCall("PoisonEffect.affect(Student)");
         student.poison();
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 }

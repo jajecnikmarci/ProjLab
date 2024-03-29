@@ -1,9 +1,9 @@
 package kevesse_kokanyolo_kod.items;
 
 import kevesse_kokanyolo_kod.effects.KillImmunity;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.player.Player;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 /**
  * Szent Sörös Pohár tárgyat reprezentáló osztály
@@ -21,12 +21,12 @@ public class Glass extends Item {
      */
     @Override
     public void use(Room room, Player player) {
-        Skeleton.startCall("Glass.use(Room, Player)");
+        SkeletonMenu.startCall("Glass.use(Room, Player)");
         KillImmunity killImmunity = new KillImmunity(this, 10, player);
         killImmunity.activate();
         effect = killImmunity;
         player.removeItem(this);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -36,8 +36,8 @@ public class Glass extends Item {
      */
     @Override
     public void accept(Player player) {
-        Skeleton.startCall("Glass.accept(Player)");
+        SkeletonMenu.startCall("Glass.accept(Player)");
         player.acceptItem(this);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 }

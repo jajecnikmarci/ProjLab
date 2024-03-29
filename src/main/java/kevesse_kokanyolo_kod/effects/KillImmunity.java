@@ -1,7 +1,7 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 /**
  * Olyan hatás, ami megvédi a játékost a megöléstől.
@@ -13,10 +13,10 @@ public class KillImmunity extends Effect {
 
     @Override
     public void activate() {
-        Skeleton.startCall("KillImmunity.activate()");
+        SkeletonMenu.startCall("KillImmunity.activate()");
         timer = new Timer(this);
         active = true;
         timer.start(getDuration());
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 }

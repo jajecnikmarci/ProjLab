@@ -4,10 +4,10 @@ import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
 import kevesse_kokanyolo_kod.effects.RoomEffect;
 import kevesse_kokanyolo_kod.items.Item;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.player.Player;
 import kevesse_kokanyolo_kod.player.Professor;
 import kevesse_kokanyolo_kod.player.Student;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,9 +65,9 @@ public class Room implements EffectConsumedObserver {
      * @param item a megadott tárgy
      */
     public void removeItem(Item item) {
-        Skeleton.startCall("Room.removeItem(Item)");
+        SkeletonMenu.startCall("Room.removeItem(Item)");
         items.remove(item);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -76,9 +76,9 @@ public class Room implements EffectConsumedObserver {
      * @param item a hozzáadandó tárgy
      */
     public void addItem(Item item) {
-        Skeleton.startCall("Room.addItem(Item)");
+        SkeletonMenu.startCall("Room.addItem(Item)");
         items.add(item);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -87,13 +87,13 @@ public class Room implements EffectConsumedObserver {
      * @param player A játékos, aki a tárgyat fel akarja venni
      */
     public void popItem(Player player) {
-        Skeleton.startCall("Room.popItem(Player)");
+        SkeletonMenu.startCall("Room.popItem(Player)");
         if (items.isEmpty()) {
-            Skeleton.endCall("Nincs több tárgy a szobában.");
+            SkeletonMenu.endCall("Nincs több tárgy a szobában.");
             return;
         }
         items.get(items.size() - 1).accept(player);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -104,14 +104,14 @@ public class Room implements EffectConsumedObserver {
      * @param professor a belépő oktató
      */
     public void onEnter(Professor professor) {
-        Skeleton.startCall("Room.onEnter(Professor)");
+        SkeletonMenu.startCall("Room.onEnter(Professor)");
         for (RoomEffect effect : this.effects) {
             if (effect.isActive()) effect.affect(professor);
         }
         for (Player player : this.players) {
             player.meet(professor, this);
         }
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -122,21 +122,21 @@ public class Room implements EffectConsumedObserver {
      * @param student a belépő hallgató
      */
     public void onEnter(Student student) {
-        Skeleton.startCall("Room.onEnter(Student)");
+        SkeletonMenu.startCall("Room.onEnter(Student)");
         for (RoomEffect effect : this.effects) {
             if (effect.isActive()) effect.affect(student);
         }
         players.forEach(player -> player.meet(student));
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
      * Megmérgez minden játékost aki a szobában tartózkodik.
      */
     public void poisonPlayers() {
-        Skeleton.startCall("Room.poisonPlayers()");
+        SkeletonMenu.startCall("Room.poisonPlayers()");
         players.forEach(Player::poison);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -147,13 +147,13 @@ public class Room implements EffectConsumedObserver {
      * A létrejövő szoba kapacitása alsó egészrésze az eredeti szoba kapacitásának felének.
      */
     public void split() {
-        Skeleton.startCall("Room.split()");
+        SkeletonMenu.startCall("Room.split()");
         if (capacity < 4) {
-            Skeleton.endCall("A szoba nem osztódott, mert kapacitása 4-nél kisebb volt.");
+            SkeletonMenu.endCall("A szoba nem osztódott, mert kapacitása 4-nél kisebb volt.");
             return;
         }
         if (!players.isEmpty()) {
-            Skeleton.endCall("A szoba nem osztódott, mert volt benne játékos.");
+            SkeletonMenu.endCall("A szoba nem osztódott, mert volt benne játékos.");
             return;
         }
 
@@ -173,7 +173,7 @@ public class Room implements EffectConsumedObserver {
         Door door = new Door(this, room, true, true);
         doors.add(door);
         room.doors.add(door);
-        Skeleton.endCall("A szoba osztódott.");
+        SkeletonMenu.endCall("A szoba osztódott.");
     }
 
     /**
@@ -187,9 +187,9 @@ public class Room implements EffectConsumedObserver {
      * @param room a szoba amit beleolvasztunk ebbe a szobába
      */
     public void mergeWithRoom(Room room) {
-        Skeleton.startCall("Room.mergeWithRoom(Room)");
+        SkeletonMenu.startCall("Room.mergeWithRoom(Room)");
         if (!players.isEmpty() || !room.players.isEmpty()) {
-            Skeleton.endCall("A szobák nem olvadtak össze, mert volt bennük játékos.");
+            SkeletonMenu.endCall("A szobák nem olvadtak össze, mert volt bennük játékos.");
             return;
         }
         this.capacity = Math.max(this.capacity, room.capacity);
@@ -207,7 +207,7 @@ public class Room implements EffectConsumedObserver {
             if (d.getRoom1() == room) d.setRoom1(this);
             if (d.getRoom2() == room) d.setRoom2(this);
         });
-        Skeleton.endCall("A szobák összeolvadtak.");
+        SkeletonMenu.endCall("A szobák összeolvadtak.");
     }
 
     /**
@@ -216,9 +216,9 @@ public class Room implements EffectConsumedObserver {
      * @param player a hozzáadandó player
      */
     public void addPlayer(Player player) {
-        Skeleton.startCall("Room.addPlayer(Player)");
+        SkeletonMenu.startCall("Room.addPlayer(Player)");
         this.players.add(player);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -227,9 +227,9 @@ public class Room implements EffectConsumedObserver {
      * @param player a kitörölni kívánt játékos
      */
     public void removePlayer(Player player) {
-        Skeleton.startCall("Room.removePlayer(Player)");
+        SkeletonMenu.startCall("Room.removePlayer(Player)");
         this.players.remove(player);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -238,18 +238,18 @@ public class Room implements EffectConsumedObserver {
      * @param effect a hozzáadandó hatás
      */
     public void addEffect(RoomEffect effect) {
-        Skeleton.startCall("Room.addEffect(RoomEffect)");
+        SkeletonMenu.startCall("Room.addEffect(RoomEffect)");
         this.effects.add(effect);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
      * @param effect
      */
     public void removeEffect(RoomEffect effect) {
-        Skeleton.startCall("Room.removeEffect(RoomEffect)");
+        SkeletonMenu.startCall("Room.removeEffect(RoomEffect)");
         this.effects.remove(effect);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -274,10 +274,10 @@ public class Room implements EffectConsumedObserver {
     }
 
     public void effectConsumed(Effect effect) {
-        Skeleton.startCall("Room.effectConsumed()");
+        SkeletonMenu.startCall("Room.effectConsumed()");
         Item item = effect.getItem();
         effects.remove(findRoomEffectByItem(item));
         item.removeEffect();
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 }
