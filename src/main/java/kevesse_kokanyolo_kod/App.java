@@ -20,6 +20,7 @@ public class App {
                 System.exit(1);
             }
         } else if (args.length == 0) {
+            skeleton = new SkeletonMenu();
             SkeletonMenu.setFromAndToFile(false);
             System.out.println("Console usage");
         }

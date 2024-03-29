@@ -234,6 +234,7 @@ public class SkeletonMenu {
             }
 
         } while (scanner.hasNextLine());
+
         scanner.close();
         if (fromAndToFile){
             try {
