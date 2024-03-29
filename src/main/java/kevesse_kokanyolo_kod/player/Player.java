@@ -4,9 +4,8 @@ import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.effects.PoisonImmunity;
-import kevesse_kokanyolo_kod.items.Camembert;
-import kevesse_kokanyolo_kod.items.FFP2;
-import kevesse_kokanyolo_kod.items.Item;
+import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.items.fakes.FakeItem;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
 
@@ -20,7 +19,7 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
     /**
      * A játékos tárgylistája.
      */
-    List<Item> inventory;
+    List<iItem> inventory;
 
     /**
      * A játékos által használható mérgezés elleni immunitások listája.
@@ -279,6 +278,13 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
         SkeletonMenu.startCall("Player.acceptItem(Camembert)");
         this.addItem(camembert);
         location.removeItem(camembert);
+        SkeletonMenu.endCall();
+    }
+
+    @Override
+    public void acceptItem(FakeItem fakeItem) {
+        SkeletonMenu.startCall("Player.acceptItem(Fake)");
+        location.removeItem(fakeItem);
         SkeletonMenu.endCall();
     }
 

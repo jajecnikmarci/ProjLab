@@ -25,17 +25,6 @@ public class Transistor extends Item {
     private Student owner;
 
     /**
-     * Beállítja a tranzisztor szobáját ahol eldobták
-     *
-     * @param room a szoba ahol a tranzisztor található
-     */
-    public void setRoom(Room room) {
-        SkeletonMenu.startCall("Transistor.setRoom(Room)");
-        this.room = room;
-        SkeletonMenu.endCall();
-    }
-
-    /**
      * A tranzisztor párának megadása
      *
      * @param transistor a tranzisztor párja
@@ -89,6 +78,17 @@ public class Transistor extends Item {
             player.addItem(this.pair);
             SkeletonMenu.endCall("A játékos át lett teleportálva a másik szobába.");
         } else SkeletonMenu.endCall("A játékos nem lett elteleportálva a másik szobába.");
+    }
+
+    /**
+     * Beállítja a tranzisztor szobáját ahol eldobták
+     *
+     * @param room a szoba ahol a tranzisztor található
+     */
+    public void setRoom(Room room) {
+        SkeletonMenu.startCall("Transistor.setRoom(Room)");
+        this.room = room;
+        SkeletonMenu.endCall();
     }
 
     /**
