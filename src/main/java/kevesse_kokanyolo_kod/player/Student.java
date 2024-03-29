@@ -23,7 +23,7 @@ public class Student extends Player {
     /**
      * Nyilvántartja, hogy melyik tárgyak által immunis a halálra.
      */
-    private final List<KillImmunity> killImmunities;
+    private List<KillImmunity> killImmunities;
 
     public Student(Room r) {
         super(r);
