@@ -8,7 +8,6 @@ public class App {
     public static void main(String[] args) {
         skeleton = new Skeleton();
         boolean configGood = false;
-        System.out.println("args: " + args.length);
         if (args.length == 5 && args[0].equals("-f")) {
             Skeleton.setFromAndToFile(true);
             System.out.println("File usage");
