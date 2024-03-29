@@ -6,7 +6,7 @@ import kevesse_kokanyolo_kod.player.Student;
 import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 /**
- *
+ * Mérgezés hatású effektum.
  */
 public class PoisonEffect extends RoomEffect {
 
@@ -16,7 +16,8 @@ public class PoisonEffect extends RoomEffect {
 
     /**
      * Az oktatót megmérgezi.
-     * @param professor
+     *
+     * @param professor A hatást elszenvedő oktató
      */
     @Override
     public void affect(Professor professor) {
@@ -27,7 +28,8 @@ public class PoisonEffect extends RoomEffect {
 
     /**
      * A hallgatót megmérgezi.
-     * @param student
+     *
+     * @param student A hatást elszenvedő hallgató
      */
     @Override
     public void affect(Student student) {

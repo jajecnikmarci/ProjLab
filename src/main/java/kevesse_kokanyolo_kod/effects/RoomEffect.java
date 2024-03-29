@@ -15,19 +15,18 @@ public abstract class RoomEffect extends Effect {
 
     /**
      * Hatást hajt végre a szobában lévő professzorra.
+     *
      * @param professor A hatást elszenvedő professzor
      */
     public abstract void affect(Professor professor);
 
     /**
      * Hatást hajt végre a szobában lévő hallgatóra.
+     *
      * @param student A hatást elszenvedő hallgató
      */
     public abstract void affect(Student student);
 
-    /**
-     *
-     */
     @Override
     public void activate() {
         Skeleton.startCall("RoomEffect.activate()");

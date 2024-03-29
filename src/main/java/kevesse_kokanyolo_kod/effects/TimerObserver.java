@@ -7,9 +7,10 @@ public interface TimerObserver {
     /**
      * A timer lejárásakor meghívódó metódus
      */
-    public void timeIsUp();
+    void timeIsUp();
+
     /**
      * A timer leállítása a lejárata előtt
      */
-    public void cancelTimer();
+    void cancelTimer();
 }
