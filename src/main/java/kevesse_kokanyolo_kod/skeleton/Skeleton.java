@@ -32,24 +32,11 @@ import java.util.Scanner;
  */
 public class Skeleton {
     static boolean fromAndToFile;
-
-    public void setInputFileName(String inputFileName) {
-        this.inputFileName = inputFileName;
-    }
-
-    String inputFileName;
-
-    public void setOutputFileName(String outputFileName) {
-        this.outputFileName = outputFileName;
-    }
-
-    String outputFileName;
     static FileWriter fileWriter;
     static Scanner scanner;
     private static int indentCounter = 0;
     private static boolean verbose = true;
-    List<Test> tests;
-    public Skeleton() {
+    private void initializeTest(){
         tests = new ArrayList<>();
         /**
          * Itt történik a tesztek hozzáadása (2)
@@ -80,6 +67,17 @@ public class Skeleton {
         tests.add(new Test("Student gets Defended from Professor with Glass",
                 this::testStudentGetsDefendedFromProfessorWithGlass));
         tests.add(new Test("Professor enters Room with Rug", this::testProfessorEntersRoomWithRug));
+    }
+
+    List<Test> tests;
+    public Skeleton(String inputFileName,String outputFileName) throws IOException {
+        initializeTest();
+        fileWriter = new FileWriter(outputFileName);
+        scanner = new Scanner(new File(inputFileName));
+    }
+    public Skeleton() {
+        initializeTest();
+        scanner = new Scanner(System.in);
     }
     
     public static void setFromAndToFile(boolean fromAndToFile) {
@@ -112,26 +110,16 @@ public class Skeleton {
     }
 
     public static void printLn(String string) {
-        for (int i = 0; i < indentCounter - 1; i++) {
-            if (fromAndToFile) {
-                try {
-                    fileWriter.write("\t");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                System.out.print("\t");
+        try {
+            for (int i = 0; i < indentCounter - 1; i++) {
+                if (fromAndToFile) fileWriter.write("\t");
+                else System.out.print("\t");
             }
-        }
-        if (fromAndToFile) {
-            try {
-                fileWriter.write(" " + string + "\n");
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            System.out.println(string);
+            if (fromAndToFile) fileWriter.write(" " + string + "\n");
+            else System.out.println(string);
+        } catch (IOException e) {
+            System.out.println("Nem lehet a fájlba írni!");
+            System.exit(1);
         }
     }
 
@@ -139,13 +127,11 @@ public class Skeleton {
         if (fromAndToFile) {
             try {
                 fileWriter.write("\n");
-
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Nem lehet a fájlba írni!");
+                System.exit(1);
             }
-        } else {
-            System.out.println();
-        }
+        } else System.out.println();
     }
 
     public static void err(String string) {
@@ -225,15 +211,7 @@ public class Skeleton {
      * Elindítja a Skeleton menüt.
      */
     public void menu() {
-        try {
-            if (fromAndToFile) {
-                fileWriter = new FileWriter(outputFileName);
 
-                scanner = new Scanner(new File(inputFileName));
-            } else scanner = new Scanner(System.in);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         printTests();
         do {
             String input;

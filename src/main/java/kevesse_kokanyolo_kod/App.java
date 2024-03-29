@@ -2,32 +2,26 @@ package kevesse_kokanyolo_kod;
 
 import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
+import java.io.IOException;
+
 public class App {
     public static Skeleton skeleton;
 
     public static void main(String[] args) {
-        skeleton = new Skeleton();
-        boolean configGood = false;
-        if (args.length == 5 && args[0].equals("-f")) {
+
+        if (args.length == 3 && args[0].equals("-f")) {
             Skeleton.setFromAndToFile(true);
             System.out.println("File usage");
-            if (args[1].equals("-i")) {
-                skeleton.setInputFileName(args[2]);
-                if (args[3].equals("-o")) {
-                    skeleton.setOutputFileName(args[4]);
-                    configGood = true;
-                }
+            try {
+                skeleton = new Skeleton(args[1],args [2] );
+            } catch (IOException e) {
+                System.out.println("Usage for file usage: running command + [-f <inputfile> <outputfile>]");
+                System.exit(1);
             }
         } else if (args.length == 0) {
             Skeleton.setFromAndToFile(false);
             System.out.println("Console usage");
-            configGood = true;
         }
-        if (!configGood) {
-            System.out.println("Usage for file usage: running command + [-f -i <inputfile> -o <outputfile>]");
-            System.exit(1);
-        }
-
         skeleton.menu();
     }
 }   
