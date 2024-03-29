@@ -1,7 +1,7 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 /**
  * Effektek megvalósítására szolgáló osztály. Az effektumokat a játékosokra és szobákra lehet alkalmazni.
@@ -56,16 +56,16 @@ public abstract class Effect implements TimerObserver {
     }
 
     public void timeIsUp() {
-        Skeleton.startCall("PoisonImmunity.timeIsUp()");
+        SkeletonMenu.startCall("PoisonImmunity.timeIsUp()");
         observer.effectConsumed(this);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     public void cancelTimer() {
-        Skeleton.startCall("Effect.cancelTimer()");
+        SkeletonMenu.startCall("Effect.cancelTimer()");
         timer.cancel();
         active = false;
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     public Item getItem() {

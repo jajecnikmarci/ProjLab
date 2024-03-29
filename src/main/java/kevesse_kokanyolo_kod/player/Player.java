@@ -7,8 +7,8 @@ import kevesse_kokanyolo_kod.effects.PoisonImmunity;
 import kevesse_kokanyolo_kod.items.Camembert;
 import kevesse_kokanyolo_kod.items.FFP2;
 import kevesse_kokanyolo_kod.items.Item;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +44,9 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * @param item a hozzáadandó tárgy
      */
     public void addItem(Item item) {
-        Skeleton.startCall("Player.addItem(Item)");
+        SkeletonMenu.startCall("Player.addItem(Item)");
         inventory.add(item);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -55,9 +55,9 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * @param item a kitörlendő tárgy
      */
     public void removeItem(Item item) {
-        Skeleton.startCall("Player.removeItem(Item)");
+        SkeletonMenu.startCall("Player.removeItem(Item)");
         inventory.remove(item);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -65,9 +65,9 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * Ezzel elindítja a Visitor működést, mely végén felveszi a szoba tárgylistájának legfelső tárgyát.
      */
     public void pickUpItem() {
-        Skeleton.startCall("Player.pickUpItem()");
+        SkeletonMenu.startCall("Player.pickUpItem()");
         location.popItem(this);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -77,10 +77,10 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * @param item
      */
     public void dropItem(Item item) {
-        Skeleton.startCall("Player.dropItem(Item)");
+        SkeletonMenu.startCall("Player.dropItem(Item)");
         inventory.remove(item);
         location.addItem(item);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -88,10 +88,10 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * item sem fog a játékoshoz tartozni.
      */
     public void dropAll() {
-        Skeleton.startCall("Player.dropAll()");
+        SkeletonMenu.startCall("Player.dropAll()");
         inventory.forEach(item -> location.addItem(item));
         inventory.clear();
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -100,9 +100,9 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * @param item a használandó tárgy
      */
     public void useItem(Item item) {
-        Skeleton.startCall("Player.useItem(Item)");
+        SkeletonMenu.startCall("Player.useItem(Item)");
         item.use(location, this);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -111,9 +111,9 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * @param poisonImmunity
      */
     public void addPoisonImmunity(PoisonImmunity poisonImmunity) {
-        Skeleton.startCall("Player.addPoisonImmunity(PoisonImmunity)");
+        SkeletonMenu.startCall("Player.addPoisonImmunity(PoisonImmunity)");
         poisonImmunities.add(poisonImmunity);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -122,19 +122,19 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * @param item A tárgy ami az immunitást adja
      */
     public void removePoisonImmunity(Item item) {
-        Skeleton.startCall("Player.removePoisonImmunity(Item)");
+        SkeletonMenu.startCall("Player.removePoisonImmunity(Item)");
         Effect effectToRemove = findPoisonImmunityByItem(item);
         poisonImmunities.remove(effectToRemove);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
      * A játékos duration ideig nem tud mozogni.
      */
     public void stun(int duration) {
-        Skeleton.startCall("Player.stun(Duration)");
+        SkeletonMenu.startCall("Player.stun(Duration)");
         // TODO: implement
-        Skeleton.endCall("A játékos lebénult.");
+        SkeletonMenu.endCall("A játékos lebénult.");
     }
 
     /**
@@ -146,20 +146,20 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * tárgyakat.
      */
     public void poison() {
-        Skeleton.startCall("Player.poison()");
+        SkeletonMenu.startCall("Player.poison()");
         if (poisonImmunities.isEmpty()) {
             this.dropAll();
             this.stun(5);
-            Skeleton.endCall("A játékos megmérgeződött.");
+            SkeletonMenu.endCall("A játékos megmérgeződött.");
             return;
         }
         if (poisonImmunities.stream().anyMatch(PoisonImmunity::isActive)) {
-            Skeleton.endCall("A játékos nem mérgeződött meg, mert volt aktív immunitása.");
+            SkeletonMenu.endCall("A játékos nem mérgeződött meg, mert volt aktív immunitása.");
             return;
         }
         PoisonImmunity poisonImmunity = poisonImmunities.get(0);
         poisonImmunity.activate();
-        Skeleton.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
+        SkeletonMenu.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
     }
 
     /**
@@ -239,7 +239,7 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * @param effect az elhasznált effekt
      */
     public void effectConsumed(Effect effect) {
-        Skeleton.startCall("Player.effectConsumed(Effect)");
+        SkeletonMenu.startCall("Player.effectConsumed(Effect)");
         Item item = effect.getItem();
         PoisonImmunity poisonImmunity = findPoisonImmunityByItem(item);
         if (poisonImmunity != null) {
@@ -249,7 +249,7 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
                 item.use(location, this);
             }
         }
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -260,11 +260,11 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      */
     @Override
     public void acceptItem(FFP2 ffp2) {
-        Skeleton.startCall("Player.acceptItem(FFP2)");
+        SkeletonMenu.startCall("Player.acceptItem(FFP2)");
         this.addItem(ffp2);
         this.addPoisonImmunity(new PoisonImmunity(ffp2, ffp2.getImmunityLength(), this));
         location.removeItem(ffp2);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
 
@@ -276,10 +276,10 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      */
     @Override
     public void acceptItem(Camembert camembert) {
-        Skeleton.startCall("Player.acceptItem(Camembert)");
+        SkeletonMenu.startCall("Player.acceptItem(Camembert)");
         this.addItem(camembert);
         location.removeItem(camembert);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
 }

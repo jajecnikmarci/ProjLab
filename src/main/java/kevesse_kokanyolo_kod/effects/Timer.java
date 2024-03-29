@@ -1,8 +1,8 @@
 package kevesse_kokanyolo_kod.effects;
 
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
-
 import java.util.TimerTask;
+
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 /**
  * Időzítő osztály. Elindítása után a megadott időtartamig várakozik, majd értesíti a hívó objektumot.
@@ -29,7 +29,7 @@ public class Timer {
      * @param durationInSeconds Az időzítő időtartama.
      */
     void start(int durationInSeconds) {
-        Skeleton.startCall("Timer.start(int)");
+        SkeletonMenu.startCall("Timer.start(int)");
         innerTimer = new java.util.Timer();
         innerTimer.schedule(new TimerTask() {
             @Override
@@ -37,15 +37,15 @@ public class Timer {
                 ownerEffect.timeIsUp();
             }
         }, durationInSeconds /*1000L*/); //TODO *1000L élesben
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
      * Az időzítő leállítását megvalósító metódus.
      */
     public void cancel() {
-        Skeleton.startCall("Timer.cancel()");
+        SkeletonMenu.startCall("Timer.cancel()");
         innerTimer.cancel();
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 }

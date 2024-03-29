@@ -1,9 +1,9 @@
 package kevesse_kokanyolo_kod.items;
 
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.player.Player;
 import kevesse_kokanyolo_kod.player.Student;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 /**
  * Tranzisztor tárgyat reprezentáló osztály
@@ -30,9 +30,9 @@ public class Transistor extends Item {
      * @param room a szoba ahol a tranzisztor található
      */
     public void setRoom(Room room) {
-        Skeleton.startCall("Transistor.setRoom(Room)");
+        SkeletonMenu.startCall("Transistor.setRoom(Room)");
         this.room = room;
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -41,9 +41,9 @@ public class Transistor extends Item {
      * @param transistor a tranzisztor párja
      */
     public void setPair(Transistor transistor) {
-        Skeleton.startCall("Transistor.setPair(Transistor)");
+        SkeletonMenu.startCall("Transistor.setPair(Transistor)");
         this.pair = transistor;
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -68,12 +68,12 @@ public class Transistor extends Item {
      */
     @Override
     public void use(Room room, Player player) {
-        Skeleton.startCall("Transistor.use(Room, Player)");
+        SkeletonMenu.startCall("Transistor.use(Room, Player)");
         if (this.pair != null && this.pair.room == null) {
 
             this.setRoom(room);
             player.removeItem(this);
-            Skeleton.endCall("A tranzisztor a szobához lett hozzáadva.");
+            SkeletonMenu.endCall("A tranzisztor a szobához lett hozzáadva.");
 
         } else if (this.pair != null && this.pair.room.canPlayerEnter()) {
             room.removePlayer(player);
@@ -87,8 +87,8 @@ public class Transistor extends Item {
 
             player.removeItem(this);
             player.addItem(this.pair);
-            Skeleton.endCall("A játékos át lett teleportálva a másik szobába.");
-        } else Skeleton.endCall("A játékos nem lett elteleportálva a másik szobába.");
+            SkeletonMenu.endCall("A játékos át lett teleportálva a másik szobába.");
+        } else SkeletonMenu.endCall("A játékos nem lett elteleportálva a másik szobába.");
     }
 
     /**
@@ -98,8 +98,8 @@ public class Transistor extends Item {
      */
     @Override
     public void accept(Player player) {
-        Skeleton.startCall("Transistor.accept(Player)");
+        SkeletonMenu.startCall("Transistor.accept(Player)");
         player.acceptItem(this);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 }
