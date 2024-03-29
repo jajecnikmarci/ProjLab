@@ -247,7 +247,7 @@ public class Skeleton {
             String input;
             try {
                 input = scanner.nextLine();
-                printLn(input);
+                if (isFromAndToFile()) printLn(input);
                 if (input.equals("q"))
                     break;
                 else if (input.equals("m")) {
@@ -263,10 +263,12 @@ public class Skeleton {
 
         } while (scanner.hasNextLine());
         scanner.close();
-        try {
-            fileWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (isFromAndToFile()){
+            try {
+                fileWriter.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
