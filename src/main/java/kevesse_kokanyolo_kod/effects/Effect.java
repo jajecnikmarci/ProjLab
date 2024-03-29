@@ -16,7 +16,7 @@ public abstract class Effect implements TimerObserver {
     /*
      * Az effektet figyelő osztály
      */
-    EffectConsumedObserver observer;
+    private final EffectConsumedObserver observer;
     /**
      * Az effektum időtartama, ha van neki. Ha nincs akkor 0
      */

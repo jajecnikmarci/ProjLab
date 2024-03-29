@@ -27,9 +27,6 @@ public abstract class RoomEffect extends Effect {
      */
     public abstract void affect(Student student);
 
-    /**
-     *
-     */
     @Override
     public void activate() {
         Skeleton.startCall("RoomEffect.activate()");
