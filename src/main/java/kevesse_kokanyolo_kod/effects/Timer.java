@@ -12,7 +12,7 @@ public class Timer {
     /**
      * Az időzítőt tulajdonló Item.
      */
-    private Effect ownerEffect;
+    private final Effect ownerEffect;
 
     /**
      * Az időzítést megvalósító java.util.Timer.
@@ -22,6 +22,7 @@ public class Timer {
     public Timer(Effect ownerEffect) {
         this.ownerEffect = ownerEffect;
     }
+
     /**
      * Az időzítő elindítását megvalósító metódus.
      *
@@ -38,6 +39,7 @@ public class Timer {
         }, durationInSeconds /*1000L*/); //TODO *1000L élesben
         Skeleton.endCall();
     }
+
     /**
      * Az időzítő leállítását megvalósító metódus.
      */

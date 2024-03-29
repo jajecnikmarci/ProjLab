@@ -1,22 +1,22 @@
 package kevesse_kokanyolo_kod.player;
 
-import kevesse_kokanyolo_kod.effects.*;
+import kevesse_kokanyolo_kod.effects.Effect;
+import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.items.*;
-
-import kevesse_kokanyolo_kod.room.*;
+import kevesse_kokanyolo_kod.room.Door;
+import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.skeleton.Skeleton;
-
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * A Hallgató viselkedését megvalósító osztály. 
+ * A Hallgató viselkedését megvalósító osztály.
  */
 public class Student extends Player {
     /**
-     * A hallgató lelkeinek számát tárolja. 
+     * A hallgató lelkeinek számát tárolja.
      */
     private int souls;
 
@@ -25,10 +25,10 @@ public class Student extends Player {
      */
     private List<KillImmunity> killImmunities;
 
-    public Student(Room r){
+    public Student(Room r) {
         super(r);
         souls = 3;
-        killImmunities=new ArrayList<>();
+        killImmunities = new ArrayList<>();
     }
 
 
@@ -61,6 +61,7 @@ public class Student extends Player {
 
     /**
      * Hozzáadja a killImmunities-hez a paraméterként kapott immuntitást.
+     *
      * @param killImmunity A hozzáadadndó killImmunity
      */
     @Override
@@ -72,6 +73,7 @@ public class Student extends Player {
 
     /**
      * Kitörli a killImmunities-ből a paraméterként kapott tárgyhoz tartozó immunitást.
+     *
      * @param item A tárgy ami az immunitást adja
      */
     @Override
@@ -84,6 +86,7 @@ public class Student extends Player {
 
     /**
      * Összepárosítja a két kapott tranzisztort. Ez egy új függvény, a tervben nem szerepelt.
+     *
      * @param transistor1 Az egyik tranzisztor
      * @param transistor2 A másik tranzisztor
      */
@@ -96,9 +99,10 @@ public class Student extends Player {
         Skeleton.endCall();
     }
 
-    /**   
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+    /**
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     *
      * @param transistor a hozzáadandó tárgy
      */
     @Override
@@ -110,8 +114,9 @@ public class Student extends Player {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     *
      * @param slideRule a hozzáadandó tárgy
      */
     @Override
@@ -123,15 +128,16 @@ public class Student extends Player {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.s
+     *
      * @param tvsz a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(TVSZ tvsz) {
         Skeleton.startCall("Student.acceptItem(TVSZ)");
         this.addItem(tvsz);
-        KillImmunity killImmunity = new KillImmunity(tvsz, 10,this);
+        KillImmunity killImmunity = new KillImmunity(tvsz, 10, this);
         killImmunity.activate();
         this.addKillImmunity(killImmunity);
         location.removeItem(tvsz);
@@ -139,22 +145,24 @@ public class Student extends Player {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     *
      * @param glass a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(Glass glass) {
         Skeleton.startCall("Student.acceptItem(Glass)");
         this.addItem(glass);
-        this.addKillImmunity(new KillImmunity(glass,10,this));
+        this.addKillImmunity(new KillImmunity(glass, 10, this));
         location.removeItem(glass);
         Skeleton.endCall();
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz, 
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     *
      * @param rug a hozzáadandó tárgy
      */
     @Override
@@ -166,9 +174,10 @@ public class Student extends Player {
     }
 
     /**
-     * Interakcióba lép egy Oktatóval, elszipolyozódik a lelke. 
+     * Interakcióba lép egy Oktatóval, elszipolyozódik a lelke.
+     *
      * @param professor A hallgatóval interakcióba lépő oktató
-     * @param room A szoba, ahol az interakció történik
+     * @param room      A szoba, ahol az interakció történik
      */
     @Override
     public void meet(Professor professor, Room room) {
@@ -179,7 +188,8 @@ public class Student extends Player {
 
     /**
      * Interakcióba lép egy másik hallgatóval, azaz nem csinál semmit.
-     * @param student 
+     *
+     * @param student
      */
     @Override
     public void meet(Student student) {
@@ -194,14 +204,15 @@ public class Student extends Player {
                 .filter(d -> d.isBetween(location, room))
                 .findFirst();
 
-        if(door.isPresent()) {
+        if (door.isPresent()) {
             door.get().goThrough(this);
             room.onEnter(this);
-            Skeleton.endCall("A hallgató átment a szobába."); 
+            Skeleton.endCall("A hallgató átment a szobába.");
             return;
         }
         Skeleton.endCall("A hallgató nem ment át a szobába.");
     }
+
     public KillImmunity findKillImmunityByItem(Item item) {
         for (KillImmunity killImmunity : killImmunities) {
             if (killImmunity.getItem().equals(item)) {
@@ -210,6 +221,7 @@ public class Student extends Player {
         }
         return null;
     }
+
     @Override
     public void effectConsumed(Effect effect) {
         Skeleton.startCall("Student.effectConsumed()");

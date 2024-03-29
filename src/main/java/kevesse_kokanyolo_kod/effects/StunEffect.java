@@ -15,6 +15,7 @@ public class StunEffect extends RoomEffect {
 
     /**
      * Lebénít egy oktatót
+     *
      * @param professor Sokkolandó oktató
      */
     @Override
@@ -26,6 +27,7 @@ public class StunEffect extends RoomEffect {
 
     /**
      * Lebénít egy hallgatót
+     *
      * @param student Sokkolandó hallgató
      */
     @Override

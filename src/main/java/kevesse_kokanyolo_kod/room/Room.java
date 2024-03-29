@@ -4,13 +4,12 @@ import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
 import kevesse_kokanyolo_kod.effects.RoomEffect;
 import kevesse_kokanyolo_kod.items.Item;
-import kevesse_kokanyolo_kod.player.Professor;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 import kevesse_kokanyolo_kod.player.Player;
+import kevesse_kokanyolo_kod.player.Professor;
 import kevesse_kokanyolo_kod.player.Student;
+import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +19,27 @@ import java.util.stream.Collectors;
 public class Room implements EffectConsumedObserver {
 
 
+    /**
+     * Megadja, hogy hány játékos tartózkodhat a szobában.
+     */
+    private int capacity;
+    /**
+     * A szobában tartózkodó játékosok listája.
+     */
+    private final List<Player> players;
+    /**
+     * A szobához tartozó ajtók listája.
+     */
+    private List<Door> doors;
+    /**
+     * A szobában található tárgyak listája.
+     */
+    private List<Item> items;
+    /**
+     * A szobában található hatások listája.
+     */
+    private ArrayList<RoomEffect> effects;
+
     public Room(int capacity) {
         this.capacity = capacity;
         this.players = new ArrayList<>();
@@ -27,42 +47,21 @@ public class Room implements EffectConsumedObserver {
         this.items = new ArrayList<>();
         this.effects = new ArrayList<>();
     }
-    
-    /**
-     * Megadja, hogy hány játékos tartózkodhat a szobában.
-     */
-    private int capacity;
 
-    /**
-     * A szobában tartózkodó játékosok listája.
-     */
-    private List<Player> players;
-
-    /**
-     * A szobához tartozó ajtók listája.
-     */
-    private List<Door> doors;
-
-    /**
-     * A szobában található tárgyak listája.
-     */
-    private List<Item> items;
-
-    /**
-     * A szobában található hatások listája.
-     */
-    private ArrayList<RoomEffect> effects;
-
-    public Room(){
+    public Room() {
         players = new ArrayList<>();
         items = new ArrayList<>();
         effects = new ArrayList<>();
         doors = new ArrayList<>();
     }
 
-    public List<Door> getDoors() {return doors;}
+    public List<Door> getDoors() {
+        return doors;
+    }
+
     /**
      * Kitörli a megadott tárgyat a szoba tárgyai közül.
+     *
      * @param item a megadott tárgy
      */
     public void removeItem(Item item) {
@@ -73,6 +72,7 @@ public class Room implements EffectConsumedObserver {
 
     /**
      * Hozzáad egy tárgyat a szobában lévő tárgyak listájához.
+     *
      * @param item a hozzáadandó tárgy
      */
     public void addItem(Item item) {
@@ -83,22 +83,24 @@ public class Room implements EffectConsumedObserver {
 
     /**
      * Hozzáad a szobában lévő táryak közül a legfelső tárgyat a játékos tárgyaihoz.
+     *
      * @param player A játékos, aki a tárgyat fel akarja venni
      */
     public void popItem(Player player) {
         Skeleton.startCall("Room.popItem(Player)");
-        if(items.isEmpty()){
+        if (items.isEmpty()) {
             Skeleton.endCall("Nincs több tárgy a szobában.");
             return;
-        } 
-        items.get(items.size()-1).accept(player);
+        }
+        items.get(items.size() - 1).accept(player);
         Skeleton.endCall();
     }
 
     /**
-     * Amikor egy oktató belép a szobába, ez a függvény gyakorolja rá a szoba hatásait. 
+     * Amikor egy oktató belép a szobába, ez a függvény gyakorolja rá a szoba hatásait.
      * Interakcióba hozza a szobában található játékosokkal.
      * A beléptető objektum felelőssége meghívni ezt a függvényt.
+     *
      * @param professor a belépő oktató
      */
     public void onEnter(Professor professor) {
@@ -107,7 +109,7 @@ public class Room implements EffectConsumedObserver {
             if (effect.isActive()) effect.affect(professor);
         }
         for (Player player : this.players) {
-            player.meet(professor,this);
+            player.meet(professor, this);
         }
         Skeleton.endCall();
     }
@@ -116,6 +118,7 @@ public class Room implements EffectConsumedObserver {
      * Amikor egy hallgató belép a szobába, ez a függvény gyakorolja rá a szoba hatásait.
      * Interakcióba hozza a szobában található játékosokkal.
      * A beléptető objektum felelőssége meghívni ezt a függvényt.
+     *
      * @param student a belépő hallgató
      */
     public void onEnter(Student student) {
@@ -128,11 +131,11 @@ public class Room implements EffectConsumedObserver {
     }
 
     /**
-     * Megmérgez minden játékost aki a szobában tartózkodik. 
+     * Megmérgez minden játékost aki a szobában tartózkodik.
      */
     public void poisonPlayers() {
         Skeleton.startCall("Room.poisonPlayers()");
-        players.forEach(p -> p.poison());
+        players.forEach(Player::poison);
         Skeleton.endCall();
     }
 
@@ -140,9 +143,8 @@ public class Room implements EffectConsumedObserver {
      * Kettéosztja ezt a szobát, ha kapacitása 4 vagy nagyobb és nincs benne játékos.
      * Az újonnan létrehozott szobával megosztoznak az eredeti szoba tulajdonságain.
      * A szoba szomszédai mostantól ennek, vagy az új szobáknak csak egyikével lesznek szomszédosak.
-     * Az újonnan létrehozott szoba szomszédos ezzel a szobával. 
+     * Az újonnan létrehozott szoba szomszédos ezzel a szobával.
      * A létrejövő szoba kapacitása alsó egészrésze az eredeti szoba kapacitásának felének.
-     * 
      */
     public void split() {
         Skeleton.startCall("Room.split()");
@@ -153,13 +155,13 @@ public class Room implements EffectConsumedObserver {
         if (!players.isEmpty()) {
             Skeleton.endCall("A szoba nem osztódott, mert volt benne játékos.");
             return;
-        } 
-        
+        }
+
         Room room = new Room(capacity / 2);
         for (int i = 0; i < doors.size(); i += 2) {
             room.doors.add(doors.remove(i));
         }
-        
+
         for (int i = 0; i < items.size(); i += 2) {
             room.items.add(items.remove(i));
         }
@@ -181,34 +183,36 @@ public class Room implements EffectConsumedObserver {
      * Az ajtók összegyűjtésekor azokat az ajtókat eldobjuk, amik a két szoba között vannak.
      * Az ajtók közül azokat, amik a kapott szobához vezetnek, átállítjuk, hogy erre a szobára vezessenek.
      * A hívó dolga a beolvasztandó szoba megsemmisítése.
+     *
      * @param room a szoba amit beleolvasztunk ebbe a szobába
      */
     public void mergeWithRoom(Room room) {
         Skeleton.startCall("Room.mergeWithRoom(Room)");
-        if (!players.isEmpty() || !room.players.isEmpty())  {
+        if (!players.isEmpty() || !room.players.isEmpty()) {
             Skeleton.endCall("A szobák nem olvadtak össze, mert volt bennük játékos.");
             return;
         }
-        this.capacity = Math.max(this.capacity, room.capacity); 
+        this.capacity = Math.max(this.capacity, room.capacity);
         this.players.addAll(room.players);
         this.items.addAll(room.items);
         this.effects.addAll(room.effects);
 
         doors.addAll(room.doors);
         doors = doors.stream()
-                        .filter(d -> !(d.getRoom1() == room && d.getRoom2() == this  
-                                    || d.getRoom1() == this && d.getRoom2() == room))
-                        .distinct()
-                        .collect(Collectors.toList());
+                .filter(d -> !(d.getRoom1() == room && d.getRoom2() == this
+                        || d.getRoom1() == this && d.getRoom2() == room))
+                .distinct()
+                .collect(Collectors.toList());
         doors.forEach(d -> {
-            if(d.getRoom1() == room) d.setRoom1(this);
-            if(d.getRoom2() == room) d.setRoom2(this);
+            if (d.getRoom1() == room) d.setRoom1(this);
+            if (d.getRoom2() == room) d.setRoom2(this);
         });
         Skeleton.endCall("A szobák összeolvadtak.");
     }
 
     /**
      * Hozzáad egy Player-t a szobában tartózkodó Player-ek közé
+     *
      * @param player a hozzáadandó player
      */
     public void addPlayer(Player player) {
@@ -219,6 +223,7 @@ public class Room implements EffectConsumedObserver {
 
     /**
      * Kitörli a játékost a szobából.
+     *
      * @param player a kitörölni kívánt játékos
      */
     public void removePlayer(Player player) {
@@ -229,6 +234,7 @@ public class Room implements EffectConsumedObserver {
 
     /**
      * Hozzáadja a hatást a szobához.
+     *
      * @param effect a hozzáadandó hatás
      */
     public void addEffect(RoomEffect effect) {
@@ -255,6 +261,7 @@ public class Room implements EffectConsumedObserver {
 
     /**
      * Megkeresi a paraméterként kapott tárgyhoz tartozó KillImmunity-t a killImmunities listában.
+     *
      * @param item a tárgy, amelyhez tartozó KillImmunity-t keresi
      */
     private RoomEffect findRoomEffectByItem(Item item) {

@@ -11,9 +11,10 @@ import kevesse_kokanyolo_kod.skeleton.Skeleton;
  */
 public class Camembert extends Item {
     /**
-     * A Camembert használata. Eltávolítja a játékos tárgyai közül a Camembert-et, 
+     * A Camembert használata. Eltávolítja a játékos tárgyai közül a Camembert-et,
      * és a szobához hozzáad egy PoisonEffect-et, valamint aktiválja azt.
-     * @param room a szoba, ahol a tárgyat használják
+     *
+     * @param room   a szoba, ahol a tárgyat használják
      * @param player a játékos, aki használja a tárgyat
      */
     @Override

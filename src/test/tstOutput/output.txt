@@ -1,0 +1,42 @@
+ m - Menü
+ q - Kilépés
+ Válasszon tesztet: 
+ 1. Pickup FFP2
+ 2. Pickup Camembert
+ 3. Pickup Glass
+ 4. Pickup Rug
+ 5. Pickup Sliderule
+ 6. Pickup Transistor
+ 7. Pickup TVSZ
+ 8. Use Camembert
+ 9. Use Glass
+ 10. Use Rug
+ 11. Pair Transistors
+ 12. Drop Transistor
+ 13. Teleport with Transistor
+ 14. Split Room
+ 15. Merge Rooms
+ 16. Move to Room
+ 17. Player gets Poisoned
+ 18. Player gets Defended from Poison
+ 19. Student gets Defended from Professor with TVSZ
+ 20. Student gets Defended from Professor with Glass
+ 21. Professor enters Room with Rug
+
+ 4
+ Running Test: Pickup Rug
+ Player.pickUpItem()
+	 Room.popItem(Player)
+		 Rug.accept(Player)
+			 Student.acceptItem(Rug)
+				 Player.addItem(Item)
+				 <-- void
+				 Room.removeItem(Item)
+				 <-- void
+			 <-- void
+		 <-- void
+	 <-- void
+ <-- void
+ End of test: Pickup Rug
+
+ q

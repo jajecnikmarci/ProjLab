@@ -1,7 +1,6 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
-
 import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 /**
@@ -9,7 +8,7 @@ import kevesse_kokanyolo_kod.skeleton.Skeleton;
  */
 public class KillImmunity extends Effect {
     public KillImmunity(Item givenBy, int duration, EffectConsumedObserver observer) {
-        super(givenBy, duration,observer);
+        super(givenBy, duration, observer);
     }
 
     @Override

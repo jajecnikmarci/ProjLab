@@ -1,0 +1,1 @@
+Main-Class: kevesse_kokanyolo_kod.App
