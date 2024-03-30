@@ -9,8 +9,7 @@ import kevesse_kokanyolo_kod.items.fakes.FakeItem;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * A játékost reprezentáló osztály
@@ -30,6 +29,12 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * A szoba amelyben a player jelenleg tartózkodik.
      */
     Room location;
+
+    public boolean isStunned() {
+        return stunned;
+    }
+
+    private boolean stunned;
 
     protected Player(Room r) {
         location = r;
@@ -132,8 +137,15 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      */
     public void stun(int duration) {
         SkeletonMenu.startCall("Player.stun(Duration)");
-        // TODO: implement
-
+        Timer timer = new Timer();
+        stunned=true;
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                stunned = false;
+                SkeletonMenu.endCall("Játékos már nem bénult");
+            }
+        }, duration * 1000L);
         SkeletonMenu.endCall("A játékos lebénult.");
     }
 
