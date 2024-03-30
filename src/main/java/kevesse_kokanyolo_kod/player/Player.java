@@ -286,4 +286,12 @@ public abstract class Player extends Person implements PickUpVisitor, EffectCons
         SkeletonMenu.endCall();
     }
 
+    @Override
+    public void acceptItem(AirFreshener airFreshener) {
+        SkeletonMenu.startCall("Player.acceptItem(AirFreshener)");
+        this.addItem(airFreshener);
+        location.removeItem(airFreshener);
+        SkeletonMenu.endCall();
+    }
+
 }

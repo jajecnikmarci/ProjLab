@@ -48,4 +48,9 @@ public interface PickUpVisitor {
      */
     void acceptItem(Rug rug);
 
+    /**
+     * @param airFreshener
+     */
+    void acceptItem(AirFreshener airFreshener);
+
 }

@@ -21,7 +21,7 @@ public class Camembert extends Item {
     public void use(Room room, Player player) {
         SkeletonMenu.startCall("Camembert.use(Room, Player)");
         PoisonEffect camembertEffect = new PoisonEffect(this, 30, room);
-        room.addEffect(camembertEffect);
+        room.addPoisonEffect(camembertEffect);
         camembertEffect.activate();
         effect = camembertEffect;
         room.poisonPlayers(); //Azért itt mert itt ismerjük a szobát

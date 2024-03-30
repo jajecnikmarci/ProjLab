@@ -36,7 +36,8 @@ public class Room implements EffectConsumedObserver {
     /**
      * A szobában található hatások listája.
      */
-    private ArrayList<RoomEffect> effects;
+    private ArrayList<PoisonEffect> poisonEffects;
+    private ArrayList<StunEffect> stunEffects;
 
     private CleaningEffect lastCleaning;
 
@@ -45,14 +46,17 @@ public class Room implements EffectConsumedObserver {
         this.people = new ArrayList<>();
         this.doors = new ArrayList<>();
         this.items = new ArrayList<>();
-        this.effects = new ArrayList<>();
+        this.poisonEffects = new ArrayList<>();
+        this.stunEffects = new ArrayList<>();
+
         lastCleaning = null;
     }
 
     public Room() {
         people = new ArrayList<>();
         items = new ArrayList<>();
-        effects = new ArrayList<>();
+        this.poisonEffects = new ArrayList<>();
+        this.stunEffects = new ArrayList<>();
         doors = new ArrayList<>();
         lastCleaning = null;
     }
@@ -107,8 +111,11 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Professor professor) {
         SkeletonMenu.startCall("Room.onEnter(Professor)");
-        for (RoomEffect effect : this.effects) {
-            if (effect.isActive()) effect.affect(professor);
+        for (PoisonEffect poisonEffect : this.poisonEffects) {
+            if (poisonEffect.isActive()) poisonEffect.affect(professor);
+        }
+        for (StunEffect stunEffect : this.stunEffects) {
+            if (stunEffect.isActive()) stunEffect.affect(professor);
         }
         for (Person person : this.people) {
             person.meet(professor, this);
@@ -125,7 +132,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Student student) {
         SkeletonMenu.startCall("Room.onEnter(Student)");
-        for (RoomEffect effect : this.effects) {
+        for (PoisonEffect effect : this.poisonEffects) {
             if (effect.isActive()) effect.affect(student);
         }
         people.forEach(person -> person.meet(student));
@@ -175,8 +182,11 @@ public class Room implements EffectConsumedObserver {
             room.items.add(items.remove(i));
         }
 
-        for (int i = 0; i < effects.size(); i += 2) {
-            room.effects.add(effects.remove(i));
+        for (int i = 0; i < poisonEffects.size(); i += 2) {
+            room.poisonEffects.add(poisonEffects.remove(i));
+        }
+        for (int i = 0; i < stunEffects.size(); i += 2) {
+            room.stunEffects.add(stunEffects.remove(i));
         }
 
         Door door = new Door(this, room, true, true);
@@ -204,7 +214,8 @@ public class Room implements EffectConsumedObserver {
         this.capacity = Math.max(this.capacity, room.capacity);
         this.people.addAll(room.people);
         this.items.addAll(room.items);
-        this.effects.addAll(room.effects);
+        this.poisonEffects.addAll(room.poisonEffects);
+        this.stunEffects.addAll(room.stunEffects);
 
         doors.addAll(room.doors);
         doors = doors.stream()
@@ -246,18 +257,36 @@ public class Room implements EffectConsumedObserver {
      *
      * @param effect a hozzáadandó hatás
      */
-    public void addEffect(RoomEffect effect) {
+    public void addPoisonEffect(PoisonEffect effect) {
         SkeletonMenu.startCall("Room.addEffect(RoomEffect)");
-        this.effects.add(effect);
+        this.poisonEffects.add(effect);
         SkeletonMenu.endCall();
     }
 
     /**
      * @param effect
      */
-    public void removeEffect(RoomEffect effect) {
+    public void removePoisonEffect(PoisonEffect effect) {
         SkeletonMenu.startCall("Room.removeEffect(RoomEffect)");
-        this.effects.remove(effect);
+        this.poisonEffects.remove(effect);
+        SkeletonMenu.endCall();
+    }/**
+     * Hozzáadja a hatást a szobához.
+     *
+     * @param effect a hozzáadandó hatás
+     */
+    public void addStunEffect(StunEffect effect) {
+        SkeletonMenu.startCall("Room.addEffect(RoomEffect)");
+        this.stunEffects.add(effect);
+        SkeletonMenu.endCall();
+    }
+
+    /**
+     * @param effect
+     */
+    public void removeStunEffect(StunEffect effect) {
+        SkeletonMenu.startCall("Room.removeEffect(RoomEffect)");
+        this.stunEffects.remove(effect);
         SkeletonMenu.endCall();
     }
 
@@ -273,20 +302,22 @@ public class Room implements EffectConsumedObserver {
      *
      * @param item a tárgy, amelyhez tartozó KillImmunity-t keresi
      */
-    private RoomEffect findRoomEffectByItem(Item item) {
-        for (RoomEffect effect : effects) {
-            if (effect.getItem().equals(item)) {
-                return effect;
-            }
-        }
-        return null;
+    private void deleteRoomEffectByItem(Item item) {
+        stunEffects.removeIf(stunEffect -> stunEffect.getItem().equals(item));
+        poisonEffects.removeIf(poisonEffect -> poisonEffect.getItem().equals(item));
     }
 
     public void effectConsumed(Effect effect) {
         SkeletonMenu.startCall("Room.effectConsumed()");
         Item item = effect.getItem();
-        effects.remove(findRoomEffectByItem(item));
+        deleteRoomEffectByItem(item);
         item.removeEffect();
+        SkeletonMenu.endCall();
+    }
+
+    public void clearPoisonEffects() {
+        SkeletonMenu.startCall("Room.clearPoisonEffects()");
+        poisonEffects.clear();
         SkeletonMenu.endCall();
     }
 }
