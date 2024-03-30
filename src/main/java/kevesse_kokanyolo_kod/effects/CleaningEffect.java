@@ -21,7 +21,7 @@ public class CleaningEffect extends RoomEffect{
         visitsBeforeEffect--;
     }
 
-    public boolean cleaningDeniesItemPickup() {
+    public boolean doesCleaningDenyItemPickup() {
         if (visitsBeforeEffect <= 0) return true;
         else return false;
     }

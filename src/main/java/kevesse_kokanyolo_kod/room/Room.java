@@ -97,9 +97,13 @@ public class Room implements EffectConsumedObserver {
         if (items.isEmpty()) {
             SkeletonMenu.endCall("Nincs több tárgy a szobában.");
             return;
+        } else if (lastCleaning.doesCleaningDenyItemPickup()) {
+            SkeletonMenu.endCall("Túl rég volt takarítás a szobában így azok ragacsosak lettek");
+            return;
+        } else {
+            items.get(items.size() - 1).accept(player);
+            SkeletonMenu.endCall();
         }
-        items.get(items.size() - 1).accept(player);
-        SkeletonMenu.endCall();
     }
 
     /**
@@ -120,6 +124,7 @@ public class Room implements EffectConsumedObserver {
         for (Person person : this.people) {
             person.meet(professor, this);
         }
+        lastCleaning.affect(professor);
         SkeletonMenu.endCall();
     }
 
@@ -135,6 +140,7 @@ public class Room implements EffectConsumedObserver {
         for (PoisonEffect effect : this.poisonEffects) {
             if (effect.isActive()) effect.affect(student);
         }
+        lastCleaning.affect(student);
         people.forEach(person -> person.meet(student));
         SkeletonMenu.endCall();
     }
