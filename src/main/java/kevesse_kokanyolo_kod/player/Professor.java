@@ -14,7 +14,6 @@ public class Professor extends Player {
 
     public Professor(Room r) {
         super(r);
-        location = r;
     }
 
 
@@ -38,7 +37,7 @@ public class Professor extends Player {
     @Override
     public void meet(Professor professor, Room room) {
         SkeletonMenu.startCall("Professor.meet(Professor, Room)");
-        // TODO: Leave room
+        hasToLeaveRoom();
         SkeletonMenu.endCall("A professzor elhagyta a szobát.");
     }
 
