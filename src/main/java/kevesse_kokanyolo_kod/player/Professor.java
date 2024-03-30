@@ -14,7 +14,6 @@ public class Professor extends Player {
 
     public Professor(Room r) {
         super(r);
-        location = r;
     }
 
 

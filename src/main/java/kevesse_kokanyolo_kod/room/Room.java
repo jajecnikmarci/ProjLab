@@ -6,9 +6,7 @@ import kevesse_kokanyolo_kod.effects.RoomEffect;
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.items.iItem;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Player;
-import kevesse_kokanyolo_kod.player.Professor;
-import kevesse_kokanyolo_kod.player.Student;
+import kevesse_kokanyolo_kod.player.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +22,11 @@ public class Room implements EffectConsumedObserver {
      * Megadja, hogy hány játékos tartózkodhat a szobában.
      */
     private int capacity;
+
     /**
      * A szobában tartózkodó játékosok listája.
      */
-    private final List<Player> players;
+    private final List<Person> people;
     /**
      * A szobához tartozó ajtók listája.
      */
@@ -43,14 +42,14 @@ public class Room implements EffectConsumedObserver {
 
     public Room(int capacity) {
         this.capacity = capacity;
-        this.players = new ArrayList<>();
+        this.people = new ArrayList<>();
         this.doors = new ArrayList<>();
         this.items = new ArrayList<>();
         this.effects = new ArrayList<>();
     }
 
     public Room() {
-        players = new ArrayList<>();
+        people = new ArrayList<>();
         items = new ArrayList<>();
         effects = new ArrayList<>();
         doors = new ArrayList<>();
@@ -109,8 +108,8 @@ public class Room implements EffectConsumedObserver {
         for (RoomEffect effect : this.effects) {
             if (effect.isActive()) effect.affect(professor);
         }
-        for (Player player : this.players) {
-            player.meet(professor, this);
+        for (Person person : this.people) {
+            person.meet(professor, this);
         }
         SkeletonMenu.endCall();
     }
@@ -127,7 +126,7 @@ public class Room implements EffectConsumedObserver {
         for (RoomEffect effect : this.effects) {
             if (effect.isActive()) effect.affect(student);
         }
-        players.forEach(player -> player.meet(student));
+        people.forEach(player -> player.meet(student));
         SkeletonMenu.endCall();
     }
 
@@ -136,7 +135,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void poisonPlayers() {
         SkeletonMenu.startCall("Room.poisonPlayers()");
-        players.forEach(Player::poison);
+        people.forEach(Person::poison);
         SkeletonMenu.endCall();
     }
 
@@ -153,7 +152,7 @@ public class Room implements EffectConsumedObserver {
             SkeletonMenu.endCall("A szoba nem osztódott, mert kapacitása 4-nél kisebb volt.");
             return;
         }
-        if (!players.isEmpty()) {
+        if (!people.isEmpty()) {
             SkeletonMenu.endCall("A szoba nem osztódott, mert volt benne játékos.");
             return;
         }
@@ -189,12 +188,12 @@ public class Room implements EffectConsumedObserver {
      */
     public void mergeWithRoom(Room room) {
         SkeletonMenu.startCall("Room.mergeWithRoom(Room)");
-        if (!players.isEmpty() || !room.players.isEmpty()) {
+        if (!people.isEmpty() || !room.people.isEmpty()) {
             SkeletonMenu.endCall("A szobák nem olvadtak össze, mert volt bennük játékos.");
             return;
         }
         this.capacity = Math.max(this.capacity, room.capacity);
-        this.players.addAll(room.players);
+        this.people.addAll(room.people);
         this.items.addAll(room.items);
         this.effects.addAll(room.effects);
 
@@ -218,7 +217,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void addPlayer(Player player) {
         SkeletonMenu.startCall("Room.addPlayer(Player)");
-        this.players.add(player);
+        this.people.add(player);
         SkeletonMenu.endCall();
     }
 
@@ -229,7 +228,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void removePlayer(Player player) {
         SkeletonMenu.startCall("Room.removePlayer(Player)");
-        this.players.remove(player);
+        this.people.remove(player);
         SkeletonMenu.endCall();
     }
 
@@ -257,7 +256,7 @@ public class Room implements EffectConsumedObserver {
      * Ha egy játékos befér még a szobába, igaz értékkel tér vissza.
      */
     public boolean canPlayerEnter() {
-        return capacity > players.size();
+        return capacity > people.size();
     }
 
     /**
