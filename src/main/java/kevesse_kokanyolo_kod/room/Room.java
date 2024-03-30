@@ -303,4 +303,10 @@ public class Room implements EffectConsumedObserver {
         item.removeEffect();
         SkeletonMenu.endCall();
     }
+
+    public void clearPoisonEffects() {
+        SkeletonMenu.startCall("Room.clearPoisonEffects()");
+        poisonEffects.clear();
+        SkeletonMenu.endCall();
+    }
 }
