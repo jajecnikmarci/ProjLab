@@ -542,7 +542,7 @@ public class SkeletonMenu {
         Professor professor = new Professor(room2);
         Rug rug = new Rug();
         StunEffect stunEffect = new StunEffect(rug, 30, room);
-        room.addEffect(stunEffect);
+        room.addStunEffect(stunEffect);
         stunEffect.activate();
         verbose = true;
         room.onEnter(professor);

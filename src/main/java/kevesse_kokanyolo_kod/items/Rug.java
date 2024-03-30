@@ -14,7 +14,7 @@ public class Rug extends Item {
         SkeletonMenu.startCall("Rug.use(Room, Player)");
         StunEffect stunEffect = new StunEffect(this, 30, room);
 
-        room.addEffect(stunEffect);
+        room.addStunEffect(stunEffect);
         effect = stunEffect;
         player.removeItem(this);
         SkeletonMenu.endCall();
