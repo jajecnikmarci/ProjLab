@@ -126,7 +126,13 @@ public class Room implements EffectConsumedObserver {
         for (RoomEffect effect : this.effects) {
             if (effect.isActive()) effect.affect(student);
         }
-        people.forEach(player -> player.meet(student));
+        people.forEach(person -> person.meet(student));
+        SkeletonMenu.endCall();
+    }
+
+    public void onEnter(Cleaner cleaner) {
+        SkeletonMenu.startCall("Room.onEnter(Cleaner)");
+        for (Person person : this.people) person.meet(cleaner, this);
         SkeletonMenu.endCall();
     }
 

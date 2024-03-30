@@ -10,12 +10,21 @@ public class Cleaner extends Person{
 
     @Override
     public void meet(Student student) {
-
+        if (!student.isStunned()) {
+            student.hasToLeaveRoom();
+        }
     }
 
     @Override
     public void meet(Professor professor, Room room) {
+        if (!professor.isStunned()) {
+            professor.hasToLeaveRoom();
+        }
+    }
 
+    @Override
+    public void meet(Cleaner cleaner, Room room) {
+        cleaner.hasToLeaveRoom();
     }
 
     @Override

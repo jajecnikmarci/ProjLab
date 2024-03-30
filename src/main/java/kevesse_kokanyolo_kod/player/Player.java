@@ -129,6 +129,18 @@ public abstract class Player extends Person implements PickUpVisitor, EffectCons
         SkeletonMenu.endCall();
     }
 
+    @Override
+    public void meet(Cleaner cleaner, Room room) {
+        SkeletonMenu.startCall("Player.meet(Cleaner, Room)");
+        if (!stunned) {
+            this.hasToLeaveRoom();
+            SkeletonMenu.endCall("A játékos elhagyta a szobát.");
+        }
+        else {
+            SkeletonMenu.endCall("A játékos nem tudott elhagyni a szobát, mert bénult.");
+        }
+    }
+
     /**
      * A játékos duration ideig nem tud mozogni.
      */
@@ -214,6 +226,9 @@ public abstract class Player extends Person implements PickUpVisitor, EffectCons
      */
     public void removeKillImmunity(Item item) {
     }
+
+
+
 
     /**
      * Ha elhasználódott egy effekt akkor a játékosnak törölnie kell az effektet a listájából.

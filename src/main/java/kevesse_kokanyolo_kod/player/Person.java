@@ -43,5 +43,11 @@ public abstract class Person {
      */
     public abstract void meet(Professor professor, Room room);
 
+    public abstract void meet(Cleaner cleaner, Room room);
+
     public abstract void poison();
+
+    public void hasToLeaveRoom() {
+        //TODO
+    }
     }
