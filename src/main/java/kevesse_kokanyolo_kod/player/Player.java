@@ -133,6 +133,7 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
     public void stun(int duration) {
         SkeletonMenu.startCall("Player.stun(Duration)");
         // TODO: implement
+
         SkeletonMenu.endCall("A játékos lebénult.");
     }
 
