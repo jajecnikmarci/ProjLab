@@ -3,6 +3,7 @@ package kevesse_kokanyolo_kod.items;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.player.Player;
+import kevesse_kokanyolo_kod.player.Student;
 import kevesse_kokanyolo_kod.room.Room;
 
 /**
@@ -39,5 +40,10 @@ public class Glass extends Item {
         SkeletonMenu.startCall("Glass.accept(Player)");
         player.acceptItem(this);
         SkeletonMenu.endCall();
+    }
+
+    @Override
+    public void hasToDropItem(Student student) {
+        student.dropRandItem();
     }
 }
