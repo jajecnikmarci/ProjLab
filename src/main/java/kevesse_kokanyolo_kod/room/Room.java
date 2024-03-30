@@ -1,8 +1,6 @@
 package kevesse_kokanyolo_kod.room;
 
-import kevesse_kokanyolo_kod.effects.Effect;
-import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
-import kevesse_kokanyolo_kod.effects.RoomEffect;
+import kevesse_kokanyolo_kod.effects.*;
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.items.iItem;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
@@ -40,12 +38,15 @@ public class Room implements EffectConsumedObserver {
      */
     private ArrayList<RoomEffect> effects;
 
+    private CleaningEffect lastCleaning;
+
     public Room(int capacity) {
         this.capacity = capacity;
         this.people = new ArrayList<>();
         this.doors = new ArrayList<>();
         this.items = new ArrayList<>();
         this.effects = new ArrayList<>();
+        lastCleaning = null;
     }
 
     public Room() {
@@ -53,6 +54,7 @@ public class Room implements EffectConsumedObserver {
         items = new ArrayList<>();
         effects = new ArrayList<>();
         doors = new ArrayList<>();
+        lastCleaning = null;
     }
 
     public List<Door> getDoors() {
@@ -133,6 +135,7 @@ public class Room implements EffectConsumedObserver {
     public void onEnter(Cleaner cleaner) {
         SkeletonMenu.startCall("Room.onEnter(Cleaner)");
         for (Person person : this.people) person.meet(cleaner, this);
+        lastCleaning.resetVisitsBeforeEffect();
         SkeletonMenu.endCall();
     }
 
