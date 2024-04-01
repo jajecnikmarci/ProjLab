@@ -39,7 +39,7 @@ public class Room implements EffectConsumedObserver {
     private ArrayList<PoisonEffect> poisonEffects;
     private ArrayList<StunEffect> stunEffects;
 
-    private CleaningEffect lastCleaning;
+    private StickinessEffect lastCleaning;
 
     public Room(int capacity) {
         this.capacity = capacity;
@@ -98,12 +98,11 @@ public class Room implements EffectConsumedObserver {
             SkeletonMenu.endCall("Nincs több tárgy a szobában.");
             return;
         } else if (lastCleaning.doesCleaningDenyItemPickup()) {
-            SkeletonMenu.endCall("Túl rég volt takarítás a szobában így azok ragacsosak lettek");
+            SkeletonMenu.endCall("Túl rég volt takarítás a szobában így a tárgyak ragacsosak lettek");
             return;
-        } else {
-            items.get(items.size() - 1).accept(player);
-            SkeletonMenu.endCall();
         }
+        items.get(items.size() - 1).accept(player);
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -116,10 +115,16 @@ public class Room implements EffectConsumedObserver {
     public void onEnter(Professor professor) {
         SkeletonMenu.startCall("Room.onEnter(Professor)");
         for (PoisonEffect poisonEffect : this.poisonEffects) {
-            if (poisonEffect.isActive()) poisonEffect.affect(professor);
+            if (poisonEffect.isActive()) {
+                poisonEffect.affect(professor);
+                break;
+            }
         }
         for (StunEffect stunEffect : this.stunEffects) {
-            if (stunEffect.isActive()) stunEffect.affect(professor);
+            if (stunEffect.isActive()) {
+                stunEffect.affect(professor);
+                break;
+            }
         }
         for (Person person : this.people) {
             person.meet(professor, this);
@@ -138,7 +143,10 @@ public class Room implements EffectConsumedObserver {
     public void onEnter(Student student) {
         SkeletonMenu.startCall("Room.onEnter(Student)");
         for (PoisonEffect effect : this.poisonEffects) {
-            if (effect.isActive()) effect.affect(student);
+            if (effect.isActive()) {
+                effect.affect(student);
+                break;
+            }
         }
         lastCleaning.affect(student);
         people.forEach(person -> person.meet(student));
@@ -148,6 +156,7 @@ public class Room implements EffectConsumedObserver {
     public void onEnter(Cleaner cleaner) {
         SkeletonMenu.startCall("Room.onEnter(Cleaner)");
         for (Person person : this.people) person.meet(cleaner, this);
+        this.poisonEffects.clear();
         lastCleaning.resetVisitsBeforeEffect();
         SkeletonMenu.endCall();
     }

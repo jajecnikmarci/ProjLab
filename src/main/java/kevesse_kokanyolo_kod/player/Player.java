@@ -133,7 +133,7 @@ public abstract class Player extends Person implements PickUpVisitor, EffectCons
     public void meet(Cleaner cleaner, Room room) {
         SkeletonMenu.startCall("Player.meet(Cleaner, Room)");
         if (!stunned) {
-            this.hasToLeaveRoom();
+            this.leaveRoom();
             SkeletonMenu.endCall("A játékos elhagyta a szobát.");
         }
         else {

@@ -47,7 +47,7 @@ public abstract class Person {
 
     public abstract void poison();
 
-    public void hasToLeaveRoom() {
+    public void leaveRoom() {
         //TODO
     }
     }
