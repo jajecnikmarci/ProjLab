@@ -16,17 +16,18 @@ import java.io.IOException;
  *  ... 
  * 
  */
-public class ProtoMenu extends Printer {
+public class ProtoMenu {
+    Printer printer;
     public ProtoMenu() {
         super();
     }
     public ProtoMenu(String inputFileName, String outputFileName) throws IOException {
-        super(inputFileName, outputFileName);
+        printer = new Printer(inputFileName, outputFileName);
     }
 
     public void printState() {
-        println("ProtoMenu:");
-        printWithIndents(" ");
-        println("Nincs belső állapot.");
+        printer.println("ProtoMenu:");
+        printer.printWithIndents(" ");
+        printer.println("Nincs belső állapot.");
     }
 }

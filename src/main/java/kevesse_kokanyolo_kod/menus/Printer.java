@@ -4,11 +4,10 @@ package kevesse_kokanyolo_kod.menus;
 import java.io.*;
 import java.util.Scanner;
 
-public abstract class Printer {
+public class Printer {
     public static FileWriter fileWriter = null;
     public static Scanner scanner = null;
     private static int indentCounter = 0;
-    private static boolean verbose = true;
 
     public Printer(String inputFileName, String outputFileName) throws IOException {
         fileWriter = new FileWriter(outputFileName);
