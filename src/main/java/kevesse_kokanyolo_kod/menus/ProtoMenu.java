@@ -17,17 +17,8 @@ import java.io.IOException;
  * 
  */
 public class ProtoMenu {
-    Printer printer;
-    public ProtoMenu() {
-        super();
-    }
+    private static Printer printer;
     public ProtoMenu(String inputFileName, String outputFileName) throws IOException {
         printer = new Printer(inputFileName, outputFileName);
-    }
-
-    public void printState() {
-        printer.println("ProtoMenu:");
-        printer.printWithIndents(" ");
-        printer.println("Nincs belső állapot.");
     }
 }

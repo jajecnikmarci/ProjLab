@@ -30,7 +30,7 @@ public class Printer {
             System.out.println("Nem lehet a fájlba írni!");
             System.exit(1);
         }
-    };
+    }
     public void printWithIndents(String msg) {
         try {
             for (int i = 0; i < indentCounter - 1; i++) {
