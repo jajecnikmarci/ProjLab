@@ -6,9 +6,11 @@ import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 public class App {
     public static SkeletonMenu skeleton;
+    static {
+        skeleton = new SkeletonMenu();
+    }
 
     public static void main(String[] args) {
-        // TODO: Implement proto mode (disable skeleton menu)
         if (args.length == 3 && args[0].equals("-f")) {
             SkeletonMenu.setFromAndToFile(true);
             System.out.println("File usage");

@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.items;
 
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.AcamedicPerson;
 import kevesse_kokanyolo_kod.room.Room;
@@ -21,5 +22,12 @@ public class SlideRule extends Item {
         SkeletonMenu.startCall("SlideRule.accept(Player)");
         acamedicPerson.acceptItem(this);
         SkeletonMenu.endCall();
+    }
+
+    @Override
+    public void printState(Printer printer) {
+        printer.startPrintObject("SlideRule");
+        printer.printField("effect", this.effect);  
+        printer.endPrintObject();      
     }
 }

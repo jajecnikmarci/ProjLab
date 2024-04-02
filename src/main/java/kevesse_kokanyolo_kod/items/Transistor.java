@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.items;
 
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.AcamedicPerson;
 import kevesse_kokanyolo_kod.people.Student;
@@ -101,5 +102,14 @@ public class Transistor extends Item {
         SkeletonMenu.startCall("Transistor.accept(Player)");
         acamedicPerson.acceptItem(this);
         SkeletonMenu.endCall();
+    }
+
+    @Override
+    public void printState(Printer printer) {
+        printer.startPrintObject("Transistor");
+        printer.printField("pair", this.pair);
+        printer.printField("room", this.room);
+        printer.printField("owner", this.owner);
+        printer.endPrintObject();
     }
 }

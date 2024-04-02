@@ -20,7 +20,7 @@ public class Printer {
 
     public void println(String msg) {
         try {
-            for (int i = 0; i < indentCounter - 1; i++) {
+            for (int i = 0; i < indentCounter; i++) {
                 if (fileWriter!=null) fileWriter.write("\t");
                 else System.out.print("\t");
             }
@@ -43,6 +43,19 @@ public class Printer {
             System.out.println("Nem lehet a fájlba írni!");
             System.exit(1);
         }
+    }
+
+    public void startPrintObject(String name) {
+        println(name);
+        indentCounter++;
+    }
+
+    public void printField(String name, Object value) {
+        println("- " + name + ": " + value);
+    }
+
+    public void endPrintObject() {
+        indentCounter--;
     }
     
 } 
