@@ -31,22 +31,13 @@ public class Printer {
             System.exit(1);
         }
     }
-    public void printWithIndents(String msg) {
+    public void print(String msg) {
         try {
             for (int i = 0; i < indentCounter - 1; i++) {
                 if (fileWriter!=null) fileWriter.write("\t");
                 else System.out.print("\t");
             }
             if (fileWriter!=null) fileWriter.write(" " + msg);
-            else System.out.print(msg);
-        } catch (IOException e) {
-            System.out.println("Nem lehet a fájlba írni!");
-            System.exit(1);
-        }
-    }
-    public void print(String msg) {
-        try {
-            if (fileWriter!=null) fileWriter.write(msg);
             else System.out.print(msg);
         } catch (IOException e) {
             System.out.println("Nem lehet a fájlba írni!");
