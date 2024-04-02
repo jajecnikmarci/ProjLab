@@ -1,4 +1,4 @@
-package kevesse_kokanyolo_kod.player;
+package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
@@ -14,7 +14,7 @@ import java.util.Optional;
 /**
  * A Hallgató viselkedését megvalósító osztály.
  */
-public class Student extends Player {
+public class Student extends AcamedicPerson {
     /**
      * A hallgató lelkeinek számát tárolja.
      */

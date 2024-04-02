@@ -1,7 +1,7 @@
 package kevesse_kokanyolo_kod.room;
 
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Player;
+import kevesse_kokanyolo_kod.people.AcamedicPerson;
 
 /**
  * Az ajtókat reprezentáló osztály.
@@ -60,21 +60,21 @@ public class Door {
      * ajtón: átmehet az ajtón abból a szobából, amelyikben a játékos van és
      * van még legalább 1 hely a szobában, amelyikbe menni próbál a játékos.
      *
-     * @param player a játékos, aki átmegy az ajtón
+     * @param acamedicPerson a játékos, aki átmegy az ajtón
      * @return true, ha a játékos átment az ajtón, false egyébként (VÁLTOZÁS: void -> boolean)
      */
-    public boolean goThrough(Player player) {
+    public boolean goThrough(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("Door.goThrough(Player)");
-        if (player.getLocation() == room1 && room2Open && room2.canPlayerEnter()) {
-            room1.removePlayer(player);
-            room2.addPlayer(player);
-            player.setLocation(room2);
+        if (acamedicPerson.getLocation() == room1 && room2Open && room2.canPlayerEnter()) {
+            room1.removePlayer(acamedicPerson);
+            room2.addPlayer(acamedicPerson);
+            acamedicPerson.setLocation(room2);
             SkeletonMenu.endCall("A játékos átment az ajtón.");
             return true;
-        } else if (player.getLocation() == room2 && room1Open && room1.canPlayerEnter()) {
-            room2.removePlayer(player);
-            room1.addPlayer(player);
-            player.setLocation(room1);
+        } else if (acamedicPerson.getLocation() == room2 && room1Open && room1.canPlayerEnter()) {
+            room2.removePlayer(acamedicPerson);
+            room1.addPlayer(acamedicPerson);
+            acamedicPerson.setLocation(room1);
             SkeletonMenu.endCall("A játékos átment az ajtón.");
             return true;
         }

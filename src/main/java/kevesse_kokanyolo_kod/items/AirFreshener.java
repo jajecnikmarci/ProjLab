@@ -1,23 +1,22 @@
 package kevesse_kokanyolo_kod.items;
 
-import kevesse_kokanyolo_kod.effects.StunEffect;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Player;
+import kevesse_kokanyolo_kod.people.AcamedicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
 public class AirFreshener extends Item{
     @Override
-    public void use(Room room, Player player) {
+    public void use(Room room, AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("AirFreshener.use(Room, Player)");
         room.clearPoisonEffects();
-        player.removeItem(this);
+        acamedicPerson.removeItem(this);
         SkeletonMenu.endCall();
     }
 
     @Override
-    public void accept(Player player) {
+    public void accept(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("AirFreshener.accept(Player)");
-        player.acceptItem(this);
+        acamedicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
 }

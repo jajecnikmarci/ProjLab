@@ -4,7 +4,7 @@ import kevesse_kokanyolo_kod.effects.*;
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.items.iItem;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.*;
+import kevesse_kokanyolo_kod.people.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,9 +90,9 @@ public class Room implements EffectConsumedObserver {
     /**
      * Hozzáad a szobában lévő táryak közül a legfelső tárgyat a játékos tárgyaihoz.
      *
-     * @param player A játékos, aki a tárgyat fel akarja venni
+     * @param acamedicPerson A játékos, aki a tárgyat fel akarja venni
      */
-    public void popItem(Player player) {
+    public void popItem(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("Room.popItem(Player)");
         if (items.isEmpty()) {
             SkeletonMenu.endCall("Nincs több tárgy a szobában.");
@@ -101,7 +101,7 @@ public class Room implements EffectConsumedObserver {
             SkeletonMenu.endCall("Túl rég volt takarítás a szobában így a tárgyak ragacsosak lettek");
             return;
         }
-        items.get(items.size() - 1).accept(player);
+        items.get(items.size() - 1).accept(acamedicPerson);
         SkeletonMenu.endCall();
     }
 
@@ -248,22 +248,22 @@ public class Room implements EffectConsumedObserver {
     /**
      * Hozzáad egy Player-t a szobában tartózkodó Player-ek közé
      *
-     * @param player a hozzáadandó player
+     * @param acamedicPerson a hozzáadandó player
      */
-    public void addPlayer(Player player) {
+    public void addPlayer(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("Room.addPlayer(Player)");
-        this.people.add(player);
+        this.people.add(acamedicPerson);
         SkeletonMenu.endCall();
     }
 
     /**
      * Kitörli a játékost a szobából.
      *
-     * @param player a kitörölni kívánt játékos
+     * @param acamedicPerson a kitörölni kívánt játékos
      */
-    public void removePlayer(Player player) {
+    public void removePlayer(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("Room.removePlayer(Player)");
-        this.people.remove(player);
+        this.people.remove(acamedicPerson);
         SkeletonMenu.endCall();
     }
 

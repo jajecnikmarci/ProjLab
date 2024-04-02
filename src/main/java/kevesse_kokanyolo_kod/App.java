@@ -3,7 +3,6 @@ package kevesse_kokanyolo_kod;
 import java.io.IOException;
 
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Student;
 
 public class App {
     public static SkeletonMenu skeleton;

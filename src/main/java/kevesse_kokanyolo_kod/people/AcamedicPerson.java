@@ -1,4 +1,4 @@
-package kevesse_kokanyolo_kod.player;
+package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * A játékost reprezentáló osztály
  */
-public abstract class Player extends Person implements PickUpVisitor, EffectConsumedObserver {
+public abstract class AcamedicPerson extends Person implements PickUpVisitor, EffectConsumedObserver {
     /**
      * A játékos tárgylistája.
      */
@@ -33,7 +33,7 @@ public abstract class Player extends Person implements PickUpVisitor, EffectCons
 
     private boolean stunned;
 
-    protected Player(Room r) {
+    protected AcamedicPerson(Room r) {
         super(r);
         inventory = new ArrayList<>();
         poisonImmunities = new ArrayList<>();
