@@ -6,7 +6,7 @@ import kevesse_kokanyolo_kod.player.Student;
 /**
  * Egy tárgyat reprezentáló osztály
  */
-public abstract class Item implements iItem {
+public abstract class Item implements IItem {
     protected Effect effect;
 
     public void hasToDropItem(Student student) {}

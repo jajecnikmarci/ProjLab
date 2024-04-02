@@ -64,7 +64,7 @@ public class Student extends Player {
     public void dropRandomItem() {
         SkeletonMenu.startCall("Student.dropRandItem()");
         int rand = (int) (Math.random() * inventory.size());
-        iItem item = inventory.get(rand);
+        IItem item = inventory.get(rand);
         inventory.remove(item);
         location.addItem(item);
         SkeletonMenu.endCall();

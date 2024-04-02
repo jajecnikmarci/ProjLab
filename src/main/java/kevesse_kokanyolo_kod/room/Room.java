@@ -4,7 +4,7 @@ import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
 import kevesse_kokanyolo_kod.effects.RoomEffect;
 import kevesse_kokanyolo_kod.items.Item;
-import kevesse_kokanyolo_kod.items.iItem;
+import kevesse_kokanyolo_kod.items.IItem;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.player.Player;
 import kevesse_kokanyolo_kod.player.Professor;
@@ -35,7 +35,7 @@ public class Room implements EffectConsumedObserver {
     /**
      * A szobában található tárgyak listája.
      */
-    private List<iItem> items;
+    private List<IItem> items;
     /**
      * A szobában található hatások listája.
      */
@@ -65,7 +65,7 @@ public class Room implements EffectConsumedObserver {
      *
      * @param item a megadott tárgy
      */
-    public void removeItem(iItem item) {
+    public void removeItem(IItem item) {
         SkeletonMenu.startCall("Room.removeItem(Item)");
         items.remove(item);
         SkeletonMenu.endCall();
@@ -76,7 +76,7 @@ public class Room implements EffectConsumedObserver {
      *
      * @param item a hozzáadandó tárgy
      */
-    public void addItem(iItem item) {
+    public void addItem(IItem item) {
         SkeletonMenu.startCall("Room.addItem(Item)");
         items.add(item);
         SkeletonMenu.endCall();

@@ -19,7 +19,7 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
     /**
      * A játékos tárgylistája.
      */
-    List<iItem> inventory;
+    List<IItem> inventory;
 
     /**
      * A játékos által használható mérgezés elleni immunitások listája.
