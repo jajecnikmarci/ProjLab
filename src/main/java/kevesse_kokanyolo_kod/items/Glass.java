@@ -10,7 +10,7 @@ import kevesse_kokanyolo_kod.room.Room;
  * Szent Sörös Pohár tárgyat reprezentáló osztály
  */
 public class Glass extends Item {
-
+    private boolean hasBeenUsed=false;
     /**
      * A Glass használatánál (csak hallgató használhatja) a hallgató védett
      * állapotba kerül az oktatók támadásaival szemben a Glass használatától
@@ -23,11 +23,22 @@ public class Glass extends Item {
     @Override
     public void use(Room room, Player player) {
         SkeletonMenu.startCall("Glass.use(Room, Player)");
+        if(hasBeenUsed) {
+            if (effect != null) {
+                player.dropRandomItem();
+                SkeletonMenu.endCall("A tárgyat úgy próbálták használni, hogy már egyszer ezt megtették");
+                return;
+            } else {
+                player.removeKillImmunity(this);
+                SkeletonMenu.endCall("A tárgy már elhasználódott ezért törlésre került");
+                return;
+            }
+        }
         KillImmunity killImmunity = new KillImmunity(this, 10, player);
         player.addKillImmunity(killImmunity);
         killImmunity.activate();
         effect = killImmunity;
-        player.removeItem(this);
+        hasBeenUsed=true;
         SkeletonMenu.endCall();
     }
 
@@ -41,10 +52,5 @@ public class Glass extends Item {
         SkeletonMenu.startCall("Glass.accept(Player)");
         player.acceptItem(this);
         SkeletonMenu.endCall();
-    }
-
-    @Override
-    public void hasToDropItem(Student student) {
-        student.dropRandomItem();
     }
 }

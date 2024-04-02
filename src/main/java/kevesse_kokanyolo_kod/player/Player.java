@@ -251,12 +251,14 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
         SkeletonMenu.endCall();
     }
 
-    /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     *
-     * @param ffp2 a hozzáadandó tárgy
-     */
+    public void dropRandomItem(){};
+
+        /**
+         * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
+         * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+         *
+         * @param ffp2 a hozzáadandó tárgy
+         */
     @Override
     public void acceptItem(FFP2 ffp2) {
         SkeletonMenu.startCall("Player.acceptItem(FFP2)");

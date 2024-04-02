@@ -47,7 +47,6 @@ public class Student extends Player {
         }
         for (KillImmunity killImmunity : killImmunities) {
             if (killImmunity.isActive()) {
-                killImmunity.getItem().hasToDropItem(this);
                 SkeletonMenu.endCall("A hallgatót megvédte egy már aktív tárgya.");
                 return;
             }
@@ -55,12 +54,12 @@ public class Student extends Player {
         KillImmunity killImmunity = killImmunities.get(0);
         killImmunity.activate();
         SkeletonMenu.endCall("A hallgatót megvédte egy most aktiválódott tárgya.");
-
     }
 
     /**
      * Eldobja a hallgató egyik tárgyát.
      */
+    @Override
     public void dropRandomItem() {
         SkeletonMenu.startCall("Student.dropRandItem()");
         int rand = (int) (Math.random() * inventory.size());

@@ -8,9 +8,6 @@ import kevesse_kokanyolo_kod.player.Student;
  */
 public abstract class Item implements IItem {
     protected Effect effect;
-
-    public void hasToDropItem(Student student) {}
-
     @Override
     public void removeEffect() {
         effect = null;
