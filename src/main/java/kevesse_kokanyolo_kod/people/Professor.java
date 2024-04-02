@@ -1,4 +1,4 @@
-package kevesse_kokanyolo_kod.player;
+package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
@@ -10,11 +10,10 @@ import java.util.Optional;
 /**
  * A professzort reprezentáló osztály
  */
-public class Professor extends Player {
+public class Professor extends AcamedicPerson {
 
     public Professor(Room r) {
         super(r);
-        location = r;
     }
 
 
@@ -38,7 +37,7 @@ public class Professor extends Player {
     @Override
     public void meet(Professor professor, Room room) {
         SkeletonMenu.startCall("Professor.meet(Professor, Room)");
-        // TODO: Leave room
+        leaveRoom();
         SkeletonMenu.endCall("A professzor elhagyta a szobát.");
     }
 

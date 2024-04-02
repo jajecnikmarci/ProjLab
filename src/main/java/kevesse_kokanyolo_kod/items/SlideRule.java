@@ -2,7 +2,7 @@ package kevesse_kokanyolo_kod.items;
 
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Player;
+import kevesse_kokanyolo_kod.people.AcamedicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
 /**
@@ -14,13 +14,13 @@ public class SlideRule extends Item {
      * A logarléc használata. Felvételekor véget ér a játék így nem felhasználható
      */
     @Override
-    public void use(Room room, Player player) {
+    public void use(Room room, AcamedicPerson acamedicPerson) {
     }
 
     @Override
-    public void accept(Player player) {
+    public void accept(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("SlideRule.accept(Player)");
-        player.acceptItem(this);
+        acamedicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
 

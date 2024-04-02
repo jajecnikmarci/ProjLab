@@ -3,8 +3,7 @@ package kevesse_kokanyolo_kod.items;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Player;
-import kevesse_kokanyolo_kod.player.Student;
+import kevesse_kokanyolo_kod.people.AcamedicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
 /**
@@ -19,24 +18,24 @@ public class Glass extends Item {
      * amint aktiválja a hallgató a tárgyat.
      *
      * @param room   a szoba, ahol a tárgyat használják
-     * @param player a játékos, aki használja a tárgyat
+     * @param acamedicPerson a játékos, aki használja a tárgyat
      */
     @Override
-    public void use(Room room, Player player) {
+    public void use(Room room, AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("Glass.use(Room, Player)");
         if(hasBeenUsed) {
             if (effect != null) {
-                player.dropRandomItem();
+                acamedicPerson.dropRandomItem();
                 SkeletonMenu.endCall("A tárgyat úgy próbálták használni, hogy már egyszer ezt megtették");
                 return;
             } else {
-                player.removeKillImmunity(this);
+                acamedicPerson.removeKillImmunity(this);
                 SkeletonMenu.endCall("A tárgy már elhasználódott ezért törlésre került");
                 return;
             }
         }
-        KillImmunity killImmunity = new KillImmunity(this, 10, player);
-        player.addKillImmunity(killImmunity);
+        KillImmunity killImmunity = new KillImmunity(this, 10, acamedicPerson);
+        acamedicPerson.addKillImmunity(killImmunity);
         killImmunity.activate();
         effect = killImmunity;
         hasBeenUsed=true;
@@ -46,12 +45,12 @@ public class Glass extends Item {
     /**
      * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
      *
-     * @param player a játékos aki próbálja felvenni a tárgyat
+     * @param acamedicPerson a játékos aki próbálja felvenni a tárgyat
      */
     @Override
-    public void accept(Player player) {
+    public void accept(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("Glass.accept(Player)");
-        player.acceptItem(this);
+        acamedicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
 

@@ -1,4 +1,4 @@
-package kevesse_kokanyolo_kod.player;
+package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.FakeItem;
@@ -47,5 +47,10 @@ public interface PickUpVisitor {
      * @param rug
      */
     void acceptItem(Rug rug);
+
+    /**
+     * @param airFreshener
+     */
+    void acceptItem(AirFreshener airFreshener);
 
 }

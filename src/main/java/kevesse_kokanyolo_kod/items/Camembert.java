@@ -3,7 +3,7 @@ package kevesse_kokanyolo_kod.items;
 import kevesse_kokanyolo_kod.effects.PoisonEffect;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Player;
+import kevesse_kokanyolo_kod.people.AcamedicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
 /**
@@ -16,24 +16,24 @@ public class Camembert extends Item {
      * és a szobához hozzáad egy PoisonEffect-et, valamint aktiválja azt.
      *
      * @param room   a szoba, ahol a tárgyat használják
-     * @param player a játékos, aki használja a tárgyat
+     * @param acamedicPerson a játékos, aki használja a tárgyat
      */
     @Override
-    public void use(Room room, Player player) {
+    public void use(Room room, AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("Camembert.use(Room, Player)");
         PoisonEffect camembertEffect = new PoisonEffect(this, 30, room);
-        room.addEffect(camembertEffect);
+        room.addPoisonEffect(camembertEffect);
         camembertEffect.activate();
         effect = camembertEffect;
         room.poisonPlayers(); //Azért itt mert itt ismerjük a szobát
-        player.removeItem(this);
+        acamedicPerson.removeItem(this);
         SkeletonMenu.endCall();
     }
 
     @Override
-    public void accept(Player player) {
+    public void accept(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("Camembert.accept(Player)");
-        player.acceptItem(this);
+        acamedicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
     @Override

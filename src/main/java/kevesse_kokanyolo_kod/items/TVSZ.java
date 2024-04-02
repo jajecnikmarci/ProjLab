@@ -3,7 +3,7 @@ package kevesse_kokanyolo_kod.items;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Player;
+import kevesse_kokanyolo_kod.people.AcamedicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
 /**
@@ -20,21 +20,21 @@ public class TVSZ extends Item {
     }
 
     @Override
-    public void use(Room room, Player player) {
+    public void use(Room room, AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("TVSZ.use(Room, Player)");
-        KillImmunity killImmunity = new KillImmunity(this, Integer.MAX_VALUE, player);
-        player.addKillImmunity(killImmunity);
+        KillImmunity killImmunity = new KillImmunity(this, Integer.MAX_VALUE, acamedicPerson);
+        acamedicPerson.addKillImmunity(killImmunity);
         timesImmune--;
 
         if (timesImmune == 0) {
-            player.removeItem(this);
+            acamedicPerson.removeItem(this);
         }
         SkeletonMenu.endCall();
     }
 
-    public void accept(Player player) {
+    public void accept(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("TVSZ.accept(Player)");
-        player.acceptItem(this);
+        acamedicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
 
