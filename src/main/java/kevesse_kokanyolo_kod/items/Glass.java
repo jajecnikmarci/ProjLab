@@ -24,6 +24,7 @@ public class Glass extends Item {
     public void use(Room room, Player player) {
         SkeletonMenu.startCall("Glass.use(Room, Player)");
         KillImmunity killImmunity = new KillImmunity(this, 10, player);
+        player.addKillImmunity(killImmunity);
         killImmunity.activate();
         effect = killImmunity;
         player.removeItem(this);
