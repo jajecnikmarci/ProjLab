@@ -1,7 +1,7 @@
 package kevesse_kokanyolo_kod.items.fakes;
 
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Player;
+import kevesse_kokanyolo_kod.people.AcamedicPerson;
 
 /**
  * FFP2-es maszkot reprezentáló osztály.
@@ -9,9 +9,9 @@ import kevesse_kokanyolo_kod.player.Player;
  */
 public class FakeFFP2 extends kevesse_kokanyolo_kod.items.FFP2 implements FakeItem {
     @Override
-    public void accept(Player player) {
+    public void accept(AcamedicPerson acamedicPerson) {
         SkeletonMenu.startCall("FakeFFP2.accept(Player)");
-        player.acceptItem((FakeItem) this);
+        acamedicPerson.acceptItem((FakeItem) this);
         SkeletonMenu.endCall();
     }
 }

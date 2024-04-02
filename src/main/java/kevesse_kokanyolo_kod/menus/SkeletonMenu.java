@@ -2,8 +2,8 @@ package kevesse_kokanyolo_kod.menus;
 
 import kevesse_kokanyolo_kod.effects.StunEffect;
 import kevesse_kokanyolo_kod.items.*;
-import kevesse_kokanyolo_kod.player.Professor;
-import kevesse_kokanyolo_kod.player.Student;
+import kevesse_kokanyolo_kod.people.Professor;
+import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 
@@ -542,7 +542,7 @@ public class SkeletonMenu {
         Professor professor = new Professor(room2);
         Rug rug = new Rug();
         StunEffect stunEffect = new StunEffect(rug, 30, room);
-        room.addEffect(stunEffect);
+        room.addStunEffect(stunEffect);
         stunEffect.activate();
         verbose = true;
         room.onEnter(professor);

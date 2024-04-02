@@ -1,4 +1,4 @@
-package kevesse_kokanyolo_kod.player;
+package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * A játékost reprezentáló osztály
  */
-public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
+public abstract class AcamedicPerson extends Person implements PickUpVisitor, EffectConsumedObserver {
     /**
      * A játékos tárgylistája.
      */
@@ -25,10 +25,7 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      */
     List<PoisonImmunity> poisonImmunities;
 
-    /**
-     * A szoba amelyben a player jelenleg tartózkodik.
-     */
-    Room location;
+
 
     public boolean isStunned() {
         return stunned;
@@ -36,8 +33,8 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
 
     private boolean stunned;
 
-    protected Player(Room r) {
-        location = r;
+    protected AcamedicPerson(Room r) {
+        super(r);
         inventory = new ArrayList<>();
         poisonImmunities = new ArrayList<>();
     }
@@ -132,6 +129,18 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
         SkeletonMenu.endCall();
     }
 
+    @Override
+    public void meet(Cleaner cleaner, Room room) {
+        SkeletonMenu.startCall("Player.meet(Cleaner, Room)");
+        if (!stunned) {
+            this.leaveRoom();
+            SkeletonMenu.endCall("A játékos elhagyta a szobát.");
+        }
+        else {
+            SkeletonMenu.endCall("A játékos nem tudott elhagyni a szobát, mert bénult.");
+        }
+    }
+
     /**
      * A játékos duration ideig nem tud mozogni.
      */
@@ -157,6 +166,7 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      * válik mozgásképtelenni és nem ejti el a nála lévő
      * tárgyakat.
      */
+    @Override
     public void poison() {
         SkeletonMenu.startCall("Player.poison()");
         if (poisonImmunities.isEmpty()) {
@@ -181,36 +191,8 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      */
     public abstract void goToRoom(Room room);
 
-    /**
-     * A játékos találkozik egy hallgatóval.
-     *
-     * @param student a hallgató, akivel találkozik
-     */
-    public abstract void meet(Student student);
 
-    /**
-     * Professzorral való találkozás esetén a játékos
-     *
-     * @param professor a professzor, akivel találkozik
-     * @param room      a szoba, ahol a találkozás történik
-     */
-    public abstract void meet(Professor professor, Room room);
 
-    /**
-     * Visszaadja, hogy melyik szobában van a játékos.
-     */
-    public Room getLocation() {
-        return this.location;
-    }
-
-    /**
-     * Beállítja, hogy a játékos melyik szobában lesz (szobaváltásnál).
-     *
-     * @param room
-     */
-    public void setLocation(Room room) {
-        this.location = room;
-    }
 
     /**
      * Megkeresi a paraméterként kapott tárgyhoz tartozó immunitást a poisonImmunities-ból.
@@ -244,6 +226,9 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
      */
     public void removeKillImmunity(Item item) {
     }
+
+
+
 
     /**
      * Ha elhasználódott egy effekt akkor a játékosnak törölnie kell az effektet a listájából.
@@ -300,6 +285,14 @@ public abstract class Player implements PickUpVisitor, EffectConsumedObserver {
     public void acceptItem(FakeItem fakeItem) {
         SkeletonMenu.startCall("Player.acceptItem(Fake)");
         location.removeItem(fakeItem);
+        SkeletonMenu.endCall();
+    }
+
+    @Override
+    public void acceptItem(AirFreshener airFreshener) {
+        SkeletonMenu.startCall("Player.acceptItem(AirFreshener)");
+        this.addItem(airFreshener);
+        location.removeItem(airFreshener);
         SkeletonMenu.endCall();
     }
 

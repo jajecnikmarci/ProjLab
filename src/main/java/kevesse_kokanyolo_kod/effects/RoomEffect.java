@@ -2,8 +2,8 @@ package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.player.Professor;
-import kevesse_kokanyolo_kod.player.Student;
+import kevesse_kokanyolo_kod.people.Professor;
+import kevesse_kokanyolo_kod.people.Student;
 
 /**
  * Egy hatás, ami egy szobában lévő játékosokra hat.
