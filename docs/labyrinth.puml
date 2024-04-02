@@ -2,7 +2,7 @@ class Labyrinth {
     + void shake()
     + void split(room room)
     + void merge(room src, room dst)
-    + void teleport(Player player, room room)
+    + void teleport(Player acamedicPerson, room room)
 }
 
 class room {
@@ -11,8 +11,8 @@ class room {
     + void setPoisonous(Time duration)
     + void onEnter(Student student)
     + void onEnter(Professor professor)
-    + void onEnter(Player player)
-    + void onLeave(Player player)
+    + void onEnter(Player acamedicPerson)
+    + void onLeave(Player acamedicPerson)
     + void addActiveItem(Item item)
     + void deleteActiveItem(Item item) 
 }

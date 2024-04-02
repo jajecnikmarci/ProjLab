@@ -1,9 +1,9 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
-import kevesse_kokanyolo_kod.player.Professor;
-import kevesse_kokanyolo_kod.player.Student;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.people.Professor;
+import kevesse_kokanyolo_kod.people.Student;
 
 /**
  * Egy játékos sokkolását elvégző effekt
@@ -20,9 +20,9 @@ public class StunEffect extends RoomEffect {
      */
     @Override
     public void affect(Professor professor) {
-        Skeleton.startCall("StunEffect.affect(Professor)");
+        SkeletonMenu.startCall("StunEffect.affect(Professor)");
         professor.stun(10);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -32,8 +32,8 @@ public class StunEffect extends RoomEffect {
      */
     @Override
     public void affect(Student student) {
-        Skeleton.startCall("StunEffect.affect(Professor)");
+        SkeletonMenu.startCall("StunEffect.affect(Professor)");
         student.stun(10);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 }

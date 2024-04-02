@@ -1,12 +1,18 @@
-package kevesse_kokanyolo_kod.player;
+package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.items.fakes.FakeItem;
 
 /**
  * A játékos által felvihető tárgyakat reprezentáló interfész
  * Visitor design pattern implementációja
  */
 public interface PickUpVisitor {
+    /** Hamis tárgy felvétele
+     * @param fakeItem a hamis tárgy
+     */
+    void acceptItem(FakeItem fakeItem);
+
     /**
      * @param ffp2
      */
@@ -41,5 +47,10 @@ public interface PickUpVisitor {
      * @param rug
      */
     void acceptItem(Rug rug);
+
+    /**
+     * @param airFreshener
+     */
+    void acceptItem(AirFreshener airFreshener);
 
 }

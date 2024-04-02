@@ -1,20 +1,19 @@
-package kevesse_kokanyolo_kod.player;
+package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 import java.util.Optional;
 
 /**
  * A professzort reprezentáló osztály
  */
-public class Professor extends Player {
+public class Professor extends AcamedicPerson {
 
     public Professor(Room r) {
         super(r);
-        location = r;
     }
 
 
@@ -25,9 +24,9 @@ public class Professor extends Player {
      */
     @Override
     public void meet(Student student) {
-        Skeleton.startCall("Professor.meet(Student)");
+        SkeletonMenu.startCall("Professor.meet(Student)");
         student.kill();
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -37,9 +36,9 @@ public class Professor extends Player {
      */
     @Override
     public void meet(Professor professor, Room room) {
-        Skeleton.startCall("Professor.meet(Professor, Room)");
-        // TODO: Leave room
-        Skeleton.endCall("A professzor elhagyta a szobát.");
+        SkeletonMenu.startCall("Professor.meet(Professor, Room)");
+        leaveRoom();
+        SkeletonMenu.endCall("A professzor elhagyta a szobát.");
     }
 
     /**
@@ -51,8 +50,8 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(Transistor transistor) {
-        Skeleton.startCall("Professor.acceptItem(Transistor)");
-        Skeleton.endCall("A professzor nem tudja felvenni a tranzisztort.");
+        SkeletonMenu.startCall("Professor.acceptItem(Transistor)");
+        SkeletonMenu.endCall("A professzor nem tudja felvenni a tranzisztort.");
     }
 
     /**
@@ -64,8 +63,8 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(SlideRule slideRule) {
-        Skeleton.startCall("Professor.acceptItem(SlideRule)");
-        Skeleton.endCall("A professzor nem tudja felvenni a logarlécet.");
+        SkeletonMenu.startCall("Professor.acceptItem(SlideRule)");
+        SkeletonMenu.endCall("A professzor nem tudja felvenni a logarlécet.");
     }
 
     /**
@@ -77,8 +76,8 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(TVSZ tvsz) {
-        Skeleton.startCall("Professor.acceptItem(TVSZ)");
-        Skeleton.endCall("A professzor nem tudja felvenni a TVSZ-t.");
+        SkeletonMenu.startCall("Professor.acceptItem(TVSZ)");
+        SkeletonMenu.endCall("A professzor nem tudja felvenni a TVSZ-t.");
     }
 
     /**
@@ -90,8 +89,8 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(Glass glass) {
-        Skeleton.startCall("Professor.acceptItem(Glass)");
-        Skeleton.endCall("A professzor nem tudja felvenni a Szent Söröspoharat.");
+        SkeletonMenu.startCall("Professor.acceptItem(Glass)");
+        SkeletonMenu.endCall("A professzor nem tudja felvenni a Szent Söröspoharat.");
     }
 
     /**
@@ -103,8 +102,8 @@ public class Professor extends Player {
      */
     @Override
     public void acceptItem(Rug rug) {
-        Skeleton.startCall("Professor.acceptItem(Rug)");
-        Skeleton.endCall("A professzor nem tudja felvenni a Nedves Táblatörlő Rongyot.");
+        SkeletonMenu.startCall("Professor.acceptItem(Rug)");
+        SkeletonMenu.endCall("A professzor nem tudja felvenni a Nedves Táblatörlő Rongyot.");
     }
 
     /**
@@ -114,7 +113,7 @@ public class Professor extends Player {
      */
     @Override
     public void goToRoom(Room room) {
-        Skeleton.startCall("Professor.goToRoom(Room)");
+        SkeletonMenu.startCall("Professor.goToRoom(Room)");
         Optional<Door> door = location.getDoors()
                 .stream()
                 .filter(d -> d.isBetween(location, room))
@@ -123,9 +122,9 @@ public class Professor extends Player {
         if (door.isPresent()) {
             door.get().goThrough(this);
             room.onEnter(this);
-            Skeleton.endCall("A professzor belépett a szobába.");
+            SkeletonMenu.endCall("A professzor belépett a szobába.");
             return;
         }
-        Skeleton.endCall("A professzor nem lépett be a szobába.");
+        SkeletonMenu.endCall("A professzor nem lépett be a szobába.");
     }
 }

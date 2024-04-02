@@ -1,9 +1,9 @@
-package kevesse_kokanyolo_kod.skeleton;
+package kevesse_kokanyolo_kod.menus;
 
 import kevesse_kokanyolo_kod.effects.StunEffect;
 import kevesse_kokanyolo_kod.items.*;
-import kevesse_kokanyolo_kod.player.Professor;
-import kevesse_kokanyolo_kod.player.Student;
+import kevesse_kokanyolo_kod.people.Professor;
+import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 
@@ -30,7 +30,8 @@ import java.util.Scanner;
  * A teszt függvényekben a verbose változót ki kell kapcsolni az iniciálásnál, mert ott is hívódhatnak függvények, de
  * ott azokat nem kell kiírni. Az iniciálás után igazra kell állítani a verbose változót.
  */
-public class Skeleton {
+public class SkeletonMenu {
+    static boolean disablePrint = false;
     static boolean fromAndToFile;
     static FileWriter fileWriter;
     static Scanner scanner;
@@ -70,18 +71,18 @@ public class Skeleton {
     }
 
     List<Test> tests;
-    public Skeleton(String inputFileName,String outputFileName) throws IOException {
+    public SkeletonMenu(String inputFileName,String outputFileName) throws IOException {
         initializeTest();
         fileWriter = new FileWriter(outputFileName);
         scanner = new Scanner(new File(inputFileName));
     }
-    public Skeleton() {
+    public SkeletonMenu() {
         initializeTest();
         scanner = new Scanner(System.in);
     }
     
     public static void setFromAndToFile(boolean fromAndToFile) {
-        Skeleton.fromAndToFile = fromAndToFile;
+        SkeletonMenu.fromAndToFile = fromAndToFile;
     }
 
     public static void startCall(String methodHeader) {
@@ -110,6 +111,7 @@ public class Skeleton {
     }
 
     public static void printLn(String string) {
+        if (disablePrint) return;
         try {
             for (int i = 0; i < indentCounter - 1; i++) {
                 if (fromAndToFile) fileWriter.write("\t");
@@ -232,6 +234,7 @@ public class Skeleton {
             }
 
         } while (scanner.hasNextLine());
+
         scanner.close();
         if (fromAndToFile){
             try {
@@ -539,7 +542,7 @@ public class Skeleton {
         Professor professor = new Professor(room2);
         Rug rug = new Rug();
         StunEffect stunEffect = new StunEffect(rug, 30, room);
-        room.addEffect(stunEffect);
+        room.addStunEffect(stunEffect);
         stunEffect.activate();
         verbose = true;
         room.onEnter(professor);

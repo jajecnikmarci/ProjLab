@@ -1,25 +1,26 @@
 package kevesse_kokanyolo_kod;
 
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
-
 import java.io.IOException;
 
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+
 public class App {
-    public static Skeleton skeleton;
+    public static SkeletonMenu skeleton;
 
     public static void main(String[] args) {
-
+        // TODO: Implement proto mode (disable skeleton menu)
         if (args.length == 3 && args[0].equals("-f")) {
-            Skeleton.setFromAndToFile(true);
+            SkeletonMenu.setFromAndToFile(true);
             System.out.println("File usage");
             try {
-                skeleton = new Skeleton(args[1],args [2] );
+                skeleton = new SkeletonMenu(args[1],args [2] );
             } catch (IOException e) {
                 System.out.println("Usage for file usage: running command + [-f <inputfile> <outputfile>]");
                 System.exit(1);
             }
         } else if (args.length == 0) {
-            Skeleton.setFromAndToFile(false);
+            skeleton = new SkeletonMenu();
+            SkeletonMenu.setFromAndToFile(false);
             System.out.println("Console usage");
         }
         skeleton.menu();

@@ -1,9 +1,9 @@
 package kevesse_kokanyolo_kod.items;
 
-import kevesse_kokanyolo_kod.player.Player;
-import kevesse_kokanyolo_kod.player.Student;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.people.AcamedicPerson;
+import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
 /**
  * Tranzisztor tárgyat reprezentáló osztály
@@ -25,25 +25,14 @@ public class Transistor extends Item {
     private Student owner;
 
     /**
-     * Beállítja a tranzisztor szobáját ahol eldobták
-     *
-     * @param room a szoba ahol a tranzisztor található
-     */
-    public void setRoom(Room room) {
-        Skeleton.startCall("Transistor.setRoom(Room)");
-        this.room = room;
-        Skeleton.endCall();
-    }
-
-    /**
      * A tranzisztor párának megadása
      *
      * @param transistor a tranzisztor párja
      */
     public void setPair(Transistor transistor) {
-        Skeleton.startCall("Transistor.setPair(Transistor)");
+        SkeletonMenu.startCall("Transistor.setPair(Transistor)");
         this.pair = transistor;
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -64,42 +53,53 @@ public class Transistor extends Item {
      * különben nem történik semmi
      *
      * @param room   a szoba, ahol a tranzisztor használva lett
-     * @param player a játékos aki használja a tranzisztort
+     * @param acamedicPerson a játékos aki használja a tranzisztort
      */
     @Override
-    public void use(Room room, Player player) {
-        Skeleton.startCall("Transistor.use(Room, Player)");
+    public void use(Room room, AcamedicPerson acamedicPerson) {
+        SkeletonMenu.startCall("Transistor.use(Room, Player)");
         if (this.pair != null && this.pair.room == null) {
 
             this.setRoom(room);
-            player.removeItem(this);
-            Skeleton.endCall("A tranzisztor a szobához lett hozzáadva.");
+            acamedicPerson.removeItem(this);
+            SkeletonMenu.endCall("A tranzisztor a szobához lett hozzáadva.");
 
         } else if (this.pair != null && this.pair.room.canPlayerEnter()) {
-            room.removePlayer(player);
+            room.removePlayer(acamedicPerson);
 
-            this.pair.room.addPlayer(player);
+            this.pair.room.addPlayer(acamedicPerson);
             this.pair.room.onEnter(owner);
 
             this.setRoom(room);
             this.pair.room.removeItem(this.pair); //TODO: ez nem biztos hogy így kéne
             this.pair.room = null;
 
-            player.removeItem(this);
-            player.addItem(this.pair);
-            Skeleton.endCall("A játékos át lett teleportálva a másik szobába.");
-        } else Skeleton.endCall("A játékos nem lett elteleportálva a másik szobába.");
+            acamedicPerson.removeItem(this);
+            acamedicPerson.addItem(this.pair);
+            SkeletonMenu.endCall("A játékos át lett teleportálva a másik szobába.");
+        } else SkeletonMenu.endCall("A játékos nem lett elteleportálva a másik szobába.");
+    }
+
+    /**
+     * Beállítja a tranzisztor szobáját ahol eldobták
+     *
+     * @param room a szoba ahol a tranzisztor található
+     */
+    public void setRoom(Room room) {
+        SkeletonMenu.startCall("Transistor.setRoom(Room)");
+        this.room = room;
+        SkeletonMenu.endCall();
     }
 
     /**
      * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
      *
-     * @param player a játékos aki próbálja felvenni a tárgyat
+     * @param acamedicPerson a játékos aki próbálja felvenni a tárgyat
      */
     @Override
-    public void accept(Player player) {
-        Skeleton.startCall("Transistor.accept(Player)");
-        player.acceptItem(this);
-        Skeleton.endCall();
+    public void accept(AcamedicPerson acamedicPerson) {
+        SkeletonMenu.startCall("Transistor.accept(Player)");
+        acamedicPerson.acceptItem(this);
+        SkeletonMenu.endCall();
     }
 }

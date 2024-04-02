@@ -4,21 +4,18 @@ import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.AcamedicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
-/**
- * Logarléc tárgyat reprezentáló osztály
- */
-public class SlideRule extends Item {
-
-    /**
-     * A logarléc használata. Felvételekor véget ér a játék így nem felhasználható
-     */
+public class AirFreshener extends Item{
     @Override
     public void use(Room room, AcamedicPerson acamedicPerson) {
+        SkeletonMenu.startCall("AirFreshener.use(Room, Player)");
+        room.clearPoisonEffects();
+        acamedicPerson.removeItem(this);
+        SkeletonMenu.endCall();
     }
 
     @Override
     public void accept(AcamedicPerson acamedicPerson) {
-        SkeletonMenu.startCall("SlideRule.accept(Player)");
+        SkeletonMenu.startCall("AirFreshener.accept(Player)");
         acamedicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }

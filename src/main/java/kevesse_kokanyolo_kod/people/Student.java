@@ -1,20 +1,18 @@
-package kevesse_kokanyolo_kod.player;
+package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.skeleton.Skeleton;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * A Hallgató viselkedését megvalósító osztály.
  */
-public class Student extends Player {
+public class Student extends AcamedicPerson {
     /**
      * A hallgató lelkeinek számát tárolja.
      */
@@ -36,27 +34,39 @@ public class Student extends Player {
      * Megpróbálja elszipolyozni a hallgató lelkét. Ha van neki immunitása, akkor nem sikerül.
      */
     public void kill() {
-        Skeleton.startCall("Student.kill()");
+        SkeletonMenu.startCall("Student.kill()");
         if (killImmunities.isEmpty()) {
             souls--;
             if (souls == 0) {
                 //TODO: Meghal a hallgató
-                Skeleton.endCall(" A játékos meghalt");
+                SkeletonMenu.endCall(" A játékos meghalt");
                 return;
             }
-            Skeleton.endCall("A hallgató lelkét elszipolyozták.");
+            SkeletonMenu.endCall("A hallgató lelkét elszipolyozták.");
             return;
         }
         for (KillImmunity killImmunity : killImmunities) {
             if (killImmunity.isActive()) {
-                Skeleton.endCall("A hallgatót megvédte egy már aktív tárgya.");
+                SkeletonMenu.endCall("A hallgatót megvédte egy már aktív tárgya.");
                 return;
             }
         }
         KillImmunity killImmunity = killImmunities.get(0);
         killImmunity.activate();
-        Skeleton.endCall("A hallgatót megvédte egy most aktiválódott tárgya.");
+        SkeletonMenu.endCall("A hallgatót megvédte egy most aktiválódott tárgya.");
+    }
 
+    /**
+     * Eldobja a hallgató egyik tárgyát.
+     */
+    @Override
+    public void dropRandomItem() {
+        SkeletonMenu.startCall("Student.dropRandItem()");
+        int rand = (int) (Math.random() * inventory.size());
+        IItem item = inventory.get(rand);
+        inventory.remove(item);
+        location.addItem(item);
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -66,9 +76,9 @@ public class Student extends Player {
      */
     @Override
     public void addKillImmunity(KillImmunity killImmunity) {
-        Skeleton.startCall("Student.addKillImmunity(KillImmunity)");
+        SkeletonMenu.startCall("Student.addKillImmunity(KillImmunity)");
         killImmunities.add(killImmunity);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -78,10 +88,10 @@ public class Student extends Player {
      */
     @Override
     public void removeKillImmunity(Item item) {
-        Skeleton.startCall("Student.removeKillImmunity(KillImmunity)");
+        SkeletonMenu.startCall("Student.removeKillImmunity(KillImmunity)");
         KillImmunity killImmunityToRemove = findKillImmunityByItem(item);
         killImmunities.remove(killImmunityToRemove);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -91,12 +101,12 @@ public class Student extends Player {
      * @param transistor2 A másik tranzisztor
      */
     public void pairTransistors(Transistor transistor1, Transistor transistor2) {
-        Skeleton.startCall("Student.pairTransistors(transistor1, transistor2)");
+        SkeletonMenu.startCall("Student.pairTransistors(transistor1, transistor2)");
         transistor1.setPair(transistor2);
         transistor2.setPair(transistor1);
         transistor1.setOwner(this);
         transistor2.setOwner(this);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -107,10 +117,10 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(Transistor transistor) {
-        Skeleton.startCall("Student.acceptItem(Transistor)");
+        SkeletonMenu.startCall("Student.acceptItem(Transistor)");
         this.addItem(transistor);
         location.removeItem(transistor);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -121,10 +131,10 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(SlideRule slideRule) {
-        Skeleton.startCall("Student.acceptItem(SlideRule)");
+        SkeletonMenu.startCall("Student.acceptItem(SlideRule)");
         this.addItem(slideRule);
         location.removeItem(slideRule);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -135,13 +145,13 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(TVSZ tvsz) {
-        Skeleton.startCall("Student.acceptItem(TVSZ)");
+        SkeletonMenu.startCall("Student.acceptItem(TVSZ)");
         this.addItem(tvsz);
         KillImmunity killImmunity = new KillImmunity(tvsz, 10, this);
         killImmunity.activate();
         this.addKillImmunity(killImmunity);
         location.removeItem(tvsz);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -152,11 +162,11 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(Glass glass) {
-        Skeleton.startCall("Student.acceptItem(Glass)");
+        SkeletonMenu.startCall("Student.acceptItem(Glass)");
         this.addItem(glass);
         this.addKillImmunity(new KillImmunity(glass, 10, this));
         location.removeItem(glass);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -167,10 +177,10 @@ public class Student extends Player {
      */
     @Override
     public void acceptItem(Rug rug) {
-        Skeleton.startCall("Student.acceptItem(Rug)");
+        SkeletonMenu.startCall("Student.acceptItem(Rug)");
         this.addItem(rug);
         location.removeItem(rug);
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -181,9 +191,9 @@ public class Student extends Player {
      */
     @Override
     public void meet(Professor professor, Room room) {
-        Skeleton.startCall("Student.meet(Professor, Room)");
+        SkeletonMenu.startCall("Student.meet(Professor, Room)");
         kill();
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 
     /**
@@ -193,12 +203,12 @@ public class Student extends Player {
      */
     @Override
     public void meet(Student student) {
-        Skeleton.startCall("Student.meet(Student)");
-        Skeleton.endCall();
+        SkeletonMenu.startCall("Student.meet(Student)");
+        SkeletonMenu.endCall();
     }
 
     public void goToRoom(Room room) {
-        Skeleton.startCall("Student.goToRoom(Room)");
+        SkeletonMenu.startCall("Student.goToRoom(Room)");
         Optional<Door> door = location.getDoors()
                 .stream()
                 .filter(d -> d.isBetween(location, room))
@@ -207,10 +217,10 @@ public class Student extends Player {
         if (door.isPresent()) {
             door.get().goThrough(this);
             room.onEnter(this);
-            Skeleton.endCall("A hallgató átment a szobába.");
+            SkeletonMenu.endCall("A hallgató átment a szobába.");
             return;
         }
-        Skeleton.endCall("A hallgató nem ment át a szobába.");
+        SkeletonMenu.endCall("A hallgató nem ment át a szobába.");
     }
 
     public KillImmunity findKillImmunityByItem(Item item) {
@@ -224,7 +234,7 @@ public class Student extends Player {
 
     @Override
     public void effectConsumed(Effect effect) {
-        Skeleton.startCall("Student.effectConsumed()");
+        SkeletonMenu.startCall("Student.effectConsumed()");
         super.effectConsumed(effect);
         Item item = effect.getItem();
         KillImmunity killImmunity = findKillImmunityByItem(item);
@@ -235,6 +245,6 @@ public class Student extends Player {
                 item.use(location, this);
             }
         }
-        Skeleton.endCall();
+        SkeletonMenu.endCall();
     }
 }
