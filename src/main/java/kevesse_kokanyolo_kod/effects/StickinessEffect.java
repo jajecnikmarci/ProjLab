@@ -32,14 +32,19 @@ public class StickinessEffect extends RoomEffect{
      * Visszaadja, hogy ragacsosság megakadályozza-e a tárgy felvételét.
      * @return true, ha ragacsosság megakadályozza a tárgy felvételét, egyébként false
      */
-    public boolean doesCleaningDenyItemPickup() {
+    public boolean isSticky() {
         return visitsBeforeEffect <= 0;
     }
 
     /**
      * Takaításkor a ragacsosságig hátralévő látogatások számát visszaállítja alapértékre, ami 5
      */
-    public void resetVisitsBeforeEffect() {
+    public void clean() {
         visitsBeforeEffect = 5;
+    }
+
+    @Override
+    public void activate() {
+        throw new UnsupportedOperationException("StickinessEffect Should not be activated.");    
     }
 }
