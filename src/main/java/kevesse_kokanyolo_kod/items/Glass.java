@@ -24,17 +24,17 @@ public class Glass extends Item {
         SkeletonMenu.startCall("Glass.use(Room, Player)");
         if(hasBeenUsed) {
             if (effect != null) {
-                player.dropRandomItem();
+                acamedicPerson.dropRandomItem();
                 SkeletonMenu.endCall("A tárgyat úgy próbálták használni, hogy már egyszer ezt megtették");
                 return;
             } else {
-                player.removeKillImmunity(this);
+                acamedicPerson.removeKillImmunity(this);
                 SkeletonMenu.endCall("A tárgy már elhasználódott ezért törlésre került");
                 return;
             }
         }
-        KillImmunity killImmunity = new KillImmunity(this, 10, player);
-        player.addKillImmunity(killImmunity);
+        KillImmunity killImmunity = new KillImmunity(this, 10, acamedicPerson);
+        acamedicPerson.addKillImmunity(killImmunity);
         killImmunity.activate();
         effect = killImmunity;
         hasBeenUsed=true;

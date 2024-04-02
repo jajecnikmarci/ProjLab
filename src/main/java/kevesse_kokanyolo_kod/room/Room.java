@@ -97,7 +97,7 @@ public class Room implements EffectConsumedObserver {
         if (items.isEmpty()) {
             SkeletonMenu.endCall("Nincs több tárgy a szobában.");
             return;
-        } else if (lastCleaning.isSticky()) {
+        } else if (lastCleaning!=null&& lastCleaning.isSticky()) {
             SkeletonMenu.endCall("Túl rég volt takarítás a szobában így a tárgyak ragacsosak lettek");
             return;
         }
@@ -129,7 +129,7 @@ public class Room implements EffectConsumedObserver {
         for (Person person : this.people) {
             person.meet(professor, this);
         }
-        lastCleaning.affect(professor);
+        if (lastCleaning!=null) lastCleaning.affect(professor);
         SkeletonMenu.endCall();
     }
 
@@ -148,7 +148,7 @@ public class Room implements EffectConsumedObserver {
                 break;
             }
         }
-        lastCleaning.affect(student);
+        if (lastCleaning!=null) lastCleaning.affect(student);
         people.forEach(person -> person.meet(student));
         SkeletonMenu.endCall();
     }
@@ -157,7 +157,10 @@ public class Room implements EffectConsumedObserver {
         SkeletonMenu.startCall("Room.onEnter(Cleaner)");
         for (Person person : this.people) person.meet(cleaner, this);
         this.poisonEffects.clear();
-        lastCleaning.clean();
+        if (lastCleaning!=null) lastCleaning.clean();
+        else {
+            lastCleaning=new StickinessEffect();
+        }
         SkeletonMenu.endCall();
     }
 

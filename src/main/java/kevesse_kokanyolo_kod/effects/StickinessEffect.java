@@ -14,7 +14,7 @@ public class StickinessEffect extends RoomEffect{
      */
     private int visitsBeforeEffect;
 
-    protected StickinessEffect(Item givenBy, int duration, EffectConsumedObserver observer) {
+    public StickinessEffect() {
         super(null, 0, null);
     }
 
