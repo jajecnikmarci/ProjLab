@@ -1,6 +1,7 @@
 package kevesse_kokanyolo_kod.items;
 
 import kevesse_kokanyolo_kod.effects.KillImmunity;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.player.Player;
 import kevesse_kokanyolo_kod.player.Student;
@@ -52,5 +53,13 @@ public class Glass extends Item {
         SkeletonMenu.startCall("Glass.accept(Player)");
         player.acceptItem(this);
         SkeletonMenu.endCall();
+    }
+
+    @Override
+    public void printState(Printer printer) {
+        printer.startPrintObject("Glass");
+        printer.printField("hasBeenUsed", this.hasBeenUsed);
+        printer.printField("effect", this.effect);
+        printer.endPrintObject();
     }
 }

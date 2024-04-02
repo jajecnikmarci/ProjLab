@@ -1,6 +1,7 @@
 package kevesse_kokanyolo_kod.items;
 
 import kevesse_kokanyolo_kod.effects.KillImmunity;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.player.Player;
 import kevesse_kokanyolo_kod.room.Room;
@@ -35,5 +36,13 @@ public class TVSZ extends Item {
         SkeletonMenu.startCall("TVSZ.accept(Player)");
         player.acceptItem(this);
         SkeletonMenu.endCall();
+    }
+
+    @Override
+    public void printState(Printer printer) {
+        printer.startPrintObject("TVSZ");
+        printer.printField("timesImmune", this.timesImmune);
+        printer.printField("effect", this.effect);
+        printer.endPrintObject();
     }
 }

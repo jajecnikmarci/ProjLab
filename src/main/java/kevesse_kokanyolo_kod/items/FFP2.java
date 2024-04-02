@@ -1,6 +1,7 @@
 package kevesse_kokanyolo_kod.items;
 
 import kevesse_kokanyolo_kod.effects.PoisonImmunity;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.player.Player;
 import kevesse_kokanyolo_kod.room.Room;
@@ -46,4 +47,12 @@ public class FFP2 extends Item {
     public int getImmunityLength() {
         return immunityLength;
     }
+    @Override
+    public void printState(Printer printer) {
+        printer.startPrintObject("FFP2");
+        printer.printField("immunityLength", this.immunityLength);
+        printer.printField("effect", this.effect);  
+        printer.endPrintObject();      
+    }
+
 }
