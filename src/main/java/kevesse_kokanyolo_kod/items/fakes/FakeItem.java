@@ -1,6 +1,6 @@
 package kevesse_kokanyolo_kod.items.fakes;
 
-import kevesse_kokanyolo_kod.items.iItem;
+import kevesse_kokanyolo_kod.items.IItem;
 
-public interface FakeItem extends iItem {
+public interface FakeItem extends IItem {
 }
