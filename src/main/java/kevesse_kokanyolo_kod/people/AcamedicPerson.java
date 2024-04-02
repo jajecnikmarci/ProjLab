@@ -18,7 +18,7 @@ public abstract class AcamedicPerson extends Person implements PickUpVisitor, Ef
     /**
      * A játékos tárgylistája.
      */
-    List<iItem> inventory;
+    List<IItem> inventory;
 
     /**
      * A játékos által használható mérgezés elleni immunitások listája.
@@ -249,12 +249,14 @@ public abstract class AcamedicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall();
     }
 
-    /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     *
-     * @param ffp2 a hozzáadandó tárgy
-     */
+    public void dropRandomItem(){};
+
+        /**
+         * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
+         * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+         *
+         * @param ffp2 a hozzáadandó tárgy
+         */
     @Override
     public void acceptItem(FFP2 ffp2) {
         SkeletonMenu.startCall("Player.acceptItem(FFP2)");

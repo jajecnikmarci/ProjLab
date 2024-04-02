@@ -7,9 +7,7 @@ import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * A Hallgató viselkedését megvalósító osztály.
@@ -56,7 +54,19 @@ public class Student extends AcamedicPerson {
         KillImmunity killImmunity = killImmunities.get(0);
         killImmunity.activate();
         SkeletonMenu.endCall("A hallgatót megvédte egy most aktiválódott tárgya.");
+    }
 
+    /**
+     * Eldobja a hallgató egyik tárgyát.
+     */
+    @Override
+    public void dropRandomItem() {
+        SkeletonMenu.startCall("Student.dropRandItem()");
+        int rand = (int) (Math.random() * inventory.size());
+        IItem item = inventory.get(rand);
+        inventory.remove(item);
+        location.addItem(item);
+        SkeletonMenu.endCall();
     }
 
     /**
