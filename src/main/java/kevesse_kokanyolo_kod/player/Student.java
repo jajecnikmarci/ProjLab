@@ -61,7 +61,7 @@ public class Student extends Player {
     /**
      * Eldobja a hallgató egyik tárgyát.
      */
-    public void dropRandItem() {
+    public void dropRandomItem() {
         SkeletonMenu.startCall("Student.dropRandItem()");
         int rand = (int) (Math.random() * inventory.size());
         iItem item = inventory.get(rand);

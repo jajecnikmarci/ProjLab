@@ -44,6 +44,6 @@ public class Glass extends Item {
 
     @Override
     public void hasToDropItem(Student student) {
-        student.dropRandItem();
+        student.dropRandomItem();
     }
 }
