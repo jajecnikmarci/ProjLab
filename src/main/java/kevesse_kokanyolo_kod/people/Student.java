@@ -4,7 +4,6 @@ import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 
 import java.util.*;
@@ -12,7 +11,7 @@ import java.util.*;
 /**
  * A Hallgató viselkedését megvalósító osztály.
  */
-public class Student extends AcamedicPerson {
+public class Student extends AcademicPerson {
     /**
      * A hallgató lelkeinek számát tárolja.
      */
@@ -23,8 +22,8 @@ public class Student extends AcamedicPerson {
      */
     private List<KillImmunity> killImmunities;
 
-    public Student(Room r) {
-        super(r);
+    public Student(Room room) {
+        super(room);
         souls = 3;
         killImmunities = new ArrayList<>();
     }
@@ -207,20 +206,10 @@ public class Student extends AcamedicPerson {
         SkeletonMenu.endCall();
     }
 
-    public void goToRoom(Room room) {
-        SkeletonMenu.startCall("Student.goToRoom(Room)");
-        Optional<Door> door = location.getDoors()
-                .stream()
-                .filter(d -> d.isBetween(location, room))
-                .findFirst();
-
-        if (door.isPresent()) {
-            door.get().goThrough(this);
-            room.onEnter(this);
-            SkeletonMenu.endCall("A hallgató átment a szobába.");
-            return;
-        }
-        SkeletonMenu.endCall("A hallgató nem ment át a szobába.");
+    
+    @Override
+    protected void callOnEnter(Room room) {
+        room.onEnter(this);
     }
 
     public KillImmunity findKillImmunityByItem(Item item) {

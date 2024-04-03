@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * A játékost reprezentáló osztály
  */
-public abstract class AcamedicPerson extends Person implements PickUpVisitor, EffectConsumedObserver {
+public abstract class AcademicPerson extends Person implements PickUpVisitor, EffectConsumedObserver {
     /**
      * A játékos tárgylistája.
      */
@@ -33,7 +33,7 @@ public abstract class AcamedicPerson extends Person implements PickUpVisitor, Ef
 
     private boolean stunned;
 
-    protected AcamedicPerson(Room r) {
+    protected AcademicPerson(Room r) {
         super(r);
         inventory = new ArrayList<>();
         poisonImmunities = new ArrayList<>();
@@ -183,13 +183,6 @@ public abstract class AcamedicPerson extends Person implements PickUpVisitor, Ef
         poisonImmunity.activate();
         SkeletonMenu.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
     }
-
-    /**
-     * Belép a szobába, ha tud és közli a szobával, hogy belépett a játékos.
-     *
-     * @param room a szoba, amibe a játékos belép
-     */
-    public abstract void goToRoom(Room room);
 
 
 

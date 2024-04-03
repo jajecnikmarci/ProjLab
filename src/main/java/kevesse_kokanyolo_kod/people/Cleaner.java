@@ -29,5 +29,8 @@ public class Cleaner extends Person{
     @Override
     public void poison() {}
 
-
+    @Override
+    protected void callOnEnter(Room room) {
+        room.onEnter(this);
+    }
 }

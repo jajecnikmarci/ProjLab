@@ -1,5 +1,9 @@
 package kevesse_kokanyolo_kod.people;
 
+import java.util.Optional;
+
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 
 public abstract class Person {
@@ -50,4 +54,28 @@ public abstract class Person {
     public void leaveRoom() {
         //TODO
     }
+    
+    // Meghívja a szoba onEnter metódusát, a megfelelő paraméterrel. 
+    // Azért szükséges felülítni, mert az onEntert a megfelelő típusú paraméterrel kell meghívni. (Professor, Student, Cleaner)
+    protected abstract void callOnEnter(Room room);
+
+    /**
+     * Belép a szobába, ha tud és közli a szobával, hogy belépett a játékos.
+     * @param room a szoba, amibe a játékos belép
+     */
+    public void goToRoom(Room room) {
+        SkeletonMenu.startCall("Person.goToRoom(Room)");
+        Optional<Door> door = location.getDoors()
+                .stream()
+                .filter(d -> d.isBetween(location, room))
+                .findFirst();
+
+        if (door.isPresent()) {
+            door.get().goThrough(this);
+            callOnEnter(room);
+            SkeletonMenu.endCall("A személy átment a szobába.");
+            return;
+        }
+        SkeletonMenu.endCall("A személy nem ment át a szobába.");
     }
+}
