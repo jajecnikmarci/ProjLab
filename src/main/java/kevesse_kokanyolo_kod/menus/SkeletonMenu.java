@@ -1,6 +1,5 @@
 package kevesse_kokanyolo_kod.menus;
 
-import kevesse_kokanyolo_kod.effects.StickinessEffect;
 import kevesse_kokanyolo_kod.effects.StunEffect;
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.FakeSlideRule;
@@ -46,6 +45,7 @@ public class SkeletonMenu {
          * Itt történik a tesztek hozzáadása (2)
          */
         // tests.add(new Test("Test 1", this::test1));
+        tests.add(new Test("Move To Room", this::testMoveToRoom));
         tests.add(new Test("Pickup FFP2", this::testPickUpFFP2));
         tests.add(new Test("Pickup Camembert", this::testPickUpCamembert));
         tests.add(new Test("Pickup Glass", this::testPickUpGlass));

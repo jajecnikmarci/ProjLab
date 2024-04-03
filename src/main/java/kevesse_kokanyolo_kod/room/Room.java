@@ -249,9 +249,9 @@ public class Room implements EffectConsumedObserver {
     }
 
     /**
-     * Hozzáad egy Player-t a szobában tartózkodó Player-ek közé
+     * Hozzáad egy személyt a szobában tartózkodó személyek listájához.
      *
-     * @param person a hozzáadandó player
+     * @param person a hozzáadandó személy
      */
     public void addPlayer(Person person) {
         SkeletonMenu.startCall("Room.addPlayer(Player)");
