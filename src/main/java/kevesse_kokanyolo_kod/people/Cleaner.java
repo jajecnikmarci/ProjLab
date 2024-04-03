@@ -3,7 +3,7 @@ package kevesse_kokanyolo_kod.people;
 import kevesse_kokanyolo_kod.room.Room;
 
 public class Cleaner extends Person{
-    protected Cleaner(Room r) {
+    public Cleaner(Room r) {
         super(r);
     }
 

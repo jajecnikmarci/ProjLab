@@ -281,6 +281,13 @@ public abstract class AcamedicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall();
     }
 
+
+    /**
+     * A hamis tárgyak (FakeItem) felvételkor megsemmisülnek. A tárgyak közös interfésze az IItem interfészben definiált.
+     * A hamis tárgyak az igazi verziójukat öröklik és implementálják az IItemből származtatott FakeItem interfészt.
+     *
+     * @param fakeItem a nem felvevendő tárgy
+     */
     @Override
     public void acceptItem(FakeItem fakeItem) {
         SkeletonMenu.startCall("Player.acceptItem(Fake)");
