@@ -31,7 +31,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         return stunned;
     }
 
-    private boolean stunned;
+    protected boolean stunned;
 
     protected AcademicPerson(Room r) {
         super(r);

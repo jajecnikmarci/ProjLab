@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.people;
 
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.room.Room;
 
 public class Cleaner extends Person{
@@ -32,5 +33,12 @@ public class Cleaner extends Person{
     @Override
     protected void callOnEnter(Room room) {
         room.onEnter(this);
+    }
+
+    @Override
+    public void printState(Printer printer){
+        printer.startPrintObject("Cleaner");
+        printer.printField("location", this.location);
+        printer.endPrintObject();
     }
 }

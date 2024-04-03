@@ -2,7 +2,9 @@ package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
+import kevesse_kokanyolo_kod.effects.PoisonImmunity;
 import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
 
@@ -235,5 +237,17 @@ public class Student extends AcademicPerson {
             }
         }
         SkeletonMenu.endCall();
+    }
+
+    @Override
+    public void printState(Printer printer){
+        printer.startPrintObject("Student");
+        printer.printField("location", this.location);
+        printer.printField("stunned", this.stunned);
+        printer.printFields("inventory", this.inventory);
+        printer.printFields("killImmunities", this.killImmunities);
+        printer.printFields("poisonImmunities", this.poisonImmunities);
+        printer.printField("souls", this.souls);
+        printer.endPrintObject();
     }
 }

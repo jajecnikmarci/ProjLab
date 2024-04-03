@@ -2,6 +2,7 @@ package kevesse_kokanyolo_kod.people;
 
 import java.util.Optional;
 
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
@@ -78,4 +79,6 @@ public abstract class Person {
         }
         SkeletonMenu.endCall("A személy nem ment át a szobába.");
     }
+
+     public abstract void printState(Printer printer);
 }
