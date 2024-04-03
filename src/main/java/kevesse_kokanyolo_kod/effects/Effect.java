@@ -1,6 +1,7 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 /**
@@ -71,4 +72,6 @@ public abstract class Effect implements TimerObserver {
     public Item getItem() {
         return givenBy;
     }
+
+    public abstract void printState(Printer printer);
 }

@@ -1,6 +1,7 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.people.Professor;
 import kevesse_kokanyolo_kod.people.Student;
 
@@ -46,5 +47,12 @@ public class StickinessEffect extends RoomEffect{
     @Override
     public void activate() {
         throw new UnsupportedOperationException("StickinessEffect Should not be activated.");    
+    }
+    
+    @Override
+    public void printState(Printer printer) {
+        printer.startPrintObject("StickinessEffect");
+        printer.printField("active", this.active);  
+        printer.endPrintObject();      
     }
 }
