@@ -1,6 +1,7 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.Professor;
 import kevesse_kokanyolo_kod.people.Student;
@@ -36,5 +37,11 @@ public class PoisonEffect extends RoomEffect {
         SkeletonMenu.startCall("PoisonEffect.affect(Student)");
         student.poison();
         SkeletonMenu.endCall();
+    }
+    @Override
+    public void printState(Printer printer) {
+        printer.startPrintObject("PoisonEffect");
+        printer.printField("active", this.active);  
+        printer.endPrintObject();      
     }
 }
