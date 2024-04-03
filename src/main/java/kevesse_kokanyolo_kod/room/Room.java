@@ -249,24 +249,24 @@ public class Room implements EffectConsumedObserver {
     }
 
     /**
-     * Hozzáad egy Player-t a szobában tartózkodó Player-ek közé
+     * Hozzáad egy személyt a szobában tartózkodó személyek listájához.
      *
-     * @param acamedicPerson a hozzáadandó player
+     * @param person a hozzáadandó személy
      */
-    public void addPlayer(AcamedicPerson acamedicPerson) {
+    public void addPlayer(Person person) {
         SkeletonMenu.startCall("Room.addPlayer(Player)");
-        this.people.add(acamedicPerson);
+        this.people.add(person);
         SkeletonMenu.endCall();
     }
 
     /**
      * Kitörli a játékost a szobából.
      *
-     * @param acamedicPerson a kitörölni kívánt játékos
+     * @param person a kitörölni kívánt játékos
      */
-    public void removePlayer(AcamedicPerson acamedicPerson) {
+    public void removePlayer(Person person) {
         SkeletonMenu.startCall("Room.removePlayer(Player)");
-        this.people.remove(acamedicPerson);
+        this.people.remove(person);
         SkeletonMenu.endCall();
     }
 

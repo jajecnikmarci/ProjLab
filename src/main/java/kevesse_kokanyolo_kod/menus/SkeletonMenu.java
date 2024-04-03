@@ -2,6 +2,8 @@ package kevesse_kokanyolo_kod.menus;
 
 import kevesse_kokanyolo_kod.effects.StunEffect;
 import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.items.fakes.FakeSlideRule;
+import kevesse_kokanyolo_kod.people.Cleaner;
 import kevesse_kokanyolo_kod.people.Professor;
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Door;
@@ -43,6 +45,7 @@ public class SkeletonMenu {
          * Itt történik a tesztek hozzáadása (2)
          */
         // tests.add(new Test("Test 1", this::test1));
+        tests.add(new Test("Move To Room", this::testMoveToRoom));
         tests.add(new Test("Pickup FFP2", this::testPickUpFFP2));
         tests.add(new Test("Pickup Camembert", this::testPickUpCamembert));
         tests.add(new Test("Pickup Glass", this::testPickUpGlass));
@@ -50,24 +53,29 @@ public class SkeletonMenu {
         tests.add(new Test("Pickup Sliderule", this::testPickUpSlideRule));
         tests.add(new Test("Pickup Transistor", this::testPickUpTransistor));
         tests.add(new Test("Pickup TVSZ", this::testPickUpTVSZ));
+        tests.add(new Test("Pickup AirFreshener", this::testPickUpAirFreshener));
+        tests.add(new Test("Pickup fake SlideRule", this::testPickUpFakeSlideRule));
+        tests.add(new Test("Pickup Camembert in sticky room", this::testPickUpCamembertInStickyRoom));
 
         tests.add(new Test("Use Camembert", this::testUseCamembert));
         tests.add(new Test("Use Glass", this::testUseGlass));
         tests.add(new Test("Use Rug", this::testUseRug));
+        tests.add(new Test("Use AirFreshener", this::testUseAirFreshener));
+        tests.add(new Test("Room poisons Academic", this::testRoomPoisonsAcademic));
 
         tests.add(new Test("Pair Transistors", this::testPairTransistors));
         tests.add(new Test("Drop Transistor", this::testDropTransistor));
         tests.add(new Test("Teleport with Transistor", this::testTeleportWithTransistor));
         tests.add(new Test("Split Room", this::testSplitRoom));
         tests.add(new Test("Merge Rooms", this::testMergeRooms));
-        tests.add(new Test("Move to Room", this::testMoveToRoom));
 
-        tests.add(new Test("Player gets Poisoned", this::testPlayerGetsPoisoned));
-        tests.add(new Test("Player gets Defended from Poison", this::testPlayerGetsDefendedFromPoison));
-        tests.add(new Test("Student gets Defended from Professor with TVSZ", this::testStudentGetsDefendedWithTVSZ));
-        tests.add(new Test("Student gets Defended from Professor with Glass",
-                this::testStudentGetsDefendedFromProfessorWithGlass));
-        tests.add(new Test("Professor enters Room with Rug", this::testProfessorEntersRoomWithRug));
+        tests.add(new Test("TVSZ defends Student", this::testTVSZdefendsStudent));
+        tests.add(new Test("Glass defends Student", this::testGlassdefendsStudent));
+        tests.add(new Test("FFP2 defends Academic", this::testFFP2defendsAcademic));
+        tests.add(new Test("Professor meets Student", this::testProfessorMeetsStudent));
+        tests.add(new Test("Professor meets Professor", this::testProfessorMeetsProfessor));
+        tests.add(new Test("Cleaner meets Academic", this::testCleanerMeetsAcademic));
+        tests.add(new Test("Rug stuns professor", this::testRugStunsProfessor));
     }
 
     List<Test> tests;
@@ -80,7 +88,7 @@ public class SkeletonMenu {
         initializeTest();
         scanner = new Scanner(System.in);
     }
-    
+
     public static void setFromAndToFile(boolean fromAndToFile) {
         SkeletonMenu.fromAndToFile = fromAndToFile;
     }
@@ -380,6 +388,52 @@ public class SkeletonMenu {
         student.pickUpItem();
     }
 
+    public void testPickUpAirFreshener() {
+        verbose = false;
+        Room room = new Room();
+        Student student = new Student(room);
+        AirFreshener airFreshener = new AirFreshener();
+        room.addPlayer(student);
+        room.addItem(airFreshener);
+        verbose = true;
+
+        student.pickUpItem();
+    }
+
+    public void testPickUpFakeSlideRule() {
+        verbose = false;
+        Room room = new Room();
+        Student student = new Student(room);
+        FakeSlideRule fakeSlideRule = new FakeSlideRule();
+        room.addPlayer(student);
+        room.addItem(fakeSlideRule);
+        verbose = true;
+
+        student.pickUpItem();
+    }
+
+    public void testPickUpCamembertInStickyRoom() {
+        verbose = false;
+        Room room = new Room();
+        Cleaner cleaner = new Cleaner(room);
+        room.addPlayer(cleaner);
+        room.onEnter(cleaner);
+        room.removePlayer(cleaner);
+        Student student = new Student(room);
+        room.addPlayer(student);
+        //Szimuláljuk, hogy bejön 5 hallgató
+        room.onEnter(student);
+        room.onEnter(student);
+        room.onEnter(student);
+        room.onEnter(student);
+        room.onEnter(student);
+        Camembert camembert = new Camembert();
+        room.addItem(camembert);
+        verbose = true;
+
+        student.pickUpItem();
+    }
+
     public void testPickUpTransistor() {
         verbose = false;
         Room room = new Room();
@@ -426,6 +480,35 @@ public class SkeletonMenu {
 
         verbose = true;
         rug.use(room, student);
+    }
+
+    public void testUseAirFreshener() {
+        verbose = false;
+        Room room = new Room();
+        Student student = new Student(room);
+        AirFreshener airFreshener = new AirFreshener();
+        room.addPlayer(student);
+        student.addItem(airFreshener);
+
+        verbose = true;
+        airFreshener.use(room, student);
+    }
+
+    /**
+     * A tárgyak elvétele a játékostól nem íródik ki, mert a tárgyak listáján a clear metódus lett meghívva.
+     */
+    public void testRoomPoisonsAcademic() {
+        verbose = false;
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        Rug rug = new Rug();
+        Glass glass = new Glass();
+        student.addItem(rug);
+        student.addItem(glass);
+
+        verbose = true;
+        student.poison();
     }
 
     private void testSplitRoom() {
@@ -480,23 +563,19 @@ public class SkeletonMenu {
         student.useItem(glass);
     }
 
-    /**
-     * A tárgyak elvétele a játékostól nem íródik ki, mert a tárgyak listáján a clear metódus lett meghívva.
-     */
-    private void testPlayerGetsPoisoned() {
+    private void testTVSZdefendsStudent() {
         verbose = false;
         Room room = new Room();
         Student student = new Student(room);
         room.addPlayer(student);
-        Rug rug = new Rug();
-        Glass glass = new Glass();
-        student.addItem(rug);
-        student.addItem(glass);
+        TVSZ tvsz = new TVSZ();
+        room.addItem(tvsz);
         verbose = true;
-        student.poison();
+        student.pickUpItem();
+        student.kill();
     }
 
-    private void testStudentGetsDefendedFromProfessorWithGlass() {
+    private void testGlassdefendsStudent() {
         verbose = false;
         Room room = new Room();
         Student student = new Student(room);
@@ -511,7 +590,7 @@ public class SkeletonMenu {
         room.onEnter(professor);
     }
 
-    private void testPlayerGetsDefendedFromPoison() {
+    private void testFFP2defendsAcademic() {
         verbose = false;
         Room room = new Room();
         Student student = new Student(room);
@@ -523,19 +602,40 @@ public class SkeletonMenu {
         student.poison();
     }
 
-    private void testStudentGetsDefendedWithTVSZ() {
+    private void testProfessorMeetsStudent() {
         verbose = false;
         Room room = new Room();
         Student student = new Student(room);
         room.addPlayer(student);
-        TVSZ tvsz = new TVSZ();
-        room.addItem(tvsz);
         verbose = true;
-        student.pickUpItem();
-        student.kill();
+        Professor professor = new Professor(room);
+        room.addPlayer(professor);
+        room.onEnter(professor);
     }
 
-    private void testProfessorEntersRoomWithRug() {
+    private void testProfessorMeetsProfessor() {
+        verbose = false;
+        Room room = new Room();
+        Professor professor1 = new Professor(room);
+        room.addPlayer(professor1);
+        verbose = true;
+        Professor professor2 = new Professor(room);
+        room.addPlayer(professor2);
+        room.onEnter(professor2);
+    }
+
+    private void testCleanerMeetsAcademic() {
+        verbose = false;
+        Room room = new Room();
+        Student student = new Student(room);
+        room.addPlayer(student);
+        verbose = true;
+        Cleaner cleaner = new Cleaner(room);
+        room.addPlayer(cleaner);
+        room.onEnter(cleaner);
+    }
+
+    private void testRugStunsProfessor() {
         verbose = false;
         Room room = new Room();
         Room room2 = new Room();
