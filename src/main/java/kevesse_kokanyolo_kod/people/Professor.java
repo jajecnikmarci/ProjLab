@@ -1,6 +1,9 @@
 package kevesse_kokanyolo_kod.people;
 
+import kevesse_kokanyolo_kod.effects.KillImmunity;
+import kevesse_kokanyolo_kod.effects.PoisonImmunity;
 import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
 
@@ -108,5 +111,16 @@ public class Professor extends AcademicPerson {
     @Override
     public void callOnEnter(Room room) {
         room.onEnter(this);
+    }
+
+    @Override
+    public void printState(Printer printer){
+        printer.startPrintObject("Student");
+        printer.printField("location", this.location);
+        printer.printField("stunned", this.stunned);
+        printer.printFields("Inventory", this.inventory);
+        printer.printFields("poisonImmunities", this.poisonImmunities);
+        
+        printer.endPrintObject();
     }
 }

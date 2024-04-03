@@ -2,7 +2,10 @@ package kevesse_kokanyolo_kod.menus;
 
 
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
+
+import kevesse_kokanyolo_kod.items.IItem;
 
 public class Printer {
     public static FileWriter fileWriter = null;
@@ -52,6 +55,15 @@ public class Printer {
 
     public void printField(String name, Object value) {
         println("- " + name + ": " + value);
+    }
+
+    public void printFields(String name,  List<? extends Object> values) {
+        println("- " + name + ": ");
+        indentCounter++;
+        for (Object value : values) {
+            println(value.toString());
+        }
+        indentCounter--;
     }
 
     public void endPrintObject() {
