@@ -2,7 +2,7 @@ package kevesse_kokanyolo_kod.items;
 
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.people.AcamedicPerson;
+import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Room;
 
@@ -54,29 +54,29 @@ public class Transistor extends Item {
      * különben nem történik semmi
      *
      * @param room   a szoba, ahol a tranzisztor használva lett
-     * @param acamedicPerson a játékos aki használja a tranzisztort
+     * @param academicPerson a játékos aki használja a tranzisztort
      */
     @Override
-    public void use(Room room, AcamedicPerson acamedicPerson) {
+    public void use(Room room, AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Transistor.use(Room, Player)");
         if (this.pair != null && this.pair.room == null) {
 
             this.setRoom(room);
-            acamedicPerson.removeItem(this);
+            academicPerson.removeItem(this);
             SkeletonMenu.endCall("A tranzisztor a szobához lett hozzáadva.");
 
         } else if (this.pair != null && this.pair.room.canPlayerEnter()) {
-            room.removePlayer(acamedicPerson);
+            room.removePlayer(academicPerson);
 
-            this.pair.room.addPlayer(acamedicPerson);
+            this.pair.room.addPlayer(academicPerson);
             this.pair.room.onEnter(owner);
 
             this.setRoom(room);
             this.pair.room.removeItem(this.pair); //TODO: ez nem biztos hogy így kéne
             this.pair.room = null;
 
-            acamedicPerson.removeItem(this);
-            acamedicPerson.addItem(this.pair);
+            academicPerson.removeItem(this);
+            academicPerson.addItem(this.pair);
             SkeletonMenu.endCall("A játékos át lett teleportálva a másik szobába.");
         } else SkeletonMenu.endCall("A játékos nem lett elteleportálva a másik szobába.");
     }
@@ -95,12 +95,12 @@ public class Transistor extends Item {
     /**
      * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
      *
-     * @param acamedicPerson a játékos aki próbálja felvenni a tárgyat
+     * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
     @Override
-    public void accept(AcamedicPerson acamedicPerson) {
+    public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Transistor.accept(Player)");
-        acamedicPerson.acceptItem(this);
+        academicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
 

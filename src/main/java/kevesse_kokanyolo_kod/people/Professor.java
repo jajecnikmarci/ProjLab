@@ -2,18 +2,16 @@ package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 
-import java.util.Optional;
 
 /**
  * A professzort reprezentáló osztály
  */
-public class Professor extends AcamedicPerson {
+public class Professor extends AcademicPerson {
 
-    public Professor(Room r) {
-        super(r);
+    public Professor(Room room) {
+        super(room);
     }
 
 
@@ -106,25 +104,9 @@ public class Professor extends AcamedicPerson {
         SkeletonMenu.endCall("A professzor nem tudja felvenni a Nedves Táblatörlő Rongyot.");
     }
 
-    /**
-     * Belép a megadott szobába, ha a szoba befogadja a játékost.
-     *
-     * @param room a szoba, amibe a játékos be kíván lépni
-     */
+    
     @Override
-    public void goToRoom(Room room) {
-        SkeletonMenu.startCall("Professor.goToRoom(Room)");
-        Optional<Door> door = location.getDoors()
-                .stream()
-                .filter(d -> d.isBetween(location, room))
-                .findFirst();
-
-        if (door.isPresent()) {
-            door.get().goThrough(this);
-            room.onEnter(this);
-            SkeletonMenu.endCall("A professzor belépett a szobába.");
-            return;
-        }
-        SkeletonMenu.endCall("A professzor nem lépett be a szobába.");
+    public void callOnEnter(Room room) {
+        room.onEnter(this);
     }
 }

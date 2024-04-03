@@ -3,7 +3,7 @@ package kevesse_kokanyolo_kod.items;
 import kevesse_kokanyolo_kod.effects.StunEffect;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.people.AcamedicPerson;
+import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
 /**
@@ -15,20 +15,20 @@ public class Rug extends Item {
      * Kitörli a tárgyat a játékos tárgyai közül.
      */
     @Override
-    public void use(Room room, AcamedicPerson acamedicPerson) {
+    public void use(Room room, AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Rug.use(Room, Player)");
         StunEffect stunEffect = new StunEffect(this, 30, room);
 
         room.addStunEffect(stunEffect);
         effect = stunEffect;
-        acamedicPerson.removeItem(this);
+        academicPerson.removeItem(this);
         SkeletonMenu.endCall();
     }
 
     @Override
-    public void accept(AcamedicPerson acamedicPerson) {
+    public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Rug.accept(Player)");
-        acamedicPerson.acceptItem(this);
+        academicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
     @Override

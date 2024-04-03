@@ -90,9 +90,9 @@ public class Room implements EffectConsumedObserver {
     /**
      * Hozzáad a szobában lévő táryak közül a legfelső tárgyat a játékos tárgyaihoz.
      *
-     * @param acamedicPerson A játékos, aki a tárgyat fel akarja venni
+     * @param academicPerson A játékos, aki a tárgyat fel akarja venni
      */
-    public void popItem(AcamedicPerson acamedicPerson) {
+    public void popItem(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Room.popItem(Player)");
         if (items.isEmpty()) {
             SkeletonMenu.endCall("Nincs több tárgy a szobában.");
@@ -101,7 +101,7 @@ public class Room implements EffectConsumedObserver {
             SkeletonMenu.endCall("Túl rég volt takarítás a szobában így a tárgyak ragacsosak lettek");
             return;
         }
-        items.get(items.size() - 1).accept(acamedicPerson);
+        items.get(items.size() - 1).accept(academicPerson);
         SkeletonMenu.endCall();
     }
 
