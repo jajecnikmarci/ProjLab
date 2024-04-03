@@ -3,8 +3,8 @@ package kevesse_kokanyolo_kod.people;
 import kevesse_kokanyolo_kod.room.Room;
 
 public class Cleaner extends Person{
-    protected Cleaner(Room r) {
-        super(r);
+    public Cleaner(Room room) {
+        super(room);
     }
 
     @Override
@@ -29,5 +29,8 @@ public class Cleaner extends Person{
     @Override
     public void poison() {}
 
-
+    @Override
+    protected void callOnEnter(Room room) {
+        room.onEnter(this);
+    }
 }

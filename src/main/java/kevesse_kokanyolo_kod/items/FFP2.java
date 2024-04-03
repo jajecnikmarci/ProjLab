@@ -3,7 +3,7 @@ package kevesse_kokanyolo_kod.items;
 import kevesse_kokanyolo_kod.effects.PoisonImmunity;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.people.AcamedicPerson;
+import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
 /**
@@ -17,25 +17,25 @@ public class FFP2 extends Item {
     private int immunityLength = 10;
 
     @Override
-    public void use(Room room, AcamedicPerson acamedicPerson) {
+    public void use(Room room, AcademicPerson academicPerson) {
         SkeletonMenu.startCall("FFP2.use(Room, Player)");
         if (immunityLength <= 0) {
-            acamedicPerson.removeItem(this);
+            academicPerson.removeItem(this);
             //TODO Mérgezni a player-t ha elhasználódott a maszk
             SkeletonMenu.endCall("A tárgy elhasználódott");
             return;
         }
-        PoisonImmunity poisonImmunity = new PoisonImmunity(this, immunityLength, acamedicPerson);
-        acamedicPerson.addPoisonImmunity(poisonImmunity);
+        PoisonImmunity poisonImmunity = new PoisonImmunity(this, immunityLength, academicPerson);
+        academicPerson.addPoisonImmunity(poisonImmunity);
         effect = poisonImmunity;
         immunityLength -= 2;
         SkeletonMenu.endCall();
     }
 
     @Override
-    public void accept(AcamedicPerson acamedicPerson) {
+    public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("FFP2.accept(Player)");
-        acamedicPerson.acceptItem(this);
+        academicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
 

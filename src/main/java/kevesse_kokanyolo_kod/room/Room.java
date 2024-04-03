@@ -90,9 +90,9 @@ public class Room implements EffectConsumedObserver {
     /**
      * Hozzáad a szobában lévő táryak közül a legfelső tárgyat a játékos tárgyaihoz.
      *
-     * @param acamedicPerson A játékos, aki a tárgyat fel akarja venni
+     * @param academicPerson A játékos, aki a tárgyat fel akarja venni
      */
-    public void popItem(AcamedicPerson acamedicPerson) {
+    public void popItem(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Room.popItem(Player)");
         if (items.isEmpty()) {
             SkeletonMenu.endCall("Nincs több tárgy a szobában.");
@@ -101,7 +101,7 @@ public class Room implements EffectConsumedObserver {
             SkeletonMenu.endCall("Túl rég volt takarítás a szobában így a tárgyak ragacsosak lettek");
             return;
         }
-        items.get(items.size() - 1).accept(acamedicPerson);
+        items.get(items.size() - 1).accept(academicPerson);
         SkeletonMenu.endCall();
     }
 
@@ -249,24 +249,24 @@ public class Room implements EffectConsumedObserver {
     }
 
     /**
-     * Hozzáad egy Player-t a szobában tartózkodó Player-ek közé
+     * Hozzáad egy személyt a szobában tartózkodó személyek listájához.
      *
-     * @param acamedicPerson a hozzáadandó player
+     * @param person a hozzáadandó személy
      */
-    public void addPlayer(AcamedicPerson acamedicPerson) {
+    public void addPlayer(Person person) {
         SkeletonMenu.startCall("Room.addPlayer(Player)");
-        this.people.add(acamedicPerson);
+        this.people.add(person);
         SkeletonMenu.endCall();
     }
 
     /**
      * Kitörli a játékost a szobából.
      *
-     * @param acamedicPerson a kitörölni kívánt játékos
+     * @param person a kitörölni kívánt játékos
      */
-    public void removePlayer(AcamedicPerson acamedicPerson) {
+    public void removePlayer(Person person) {
         SkeletonMenu.startCall("Room.removePlayer(Player)");
-        this.people.remove(acamedicPerson);
+        this.people.remove(person);
         SkeletonMenu.endCall();
     }
 

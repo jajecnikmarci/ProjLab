@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * A játékost reprezentáló osztály
  */
-public abstract class AcamedicPerson extends Person implements PickUpVisitor, EffectConsumedObserver {
+public abstract class AcademicPerson extends Person implements PickUpVisitor, EffectConsumedObserver {
     /**
      * A játékos tárgylistája.
      */
@@ -33,7 +33,7 @@ public abstract class AcamedicPerson extends Person implements PickUpVisitor, Ef
 
     private boolean stunned;
 
-    protected AcamedicPerson(Room r) {
+    protected AcademicPerson(Room r) {
         super(r);
         inventory = new ArrayList<>();
         poisonImmunities = new ArrayList<>();
@@ -184,13 +184,6 @@ public abstract class AcamedicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
     }
 
-    /**
-     * Belép a szobába, ha tud és közli a szobával, hogy belépett a játékos.
-     *
-     * @param room a szoba, amibe a játékos belép
-     */
-    public abstract void goToRoom(Room room);
-
 
 
 
@@ -281,6 +274,13 @@ public abstract class AcamedicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall();
     }
 
+
+    /**
+     * A hamis tárgyak (FakeItem) felvételkor megsemmisülnek. A tárgyak közös interfésze az IItem interfészben definiált.
+     * A hamis tárgyak az igazi verziójukat öröklik és implementálják az IItemből származtatott FakeItem interfészt.
+     *
+     * @param fakeItem a nem felvevendő tárgy
+     */
     @Override
     public void acceptItem(FakeItem fakeItem) {
         SkeletonMenu.startCall("Player.acceptItem(Fake)");
