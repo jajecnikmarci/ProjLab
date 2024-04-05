@@ -10,9 +10,19 @@ import kevesse_kokanyolo_kod.people.Student;
  * Egy játékos sokkolását elvégző effekt
  */
 public class StunEffect extends RoomEffect {
+    /**
+     * @param givenBy A hatást kiváltó tárgy
+     * @param duration A hatás élettartama. Ennyi idő után törlődik a szobából a hatás.
+     * @param observer Az hatást figyelő osztály
+     */
     public StunEffect(Item givenBy, int duration, EffectConsumedObserver observer) {
         super(givenBy, duration, observer);
     }
+
+    /**
+     * A bénítás időtartama
+     */
+    private static final int stunDuration = 10;
 
     /**
      * Lebénít egy oktatót
@@ -22,10 +32,9 @@ public class StunEffect extends RoomEffect {
     @Override
     public void affect(Professor professor) {
         SkeletonMenu.startCall("StunEffect.affect(Professor)");
-        professor.stun(10);
+        professor.stun(stunDuration);
         SkeletonMenu.endCall();
     }
-
     /**
      * Lebénít egy hallgatót
      *
@@ -34,7 +43,7 @@ public class StunEffect extends RoomEffect {
     @Override
     public void affect(Student student) {
         SkeletonMenu.startCall("StunEffect.affect(Professor)");
-        student.stun(10);
+        student.stun(stunDuration);
         SkeletonMenu.endCall();
     }
     @Override

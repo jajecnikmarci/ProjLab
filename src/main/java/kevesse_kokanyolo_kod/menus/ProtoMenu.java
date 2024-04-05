@@ -35,8 +35,7 @@ public class ProtoMenu {
     // pickup <Academic>
     // drop <Academic> <Item>
     // use <Academic> <Item>
-    // gotoroom <Person> <Door>
-    // pairtransstors <Student> <Transistor> <Transistor>
+    // gotoroom <Person> <Room>
     // split <Room>
     // merge <Room> <Room>
 
@@ -44,8 +43,8 @@ public class ProtoMenu {
     // Megjegyzések: 
     // A <> közötti szavak példányneveket jelölnek.
     // Academic: egy hallgató, vagy oktató példány neve
+    // Person: egy hallgató, oktató, takarító példány neve
     // A proto nyelv értelmezője hibát dob ha helytelen a parancs.
-    // PersonInstance: egy hallgató, oktató, takarító példány neve
-    // - new <ClassName> <instanceName> {Door, Room, Student, Professor, Cleaner, Items, FakeItems}
-    // TODO: A Student, Professor, Cleaner osztályokból érdemes lenne azokat a metódusokat egy-egy interfészbe kiszervezni, amik az irányításhoz szükségesek.
+    // Új példány létrehozása:
+    // new <ClassName> <instanceName> {Door, Room, Student, Professor, Cleaner, Items, FakeItems}
 }
