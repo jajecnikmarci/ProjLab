@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.room;
 
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Person;
 
 /**

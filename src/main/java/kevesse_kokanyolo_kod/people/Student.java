@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
-import kevesse_kokanyolo_kod.effects.PoisonImmunity;
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;

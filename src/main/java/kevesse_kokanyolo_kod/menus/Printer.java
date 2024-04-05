@@ -5,8 +5,6 @@ import java.io.*;
 import java.util.List;
 import java.util.Scanner;
 
-import kevesse_kokanyolo_kod.items.IItem;
-
 public class Printer {
     public static FileWriter fileWriter = null;
     public static Scanner scanner = null;
