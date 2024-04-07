@@ -16,7 +16,7 @@ public class Door {
     /**
      * Az ajtó másik szobája.
      */
-    private final Room room2;
+    private Room room2;
 
     /**
      * Az ajtó első szobából a másodikba nyitva van-e.
