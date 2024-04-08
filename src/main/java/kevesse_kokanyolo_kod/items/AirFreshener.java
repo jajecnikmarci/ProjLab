@@ -26,4 +26,15 @@ public class AirFreshener extends Item{
         printer.printField("effect", this.effect);  
         printer.endPrintObject();      
     }
+
+    @Override
+    public boolean interactItem(AirFreshener airFreshener) {
+        return true;
+    }
+
+    @Override
+    public boolean interact(IItem item) {
+        return  item.interactItem(this);
+    }
+
 }

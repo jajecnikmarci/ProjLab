@@ -283,9 +283,11 @@ public class SkeletonMenu {
 
         student.addItem(transistor1);
         student.addItem(transistor2);
+        transistor1.setOwner(student);
+        transistor2.setOwner(student);
 
         verbose = true;
-        student.pairTransistors(transistor1, transistor2);
+        student.useItem(transistor1);     
     }
 
     public void testDropTransistor() {

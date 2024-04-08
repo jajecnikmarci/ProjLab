@@ -30,4 +30,14 @@ public class SlideRule extends Item {
         printer.printField("effect", this.effect);  
         printer.endPrintObject();      
     }
+
+    @Override
+    public boolean interactItem(SlideRule slideRule) {
+        return true;
+    }
+
+    @Override
+    public boolean interact(IItem item) {
+        return  item.interactItem(this);
+    }
 }
