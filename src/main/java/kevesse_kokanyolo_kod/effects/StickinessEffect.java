@@ -2,8 +2,7 @@ package kevesse_kokanyolo_kod.effects;
 
 
 import kevesse_kokanyolo_kod.menus.Printer;
-import kevesse_kokanyolo_kod.people.Professor;
-import kevesse_kokanyolo_kod.people.Student;
+import kevesse_kokanyolo_kod.people.AcademicPerson;
 
 /**
  * A ragadós hatású tárgyakat reprezentáló osztály.
@@ -20,12 +19,7 @@ public class StickinessEffect extends RoomEffect{
     }
 
     @Override
-    public void affect(Professor professor) {
-        visitsBeforeEffect--;
-        }
-
-    @Override
-    public void affect(Student student) {
+    public void affect(AcademicPerson academicPerson) {
         visitsBeforeEffect--;
     }
 

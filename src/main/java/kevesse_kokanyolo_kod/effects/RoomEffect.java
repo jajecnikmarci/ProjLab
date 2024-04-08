@@ -2,8 +2,7 @@ package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.people.Professor;
-import kevesse_kokanyolo_kod.people.Student;
+import kevesse_kokanyolo_kod.people.AcademicPerson;
 
 /**
  * Egy hatás, ami egy szobában lévő játékosokra hat.
@@ -13,19 +12,12 @@ public abstract class RoomEffect extends Effect {
         super(givenBy, duration, observer);
     }
 
+    
     /**
-     * Hatást hajt végre a szobában lévő professzorra.
-     *
-     * @param professor A hatást elszenvedő professzor
+     * 
+     * @param academicPerson
      */
-    public abstract void affect(Professor professor);
-
-    /**
-     * Hatást hajt végre a szobában lévő hallgatóra.
-     *
-     * @param student A hatást elszenvedő hallgató
-     */
-    public abstract void affect(Student student);
+    public abstract void affect(AcademicPerson academicPerson);
 
     @Override
     public void activate() {

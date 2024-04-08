@@ -3,8 +3,7 @@ package kevesse_kokanyolo_kod.effects;
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.people.Professor;
-import kevesse_kokanyolo_kod.people.Student;
+import kevesse_kokanyolo_kod.people.AcademicPerson;
 
 /**
  * Egy játékos sokkolását elvégző effekt
@@ -25,27 +24,17 @@ public class StunEffect extends RoomEffect {
     private static final int stunDuration = 10;
 
     /**
-     * Lebénít egy oktatót
+     * Lebénít egy játkost
      *
-     * @param professor Sokkolandó oktató
+     * @param professor Sokkolandó játékos
      */
     @Override
-    public void affect(Professor professor) {
+    public void affect(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("StunEffect.affect(Professor)");
-        professor.stun(stunDuration);
+        academicPerson.stun(stunDuration);
         SkeletonMenu.endCall();
     }
-    /**
-     * Lebénít egy hallgatót
-     *
-     * @param student Sokkolandó hallgató
-     */
-    @Override
-    public void affect(Student student) {
-        SkeletonMenu.startCall("StunEffect.affect(Professor)");
-        student.stun(stunDuration);
-        SkeletonMenu.endCall();
-    }
+    
     @Override
     public void printState(Printer printer) {
         printer.startPrintObject("StunEffect");

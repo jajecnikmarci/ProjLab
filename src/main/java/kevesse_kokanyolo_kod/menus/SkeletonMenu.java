@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.menus;
 
+import kevesse_kokanyolo_kod.effects.PoisonEffect;
 import kevesse_kokanyolo_kod.effects.StunEffect;
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.FakeSlideRule;
