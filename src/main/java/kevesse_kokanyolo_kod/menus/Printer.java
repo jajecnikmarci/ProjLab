@@ -68,4 +68,7 @@ public class Printer {
         indentCounter--;
     }
     
+    public void printError(String errorMessage) {
+        println("Hiba: " + errorMessage);
+    }
 } 
