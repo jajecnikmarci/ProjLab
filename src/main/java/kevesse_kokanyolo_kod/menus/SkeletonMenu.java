@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.menus;
 
+import kevesse_kokanyolo_kod.effects.PoisonEffect;
 import kevesse_kokanyolo_kod.effects.StunEffect;
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.FakeSlideRule;
@@ -74,7 +75,7 @@ public class SkeletonMenu {
         tests.add(new Test("FFP2 defends Academic", this::testFFP2defendsAcademic));
         tests.add(new Test("Professor meets Student", this::testProfessorMeetsStudent));
         tests.add(new Test("Professor meets Professor", this::testProfessorMeetsProfessor));
-        tests.add(new Test("Cleaner meets Academic", this::testCleanerMeetsAcademic));
+        tests.add(new Test("Cleaner meets AcademicPerson", this::testCleanerMeetsAcademic));
         tests.add(new Test("Rug stuns professor", this::testRugStunsProfessor));
     }
 
@@ -501,14 +502,16 @@ public class SkeletonMenu {
         verbose = false;
         Room room = new Room();
         Student student = new Student(room);
-        room.addPlayer(student);
-        Rug rug = new Rug();
+        PoisonEffect poisonEffect = new PoisonEffect(new Camembert(), 5, room);
+        room.addPoisonEffect(poisonEffect);
+        poisonEffect.activate();
+        Rug rug = new Rug(); //Azért kell a játékosnak item, hogy lássuk ahogy eldobja azokat a mérgezést követően
         Glass glass = new Glass();
         student.addItem(rug);
         student.addItem(glass);
 
         verbose = true;
-        student.poison();
+        room.onEnter(student);
     }
 
     private void testSplitRoom() {
@@ -570,9 +573,10 @@ public class SkeletonMenu {
         room.addPlayer(student);
         TVSZ tvsz = new TVSZ();
         room.addItem(tvsz);
-        verbose = true;
         student.pickUpItem();
-        student.kill();
+        Professor professor = new Professor(room);
+        verbose = true;
+        room.onEnter(professor);
     }
 
     private void testGlassdefendsStudent() {
@@ -583,10 +587,9 @@ public class SkeletonMenu {
         Glass glass = new Glass();
         room.addItem(glass);
         student.pickUpItem();
-        verbose = true;
         student.useItem(glass);
         Professor professor = new Professor(room);
-        room.addPlayer(professor);
+        verbose = true;
         room.onEnter(professor);
     }
 
@@ -594,12 +597,14 @@ public class SkeletonMenu {
         verbose = false;
         Room room = new Room();
         Student student = new Student(room);
-        room.addPlayer(student);
+        PoisonEffect poisonEffect = new PoisonEffect(new Camembert(), 5, room);
+        room.addPoisonEffect(poisonEffect);
+        poisonEffect.activate();
         FFP2 ffp2 = new FFP2();
         room.addItem(ffp2);
-        verbose = true;
         student.pickUpItem();
-        student.poison();
+        verbose = true;
+        room.onEnter(student);
     }
 
     private void testProfessorMeetsStudent() {
@@ -609,7 +614,6 @@ public class SkeletonMenu {
         room.addPlayer(student);
         verbose = true;
         Professor professor = new Professor(room);
-        room.addPlayer(professor);
         room.onEnter(professor);
     }
 
@@ -618,9 +622,8 @@ public class SkeletonMenu {
         Room room = new Room();
         Professor professor1 = new Professor(room);
         room.addPlayer(professor1);
-        verbose = true;
         Professor professor2 = new Professor(room);
-        room.addPlayer(professor2);
+        verbose = true;
         room.onEnter(professor2);
     }
 
@@ -629,9 +632,8 @@ public class SkeletonMenu {
         Room room = new Room();
         Student student = new Student(room);
         room.addPlayer(student);
-        verbose = true;
         Cleaner cleaner = new Cleaner(room);
-        room.addPlayer(cleaner);
+        verbose = true;
         room.onEnter(cleaner);
     }
 
