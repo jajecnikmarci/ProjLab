@@ -115,7 +115,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Professor professor) {
         SkeletonMenu.startCall("Room.onEnter(Professor)");
-        checkPoisonEffect(professor);
+        tryPoison(professor);
         for (StunEffect stunEffect : this.stunEffects) {
             if (stunEffect.isActive()) {
                 stunEffect.affect(professor);
@@ -138,7 +138,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Student student) {
         SkeletonMenu.startCall("Room.onEnter(Student)");
-        checkPoisonEffect(student);
+        tryPoison(student);
         if (lastCleaning!=null) lastCleaning.affect(student);
         people.forEach(person -> person.meet(student));
         SkeletonMenu.endCall();
@@ -155,7 +155,7 @@ public class Room implements EffectConsumedObserver {
         SkeletonMenu.endCall();
     }
 
-    public void checkPoisonEffect(AcademicPerson academicPerson) {
+    public void tryPoison(AcademicPerson academicPerson) {
         for (PoisonEffect effect : this.poisonEffects) {
             if (effect.isActive()) {
                 effect.affect(academicPerson);
