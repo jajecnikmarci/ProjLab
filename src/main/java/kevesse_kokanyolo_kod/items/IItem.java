@@ -25,22 +25,45 @@ public interface IItem {
      */
     void accept(AcademicPerson academicPerson);
 
-
-    
-    boolean interactItem(AirFreshener airFreshener);
-    boolean interactItem(Camembert camembert);
-    boolean interactItem(FFP2 ffp2);
-    boolean interactItem(Glass glass);
-    boolean interactItem(Rug rug);
-    boolean interactItem(SlideRule slideRule);
-    boolean interactItem(Transistor transistor);
-    boolean interactItem(TVSZ tvsz);
-    boolean interactItem(FakeFFP2 fakeFFP2);
-    boolean interactItem(FakeSlideRule fakeSlideRule);
-    boolean interactItem(FakeTVSZ fakeTVSZ);
+    public default boolean interactItem(AirFreshener airFreshener){
+        return false;
+    }
+    public default boolean interactItem(Camembert camembert){
+        return false;
+    }
+    public default boolean interactItem(FFP2 ffp2){
+        return false;
+    }
+    public default boolean interactItem(Glass glass){
+        return false;
+    }
+    public default boolean interactItem(Rug rug){
+        return false;
+    }
+    public default boolean interactItem(SlideRule slideRule){
+        return false;
+    }
+    public default boolean interactItem(Transistor transistor){
+        return false;
+    }
+    public default boolean interactItem(TVSZ tvsz){
+        return false;
+    }
+    public default boolean interactItem(FakeFFP2 fakeFFP2){
+        return false;
+    }
+    public default boolean interactItem(FakeSlideRule fakeSlideRule){
+        return false;
+    }
+    public default boolean interactItem(FakeTVSZ fakeTVSZ){
+        return false;
+    }
 
     /**
-     * 
+     * Egy interakció során ez hívódik meg, ez még az általános IItemet fogadja
+     * Ez az implementációkban meghívja már az adott tárgyra vonatkozó interactItem függvényt
+     * Az interactItem alapból (lásd fentebb) mindig false-sal tér vissza, azaz a tárgyak nem azonosak
+     * Viszont minden tárgy a saját típusával valót felülírja, és true-val tér vissza, vagyis azonosak a tárgyak
      * @param item a tárgy, amivel interakcióba lép
      * @return igaz, ha a 2 tárgy azonos fajta, egyébként hamis
      */
