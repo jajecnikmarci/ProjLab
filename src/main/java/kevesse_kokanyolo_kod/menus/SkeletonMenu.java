@@ -277,14 +277,15 @@ public class SkeletonMenu {
     public void testPairTransistors() {
 
         verbose = false;
-        Student student = new Student(null);
+        Room room = new Room(10);
+        Student student = new Student(room);
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
 
-        student.addItem(transistor1);
-        student.addItem(transistor2);
-        transistor1.setOwner(student);
-        transistor2.setOwner(student);
+        room.addItem(transistor1);
+        room.addItem(transistor2);
+        student.pickUpItem();
+        student.pickUpItem();
 
         verbose = true;
         student.useItem(transistor1);     
@@ -300,8 +301,11 @@ public class SkeletonMenu {
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
 
-        student.addItem(transistor1);
-        student.addItem(transistor2);
+
+        room1.addItem(transistor1);
+        room1.addItem(transistor2);
+        student.pickUpItem();
+        student.pickUpItem();
 
         transistor1.setPair(transistor2);
         transistor2.setPair(transistor1);
@@ -332,7 +336,8 @@ public class SkeletonMenu {
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
 
-        student.addItem(transistor1);
+        room1.addItem(transistor1);
+        student.pickUpItem();
 
         transistor1.setPair(transistor2);
         transistor2.setPair(transistor1);
