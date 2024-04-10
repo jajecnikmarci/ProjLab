@@ -96,23 +96,9 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * Összepárosítja a két kapott tranzisztort. Ez egy új függvény, a tervben nem szerepelt.
-     *
-     * @param transistor1 Az egyik tranzisztor
-     * @param transistor2 A másik tranzisztor
-     */
-    public void pairTransistors(Transistor transistor1, Transistor transistor2) {
-        SkeletonMenu.startCall("Student.pairTransistors(transistor1, transistor2)");
-        transistor1.setPair(transistor2);
-        transistor2.setPair(transistor1);
-        transistor1.setOwner(this);
-        transistor2.setOwner(this);
-        SkeletonMenu.endCall();
-    }
-
-    /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * Beállítja a transzisztor tulajdonosát a játékosra.
      *
      * @param transistor a hozzáadandó tárgy
      */
@@ -120,6 +106,7 @@ public class Student extends AcademicPerson {
     public void acceptItem(Transistor transistor) {
         SkeletonMenu.startCall("Student.acceptItem(Transistor)");
         this.addItem(transistor);
+        transistor.setOwner(this);
         location.removeItem(transistor);
         SkeletonMenu.endCall();
     }

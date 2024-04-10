@@ -44,4 +44,14 @@ public class Camembert extends Item {
         printer.endPrintObject();      
     }
 
+    @Override
+    public boolean interactItem(Camembert camembert) {
+        return true;
+    }
+
+    @Override
+    public boolean interact(IItem item) {
+        return  item.interactItem(this);
+    }
+
 }

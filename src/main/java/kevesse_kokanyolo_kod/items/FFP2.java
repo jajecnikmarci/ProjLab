@@ -56,4 +56,14 @@ public class FFP2 extends Item {
         printer.endPrintObject();      
     }
 
+    @Override
+    public boolean interactItem(FFP2 ffp2) {
+        return true;
+    }
+
+    @Override
+    public boolean interact(IItem item) {
+        return  item.interactItem(this);
+    }
+
 }

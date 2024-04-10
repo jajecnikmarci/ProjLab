@@ -39,4 +39,14 @@ public class Rug extends Item {
         printer.endPrintObject();
     }
 
+    @Override
+    public boolean interactItem(Rug rug) {
+        return true;
+    }
+
+    @Override
+    public boolean interact(IItem item) {
+        return  item.interactItem(this);
+    }
+
 }

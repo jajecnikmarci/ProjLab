@@ -62,4 +62,14 @@ public class Glass extends Item {
         printer.printField("effect", this.effect);
         printer.endPrintObject();
     }
+
+    @Override
+    public boolean interactItem(Glass glass) {
+        return true;
+    }
+
+    @Override
+    public boolean interact(IItem item) {
+        return  item.interactItem(this);
+    }
 }
