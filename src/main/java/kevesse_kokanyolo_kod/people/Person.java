@@ -79,6 +79,5 @@ public abstract class Person {
         }
         SkeletonMenu.endCall("A személy nem ment át a szobába.");
     }
-
-     public abstract void printState(Printer printer);
+    public abstract void printState(Printer printer);
 }

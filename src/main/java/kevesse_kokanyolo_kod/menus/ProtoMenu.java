@@ -167,14 +167,11 @@ public class ProtoMenu {
             }
 
         } while (printer.scanner.hasNextLine());
-
-        printer.scanner.close();
-        if (fromAndToFile){
-            try {
-                printer.fileWriter.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            printer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
         }
         
     }
@@ -411,5 +408,4 @@ public class ProtoMenu {
             option.accept(argument);
         }
     }
-
 }

@@ -24,6 +24,14 @@ public class Printer {
         scanner = new Scanner(System.in);
     }
 
+    public void close() throws IOException {
+        if(fileWriter != null) {
+            fileWriter.close();
+        }
+        if (scanner != null) {
+            scanner.close();
+        }
+    }
     public void println(String msg) {
         print(msg + "\n");
     }
