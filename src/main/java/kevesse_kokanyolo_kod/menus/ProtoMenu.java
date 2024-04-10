@@ -142,15 +142,21 @@ public class ProtoMenu {
 
     public ProtoMenu(String mode, String inputFileName, String outputFileName) throws IOException {
         initProtoMenu();
+        if(mode == null) return;
         if(mode.equals("-f")){
             runFileMode(inputFileName, outputFileName);
+            return;
         }
         if(mode.equals("test")){
             runTestMode(inputFileName, inputFileName);
+            return;
         }
+        System.err.println("Hibás argumentum.");
+        System.exit(1);
+
     }
     
-    public ProtoMenu() {
+    public ProtoMenu() { 
         initProtoMenu();
         printer = new Printer();
     }

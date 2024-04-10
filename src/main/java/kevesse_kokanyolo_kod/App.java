@@ -25,18 +25,17 @@ public class App {
             if(args[0].equals("skeleton")) skeleton.menu();
             if(args[0].equals("proto")) {
                 String arg[] = new String[]{null, null, null, null};
-                if(args.length >= 2 && args[1].equals("-f") || args[1].equals("test")) {
-                    for(int i = 0; i < args.length; i++) {
-                        arg[i] = args[i];
-                    }
-                    try {
-                        proto = new ProtoMenu(arg[1], arg[2], arg[3]);
-                        proto.menu();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        System.exit(1);
-                    }
-                } 
+                for(int i = 0; i < args.length; i++) {
+                    arg[i] = args[i];
+                }
+                try {
+                    proto = new ProtoMenu(arg[1], arg[2], arg[3]);
+                    proto.menu();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+                
             }
         }
     }
