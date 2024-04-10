@@ -208,7 +208,8 @@ public class Room implements EffectConsumedObserver {
             room.stunEffects.add(stunEffects.remove(i));
         }
 
-        Door door = new Door(this, room, true, true);
+        // Jöhetne létre elátkozott ajtó...
+        Door door = new Door(this, room, true, true, true, false); 
         doors.add(door);
         room.doors.add(door);
         SkeletonMenu.endCall("A szoba osztódott.");

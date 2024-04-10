@@ -545,7 +545,7 @@ public class SkeletonMenu {
         verbose = false;
         Room room1 = new Room(4);
         Room room2 = new Room(4);
-        Door door = new Door(room1, room2, true, true);
+        Door door = new Door(room1, room2, true, true, true , false);
         Student student = new Student(room1);
         room1.addPlayer(student);
         verbose = true;

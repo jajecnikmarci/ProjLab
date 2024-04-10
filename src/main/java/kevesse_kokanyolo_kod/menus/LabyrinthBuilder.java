@@ -105,9 +105,7 @@ public class LabyrinthBuilder {
         Room room1 = rooms.get(roomname1);
         Room room2 = rooms.get(roomname2);
 
-        Door door = new Door(room1, room2, passable, true);
-        // cursed nincs beállítva
-
+        Door door = new Door(room1, room2, passable, true, true, cursed);
         doors.add(door);
     }
 
@@ -198,12 +196,11 @@ public class LabyrinthBuilder {
      * @param name    Kiválasztott objektum neve
      * @param printer Printer objektum
      */
-    public void printState(String name, Printer printer) {
-        // TODO .get null-t ad vissza
-        rooms.get(name).printState(printer);
-        items.get(name).printState(printer);
-        cleaners.get(name).printState(printer);
-        academicPeople.get(name).printState(printer);
+    public void printState(String name, Printer printer) {  
+        if (rooms.containsKey(name)) rooms.get(name).printState(printer);
+        if (items.containsKey(name)) items.get(name).printState(printer);
+        if (cleaners.containsKey(name)) cleaners.get(name).printState(printer);
+        if (academicPeople.containsKey(name)) academicPeople.get(name).printState(printer);
     }
 
     /**

@@ -38,11 +38,13 @@ public class Door {
      */
     private boolean cursed;
 
-    public Door(Room room1, Room room2, boolean room1Open, boolean room2Open) {
+    public Door(Room room1, Room room2, boolean room1Open, boolean room2Open, boolean visible, boolean cursed) {
         this.room1 = room1;
         this.room2 = room2;
         this.room1Open = room1Open;
         this.room2Open = room2Open;
+        this.visible = visible;
+        this.cursed = cursed;
     }
 
     /**
