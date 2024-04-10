@@ -348,7 +348,7 @@ public class Room implements EffectConsumedObserver {
     public void printState(Printer printer){
         printer.startPrintObject("Room");
         printer.printField("capacity", this.capacity);
-        printer.printFields("people", this.people);
+        printer.printFields("people", this.people); //TODO emberek listázása
         printer.printFields("doors", this.doors);
         printer.printFields("items", this.items);
         printer.printFields("poisonEffects", this.poisonEffects);

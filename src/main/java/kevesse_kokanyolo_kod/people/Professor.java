@@ -113,7 +113,7 @@ public class Professor extends AcademicPerson {
 
     @Override
     public void printState(Printer printer){
-        printer.startPrintObject("Student");
+        printer.startPrintObject("Student");//TODO ez nem student
         printer.printField("location", this.location);
         printer.printField("stunned", this.stunned);
         printer.printFields("Inventory", this.inventory);

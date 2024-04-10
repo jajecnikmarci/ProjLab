@@ -119,7 +119,7 @@ public class Student extends AcademicPerson {
     @Override
     public void acceptItem(SlideRule slideRule) {
         SkeletonMenu.startCall("Student.acceptItem(SlideRule)");
-        this.addItem(slideRule);
+        this.addItem(slideRule); //Todo: itt nem kell a playerhez a slideRule-t hozzáadni mert "Játék vége!"
         location.removeItem(slideRule);
         SkeletonMenu.endCall();
     }
