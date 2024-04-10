@@ -111,6 +111,7 @@ public class ProtoMenu {
 
         // TODO: compare result with contet of expectedFile
 
+        // menu() is called in App.java
     }
 
     private void runTestMode(String inputFileName, String expectedFileName) throws IOException{
@@ -127,6 +128,8 @@ public class ProtoMenu {
 
         printer = new Printer("input" + File.separatorChar + inputFileName + ".txt", 
                               "output" + File.separatorChar + outputFileName); 
+
+        // menu() is called in App.java
     }
 
     private void runFileMode(String inputFileName, String outputFileName) throws IOException {
