@@ -65,10 +65,8 @@ public class ProtoMenu {
         initProtoMenu();
         
         if(mode.equals("-f")){
-            System.out.println("-f");    
         }
         if(mode.equals("test")){
-            System.out.println("test");
         }
 
         if(inputFileName == null){
@@ -78,16 +76,15 @@ public class ProtoMenu {
         else {
             if(outputFileName==null){
                 if(mode.equals("-f")){
-                    outputFileName="output\\"+inputFileName+"_result";
+                    outputFileName="output" + File.separatorChar + inputFileName + "_result";
                 }
                 if(mode.equals("test")){
-                    outputFileName="expected\\"+inputFileName+"_expected";
+                    outputFileName="expected" + File.separatorChar+ inputFileName + "_expected";
                     //TODO nem fajlbairas hanem ellenorzes
                 }
             }
         }
-        printer = new Printer("input\\"+inputFileName, outputFileName);
-        //TODO crossplatformosítás (\\)
+        printer = new Printer("input" + File.separatorChar + inputFileName+".txt", outputFileName+".txt");
 
     }
     

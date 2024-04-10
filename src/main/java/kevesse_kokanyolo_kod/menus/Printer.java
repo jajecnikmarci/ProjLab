@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Printer {
-    public static FileWriter fileWriter = null;
+    public static OutputStreamWriter fileWriter = null;
     public static Scanner scanner = null;
     private static int indentCounter = 0;
 
@@ -14,6 +14,10 @@ public class Printer {
         fileWriter = new FileWriter(outputFileName);
         scanner = new Scanner(new File(inputFileName));
     }
+    public Printer (String inputFileName, OutputStream outputStream) throws IOException{
+        scanner = new Scanner(new File(inputFileName));
+        fileWriter = new OutputStreamWriter(outputStream);
+    } 
     public Printer() {
         fileWriter=null;
         scanner = new Scanner(System.in);
