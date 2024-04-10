@@ -95,17 +95,20 @@ public class Room implements EffectConsumedObserver {
      */
     public void popItem(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Room.popItem(Player)");
-        if(academicPerson.checkHasItem(items.get(items.size() - 1))){
-            SkeletonMenu.endCall("A játékosnak már van ilyen tárgya.");
-            return;
-        } else if (items.isEmpty()) {
+        IItem topItem = items.get(items.size() - 1);
+         if (items.isEmpty()) {
             SkeletonMenu.endCall("Nincs több tárgy a szobában.");
             return;
         } else if (lastCleaning!=null&& lastCleaning.isSticky()) {
             SkeletonMenu.endCall("Túl rég volt takarítás a szobában így a tárgyak ragacsosak lettek");
             return;
-        }
-        items.get(items.size() - 1).accept(academicPerson);
+        } else if(academicPerson.checkHasItem(topItem)){  
+            // Fontos, hogy előbb megnézzük, hogy létezik-e a tárgy, valamint, hogy más nem akadályozza-e a felvételt. 
+            // Csak utána lépjenek interakcióba a tárgyak. 
+            SkeletonMenu.endCall("A játékosnak már van ilyen tárgya.");
+            return;
+        } 
+        topItem.accept(academicPerson);
         SkeletonMenu.endCall();
     }
 

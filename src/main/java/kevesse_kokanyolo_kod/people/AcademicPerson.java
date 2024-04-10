@@ -72,8 +72,8 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * Megnézi, hogy a játékosnak van-e a paraméterként kapott tárgya.
-     *
+     * Megnézi, hogy a játékosnak van-e a paraméterként kapott tárgya. 
+     * Bővebben megnézi, hogy a játékos tűárgyai tiltják-e a paraméterként kapott tárgy felvételét.
      * @param item a keresett tárgy
      * @return true, ha a játékosnak van a tárgya, false egyébként
      */
