@@ -183,10 +183,9 @@ public class ProtoMenu {
         if(tokens.length == 0){
             return;
         }
+        boolean found = false;
 
         if(labyrinthBuilder==null){
-
-            boolean found = false;
             for (Option option : configOptions) {
                 if (option.getName().equals(tokens[0])) {
                     option.run(tokens);
@@ -194,12 +193,7 @@ public class ProtoMenu {
                     break;
                 }
             }
-            if(!found)
-                printer.printError("Ismeretlen parancs.");
-        
         } else {
-
-            boolean found = false;
             for (Option option : initControlOptions) {
                 if (option.getName().equals(tokens[0])) {
                     option.run(tokens);
@@ -207,11 +201,9 @@ public class ProtoMenu {
                     break;
                 }
             }
-
-            if(!found)
-                printer.printError("Ismeretlen parancs.");
-
         }
+        if(!found)
+            printer.printError("Ismeretlen parancs.");
     }
 
     /**
