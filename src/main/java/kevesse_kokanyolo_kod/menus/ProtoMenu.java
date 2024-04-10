@@ -334,10 +334,10 @@ public class ProtoMenu {
                     passable = false;
                     tokens[2] = tokens[2].substring(1);
                 }
-                if(tokens.length == 5 && tokens[4].equals("true")){
+                if(tokens.length == 6 && tokens[5].equals("true")){
                     cursed = true;
                 }
-                labyrinthBuilder.addDoor(tokens[2], tokens[3], passable, cursed);
+                labyrinthBuilder.addDoor(tokens[2], tokens[3], passable, tokens[4], cursed);
                 break;
             case "person":
                 if (tokens.length < 5) {

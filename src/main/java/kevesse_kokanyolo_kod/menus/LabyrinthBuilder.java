@@ -19,7 +19,7 @@ public class LabyrinthBuilder {
 
     Map<String, Room> rooms = new HashMap<>();
     Map<String, Item> items = new HashMap<>();
-    List<Door> doors = new ArrayList<>();
+    Map<String, Door> doors = new HashMap<>();
     Map<String, Cleaner> cleaners = new HashMap<>();
     Map<String, AcademicPerson> academicPeople = new HashMap<>();
 
@@ -94,15 +94,13 @@ public class LabyrinthBuilder {
 
     /**
      * Szoba hozzáadása
-     * TODO: A cursed nem kerül beállításra, kell egy setter vagy a konstruktort
-     * kell kibővíteni
      * 
      * @param roomname1 Első szoba neve
      * @param roomname2 Második szoba neve
      * @param passable  Átjárható-e az első szoba felől
      * @param cursed    Átkos-e az ajtó
      */
-    public void addDoor(String roomname1, String roomname2, boolean passable, boolean cursed) {
+    public void addDoor(String roomname1, String roomname2, boolean passable, String doorName, boolean cursed) {
         if (!rooms.containsKey(roomname1) || !rooms.containsKey(roomname2)) {
             System.err.println("Nincs ilyen nevű szoba.");
             return;
@@ -111,7 +109,7 @@ public class LabyrinthBuilder {
         Room room2 = rooms.get(roomname2);
 
         Door door = new Door(room1, room2, passable, true, true, cursed);
-        doors.add(door);
+        doors.put(doorName, door);
     }
 
     /**
@@ -258,6 +256,14 @@ public class LabyrinthBuilder {
             .findFirst()
             .orElse("");
     }
+    public String getInstanceName(Door door) {
+        return doors.keySet()
+            .stream()
+            .filter(key -> doors.get(key)
+            .equals(door))
+            .findFirst()
+            .orElse("");
+    }
 
     /**
      * A kiválasztott objektum állapotának kiírása
@@ -281,8 +287,8 @@ public class LabyrinthBuilder {
         for (String key : rooms.keySet()) {
             rooms.get(key).printState(printer, this);
         }
-        for (Door door : doors) {
-            door.printState(printer);
+        for (String key : doors.keySet()) {
+            doors.get(key).printState(printer, this);
         }
         for (String key : items.keySet()) {
             items.get(key).printState(printer, this);
