@@ -257,6 +257,9 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
                 item.use(location, this);
             }
         }
+
+        location.tryPoison(this);
+
         SkeletonMenu.endCall();
     }
 

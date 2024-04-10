@@ -121,12 +121,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Professor professor) {
         SkeletonMenu.startCall("Room.onEnter(Professor)");
-        for (PoisonEffect poisonEffect : this.poisonEffects) {
-            if (poisonEffect.isActive()) {
-                poisonEffect.affect(professor);
-                break;
-            }
-        }
+        tryPoison(professor);
         for (StunEffect stunEffect : this.stunEffects) {
             if (stunEffect.isActive()) {
                 stunEffect.affect(professor);
@@ -149,12 +144,7 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Student student) {
         SkeletonMenu.startCall("Room.onEnter(Student)");
-        for (PoisonEffect effect : this.poisonEffects) {
-            if (effect.isActive()) {
-                effect.affect(student);
-                break;
-            }
-        }
+        tryPoison(student);
         if (lastCleaning!=null) lastCleaning.affect(student);
         people.forEach(person -> person.meet(student));
         SkeletonMenu.endCall();
@@ -169,6 +159,15 @@ public class Room implements EffectConsumedObserver {
             lastCleaning=new StickinessEffect();
         }
         SkeletonMenu.endCall();
+    }
+
+    public void tryPoison(AcademicPerson academicPerson) {
+        for (PoisonEffect effect : this.poisonEffects) {
+            if (effect.isActive()) {
+                effect.affect(academicPerson);
+                break;
+            }
+        }
     }
 
     /**
