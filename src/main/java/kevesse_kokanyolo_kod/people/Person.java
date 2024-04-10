@@ -53,8 +53,15 @@ public abstract class Person {
 
     public abstract void poison();
 
+    /**
+     * A játékos megpróbálja elhagyni a szobát, addig próbál
+     * a szoba ajtajain kimenni, amíg sikerrel nem jár, vagy
+     * megpróbált az összes ajtón átmenni.
+     */
     public void leaveRoom() {
-        //TODO
+        SkeletonMenu.startCall("Person.leaveRoom()");
+        for(Door door: location.getDoors()) if(door.goThrough(this)) break;
+        SkeletonMenu.endCall();
     }
     
     // Meghívja a szoba onEnter metódusát, a megfelelő paraméterrel. 
