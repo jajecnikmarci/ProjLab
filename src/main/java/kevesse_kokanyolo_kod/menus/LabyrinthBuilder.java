@@ -102,6 +102,10 @@ public class LabyrinthBuilder {
      * @param cursed    Átkos-e az ajtó
      */
     public void addDoor(String roomname1, String roomname2, boolean passable, boolean cursed) {
+        if (!rooms.containsKey(roomname1) || !rooms.containsKey(roomname2)) {
+            System.err.println("Nincs ilyen nevű szoba.");
+            return;
+        }
         Room room1 = rooms.get(roomname1);
         Room room2 = rooms.get(roomname2);
 
@@ -152,6 +156,10 @@ public class LabyrinthBuilder {
      * @param academicName Játékos neve
      */
     public void pickup(String academicName) {
+        if (!academicPeople.containsKey(academicName)) {
+            System.err.println("Nincs ilyen nevű játékos.");
+            return;
+        }
         academicPeople.get(academicName).pickUpItem();
     }
 
@@ -162,6 +170,14 @@ public class LabyrinthBuilder {
      * @param itemName     Tárgy neve
      */
     public void drop(String academicName, String itemName) {
+        if (!academicPeople.containsKey(academicName)) {
+            System.err.println("Nincs ilyen nevű játékos.");
+            return;
+        }
+        if (!items.containsKey(itemName)) {
+            System.err.println("Nincs ilyen nevű tárgy.");
+            return;
+        }
         academicPeople.get(academicName).dropItem(items.get(itemName));
     }
 
@@ -172,6 +188,14 @@ public class LabyrinthBuilder {
      * @param itemName     Tárgy neve
      */
     public void use(String academicName, String itemName) {
+        if (!academicPeople.containsKey(academicName)) {
+            System.err.println("Nincs ilyen nevű játékos.");
+            return;
+        }
+        if (!items.containsKey(itemName)) {
+            System.err.println("Nincs ilyen nevű tárgy.");
+            return;
+        }
         academicPeople.get(academicName).useItem(items.get(itemName));
     }
 
@@ -182,6 +206,14 @@ public class LabyrinthBuilder {
      * @param roomName   Szoba neve
      */
     public void gotoroom(String personName, String roomName) {
+        if (!academicPeople.containsKey(personName)) {
+            System.err.println("Nincs ilyen nevű játékos.");
+            return;
+        }
+        if (!rooms.containsKey(roomName)) {
+            System.err.println("Nincs ilyen nevű szoba.");
+            return;
+        }
         academicPeople.get(personName).goToRoom(rooms.get(roomName));
         cleaners.get(personName).goToRoom(rooms.get(roomName));
     }
