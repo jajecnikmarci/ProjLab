@@ -86,9 +86,10 @@ public class LabyrinthBuilder {
         }
 
         Class<?> classType = ItemclassMap.get(itemType);
-        Item item = (Item) classType.getDeclaredConstructor(Room.class).newInstance(rooms.get(roomName));
+        Item item = (Item) classType.getConstructor().newInstance();
 
         items.put(itemName, item);
+        rooms.get(roomName).addItem(item);
     }
 
     /**

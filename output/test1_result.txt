@@ -3,6 +3,7 @@ Room
 	- people: 
 	- doors: 
 	- items: 
+		kevesse_kokanyolo_kod.items.FFP2@46f7f36a
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
