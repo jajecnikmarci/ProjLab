@@ -5,6 +5,12 @@ import java.io.*;
 import java.util.List;
 import java.util.Scanner;
 
+import kevesse_kokanyolo_kod.people.AcademicPerson;
+import kevesse_kokanyolo_kod.people.Cleaner;
+import kevesse_kokanyolo_kod.people.Person;
+import kevesse_kokanyolo_kod.room.Room;
+import kevesse_kokanyolo_kod.items.Item;
+
 public class Printer {
     public static OutputStreamWriter fileWriter = null;
     public static Scanner scanner = null;
@@ -70,14 +76,25 @@ public class Printer {
         println("- " + name + ": " + value);
     }
 
-    public void printFields(String name,  List<? extends Object> values) {
+    public <T> void printFields(String name, List<? extends T> values, LabyrinthBuilder builder) {
         println("- " + name + ": ");
         indentCounter++;
-        for (Object value : values) {
-            println(value.toString());
+        for (T value : values) {
+            if (value instanceof AcademicPerson) {
+                println(builder.getInstanceName((AcademicPerson) value));
+            } else if(value instanceof Cleaner) {
+                println(builder.getInstanceName((Cleaner) value));
+            } else if (value instanceof Room) {
+                println(builder.getInstanceName((Room) value));
+            } else if (value instanceof Item) {
+                println(builder.getInstanceName((Item) value));
+            } else {
+                println(value.toString());
+            }
         }
         indentCounter--;
     }
+
 
     public void endPrintObject() {
         indentCounter--;

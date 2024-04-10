@@ -140,14 +140,17 @@ public class LabyrinthBuilder {
         if (personType.equals("Cleaner")) {
             Cleaner cleaner = new Cleaner(rooms.get(roomName));
             cleaners.put(personName, cleaner);
+            rooms.get(roomName).addPlayer(cleaner);
 
         } else if (personType.equals("Student")) {
             Student student = new Student(rooms.get(roomName));
             academicPeople.put(personName, student);
+            rooms.get(roomName).addPlayer(student);
 
         } else if (personType.equals("Professor")) {
             Professor professor = new Professor(rooms.get(roomName));
             academicPeople.put(personName, professor);
+            rooms.get(roomName).addPlayer(professor);
         }
     }
 
@@ -223,7 +226,6 @@ public class LabyrinthBuilder {
         // TODO
     }
 
-
     public String getInstanceName(Item item) {
         return items.keySet()
             .stream()
@@ -233,7 +235,7 @@ public class LabyrinthBuilder {
             .orElse("");
     }
     public String getInstanceName(Room room) {
-        return items.keySet()
+        return rooms.keySet()
             .stream()
             .filter(key -> rooms.get(key)
             .equals(room))
@@ -241,10 +243,18 @@ public class LabyrinthBuilder {
             .orElse("");
     }
     public String getInstanceName(AcademicPerson person) {
-        return items.keySet()
+        return academicPeople.keySet()
             .stream()
             .filter(key -> academicPeople.get(key)
             .equals(person))
+            .findFirst()
+            .orElse("");
+    }
+    public String getInstanceName(Cleaner cleaner) {
+        return cleaners.keySet()
+            .stream()
+            .filter(key -> cleaners.get(key)
+            .equals(cleaner))
             .findFirst()
             .orElse("");
     }
@@ -256,10 +266,10 @@ public class LabyrinthBuilder {
      * @param printer Printer objektum
      */
     public void printState(String name, Printer printer) {  
-        if (rooms.containsKey(name)) rooms.get(name).printState(printer);
+        if (rooms.containsKey(name)) rooms.get(name).printState(printer, this);
         if (items.containsKey(name)) items.get(name).printState(printer, this);
-        if (cleaners.containsKey(name)) cleaners.get(name).printState(printer);
-        if (academicPeople.containsKey(name)) academicPeople.get(name).printState(printer);
+        if (cleaners.containsKey(name)) cleaners.get(name).printState(printer, this);
+        if (academicPeople.containsKey(name)) academicPeople.get(name).printState(printer, this);
     }
 
     /**
@@ -269,7 +279,7 @@ public class LabyrinthBuilder {
      */
     public void printAll(Printer printer) {
         for (String key : rooms.keySet()) {
-            rooms.get(key).printState(printer);
+            rooms.get(key).printState(printer, this);
         }
         for (Door door : doors) {
             door.printState(printer);
@@ -278,10 +288,10 @@ public class LabyrinthBuilder {
             items.get(key).printState(printer, this);
         }
         for (String key : cleaners.keySet()) {
-            cleaners.get(key).printState(printer);
+            cleaners.get(key).printState(printer, this);
         }
         for (String key : academicPeople.keySet()) {
-            academicPeople.get(key).printState(printer);
+            academicPeople.get(key).printState(printer, this);
         }
     }
 }

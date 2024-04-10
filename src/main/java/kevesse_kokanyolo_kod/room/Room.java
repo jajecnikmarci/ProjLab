@@ -3,6 +3,7 @@ package kevesse_kokanyolo_kod.room;
 import kevesse_kokanyolo_kod.effects.*;
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.items.IItem;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.*;
@@ -341,14 +342,14 @@ public class Room implements EffectConsumedObserver {
         SkeletonMenu.endCall();
     }
 
-    public void printState(Printer printer){
-        printer.startPrintObject("Room");
+    public void printState(Printer printer, LabyrinthBuilder builder){
+        printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("capacity", this.capacity);
-        printer.printFields("people", this.people);
-        printer.printFields("doors", this.doors);
-        printer.printFields("items", this.items);
-        printer.printFields("poisonEffects", this.poisonEffects);
-        printer.printFields("stunEffects", this.stunEffects);
+        printer.printFields("people", this.people, builder);
+        printer.printFields("doors", this.doors, builder);
+        printer.printFields("items", this.items, builder);
+        printer.printFields("poisonEffects", this.poisonEffects, builder);
+        printer.printFields("stunEffects", this.stunEffects, builder);
         printer.printField("lastCleaning", this.lastCleaning);
         printer.endPrintObject();
     }

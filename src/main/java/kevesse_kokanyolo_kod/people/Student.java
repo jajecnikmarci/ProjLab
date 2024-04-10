@@ -3,6 +3,7 @@ package kevesse_kokanyolo_kod.people;
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
@@ -239,13 +240,13 @@ public class Student extends AcademicPerson {
     }
 
     @Override
-    public void printState(Printer printer){
-        printer.startPrintObject("Student");
-        printer.printField("location", this.location);
+    public void printState(Printer printer, LabyrinthBuilder builder){
+        printer.startPrintObject(builder.getInstanceName(this));
+        printer.printField("location", builder.getInstanceName(this.location));
         printer.printField("stunned", this.stunned);
-        printer.printFields("inventory", this.inventory);
-        printer.printFields("killImmunities", this.killImmunities);
-        printer.printFields("poisonImmunities", this.poisonImmunities);
+        printer.printFields("inventory", this.inventory, builder);
+        printer.printFields("killImmunities", this.killImmunities, builder);
+        printer.printFields("poisonImmunities", this.poisonImmunities, builder);
         printer.printField("souls", this.souls);
         printer.endPrintObject();
     }

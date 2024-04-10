@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.people;
 
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.room.Room;
 
@@ -36,9 +37,9 @@ public class Cleaner extends Person{
     }
 
     @Override
-    public void printState(Printer printer){
-        printer.startPrintObject("Cleaner");
-        printer.printField("location", this.location);
+    public void printState(Printer printer, LabyrinthBuilder builder){
+        printer.startPrintObject(builder.getInstanceName(this));
+        printer.printField("location", builder.getInstanceName(this.location));
         printer.endPrintObject();
     }
 }

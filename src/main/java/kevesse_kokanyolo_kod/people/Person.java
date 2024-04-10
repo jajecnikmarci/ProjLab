@@ -6,6 +6,7 @@ import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 
 public abstract class Person {
     Person(Room r) {
@@ -79,5 +80,5 @@ public abstract class Person {
         }
         SkeletonMenu.endCall("A személy nem ment át a szobába.");
     }
-    public abstract void printState(Printer printer);
+    public abstract void printState(Printer printer, LabyrinthBuilder builder);
 }
