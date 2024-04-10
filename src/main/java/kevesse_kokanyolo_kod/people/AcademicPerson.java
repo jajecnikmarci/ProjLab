@@ -72,6 +72,24 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
+     * Megnézi, hogy a játékosnak van-e a paraméterként kapott tárgya. 
+     * Bővebben megnézi, hogy a játékos tűárgyai tiltják-e a paraméterként kapott tárgy felvételét.
+     * @param item a keresett tárgy
+     * @return true, ha a játékosnak van a tárgya, false egyébként
+     */
+    public boolean checkHasItem(IItem item){
+        SkeletonMenu.startCall("Player.pickUpItem()");
+        for(IItem i : inventory){
+            if(i != item && i.interact(item)){
+                SkeletonMenu.endCall();
+                return true;
+            }
+        }
+        SkeletonMenu.endCall();
+        return false;
+    }
+
+    /**
      * A paraméterül kapott item-et eldobja a játékos, nem
      * tartozik többé a játékoshoz az item.
      *

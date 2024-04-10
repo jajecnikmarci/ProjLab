@@ -59,7 +59,14 @@ public class Transistor extends Item {
     @Override
     public void use(Room room, AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Transistor.use(Room, Player)");
-        if (this.pair != null && this.pair.room == null) {
+
+        if(this.pair==null){
+            academicPerson.checkHasItem(this);
+
+            if(this.pair!=null)
+                SkeletonMenu.endCall("A tranzisztor párosítva lett egy másikkal.");
+
+        }else if (this.pair != null && this.pair.room == null) {
 
             this.setRoom(room);
             academicPerson.removeItem(this);
@@ -72,7 +79,6 @@ public class Transistor extends Item {
             this.pair.room.onEnter(owner);
 
             this.setRoom(room);
-            this.pair.room.removeItem(this.pair); //TODO: ez nem biztos hogy így kéne
             this.pair.room = null;
 
             academicPerson.removeItem(this);
@@ -111,5 +117,36 @@ public class Transistor extends Item {
         printer.printField("room", this.room);
         printer.printField("owner", this.owner);
         printer.endPrintObject();
+    }
+
+    
+    /**
+     * Működés: Ha a tranzisztornak van párja, akkor nem lehet még egy tranzisztor hozzáadni a játékoshoz, 
+     * ezért tér vissza igazzal.
+     * Ha a thisnek (új tranziszornak) nincs tulajdonosa, vagyis még nincs a játékosnál, akkor hamis értékkel tér vissza, 
+     * vagyis hozzáadható a játékoshoz.
+     * Különben megtörténik a tranzisztorok összekapcsolása.
+     * @param transistor a tranzisztor, ami már a játékosnál van
+     * @return igaz, ha a tárgy a játékoshoz nem adható hozzá
+     */
+    @Override
+    public boolean interactItem(Transistor transistor) {
+
+        //this: ezt akarjuk hozzáadni
+        if(transistor.pair != null){
+            return true;
+        }else if(this.owner == null){
+            return false;
+        }
+
+        this.pair = transistor;
+        transistor.pair = this;
+
+        return true;
+    }
+
+    @Override
+    public boolean interact(IItem item) {
+        return  item.interactItem(this);
     }
 }
