@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.room;
 
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.Person;
@@ -38,11 +39,13 @@ public class Door {
      */
     private boolean cursed;
 
-    public Door(Room room1, Room room2, boolean room1Open, boolean room2Open) {
+    public Door(Room room1, Room room2, boolean room1Open, boolean room2Open, boolean visible, boolean cursed) {
         this.room1 = room1;
         this.room2 = room2;
         this.room1Open = room1Open;
         this.room2Open = room2Open;
+        this.visible = visible;
+        this.cursed = cursed;
     }
 
     /**
@@ -98,9 +101,8 @@ public class Door {
     public void setRoom2(Room room2) {
     }
 
-    public void printState(Printer printer){
-
-        printer.startPrintObject("Door");
+    public void printState(Printer printer, LabyrinthBuilder labyrinthBuilder ){
+        printer.startPrintObject(labyrinthBuilder.getInstanceName(this));
         printer.printField("room1", this.room1);
         printer.printField("room2", this.room2);
         printer.printField("room1Open", this.room1Open);

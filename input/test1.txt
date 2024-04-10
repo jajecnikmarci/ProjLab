@@ -1,0 +1,5 @@
+starttest
+add room Room1 3
+add item Room1 FFP2 FFP1
+printstate FFP1
+endtest

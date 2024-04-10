@@ -4,6 +4,7 @@ package kevesse_kokanyolo_kod.items;
 import kevesse_kokanyolo_kod.items.fakes.FakeFFP2;
 import kevesse_kokanyolo_kod.items.fakes.FakeSlideRule;
 import kevesse_kokanyolo_kod.items.fakes.FakeTVSZ;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.room.Room;
@@ -74,6 +75,6 @@ public interface IItem {
      */
     void removeEffect();
 
-    public void printState(Printer printer);
+    public void printState(Printer printer, LabyrinthBuilder builder);
 
 }

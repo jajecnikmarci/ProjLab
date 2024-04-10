@@ -1,6 +1,7 @@
 package kevesse_kokanyolo_kod.items;
 
 import kevesse_kokanyolo_kod.effects.PoisonImmunity;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
@@ -48,8 +49,8 @@ public class FFP2 extends Item {
         return immunityLength;
     }
     @Override
-    public void printState(Printer printer) {
-        printer.startPrintObject("FFP2");
+    public void printState(Printer printer, LabyrinthBuilder builder) {
+        printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("immunityLength", this.immunityLength);
         printer.printField("effect", this.effect);  
         printer.endPrintObject();      

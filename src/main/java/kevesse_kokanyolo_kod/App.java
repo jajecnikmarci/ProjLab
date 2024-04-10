@@ -2,6 +2,7 @@ package kevesse_kokanyolo_kod;
 
 import java.io.IOException;
 
+import kevesse_kokanyolo_kod.menus.ProtoMenu;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 public class App {
@@ -9,22 +10,33 @@ public class App {
     static {
         skeleton = new SkeletonMenu();
     }
+    
+    public static ProtoMenu proto;
+    static {
+        proto = new ProtoMenu();
+    }
 
-    public static void main(String[] args) {
-        if (args.length == 3 && args[0].equals("-f")) {
-            SkeletonMenu.setFromAndToFile(true);
-            System.out.println("File usage");
-            try {
-                skeleton = new SkeletonMenu(args[1],args [2] );
-            } catch (IOException e) {
-                System.out.println("Usage for file usage: running command + [-f <inputfile> <outputfile>]");
-                System.exit(1);
-            }
-        } else if (args.length == 0) {
-            skeleton = new SkeletonMenu();
-            SkeletonMenu.setFromAndToFile(false);
-            System.out.println("Console usage");
+    public static void main(String[] args) {  // TODO: proto menu usage kiírása 
+        if(args.length == 0) {
+            System.out.println("Nincs megadva argumentum");
+            System.exit(1);
         }
-        skeleton.menu();
+        else if(args.length >= 1){
+            if(args[0].equals("skeleton")) skeleton.menu();
+            if(args[0].equals("proto")) {
+                String arg[] = new String[]{null, null, null, null};
+                for(int i = 0; i < args.length; i++) {
+                    arg[i] = args[i];
+                }
+                try {
+                    proto = new ProtoMenu(arg[1], arg[2], arg[3]);
+                    proto.menu();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+                
+            }
+        }
     }
 }   

@@ -1,6 +1,7 @@
 package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
@@ -112,12 +113,12 @@ public class Professor extends AcademicPerson {
     }
 
     @Override
-    public void printState(Printer printer){
-        printer.startPrintObject("Student");
-        printer.printField("location", this.location);
+    public void printState(Printer printer, LabyrinthBuilder builder){
+        printer.startPrintObject(builder.getInstanceName(this));
+        printer.printField("location", builder.getInstanceName(this.location));
         printer.printField("stunned", this.stunned);
-        printer.printFields("Inventory", this.inventory);
-        printer.printFields("poisonImmunities", this.poisonImmunities);
+        printer.printFields("Inventory", this.inventory, builder);
+        printer.printFields("poisonImmunities", this.poisonImmunities, builder);
         
         printer.endPrintObject();
     }
