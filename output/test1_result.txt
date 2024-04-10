@@ -1,1 +1,8 @@
-Hiba: Ismeretlen parancs.
+Room
+	- capacity: 3
+	- people: 
+	- doors: 
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
