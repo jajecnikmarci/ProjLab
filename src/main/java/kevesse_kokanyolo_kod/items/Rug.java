@@ -12,8 +12,11 @@ import kevesse_kokanyolo_kod.room.Room;
  */
 public class Rug extends Item {
     /**
-     * Elhelyezi ezt a tárgyat a szobában, azaz hozzáad egy StunEffectet a szobához.
-     * Kitörli a tárgyat a játékos tárgyai közül.
+     * Elhelyezi ezt a tárgyat a szobában, azaz hozzáad egy StunEffectet a szobához,
+     * ez az effekt fél percig tart és kitörli a tárgyat a játékos tárgyai közül.
+     *
+     * @param room a szoba, ahol a tárgyat használják
+     * @param academicPerson a játékos, aki használja a tárgyat
      */
     @Override
     public void use(Room room, AcademicPerson academicPerson) {
@@ -26,12 +29,18 @@ public class Rug extends Item {
         SkeletonMenu.endCall();
     }
 
+    /**
+     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     *
+     * @param academicPerson a játékos aki próbálja felvenni a tárgyat
+     */
     @Override
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Rug.accept(Player)");
         academicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
+    
     @Override
     public void printState(Printer printer, LabyrinthBuilder builder) {
         printer.startPrintObject(builder.getInstanceName(this));

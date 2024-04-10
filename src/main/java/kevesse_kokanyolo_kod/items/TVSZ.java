@@ -23,6 +23,14 @@ public class TVSZ extends Item {
         timesImmune = 3;
     }
 
+    /**
+     * A TVSZ használata. A tárgyat felvevő academicPerson-nek
+     * 3 alkalommal védelmet nyújt oktatók támadásával szemben.
+     * Amikor a tárgy teljesen elhasználódik, a tárgy megsemmisül.
+     *
+     * @param room a szoba, ahol a tárgyat használják
+     * @param academicPerson a játékos, aki használja a tárgyat
+     */
     @Override
     public void use(Room room, AcademicPerson academicPerson) {
         SkeletonMenu.startCall("TVSZ.use(Room, Player)");
@@ -36,6 +44,11 @@ public class TVSZ extends Item {
         SkeletonMenu.endCall();
     }
 
+    /**
+     * Meghívja a paraméterként kapott academiPerson-re a tárgyhoz tartozó acceptItem függvényt.
+     *
+     * @param academicPerson a játékos aki próbálja felvenni a tárgyat
+     */
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("TVSZ.accept(Player)");
         academicPerson.acceptItem(this);

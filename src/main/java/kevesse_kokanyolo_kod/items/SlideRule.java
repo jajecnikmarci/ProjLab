@@ -18,6 +18,11 @@ public class SlideRule extends Item {
     public void use(Room room, AcademicPerson academicPerson) {
     }
 
+    /**
+     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     *
+     * @param academicPerson a játékos aki próbálja felvenni a tárgyat
+     */
     @Override
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("SlideRule.accept(Player)");

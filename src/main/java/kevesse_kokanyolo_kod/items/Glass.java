@@ -18,7 +18,7 @@ public class Glass extends Item {
      * kezdve 10 másodpercig. A védettség egy KillImmunity, ami aktiválódik
      * amint aktiválja a hallgató a tárgyat.
      *
-     * @param room   a szoba, ahol a tárgyat használják
+     * @param room a szoba, ahol a tárgyat használják
      * @param academicPerson a játékos, aki használja a tárgyat
      */
     @Override

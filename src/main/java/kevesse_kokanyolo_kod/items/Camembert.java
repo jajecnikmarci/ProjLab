@@ -16,7 +16,7 @@ public class Camembert extends Item {
      * A Camembert használata. Eltávolítja a játékos tárgyai közül a Camembert-et,
      * és a szobához hozzáad egy PoisonEffect-et, valamint aktiválja azt.
      *
-     * @param room   a szoba, ahol a tárgyat használják
+     * @param room a szoba, ahol a tárgyat használják
      * @param academicPerson a játékos, aki használja a tárgyat
      */
     @Override
@@ -31,6 +31,10 @@ public class Camembert extends Item {
         SkeletonMenu.endCall();
     }
 
+    /**
+     * Hozzáadja a paraméterül kapott AcademicPerson-höz a Camembert-et.
+     * @param academicPerson az a játékos, aki felveszi a tárgyat
+     */
     @Override
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Camembert.accept(Player)");
@@ -51,7 +55,7 @@ public class Camembert extends Item {
 
     @Override
     public boolean interact(IItem item) {
-        return  item.interactItem(this);
+        return item.interactItem(this);
     }
 
 }

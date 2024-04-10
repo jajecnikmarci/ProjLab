@@ -17,6 +17,14 @@ public class FFP2 extends Item {
      */
     private int immunityLength = 10;
 
+    /**
+     * Az FFP2 használata. A tárgyat felvevő academicPerson-nek
+     * immunitást ad a mérgezés hatással szemben, a használattól
+     * kezdve. Ha a tárgy teljesen elhasználódott, a tárgy megsemmisül.
+     *
+     * @param room a szoba, ahol a tárgyat használják
+     * @param academicPerson a játékos, aki használja a tárgyat
+     */
     @Override
     public void use(Room room, AcademicPerson academicPerson) {
         SkeletonMenu.startCall("FFP2.use(Room, Player)");
@@ -33,6 +41,10 @@ public class FFP2 extends Item {
         SkeletonMenu.endCall();
     }
 
+    /**
+     * Hozzáadja a paraméterül kapott AcademicPerson-höz a FFP2-t.
+     * @param academicPerson az a játékos, aki felveszi a tárgyat
+     */
     @Override
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("FFP2.accept(Player)");
@@ -48,6 +60,7 @@ public class FFP2 extends Item {
     public int getImmunityLength() {
         return immunityLength;
     }
+
     @Override
     public void printState(Printer printer, LabyrinthBuilder builder) {
         printer.startPrintObject(builder.getInstanceName(this));

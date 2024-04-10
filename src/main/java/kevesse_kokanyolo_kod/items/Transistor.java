@@ -27,7 +27,7 @@ public class Transistor extends Item {
     private Student owner;
 
     /**
-     * A tranzisztor párának megadása
+     * A tranzisztor párjának megadása
      *
      * @param transistor a tranzisztor párja
      */
@@ -100,7 +100,7 @@ public class Transistor extends Item {
     }
 
     /**
-     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     * Meghívja a paraméterként kapott academiPerson-re a tárgyhoz tartozó acceptItem függvényt.
      *
      * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
@@ -119,7 +119,6 @@ public class Transistor extends Item {
         printer.printField("owner", this.owner);
         printer.endPrintObject();
     }
-
     
     /**
      * Működés: Ha a tranzisztornak van párja, akkor nem lehet még egy tranzisztor hozzáadni a játékoshoz, 
