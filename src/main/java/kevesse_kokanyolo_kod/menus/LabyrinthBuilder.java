@@ -200,7 +200,7 @@ public class LabyrinthBuilder {
      * @param printer Printer objektum
      */
     public void printState(String name, Printer printer){
-            
+        //TODO .get null-t ad vissza
         rooms.get(name).printState(printer);
         items.get(name).printState(printer);
         cleaners.get(name).printState(printer);

@@ -61,14 +61,41 @@ public class ProtoMenu {
         initControlOptions.add(new Option("shake", this::shakeOption));
     }
 
-    public ProtoMenu(String inputFileName,String outputFileName) throws IOException {
+    public ProtoMenu(String mode, String inputFileName,String outputFileName) throws IOException {
         initProtoMenu();
-        printer = new Printer(inputFileName, outputFileName);
+        
+        if(mode.equals("-f")){
+            System.out.println("-f");    
+        }
+        if(mode.equals("test")){
+            System.out.println("test");
+        }
+
+        if(inputFileName == null){
+            //testAll(); //betölti az input_file-beli tesztet, lefuttatja
+            return;
+        }
+        else {
+            if(outputFileName==null){
+                if(mode.equals("-f")){
+                    outputFileName="output\\"+inputFileName+"_result";
+                }
+                if(mode.equals("test")){
+                    outputFileName="expected\\"+inputFileName+"_expected";
+                    //TODO nem fajlbairas hanem ellenorzes
+                }
+            }
+        }
+        printer = new Printer("input\\"+inputFileName, outputFileName);
+        //TODO crossplatformosítás (\\)
+
     }
+    
     public ProtoMenu() {
         initProtoMenu();
         printer = new Printer();
     }
+    
 
     // CONFIG:
     // randomness <enable|disable> - véletlenszerűség be- vagy kikapcsolása, 
@@ -119,40 +146,7 @@ public class ProtoMenu {
             String input;
             try {
                 input = printer.scanner.nextLine();
-                String[] tokens = input.split(" ");
-
-                if(tokens.length == 0){
-                    continue;
-                }
-
-                if(labyrinthBuilder==null){
-
-                    boolean found = false;
-                    for (Option option : configOptions) {
-                        if (option.getName().equals(tokens[0])) {
-                            option.run(tokens);
-                            found = true;
-                            break;
-                        }
-                    }
-                    if(!found)
-                        printer.printError("Ismeretlen parancs.");
-                
-                } else {
-
-                    boolean found = false;
-                    for (Option option : initControlOptions) {
-                        if (option.getName().equals(tokens[0])) {
-                            option.run(tokens);
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if(!found)
-                        printer.printError("Ismeretlen parancs.");
-
-                }
+                execute(input);
 
             } catch (NoSuchElementException e) {
                 break;
@@ -171,6 +165,43 @@ public class ProtoMenu {
         
     }
 
+    protected void execute(String line){
+
+        String[] tokens = line.split(" ");
+
+        if(tokens.length == 0){
+            return;
+        }
+
+        if(labyrinthBuilder==null){
+
+            boolean found = false;
+            for (Option option : configOptions) {
+                if (option.getName().equals(tokens[0])) {
+                    option.run(tokens);
+                    found = true;
+                    break;
+                }
+            }
+            if(!found)
+                printer.printError("Ismeretlen parancs.");
+        
+        } else {
+
+            boolean found = false;
+            for (Option option : initControlOptions) {
+                if (option.getName().equals(tokens[0])) {
+                    option.run(tokens);
+                    found = true;
+                    break;
+                }
+            }
+
+            if(!found)
+                printer.printError("Ismeretlen parancs.");
+
+        }
+    }
 
     /**
      * A véletlenszerűség be- vagy kikapcsolása.

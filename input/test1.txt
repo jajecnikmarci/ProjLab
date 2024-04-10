@@ -1,0 +1,4 @@
+add room Room1 3
+starttest
+printstate Room1
+endtest
