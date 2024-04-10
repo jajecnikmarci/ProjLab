@@ -16,8 +16,7 @@ public class App {
         proto = new ProtoMenu();
     }
 
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) {  // TODO: proto menu usage kiírása 
         if(args.length == 0){
             System.out.println("Nincs megadva argumentum");
             System.exit(1);
@@ -65,8 +64,6 @@ public class App {
                 System.exit(1);
             }
         }
-        
-
 
         if (args.length == 4 && args[0].equals("-f")) {
             

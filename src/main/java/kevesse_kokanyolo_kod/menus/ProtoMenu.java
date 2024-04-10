@@ -9,92 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 
-/**
- * A prototípus menü osztálya.
- * A tesztelő nyelv értelmezését végzi.
- * 
- * Minden osztályunknak meg kell valósítania a printState(Printer) metódust, 
- * és ezzel ki kell iratnia a belső állapotát. Fontos, hogy látszódjon, ami változhatott.
- * Formátum: 
- * <Osztálynév>: 
- *  <változó1>: <érték1> 
- *  <változó2>: 
- *  ... 
- * 
- */
-public class ProtoMenu {
-    private static Printer printer;
-    private static boolean fromAndToFile = false;
-
-    boolean randomness = false;
-    boolean timerControl = false;
-    LabyrinthBuilder labyrinthBuilder = null; //null, ha konfigurációs módban vagyunk
-
-    List<Option> configOptions = new ArrayList<>(); //Konfigurációs parancsokat tartalmazza
-    List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
-
-    /**
-     * Hozzáadja a parancsokat a 2 listához.
-     */
-    public void initProtoMenu() {
-
-        configOptions.add(new Option("randomness", this::randomnessOption));
-        configOptions.add(new Option("timercontrol", this::timerControlOption));
-        configOptions.add(new Option("load", this::loadOption));
-        configOptions.add(new Option("starttest", this::startTestOption));
-
-        initControlOptions.add(new Option("printstate", this::printStateOption));
-        initControlOptions.add(new Option("printall", this::printAllOption));
-        initControlOptions.add(new Option("endtest", this::endTestOption));
-        initControlOptions.add(new Option("add", t -> {
-            try {
-                addOption(t);
-            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-                    | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-                e.printStackTrace();
-            }
-        }));
-        initControlOptions.add(new Option("pickup", this::pickupOption));
-        initControlOptions.add(new Option("drop", this::dropOption));
-        initControlOptions.add(new Option("use", this::useOption));
-        initControlOptions.add(new Option("gotoroom", this::gotoroomOption));
-        initControlOptions.add(new Option("shake", this::shakeOption));
-    }
-
-    public ProtoMenu(String mode, String inputFileName,String outputFileName) throws IOException {
-        initProtoMenu();
-        
-        if(mode.equals("-f")){
-        }
-        if(mode.equals("test")){
-        }
-
-        if(inputFileName == null){
-            //testAll(); //betölti az input_file-beli tesztet, lefuttatja
-            return;
-        }
-        else {
-            if(outputFileName==null){
-                if(mode.equals("-f")){
-                    outputFileName="output" + File.separatorChar + inputFileName + "_result";
-                }
-                if(mode.equals("test")){
-                    outputFileName="expected" + File.separatorChar+ inputFileName + "_expected";
-                    //TODO nem fajlbairas hanem ellenorzes
-                }
-            }
-        }
-        printer = new Printer("input" + File.separatorChar + inputFileName+".txt", outputFileName+".txt");
-
-    }
-    
-    public ProtoMenu() {
-        initProtoMenu();
-        printer = new Printer();
-    }
-    
-
-    // CONFIG:
+// CONFIG:
     // randomness <enable|disable> - véletlenszerűség be- vagy kikapcsolása, 
     //   bármi ami véletlenszerű viselkedést kér, a ProtoMenüvel kiválasztatja az eredményt, ha a randomness ki van kapcsolva.
     // timercontrol <enable|disable> - Ha be van kapcsolva, a felhasználó átveszi az időzítők vezérlését a programtól, ezzel aktiválja a timer parancsot.   
@@ -136,9 +51,108 @@ public class ProtoMenu {
     // - Academic: egy hallgató, vagy oktató példány neve
     // - Person: egy hallgató, oktató, takarító példány neve
     // - A proto nyelv értelmezője hibát dob ha helytelen a parancs.
+/**
+ * A prototípus menü osztálya.
+ * A tesztelő nyelv értelmezését végzi.
+ * 
+ * Minden osztályunknak meg kell valósítania a printState(Printer) metódust, 
+ * és ezzel ki kell iratnia a belső állapotát. Fontos, hogy látszódjon, ami változhatott.
+ * Formátum: 
+ * <Osztálynév>: 
+ *  <változó1>: <érték1> 
+ *  <változó2>: 
+ *  ... 
+ * 
+ */
+public class ProtoMenu {
+    private static Printer printer;
+    private static boolean fromAndToFile = false;
+
+    boolean randomness = false;
+    boolean timerControl = false;
+    LabyrinthBuilder labyrinthBuilder = null; //null, ha konfigurációs módban vagyunk
+
+    List<Option> configOptions = new ArrayList<>(); //Konfigurációs parancsokat tartalmazza
+    List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
+
+    /**
+     * Hozzáadja a parancsokat a 2 listához.
+     */
+    public void initProtoMenu() { // TODO: ez az egész lehetne static, csak viszonylag sok munka.
+        configOptions.add(new Option("randomness", this::randomnessOption));
+        configOptions.add(new Option("timercontrol", this::timerControlOption));
+        configOptions.add(new Option("load", this::loadOption));
+        configOptions.add(new Option("starttest", this::startTestOption));
+
+        initControlOptions.add(new Option("printstate", this::printStateOption));
+        initControlOptions.add(new Option("printall", this::printAllOption));
+        initControlOptions.add(new Option("endtest", this::endTestOption));
+        initControlOptions.add(new Option("add", t -> {
+            try {
+                addOption(t);
+            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                e.printStackTrace();
+            }
+        }));
+        initControlOptions.add(new Option("pickup", this::pickupOption));
+        initControlOptions.add(new Option("drop", this::dropOption));
+        initControlOptions.add(new Option("use", this::useOption));
+        initControlOptions.add(new Option("gotoroom", this::gotoroomOption));
+        initControlOptions.add(new Option("shake", this::shakeOption));
+    }
+
+    private void runTest(String inputFileName, String expectedFileName) throws IOException {
+        if (expectedFileName == null) expectedFileName = inputFileName + "_expected";
+        expectedFileName += ".txt";
+
+        printer = new Printer("input" + File.separatorChar + inputFileName + ".txt"); 
+        String result = printer.getOutput();
+
+        // TODO: compare result with contet of expectedFile
+
+    }
+
+    private void runTestMode(String inputFileName, String expectedFileName) throws IOException{
+        if (inputFileName == null) {
+            // TODO: go through files in input directory AND CALL RUNTEST FOR EACH
+        } else {
+            runTest(inputFileName, expectedFileName);
+        }
+    }
+
+    private void runFile(String inputFileName, String outputFileName) throws IOException { 
+        if (outputFileName == null) outputFileName = inputFileName + "_result";
+        outputFileName += ".txt";
+
+        printer = new Printer("input" + File.separatorChar + inputFileName + ".txt", 
+                              "output" + File.separatorChar + outputFileName); 
+    }
+
+    private void runFileMode(String inputFileName, String outputFileName) throws IOException {
+        if (inputFileName == null) {
+            // TODO: go through files in input directory AND CALL RUNFile FOR EACH
+        } else {
+            runFile(inputFileName, outputFileName);
+        }
+    }
+
+    public ProtoMenu(String mode, String inputFileName, String outputFileName) throws IOException {
+        initProtoMenu();
+        if(mode.equals("-f")){
+            runFileMode(inputFileName, outputFileName);
+        }
+        if(mode.equals("test")){
+            runTestMode(inputFileName, inputFileName);
+        }
+    }
+    
+    public ProtoMenu() {
+        initProtoMenu();
+        printer = new Printer();
+    }
 
     public void menu() {
-
         do {
             String input;
             try {
