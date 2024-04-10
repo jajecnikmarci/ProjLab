@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.items;
 
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
@@ -105,8 +106,8 @@ public class Transistor extends Item {
     }
 
     @Override
-    public void printState(Printer printer) {
-        printer.startPrintObject("Transistor");
+    public void printState(Printer printer, LabyrinthBuilder builder) {
+        printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("pair", this.pair);
         printer.printField("room", this.room);
         printer.printField("owner", this.owner);

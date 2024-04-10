@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.items;
 
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
@@ -21,8 +22,8 @@ public class AirFreshener extends Item{
         SkeletonMenu.endCall();
     }
     @Override
-    public void printState(Printer printer) {
-        printer.startPrintObject("AirFreshener");
+    public void printState(Printer printer, LabyrinthBuilder builder) {
+        printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("effect", this.effect);  
         printer.endPrintObject();      
     }

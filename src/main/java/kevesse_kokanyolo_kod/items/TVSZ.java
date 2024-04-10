@@ -1,6 +1,10 @@
 package kevesse_kokanyolo_kod.items;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import kevesse_kokanyolo_kod.effects.KillImmunity;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
@@ -39,8 +43,8 @@ public class TVSZ extends Item {
     }
 
     @Override
-    public void printState(Printer printer) {
-        printer.startPrintObject("TVSZ");
+    public void printState(Printer printer, LabyrinthBuilder builder) {
+        printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("timesImmune", this.timesImmune);
         printer.printField("effect", this.effect);
         printer.endPrintObject();

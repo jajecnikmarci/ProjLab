@@ -223,6 +223,32 @@ public class LabyrinthBuilder {
         // TODO
     }
 
+
+    public String getInstanceName(Item item) {
+        return items.keySet()
+            .stream()
+            .filter(key -> items.get(key)
+            .equals(item))
+            .findFirst()
+            .orElse("");
+    }
+    public String getInstanceName(Room room) {
+        return items.keySet()
+            .stream()
+            .filter(key -> rooms.get(key)
+            .equals(room))
+            .findFirst()
+            .orElse("");
+    }
+    public String getInstanceName(AcademicPerson person) {
+        return items.keySet()
+            .stream()
+            .filter(key -> academicPeople.get(key)
+            .equals(person))
+            .findFirst()
+            .orElse("");
+    }
+
     /**
      * A kiválasztott objektum állapotának kiírása
      * 
@@ -231,7 +257,7 @@ public class LabyrinthBuilder {
      */
     public void printState(String name, Printer printer) {  
         if (rooms.containsKey(name)) rooms.get(name).printState(printer);
-        if (items.containsKey(name)) items.get(name).printState(printer);
+        if (items.containsKey(name)) items.get(name).printState(printer, this);
         if (cleaners.containsKey(name)) cleaners.get(name).printState(printer);
         if (academicPeople.containsKey(name)) academicPeople.get(name).printState(printer);
     }
@@ -249,7 +275,7 @@ public class LabyrinthBuilder {
             door.printState(printer);
         }
         for (String key : items.keySet()) {
-            items.get(key).printState(printer);
+            items.get(key).printState(printer, this);
         }
         for (String key : cleaners.keySet()) {
             cleaners.get(key).printState(printer);
