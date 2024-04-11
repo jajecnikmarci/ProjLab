@@ -124,7 +124,10 @@ public class Room implements EffectConsumedObserver {
             // Csak utána lépjenek interakcióba a tárgyak. 
             SkeletonMenu.endCall("A játékosnak már van ilyen tárgya.");
             return;
-        } 
+        } else if(academicPerson.getInventorySize()>4){
+            //A játékos nem vehet fel több tárgyat (max 5 tárgy lehet nála)
+            return;
+        }
         topItem.accept(academicPerson);
         SkeletonMenu.endCall();
     }

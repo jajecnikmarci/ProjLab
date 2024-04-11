@@ -1,0 +1,14 @@
+starttest
+add room room1 3
+add room room2 3
+add person room1 Student student1
+add person room1 Professor professor1
+add person room1 Cleaner cleaner1
+add person room2 Student student2
+add door room1 room2 door1
+printstate room1
+printstate room2
+gotoroom student2 room1
+printstate room1
+printstate room2
+endtest

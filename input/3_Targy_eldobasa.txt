@@ -1,0 +1,14 @@
+starttest
+add room room1 3
+add item room1 FFP2 ffp2
+add item room1 Transistor transistor
+add item room1 Camembert camembert
+add person room1 Student student1
+pickup student1
+pickup student1 
+printstate room1
+printstate student1
+drop student1 camembert
+printstate room1
+printstate student1
+endtest

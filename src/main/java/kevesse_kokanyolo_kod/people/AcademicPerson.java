@@ -32,6 +32,13 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         return stunned;
     }
 
+    /**
+     * Visszaadja a játékos tárgylistájának méretét.
+     * @return a játékos tárgylistájának mérete
+     */
+    public int getInventorySize() {
+        return inventory.size();
+    }
     
     /**
      * Megmondja, hogy mérgezett-e a játékos.
@@ -96,8 +103,8 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      * Megnézi, hogy a játékosnak van-e a paraméterként kapott tárgya. 
      * Bővebben megnézi, hogy a játékos tárgyai tiltják-e a paraméterként kapott tárgy felvételét. 
      * 
-     * Ilyenkor trmészetesen a tárgyak interakcióba is lépnek egymással, ami egyelőre csak a tranzisztor párosítása során lényeges.
-     * (Az interakció gondoskodik Tranzisztorok párosításáról. Ezt a metódust hvja a tranzisztor use metódusa, amikor párosításra van szükség.)
+     * Ilyenkor természetesen a tárgyak interakcióba is lépnek egymással, ami egyelőre csak a tranzisztor párosítása során lényeges.
+     * (Az interakció gondoskodik Tranzisztorok párosításáról. Ezt a metódust hívja a tranzisztor use metódusa, amikor párosításra van szükség.)
      * 
      * @param item a keresett tárgy
      * @return true, ha a játékosnak van a tárgya, false egyébként

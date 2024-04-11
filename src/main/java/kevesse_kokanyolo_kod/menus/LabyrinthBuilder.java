@@ -206,7 +206,7 @@ public class LabyrinthBuilder {
      * @param roomName   Szoba neve
      */
     public void gotoroom(String personName, String roomName) {
-        if (!academicPeople.containsKey(personName)) {
+        if (!academicPeople.containsKey(personName) && !cleaners.containsKey(personName)) {
             System.err.println("Nincs ilyen nevű játékos.");
             return;
         }
@@ -214,8 +214,12 @@ public class LabyrinthBuilder {
             System.err.println("Nincs ilyen nevű szoba.");
             return;
         }
-        academicPeople.get(personName).goToRoom(rooms.get(roomName));
-        cleaners.get(personName).goToRoom(rooms.get(roomName));
+
+        if(academicPeople.containsKey(personName))
+            academicPeople.get(personName).goToRoom(rooms.get(roomName));
+
+        if(cleaners.containsKey(personName))
+            cleaners.get(personName).goToRoom(rooms.get(roomName));
     }
 
     public void shake(boolean randomness) {
