@@ -12,12 +12,18 @@ import kevesse_kokanyolo_kod.room.Room;
 public class SlideRule extends Item {
 
     /**
-     * A logarléc használata. Felvételekor véget ér a játék így nem felhasználható
+     * A logarléc használata. Felvételekor véget ér a játék így nem csinál semmit.
      */
     @Override
     public void use(Room room, AcademicPerson academicPerson) {
     }
 
+    /**
+     * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
+     * Visitor design pattern része
+     *
+     * @param academicPerson a játékos aki próbálja felvenni a tárgyat
+     */
     @Override
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("SlideRule.accept(Player)");
@@ -25,20 +31,30 @@ public class SlideRule extends Item {
         SkeletonMenu.endCall();
     }
 
-    @Override
-    public void printState(Printer printer, LabyrinthBuilder builder) {
-        printer.startPrintObject(builder.getInstanceName(this));
-        printer.printField("effect", this.effect);  
-        printer.endPrintObject();      
-    }
-
+    /**
+     * Felülírja az IItem interfész SlideRule interactItem metódusát,
+     * felügyeli, hogy ne kerülhessen két SlideRule tárgy az AcademicPerson-höz
+     * 
+     * @param slideRule a tárgy, amit az AcademicPerson megpróbál felvenni
+     */
     @Override
     public boolean interactItem(SlideRule slideRule) {
         return true;
     }
 
+    /**
+     * Visitor design pattern része. 
+     * @param item a tárgy, amivel interakcióba lép.
+     */
     @Override
     public boolean interact(IItem item) {
         return  item.interactItem(this);
+    }
+
+    @Override
+    public void printState(Printer printer, LabyrinthBuilder builder) {
+        printer.startPrintObject(builder.getInstanceName(this));
+        printer.printField("effect", this.effect);  
+        printer.endPrintObject();      
     }
 }

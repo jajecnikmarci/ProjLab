@@ -8,9 +8,12 @@ import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 
+/**
+ * A személyeket reprezentáló absztrakt osztály.
+ */
 public abstract class Person {
-    Person(Room r) {
-        location = r;
+    Person(Room room) {
+        location = room;
     }
     /**
      * A szoba amelyben a player jelenleg tartózkodik.
@@ -33,7 +36,6 @@ public abstract class Person {
         this.location = room;
     }
 
-
     /**
      * A játékos találkozik egy hallgatóval.
      *
@@ -42,15 +44,22 @@ public abstract class Person {
     public abstract void meet(Student student);
 
     /**
-     * Professzorral való találkozás esetén a játékos
+     * Professzorral találkozik a játékos
      *
      * @param professor a professzor, akivel találkozik
-     * @param room      a szoba, ahol a találkozás történik
      */
-    public abstract void meet(Professor professor, Room room);
+    public abstract void meet(Professor professor);
 
-    public abstract void meet(Cleaner cleaner, Room room);
+    /**
+     * Takarítóval találkozik a játékos
+     *
+     * @param cleaner a takarító, akivel találkozik
+     */
+    public abstract void meet(Cleaner cleaner);
 
+    /**
+     * Megmérgezi a játékost.
+     */
     public abstract void poison();
 
     /**
@@ -64,13 +73,19 @@ public abstract class Person {
         SkeletonMenu.endCall();
     }
     
-    // Meghívja a szoba onEnter metódusát, a megfelelő paraméterrel. 
-    // Azért szükséges felülítni, mert az onEntert a megfelelő típusú paraméterrel kell meghívni. (Professor, Student, Cleaner)
+    /**
+     * Meghívja a szoba onEnter metódusát, a megfelelő paraméterrel. 
+     * Azért szükséges felülírni, mert az onEntert a megfelelő típusú paraméterrel kell meghívni. (Professor, Student, Cleaner)
+     */
     protected abstract void callOnEnter(Room room);
 
     /**
      * Belép a szobába, ha tud és közli a szobával, hogy belépett a játékos.
-     * @param room a szoba, amibe a játékos belép
+     * 
+     * Megnézi, hogy a szobának van-e olyan ajtaja, amelyiken át tud menni a megadott szobába. (Tehát a két szoba között van és látható.)
+     * Ha van ilyen ajtó, megpróbál átmenni rajta, 
+     * ha sikerül közli a szobával, hogy belépett a megfelelő típusú játékos (callOnEnter felülírt verzióját meghívja)
+     * @param room a szoba, amibe a játékos belépni kíván
      */
     public void goToRoom(Room room) {
         SkeletonMenu.startCall("Person.goToRoom(Room)");
@@ -79,8 +94,7 @@ public abstract class Person {
                 .filter(d -> d.isBetween(location, room))
                 .findFirst();
 
-        if (door.isPresent()) {
-            door.get().goThrough(this);
+        if (door.isPresent() && door.get().goThrough(this)) {
             callOnEnter(room);
             SkeletonMenu.endCall("A személy átment a szobába.");
             return;

@@ -27,7 +27,7 @@ public class Transistor extends Item {
     private Student owner;
 
     /**
-     * A tranzisztor párának megadása
+     * A tranzisztor párjának megadása
      *
      * @param transistor a tranzisztor párja
      */
@@ -100,7 +100,8 @@ public class Transistor extends Item {
     }
 
     /**
-     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
+     * Visitor design pattern része
      *
      * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
@@ -110,29 +111,22 @@ public class Transistor extends Item {
         academicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
-
-    @Override
-    public void printState(Printer printer, LabyrinthBuilder builder) {
-        printer.startPrintObject(builder.getInstanceName(this));
-        printer.printField("pair", this.pair);
-        printer.printField("room", this.room);
-        printer.printField("owner", this.owner);
-        printer.endPrintObject();
-    }
-
     
     /**
-     * Működés: Ha a tranzisztornak van párja, akkor nem lehet még egy tranzisztor hozzáadni a játékoshoz, 
+     * Működés: Ha a tranzisztornak van párja, akkor nem lehet még egy tranzisztort hozzáadni a játékoshoz, 
      * ezért tér vissza igazzal.
-     * Ha a thisnek (új tranziszornak) nincs tulajdonosa, vagyis még nincs a játékosnál, akkor hamis értékkel tér vissza, 
-     * vagyis hozzáadható a játékoshoz.
-     * Különben megtörténik a tranzisztorok összekapcsolása.
+     * Ha a thisnek (új tranziszornak) nincs tulajdonosa, vagyis még nincs tranzisztor a játékosnál, 
+     * akkor hamis értékkel tér vissza, fel lehet venni a tárgyat.
+     * 
+     * Különben megtörténik a tranzisztorok összekapcsolása (egymás párját bellítják a másiknak) 
+     * és hamis értékkel térünk vissza, hogy fel legyen véve a tárgy. 
+     * Ez a use függvény hatására mehet csak végbe, ilyenkor nincs mit felvenni.
+     * 
      * @param transistor a tranzisztor, ami már a játékosnál van
      * @return igaz, ha a tárgy a játékoshoz nem adható hozzá
      */
     @Override
     public boolean interactItem(Transistor transistor) {
-
         //this: ezt akarjuk hozzáadni
         if(transistor.pair != null){
             return true;
@@ -146,8 +140,21 @@ public class Transistor extends Item {
         return true;
     }
 
+    /**
+     * Visitor design pattern része. 
+     * @param item a tárgy, amivel interakcióba lép.
+     */
     @Override
     public boolean interact(IItem item) {
         return  item.interactItem(this);
+    }
+
+    @Override
+    public void printState(Printer printer, LabyrinthBuilder builder) {
+        printer.startPrintObject(builder.getInstanceName(this));
+        printer.printField("pair", this.pair);
+        printer.printField("room", this.room);
+        printer.printField("owner", this.owner);
+        printer.endPrintObject();
     }
 }

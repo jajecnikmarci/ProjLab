@@ -11,14 +11,31 @@ import kevesse_kokanyolo_kod.room.Room;
  * Szent Sörös Pohár tárgyat reprezentáló osztály
  */
 public class Glass extends Item {
-    private boolean hasBeenUsed=false;
     /**
-     * A Glass használatánál (csak hallgató használhatja) a hallgató védett
-     * állapotba kerül az oktatók támadásaival szemben a Glass használatától
-     * kezdve 10 másodpercig. A védettség egy KillImmunity, ami aktiválódik
-     * amint aktiválja a hallgató a tárgyat.
-     *
-     * @param room   a szoba, ahol a tárgyat használják
+     * Ennyi ideig ad védettséget a tárgy
+     */
+    private static final int killImmunityLength = 10;
+    /**
+     * Megmondja, hogy a tárgy használt-e, igaz, hamis ha nem volt használva,
+     * ellenkező esetben igaz.
+     */
+    private boolean hasBeenUsed=false;
+    
+    /**
+     * A Glass használata (csak hallgató használhatja).
+     * Az AcademicPerson-höz hozzáad egy 10 másodpercers KillImmunity effektet, valamint aktiválja azt.
+     * A hallgató védett állapotba kerül az oktatók támadásaival szemben,
+     * a Glass használatát követő 10 másodpercig.
+     * Beállítja a tárgyhoz tartozó hatást a létrehozott hatásra.
+     * 
+     * Ha a hallgató már használta a tárgyat és újra használni próbálja, 
+     * akkor el kell dobnia az egyik tárgyát véletlenszerűen. 
+     * 
+     * Az effekt lejártakor a szoba meghívja a removeEffect metódust, 
+     * ezzel jelezve, hogy a hatás lejárt, majd meg kell hívnia ezt a függvényt, 
+     * ami törölteti ezt a tárgyat a játékossal.
+     * 
+     * @param room a szoba, ahol a tárgyat használják
      * @param academicPerson a játékos, aki használja a tárgyat
      */
     @Override
@@ -35,7 +52,7 @@ public class Glass extends Item {
                 return;
             }
         }
-        KillImmunity killImmunity = new KillImmunity(this, 10, academicPerson);
+        KillImmunity killImmunity = new KillImmunity(this, killImmunityLength, academicPerson);
         academicPerson.addKillImmunity(killImmunity);
         killImmunity.activate();
         effect = killImmunity;
@@ -44,7 +61,8 @@ public class Glass extends Item {
     }
 
     /**
-     * Meghívja a paraméterként kapott playerre a tárgyhoz tartozó acceptItem függvényt.
+     * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
+     * Visitor design pattern része
      *
      * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
@@ -55,21 +73,31 @@ public class Glass extends Item {
         SkeletonMenu.endCall();
     }
 
+    /**
+     * Felülírja az IItem interfész Glass interactItem metódusát,
+     * felügyeli, hogy ne kerülhessen két Glass tárgy az AcademicPerson-höz
+     * 
+     * @param glass a tárgy, amit az AcademicPerson megpróbál felvenni
+     */
+    @Override
+    public boolean interactItem(Glass glass) {
+        return true;
+    }
+
+    /**
+     * Visitor design pattern része. 
+     * @param item a tárgy, amivel interakcióba lép.
+     */
+    @Override
+    public boolean interact(IItem item) {
+        return  item.interactItem(this);
+    }
+
     @Override
     public void printState(Printer printer, LabyrinthBuilder builder) {
         printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("hasBeenUsed", this.hasBeenUsed);
         printer.printField("effect", this.effect);
         printer.endPrintObject();
-    }
-
-    @Override
-    public boolean interactItem(Glass glass) {
-        return true;
-    }
-
-    @Override
-    public boolean interact(IItem item) {
-        return  item.interactItem(this);
     }
 }

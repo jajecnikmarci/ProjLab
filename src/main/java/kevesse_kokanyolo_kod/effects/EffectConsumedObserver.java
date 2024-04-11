@@ -5,7 +5,7 @@ package kevesse_kokanyolo_kod.effects;
  */
 public interface EffectConsumedObserver {
     /**
-     * Az effektum lejártakor meghívódó metódus
+     * A hatás lejártakor kezeli a végrehajtandó eseményeket.
      */
     void effectConsumed(Effect effect);
 }

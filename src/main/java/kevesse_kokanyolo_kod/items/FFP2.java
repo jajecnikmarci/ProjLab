@@ -8,31 +8,65 @@ import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
 /**
- * FFP2-es maszkot reprezentáló osztály.
- * Használatakor a Playerre PoisonImmunity-t rak, ami 10 másodpercig ad védelmet poison ellen.
+ * FFP2-es maszkot reprezentáló osztály. Ezt a tárgy automatikusan használódik, 
+ * a játékos kézileg tudja használni.
+ * Elhasználódáskor a Playerre PoisonImmunity-t rak, ami immunityLength ideig védelmet ad poison ellen.
  */
 public class FFP2 extends Item {
     /**
-     * 10 másodpercig tartó immunitás a poison hatásával szemben.
+     * Megmondja, hogy a tárgy keletkezésekor, hány másodpercig tart a tárgy hatása
      */
-    private int immunityLength = 10;
+    private static final int firstImmunityLength = 10;
 
+    /**
+     * Tárolja, hogy hány másodperccel csökkel a tárgy hatása minden használat után
+     */
+    private static final int immunityLengthDecrease = 2;
+    
+    /**
+     * A maszkhoz tartozó következő védettség hossza.
+     */
+    private int immunityLength = firstImmunityLength;
+    
+    /**
+     * Az FFP2 használata. A tárgyat felvevő academicPerson-nek
+     * immunitást ad a mérgezés hatással szemben, a használattól
+     * kezdve. Ha a tárgy teljesen elhasználódott, a tárgy megsemmisül.
+     * 
+     * Ez a függvény akkor hívódik, ha a tárgyhoz tartozó hatás lejárt. 
+     * (Az első hatás a tárgy felvételekor adódik a játékoshoz)
+     * Ha a tárgy elhasználódott (immunityLength = 0) akkor törölteti a tárgyat a játékostól.
+     * Egyébként létrehoz egy PoisonImmunity hatást immunityLength hosszal és hozzáadja a játékoshoz.
+     * Beállítja a tárgy effect attribútumát a létrehozott hatásra.
+     * Csökkenti 2 másodperccel az immunityLength-et.
+     * 
+     * Ha a védettség lejárt és a szoba továbbra is mérgező, 
+     * a játékos úőjbóli mérgezését a szoba felelőssége kezelni.
+     *
+     * @param room a szoba, ahol a tárgyat használják
+     * @param academicPerson a játékos, aki használja a tárgyat
+     */
     @Override
     public void use(Room room, AcademicPerson academicPerson) {
         SkeletonMenu.startCall("FFP2.use(Room, Player)");
         if (immunityLength <= 0) {
             academicPerson.removeItem(this);
-            //TODO Mérgezni a player-t ha elhasználódott a maszk
             SkeletonMenu.endCall("A tárgy elhasználódott");
             return;
         }
         PoisonImmunity poisonImmunity = new PoisonImmunity(this, immunityLength, academicPerson);
         academicPerson.addPoisonImmunity(poisonImmunity);
-        effect = poisonImmunity;
-        immunityLength -= 2;
+        effect = poisonImmunity; 
+        immunityLength -= immunityLengthDecrease;
         SkeletonMenu.endCall();
     }
 
+    /**
+     * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
+     * Visitor design pattern része
+     *
+     * @param academicPerson a játékos aki próbálja felvenni a tárgyat
+     */
     @Override
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("FFP2.accept(Player)");
@@ -40,14 +74,27 @@ public class FFP2 extends Item {
         SkeletonMenu.endCall();
     }
 
+  
     /**
-     * Visszaadja az immunitás hosszát.
-     *
-     * @return az immunitás hossza
+     * Felülírja az IItem interfész FFP2 interactItem metódusát,
+     * felügyeli, hogy ne kerülhessen két FFP2 tárgy az AcademicPerson-höz
+     * 
+     * @param ffp2 a tárgy, amit az AcademicPerson megpróbál felvenni
      */
-    public int getImmunityLength() {
-        return immunityLength;
+    @Override
+    public boolean interactItem(FFP2 ffp2) {
+        return true;
     }
+
+    /**
+     * Visitor design pattern része. 
+     * @param item a tárgy, amivel interakcióba lép.
+     */
+    @Override
+    public boolean interact(IItem item) {
+        return  item.interactItem(this);
+    }
+
     @Override
     public void printState(Printer printer, LabyrinthBuilder builder) {
         printer.startPrintObject(builder.getInstanceName(this));
@@ -55,15 +102,4 @@ public class FFP2 extends Item {
         printer.printField("effect", this.effect);  
         printer.endPrintObject();      
     }
-
-    @Override
-    public boolean interactItem(FFP2 ffp2) {
-        return true;
-    }
-
-    @Override
-    public boolean interact(IItem item) {
-        return  item.interactItem(this);
-    }
-
 }

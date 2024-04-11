@@ -16,28 +16,32 @@ public class Professor extends AcademicPerson {
         super(room);
     }
 
-
     /**
-     * Professzor találkozik egy diákkal, akit megöl.
+     * Professzor találkozik egy diákkal, ha nincs lebénulva megpróbálja megölni.
      *
      * @param student a diák, aki meg fog halni
      */
     @Override
     public void meet(Student student) {
         SkeletonMenu.startCall("Professor.meet(Student)");
-        student.kill();
+        if(!stunned)
+            student.kill();
         SkeletonMenu.endCall();
     }
 
     /**
-     * Professzor találkozik egy professzorral, akivel találkozik
+     * Professzor találkozik egy professzorral, 
+     * ha a belépő professzor nincs lebénulva elhagyja a szobát. 
+     * (A paraméterként átadott oktató a belépő oktató.)  
      *
      * @param professor a professzor, akivel találkozik
      */
     @Override
-    public void meet(Professor professor, Room room) {
+    public void meet(Professor professor) {
         SkeletonMenu.startCall("Professor.meet(Professor, Room)");
-        leaveRoom();
+        if(!professor.stunned)
+            professor.leaveRoom();
+        
         SkeletonMenu.endCall("A professzor elhagyta a szobát.");
     }
 
@@ -106,7 +110,10 @@ public class Professor extends AcademicPerson {
         SkeletonMenu.endCall("A professzor nem tudja felvenni a Nedves Táblatörlő Rongyot.");
     }
 
-    
+    /**
+     * Meghívja a szoba onEnter metódusát átadva magát paraméterként, mint Professzor. 
+     * @param room a szoba, ahova a professzor érkezik
+     */
     @Override
     public void callOnEnter(Room room) {
         room.onEnter(this);

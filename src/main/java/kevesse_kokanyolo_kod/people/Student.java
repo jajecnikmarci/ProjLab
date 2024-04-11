@@ -20,19 +20,27 @@ public class Student extends AcademicPerson {
     private int souls;
 
     /**
-     * Nyilvántartja, hogy melyik tárgyak által immunis a halálra.
+     * Nyilvántartja, a hallgató immunitásait a halálra.
      */
     private List<KillImmunity> killImmunities;
 
+    /**
+     * Létrehozza a hallgatót
+     * 
+     * @param room a szoba, ahova a hallgató kerül
+     */
     public Student(Room room) {
         super(room);
         souls = 3;
         killImmunities = new ArrayList<>();
     }
 
-
     /**
-     * Megpróbálja elszipolyozni a hallgató lelkét. Ha van neki immunitása, akkor nem sikerül.
+     * Megpróbálja elszipolyozni a hallgató lelkét. 
+     * Ha van neki aktív immunitása, akkor az megvédi-
+     * Ha van neki nem aktív immunitása, akkor azt aktiválja, ez megvédi.
+     * Különben csökkenti a hallgató lelkeinek számát 1-el. 
+     * Ha meghal a hallgató (lelkeinek száma=0), jelez a vezérlő felé.
      */
     public void kill() {
         SkeletonMenu.startCall("Student.kill()");
@@ -62,18 +70,17 @@ public class Student extends AcademicPerson {
      */
     @Override
     public void dropRandomItem() {
-        SkeletonMenu.startCall("Student.dropRandItem()");
-        int rand = (int) (Math.random() * inventory.size());
+        SkeletonMenu.startCall("Student.dropRandomItem()");
+        int rand = (int) (Math.random() * inventory.size()); // TODO: randomness disable
         IItem item = inventory.get(rand);
-        inventory.remove(item);
-        location.addItem(item);
+        dropItem(item);
         SkeletonMenu.endCall();
     }
 
     /**
      * Hozzáadja a killImmunities-hez a paraméterként kapott immuntitást.
      *
-     * @param killImmunity A hozzáadadndó killImmunity
+     * @param killImmunity a hozzáadadndó killImmunity
      */
     @Override
     public void addKillImmunity(KillImmunity killImmunity) {
@@ -85,7 +92,7 @@ public class Student extends AcademicPerson {
     /**
      * Kitörli a killImmunities-ből a paraméterként kapott tárgyhoz tartozó immunitást.
      *
-     * @param item A tárgy ami az immunitást adja
+     * @param item a tárgy ami az immunitást adja
      */
     @Override
     public void removeKillImmunity(Item item) {
@@ -127,7 +134,7 @@ public class Student extends AcademicPerson {
 
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.s
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      *
      * @param tvsz a hozzáadandó tárgy
      */
@@ -152,7 +159,6 @@ public class Student extends AcademicPerson {
     public void acceptItem(Glass glass) {
         SkeletonMenu.startCall("Student.acceptItem(Glass)");
         this.addItem(glass);
-        this.addKillImmunity(new KillImmunity(glass, 10, this));
         location.removeItem(glass);
         SkeletonMenu.endCall();
     }
@@ -172,22 +178,22 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * Interakcióba lép egy Oktatóval, elszipolyozódik a lelke.
+     * Interakcióba lép egy oktatóval, elszipolyozódik a lelke.
      *
-     * @param professor A hallgatóval interakcióba lépő oktató
-     * @param room      A szoba, ahol az interakció történik
+     * @param professor a hallgatóval interakcióba lépő oktató
+     * @param room a szoba, ahol az interakció történik
      */
     @Override
-    public void meet(Professor professor, Room room) {
+    public void meet(Professor professor) {
         SkeletonMenu.startCall("Student.meet(Professor, Room)");
         kill();
         SkeletonMenu.endCall();
     }
 
     /**
-     * Interakcióba lép egy másik hallgatóval, azaz nem csinál semmit.
+     * Interakcióba lép egy másik hallgatóval, nem csinál semmit.
      *
-     * @param student
+     * @param student a hallgatü, akivel találkozik
      */
     @Override
     public void meet(Student student) {
@@ -195,12 +201,21 @@ public class Student extends AcademicPerson {
         SkeletonMenu.endCall();
     }
 
-    
+    /**
+     * Kezeli a hallgató szobába érkezését
+     * 
+     * @param room a szoba, ahova érkezik a játékos
+     */
     @Override
     protected void callOnEnter(Room room) {
         room.onEnter(this);
     }
 
+    /**
+     * Visszaadja a tárgyhoz tartozó KillImmunity-t, null-t ha nincs ilyen.
+     * 
+     * @param item a tárgy, amelyik az immunitást adja
+     */
     public KillImmunity findKillImmunityByItem(Item item) {
         for (KillImmunity killImmunity : killImmunities) {
             if (killImmunity.getItem().equals(item)) {
@@ -210,6 +225,15 @@ public class Student extends AcademicPerson {
         return null;
     }
 
+    /**
+     * Felülírja az AcademicPerson effectConsumed metódusát, hogy a hallgatót megfelelően kezelje.
+     * felhasználja az eredeti metódust, hogy a PoisonImmunityket kezelje.
+     * 
+     * Ha lejárt egy killimmunity effect akkor a játékos törli az effektet a killimmunity listájából, 
+     * valamint az effektet adó tárgy use metódusát meghívja, ha a tárgy még a játékosnál van, 
+     * ezzel jelezve neki a használódást.
+     * 
+     */
     @Override
     public void effectConsumed(Effect effect) {
         SkeletonMenu.startCall("Student.effectConsumed()");

@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Cleaner;
-import kevesse_kokanyolo_kod.people.Person;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.items.Item;
 

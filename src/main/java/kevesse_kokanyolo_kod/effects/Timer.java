@@ -6,11 +6,12 @@ import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 /**
  * Időzítő osztály. Elindítása után a megadott időtartamig várakozik, majd értesíti a hívó objektumot.
+ * // TODO: timercontrol
  */
 public class Timer {
 
     /**
-     * Az időzítőt tulajdonló Item.
+     * Az időzítőt birtokló Hatás.
      */
     private final Effect ownerEffect;
 
@@ -19,13 +20,16 @@ public class Timer {
      */
     private java.util.Timer innerTimer;
 
+    /**
+     * A paraméterül kapott értékkel létrehozza a Timer-t
+     */
     public Timer(Effect ownerEffect) {
         this.ownerEffect = ownerEffect;
     }
 
     /**
      * Az időzítő elindítását megvalósító metódus.
-     *
+     * Amikor véget ér az időzítő, meghívja az ownerEffect.timeIsUp metódust, ezzel jelezve a hatás végét.
      * @param durationInSeconds Az időzítő időtartama.
      */
     void start(int durationInSeconds) {
@@ -36,7 +40,7 @@ public class Timer {
             public void run() {
                 ownerEffect.timeIsUp();
             }
-        }, durationInSeconds /*1000L*/); //TODO *1000L élesben
+        }, durationInSeconds *1000L); 
         SkeletonMenu.endCall();
     }
 
