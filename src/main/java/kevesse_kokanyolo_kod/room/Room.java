@@ -130,7 +130,7 @@ public class Room implements EffectConsumedObserver {
             }
         }
         for (Person person : this.people) {
-            person.meet(professor, this);
+            person.meet(professor);
         }
         if (lastCleaning!=null) lastCleaning.affect(professor);
         SkeletonMenu.endCall();
@@ -153,7 +153,7 @@ public class Room implements EffectConsumedObserver {
 
     public void onEnter(Cleaner cleaner) {
         SkeletonMenu.startCall("Room.onEnter(Cleaner)");
-        for (Person person : this.people) person.meet(cleaner, this);
+        for (Person person : this.people) person.meet(cleaner);
         this.poisonEffects.clear();
         if (lastCleaning!=null) lastCleaning.clean();
         else {

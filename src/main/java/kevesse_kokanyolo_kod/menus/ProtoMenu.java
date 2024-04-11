@@ -66,7 +66,6 @@ import java.util.function.Consumer;
  */
 public class ProtoMenu {
     private static Printer printer;
-    private static boolean fromAndToFile = false;
 
     boolean randomness = false;
     boolean timerControl = false;
@@ -165,14 +164,14 @@ public class ProtoMenu {
         do {
             String input;
             try {
-                input = printer.scanner.nextLine();
+                input = Printer.scanner.nextLine();
                 execute(input);
 
             } catch (NoSuchElementException e) {
                 break;
             }
 
-        } while (printer.scanner.hasNextLine());
+        } while (Printer.scanner.hasNextLine());
         try {
             printer.close();
         } catch (IOException e) {

@@ -12,7 +12,7 @@ import kevesse_kokanyolo_kod.room.Room;
 import java.util.*;
 
 /**
- * A játékost reprezentáló osztály
+ * A Hallgatókat és oktatókat összefoglaló osztály reprezentáló osztály
  */
 public abstract class AcademicPerson extends Person implements PickUpVisitor, EffectConsumedObserver {
     /**
@@ -25,22 +25,41 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      */
     List<PoisonImmunity> poisonImmunities;
 
-
-
+    /**
+     * Megmondja, hogy mérgezett-e a játékos.
+     */
     public boolean isStunned() {
         return stunned;
     }
 
+    
+    /**
+     * Megmondja, hogy mérgezett-e a játékos.
+     */
     protected boolean stunned;
 
-    protected AcademicPerson(Room r) {
-        super(r);
+    /**
+     * Létrehozza a játékost
+     * 
+     * @param room a szoba, ahova a játékos kerül
+     */
+    protected AcademicPerson(Room room) {
+        super(room);
         inventory = new ArrayList<>();
         poisonImmunities = new ArrayList<>();
     }
+    /**
+     * Megnézi, hogy a játékos bénult-e. Ha igen, akkor nem tud mozogni. 
+     * Felülírja a Person goToRoom függvényét. 
+     */
+    @Override 
+    public void goToRoom(Room room) {
+        if(!stunned)
+            super.goToRoom(room);
+    }
 
     /**
-     * Hozzáadja a player tárgylistájához a paraméterként kapott tárgyat.
+     * Hozzáadja az AcademicPerson tárgylistájához a paraméterként kapott tárgyat.
      *
      * @param item a hozzáadandó tárgy
      */
@@ -62,18 +81,24 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * A jelenlegi szobára meghívja a popItem függvényt.
-     * Ezzel elindítja a Visitor működést, mely végén felveszi a szoba tárgylistájának legfelső tárgyát.
+     * Ha a játékos nincs lebénulva, a jelenlegi szobára meghívja a popItem függvényt.
+     * Ezzel elindítja a Visitor működést, 
+     * mely végén felveszi a szoba tárgylistájának legfelső tárgyát, ha felveheti.
      */
     public void pickUpItem() {
         SkeletonMenu.startCall("Player.pickUpItem()");
-        location.popItem(this);
+        if(!stunned)
+            location.popItem(this);
         SkeletonMenu.endCall();
     }
 
     /**
      * Megnézi, hogy a játékosnak van-e a paraméterként kapott tárgya. 
-     * Bővebben megnézi, hogy a játékos tűárgyai tiltják-e a paraméterként kapott tárgy felvételét.
+     * Bővebben megnézi, hogy a játékos tárgyai tiltják-e a paraméterként kapott tárgy felvételét. 
+     * 
+     * Ilyenkor trmészetesen a tárgyak interakcióba is lépnek egymással, ami egyelőre csak a tranzisztor párosítása során lényeges.
+     * (Az interakció gondoskodik Tranzisztorok párosításáról. Ezt a metódust hvja a tranzisztor use metódusa, amikor párosításra van szükség.)
+     * 
      * @param item a keresett tárgy
      * @return true, ha a játékosnak van a tárgya, false egyébként
      */
@@ -90,31 +115,34 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * A paraméterül kapott item-et eldobja a játékos, nem
-     * tartozik többé a játékoshoz az item.
+     * A paraméterül kapott item-et eldobja a játékos, ha nincs lebénulva.
+     * Az item a szobához kerül, nem tartozik többé a játékoshoz az item.
+     * //TODO: onDrop()?
      *
-     * @param item
+     * @param item a tárgy, amit eldob a játékos
      */
-    public void dropItem(Item item) {
+    public void dropItem(IItem item) {
         SkeletonMenu.startCall("Player.dropItem(Item)");
-        inventory.remove(item);
-        location.addItem(item);
+        if(!stunned) {
+            inventory.remove(item);
+            location.addItem(item);
+        }
         SkeletonMenu.endCall();
     }
 
     /**
-     * A játékos elejti az összes nála lévő item-et, egy
-     * item sem fog a játékoshoz tartozni.
+     * A játékos eldobja az összes nála lévő tárgyat-et,
+     * mindegyik, a játékosnál lévő item a szobához kerül,
+     * egy item sem fog a játékoshoz tartozni.
      */
     public void dropAll() {
         SkeletonMenu.startCall("Player.dropAll()");
-        inventory.forEach(item -> location.addItem(item));
-        inventory.clear();
+        inventory.forEach(item -> this.dropItem(item));
         SkeletonMenu.endCall();
     }
 
     /**
-     * A paraméterként kapott tárgyat használja a játékos.
+     * A paraméterként kapott tárgyat használja a játékos, ha nincs lebénulva.
      * Csak olyan tárgyat szabad átadni ennek a függvénynek, 
      * aminek a játékos meghívhatja a use függvényét.
      * 
@@ -122,14 +150,14 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      */
     public void useItem(Item item) {
         SkeletonMenu.startCall("Player.useItem(Item)");
-        item.use(location, this);
+        if(!stunned)
+            item.use(location, this);
         SkeletonMenu.endCall();
     }
 
     /**
      * Hozzáadja a poisonImmunities-hez a paraméterként kapott immuntitást.
-     *
-     * @param poisonImmunity
+     * @param poisonImmunity az immunitás, ami hozzáadódik az immunitásokhoz
      */
     public void addPoisonImmunity(PoisonImmunity poisonImmunity) {
         SkeletonMenu.startCall("Player.addPoisonImmunity(PoisonImmunity)");
@@ -140,7 +168,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     /**
      * Kitörli a poisonImmunities-ból a paraméterként kapott tárgyhoz tartozó immunitást.
      *
-     * @param item A tárgy ami az immunitást adja
+     * @param item a tárgy amihez tartozik az immunitás
      */
     public void removePoisonImmunity(Item item) {
         SkeletonMenu.startCall("Player.removePoisonImmunity(Item)");
@@ -149,8 +177,14 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall();
     }
 
+    /**
+     * A játékos találkozik egy takarítóval, amikor a takarító a szobába lép
+     * és a játékos tud mozogni, a játékos elhagyja a szobát.
+     *
+     * @param cleaner a takarító, akivel a játékos találkozik
+     */
     @Override
-    public void meet(Cleaner cleaner, Room room) {
+    public void meet(Cleaner cleaner) {
         SkeletonMenu.startCall("Player.meet(Cleaner, Room)");
         if (!stunned) {
             this.leaveRoom();
@@ -162,10 +196,15 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * A játékos duration ideig nem tud mozogni.
+     * A játékos lebénulását valósítja meg. 
+     * Beállítja a stunned jelzőt igazta
+     * Elindít egy időzítőt, ez duration másodperc  múlva visszaállítja a stunned jelzőt hamisra.
+     *
+     * @param duration az idő, ameddig a játékos lebénulva lesz
      */
     public void stun(int duration) {
         SkeletonMenu.startCall("Player.stun(Duration)");
+        // TODO: timercontrol
         Timer timer = new Timer();
         stunned=true;
         timer.schedule(new TimerTask() {
@@ -181,12 +220,10 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     /**
      * A játékost ha mérgezés éri és nincs védettsége a méreg
      * ellen a játékosnak, mozgásképtelenné válik a játékos 5
-     * másodpercre és elejti az összes nála lévő tárgyat. Ha
-     * a játékos tud védekezni a méreg ellen, a játékos nem
-     * válik mozgásképtelenni és nem ejti el a nála lévő
-     * tárgyakat.
+     * másodpercre és elejti az összes nála lévő tárgyat. 
+     * Ha ajátékosnak van aktív PoisonImmunityje, az megvédi a mérgezéssel szemben.
+     * Ha van nem aktív PoisonImmunity-je, azt aktiválja és ez megvédi a mérgeződéssel szemben.
      */
-    @Override
     public void poison() {
         SkeletonMenu.startCall("Player.poison()");
         if (poisonImmunities.isEmpty()) {
@@ -221,7 +258,8 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
 
     /**
      * Hozzáad egy KillImmunity-t a játékoshoz.
-     * Professor nem overide-olja mivel számára nem szükséges
+     * Professor nem írja fölül mivel számára nem szükséges
+     * A Student osztályban felül kell írni.
      *
      * @param killImmunity a hozzáadandó immunitás
      */
@@ -230,7 +268,8 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
 
     /**
      * Kitörli a paraméterként kapott tárgyhoz tartozó KillImmunity-t a játékosból.
-     * Professor nem overide-olja mivel számára nem szükséges
+     * Professor nem írja fölül mivel számára nem szükséges
+     * A Student osztályban felül kell írni.
      *
      * @param item a tárgy, aminek az immunitását törli
      */
@@ -238,7 +277,16 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * Ha elhasználódott egy effekt akkor a játékosnak törölnie kell az effektet a listájából.
+     * EffectConsumedObserver interfész implementációja.
+     * Ha lejárt egy effekt akkor a játékos törli az effektet a poisonimmunity listájából, 
+     * valamint az effektet adó tárgy use metódusát meghívja, ha a tárgy még a játékosnál van, 
+     * ezzel jelezve neki a használódást.
+     * 
+     * Ebben az osztályban a PoisonImmunity effekteket kell csak kezelni, 
+     * a Student osztályban a KillImmunityket is kezelni kell.
+     * 
+     * Ha lejár egy PoisonImmunity effect, 
+     * a szobával meg kell mérgeztetni ezt a játékost, ha továbbra is mérgező. (tryPoison)
      *
      * @param effect az elhasznált effekt
      */
@@ -259,14 +307,21 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall();
     }
 
-    public void dropRandomItem(){};
+    /**
+     * A játékos elejt egy nála lévő, véletlenszerűen kiválasztott tárgyat.
+     */
+    public void dropRandomItem() {
+        SkeletonMenu.startCall("AcademicPerson.dropRandomItem()");
+        dropItem(inventory.get(new Random().nextInt(inventory.size())));
+        SkeletonMenu.endCall();
+    };
 
-        /**
-         * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-         * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-         *
-         * @param ffp2 a hozzáadandó tárgy
-         */
+    /**
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     *
+     * @param ffp2 a hozzáadandó tárgy
+     */
     @Override
     public void acceptItem(FFP2 ffp2) {
         SkeletonMenu.startCall("Player.acceptItem(FFP2)");
@@ -275,7 +330,6 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         location.removeItem(ffp2);
         SkeletonMenu.endCall();
     }
-
 
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
@@ -291,7 +345,6 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall();
     }
 
-
     /**
      * A hamis tárgyak (FakeItem) felvételkor megsemmisülnek. A tárgyak közös interfésze az IItem interfészben definiált.
      * A hamis tárgyak az igazi verziójukat öröklik és implementálják az IItemből származtatott FakeItem interfészt.
@@ -305,6 +358,12 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall();
     }
 
+    /**
+     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz,
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     *
+     * @param airFreshener a felvevendő tárgy
+     */
     @Override
     public void acceptItem(AirFreshener airFreshener) {
         SkeletonMenu.startCall("Player.acceptItem(AirFreshener)");
