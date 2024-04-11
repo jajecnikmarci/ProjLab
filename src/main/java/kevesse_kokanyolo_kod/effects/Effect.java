@@ -44,7 +44,7 @@ public abstract class Effect implements TimerObserver {
     }
 
     /**
-     * Aktiválja az effecet, létrehoz egy időzítőt és elindítja a hatás időtartamáig.
+     * Aktiválja az effectet, létrehoz egy időzítőt és elindítja a hatás időtartamáig.
      */
     public void activate() {
         SkeletonMenu.startCall("Effect.activate()");
@@ -74,7 +74,7 @@ public abstract class Effect implements TimerObserver {
      * A hatás lejártakor az időzítő meghívja ezt a függvént. 
      */
     public void timeIsUp() {
-        SkeletonMenu.startCall("PoisonImmunity.timeIsUp()");
+        SkeletonMenu.startCall("Effect.timeIsUp()");
         observer.effectConsumed(this);
         SkeletonMenu.endCall();
     }

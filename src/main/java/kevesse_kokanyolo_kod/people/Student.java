@@ -127,7 +127,7 @@ public class Student extends AcademicPerson {
 
     /**
      * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.s
+     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      *
      * @param tvsz a hozzáadandó tárgy
      */
@@ -152,7 +152,6 @@ public class Student extends AcademicPerson {
     public void acceptItem(Glass glass) {
         SkeletonMenu.startCall("Student.acceptItem(Glass)");
         this.addItem(glass);
-        this.addKillImmunity(new KillImmunity(glass, 10, this));
         location.removeItem(glass);
         SkeletonMenu.endCall();
     }

@@ -9,8 +9,11 @@ import kevesse_kokanyolo_kod.people.AcademicPerson;
  */
 public class FakeTVSZ extends TVSZ implements FakeItem {
     /**
-     * Hozzáadja a paraméterül kapott AcademicPerson-höz a tárgyat.
-     * @param academicPerson az a játékos, aki felveszi a tárgyat
+     * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt,
+     * FakeItemként átadva magát.
+     * Visitor design pattern része
+     *
+     * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
     @Override
     public void accept(AcademicPerson academicPerson) {

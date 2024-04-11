@@ -115,7 +115,9 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
 
     /**
      * A paraméterként kapott tárgyat használja a játékos.
-     *
+     * Csak olyan tárgyat szabad átadni ennek a függvénynek, 
+     * aminek a játékos meghívhatja a use függvényét.
+     * 
      * @param item a használandó tárgy
      */
     public void useItem(Item item) {
@@ -202,9 +204,6 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
     }
 
-
-
-
     /**
      * Megkeresi a paraméterként kapott tárgyhoz tartozó immunitást a poisonImmunities-ból.
      *
@@ -237,9 +236,6 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      */
     public void removeKillImmunity(Item item) {
     }
-
-
-
 
     /**
      * Ha elhasználódott egy effekt akkor a játékosnak törölnie kell az effektet a listájából.
@@ -275,7 +271,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     public void acceptItem(FFP2 ffp2) {
         SkeletonMenu.startCall("Player.acceptItem(FFP2)");
         this.addItem(ffp2);
-        this.addPoisonImmunity(new PoisonImmunity(ffp2, ffp2.getImmunityLength(), this));
+        ffp2.use(location, this); 
         location.removeItem(ffp2);
         SkeletonMenu.endCall();
     }

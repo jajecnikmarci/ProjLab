@@ -3,7 +3,6 @@ package kevesse_kokanyolo_kod.effects;
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
-import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 /**
  * Olyan hatás, ami megvédi a Student-et a Professor-ok támadásától (lélekszipolyozásától), ha aktiválva van.
@@ -15,6 +14,7 @@ public class KillImmunity extends Effect {
     public KillImmunity(Item givenBy, int duration, EffectConsumedObserver observer) {
         super(givenBy, duration, observer);
     }
+
 
     @Override
     public void printState(Printer printer, LabyrinthBuilder builder) {

@@ -7,7 +7,7 @@ import kevesse_kokanyolo_kod.effects.Effect;
  */
 public abstract class Item implements IItem {
     /**
-     * A tárgyhoz tartozó effektet tárolja
+     * A tárgyhoz tartozó effektet tárolja, hogy meg lehessen szüntetni eldobáskor. 
      */
     protected Effect effect;
 

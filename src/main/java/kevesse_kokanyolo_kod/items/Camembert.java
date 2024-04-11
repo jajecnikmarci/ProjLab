@@ -13,9 +13,12 @@ import kevesse_kokanyolo_kod.room.Room;
  */
 public class Camembert extends Item {
     /**
-     * A Camembert használata. Eltávolítja a játékos tárgyai közül a Camembert-et,
-     * és a szobához hozzáad egy PoisonEffect-et, valamint aktiválja azt.
-     *
+     * A Camembert használata. 
+     * Eltávolítja a játékos tárgyai közül a Camembert-et,
+     * és a szobához hozzáad egy 30 másodpercers PoisonEffect-et, valamint aktiválja azt.
+     * Megmérgezteti a szobával a már benne tartózkodó játékosokat.
+     * Beállítja a tárgyhoz tartozó hatást a létrehozott hatásra.
+     *  
      * @param room a szoba, ahol a tárgyat használják
      * @param academicPerson a játékos, aki használja a tárgyat
      */
@@ -32,8 +35,10 @@ public class Camembert extends Item {
     }
 
     /**
-     * Hozzáadja a paraméterül kapott AcademicPerson-höz a Camembert-et.
-     * @param academicPerson az a játékos, aki felveszi a tárgyat
+     * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
+     * Visitor design pattern része
+     *
+     * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
     @Override
     public void accept(AcademicPerson academicPerson) {
@@ -41,21 +46,31 @@ public class Camembert extends Item {
         academicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
+
+    /**
+     * Felülírja az IItem interfész Camembert interactItem metódusát,
+     * felügyeli, hogy ne kerülhessen két Camembert tárgy az AcademicPerson-höz
+     * 
+     * @param camembert a tárgy, amit az AcademicPerson megpróbál felvenni
+     */
+    @Override
+    public boolean interactItem(Camembert camembert) {
+        return true;
+    }
+
+    /**
+     * Visitor design pattern része. 
+     * @param item a tárgy, amivel interakcióba lép.
+     */
+    @Override
+    public boolean interact(IItem item) {
+        return item.interactItem(this);
+    }
+
     @Override
     public void printState(Printer printer, LabyrinthBuilder builder) {
         printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("effect", this.effect);  
         printer.endPrintObject();      
     }
-
-    @Override
-    public boolean interactItem(Camembert camembert) {
-        return true;
-    }
-
-    @Override
-    public boolean interact(IItem item) {
-        return item.interactItem(this);
-    }
-
 }

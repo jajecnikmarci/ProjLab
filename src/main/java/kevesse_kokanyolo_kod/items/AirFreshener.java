@@ -8,8 +8,8 @@ import kevesse_kokanyolo_kod.room.Room;
 
 public class AirFreshener extends Item{
     /**
-     * Az AirFreshener használata. Megtisztítja a szobát, ahol a tárgyat használták,
-     * a szoba megszűnik mérgezőnek lenni. A tárgy használat után megsemmisül.
+     * Az AirFreshener használata. Megtisztítja a szobát a mérgezőségtől, ahol a tárgyat használták,
+     * a szoba megszűnik mérgezőnek lenni. A tárgy törölteti magát a felhasználójával.
      *
      * @param room   a szoba, ahol a tárgyat használják
      * @param academicPerson a játékos, aki használja a tárgyat
@@ -23,8 +23,9 @@ public class AirFreshener extends Item{
     }
 
     /**
-     * Hozzáadja a paraméterül kapott AcademicPerson-höz a tárgyat.
-     * @param academicPerson az a játékos, aki felveszi a tárgyat
+     * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
+     * Visitor design pattern része
+     * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
     @Override
     public void accept(AcademicPerson academicPerson) {
@@ -32,21 +33,31 @@ public class AirFreshener extends Item{
         academicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
+
+    /**
+     * Felülírja az IItem interfész AirFreshener interactItem metódusát,
+     * felügyeli, hogy ne kerülhessen két AirFreshener tárgy az AcademicPerson-höz
+     * 
+     * @param airFreshener a tárgy, amit az AcademicPerson megpróbál felvenni
+     */
+    @Override
+    public boolean interactItem(AirFreshener airFreshener) {
+        return true;
+    }
+
+    /**
+     * Visitor design pattern része. 
+     * @param item a tárgy, amivel interakcióba lép.
+     */
+    @Override
+    public boolean interact(IItem item) {
+        return item.interactItem(this);
+    }
+
     @Override
     public void printState(Printer printer, LabyrinthBuilder builder) {
         printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("effect", this.effect);  
         printer.endPrintObject();      
     }
-
-    @Override
-    public boolean interactItem(AirFreshener airFreshener) {
-        return true;
-    }
-
-    @Override
-    public boolean interact(IItem item) {
-        return  item.interactItem(this);
-    }
-
 }
