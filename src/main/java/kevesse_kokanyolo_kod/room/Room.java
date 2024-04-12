@@ -62,7 +62,13 @@ public class Room implements EffectConsumedObserver {
 
         stickiness = null;
     }
-
+    /**
+     * Hozzáadja a szoba ajtóihoz a kapott ajtót.
+     * @param door a kapott ajtó
+     */
+    public void addDoor(Door door) {
+        doors.add(door);
+    }
     /**
      * Visszaadja a szoba ajatajainak listáját.
      * @return
@@ -252,9 +258,7 @@ public class Room implements EffectConsumedObserver {
         }
 
         // Jöhetne létre elátkozott ajtó...
-        Door door = new Door(this, room, true, true, true, false); 
-        doors.add(door);
-        room.doors.add(door);
+        new Door(this, room, true, true, true, false); 
         SkeletonMenu.endCall("A szoba osztódott.");
     }
 
@@ -278,10 +282,9 @@ public class Room implements EffectConsumedObserver {
         this.poisonEffects.addAll(room.poisonEffects);
         this.stunEffects.addAll(room.stunEffects);
 
-        doors.addAll(room.doors);
+        doors.addAll(room.doors); 
         doors = doors.stream()
-                .filter(d -> !(d.getRoom1() == room && d.getRoom2() == this
-                        || d.getRoom1() == this && d.getRoom2() == room))
+                .filter(d -> !d.isBetween(this, room))
                 .distinct()
                 .collect(Collectors.toList());
         doors.forEach(d -> {

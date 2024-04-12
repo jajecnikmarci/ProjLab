@@ -39,9 +39,14 @@ public class Door {
      */
     private boolean cursed;
 
+    /**
+     * Ajtó konstruktor. Tárolja a kapott paramétereket, valamint hozzáadja a hozzáadja a kapott szobákhoz az ajtót.
+     */
     public Door(Room room1, Room room2, boolean room1Open, boolean room2Open, boolean visible, boolean cursed) {
         this.room1 = room1;
         this.room2 = room2;
+        room1.addDoor(this);
+        room2.addDoor(this);
         this.room1Open = room1Open;
         this.room2Open = room2Open;
         this.visible = visible;
