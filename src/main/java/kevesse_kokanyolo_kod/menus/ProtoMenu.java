@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
+import kevesse_kokanyolo_kod.people.Student;
+
 
 // CONFIG:
     // randomness <enable|disable> - véletlenszerűség be- vagy kikapcsolása, 
@@ -28,7 +30,7 @@ import java.util.function.Consumer;
     // add item <RoomName> <ItemType> <ItemName> 
 
     // 3. Ajtók létrehozása (Adjon hozzá ajtókat a szobához: [!]<RoomName> <RoomName> [?cursed] Tegyen felkiáltójelet az 1. szoba neve elé, ha nem átjárható abból az irányból. A cursed opcionális true/false értéket lehet megadni, default = false.) 
-    // add door [!]<RoomName> <RoomName>  [?cursed]
+    // add door [!]<RoomName> <RoomName>  <DoorName> [?cursed]
 
     // 4. Személyek létrehozása, szobához adása. (Adjon hozzá személyeket a szobához: <RoomName> <PersonType> <PersonName>) 
     // add person <RoomName> <PersonType> <PersonName>
@@ -99,6 +101,11 @@ public class ProtoMenu {
         initControlOptions.add(new Option("use", this::useOption));
         initControlOptions.add(new Option("gotoroom", this::gotoroomOption));
         initControlOptions.add(new Option("shake", this::shakeOption));
+
+
+        Student.slideRulePicked = () -> printer.println("A diák felvette a logarlécet.");
+        Student.studentKilled = (student) -> printer.println(student + " meghalt.");
+        
     }
 
     private void runTest(String inputFileName, String expectedFileName) throws IOException {

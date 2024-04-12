@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
-import kevesse_kokanyolo_kod.effects.PoisonImmunity;
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.FakeItem;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
@@ -165,7 +164,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      * Hozzáadja a poisonImmunities-hez a paraméterként kapott immuntitást.
      * @param poisonImmunity az immunitás, ami hozzáadódik az immunitásokhoz
      */
-    public void addPoisonImmunity(PoisonImmunity poisonImmunity) {
+    public void addPoisonImmunity(Effect poisonImmunity) {
         SkeletonMenu.startCall("Player.addPoisonImmunity(PoisonImmunity)");
         poisonImmunities.add(poisonImmunity);
         SkeletonMenu.endCall();
@@ -301,8 +300,9 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     };
 
     /**
-     * A paraméterként kapott FFP2 tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * A paraméterként kapott FFP2 tárgyat hozzáadja a Player tárgyaihoz.
+     * A tárgy felvételét követően a játékos megkapja az FFP2 tárgyhoz tartozó hatást.
+     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      *
      * @param ffp2 a hozzáadandó tárgy
      */
@@ -310,14 +310,14 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     public void acceptItem(FFP2 ffp2) {
         SkeletonMenu.startCall("Player.acceptItem(FFP2)");
         this.addItem(ffp2);
-        ffp2.use(location, this); 
+        this.addPoisonImmunity(ffp2.getEffect());
         location.removeItem(ffp2);
         SkeletonMenu.endCall();
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * A paraméterként kapott Camembert tárgyat hozzáadja a Player tárgyaihoz.
+     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      *
      * @param camembert a felvevendő tárgy
      */
@@ -330,9 +330,8 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * A hamis tárgyak (FakeItem) felvételkor megsemmisülnek. A tárgyak közös interfésze az IItem interfészben definiált.
-     * A hamis tárgyak az igazi verziójukat öröklik és implementálják az IItemből származtatott FakeItem interfészt.
-     *
+     * A hamis tárgy felvételét követően a hamis tárgy törlődik, megszűnik létezni.
+     * 
      * @param fakeItem a nem felvevendő tárgy
      */
     @Override
@@ -343,8 +342,8 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * Az AirFreshener tárgyat hozzáadja a Player tárgyaihoz.
+     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      *
      * @param airFreshener a felvevendő tárgy
      */

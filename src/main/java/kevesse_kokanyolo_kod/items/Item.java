@@ -26,6 +26,4 @@ public abstract class Item implements IItem {
     public Effect getEffect() {
         return effect;
     }
-
-
 }

@@ -10,7 +10,6 @@ import kevesse_kokanyolo_kod.room.Room;
  * Logarléc tárgyat reprezentáló osztály
  */
 public class SlideRule extends Item {
-
     /**
      * A logarléc használata. Felvételekor véget ér a játék így nem csinál semmit.
      */

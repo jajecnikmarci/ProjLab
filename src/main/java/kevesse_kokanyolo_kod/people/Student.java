@@ -8,11 +8,36 @@ import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * A Hallgató viselkedését megvalósító osztály.
  */
 public class Student extends AcademicPerson {
+    /**
+     * Egy olyan függvényt reprezentál, amely nem vesz át és nem ad vissza értéket.
+     */
+    public interface VoidFunction {
+        public void execute();
+    }
+    
+    /**
+     * A játék menete közben figyeli, hogy hány hallgatót bocsájtottak el.
+     * Ha az összes hallgatót elbocsájtották, a professzorok nyertek.
+     * A controllernek kell beállítania.
+     */
+    public static Consumer<Student> studentKilled;
+
+    /**
+     * Ez a függvény hívódik meg, ha egy hallgató felveszi a logarlécet.
+     * A controllernek kell beállítania.
+     */
+    public static VoidFunction slideRulePicked;
+
+    static {
+        studentKilled = (Student) -> {};
+        slideRulePicked = () -> {};
+    }
     /**
      * A hallgató lelkeinek számát tárolja.
      */
@@ -46,7 +71,8 @@ public class Student extends AcademicPerson {
         if (killImmunities.isEmpty()) {
             souls--;
             if (souls == 0) {
-                //TODO: Meghal a hallgató
+                studentKilled.accept(this);  // Jelzés a vezérlőnek, hogy a hallgató meghalt
+
                 SkeletonMenu.endCall(" A játékos meghalt");
                 return;
             }
@@ -100,9 +126,9 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Beállítja a transzisztor tulajdonosát a játékosra.
+     * A paraméterként kapott Transistor tárgyat hozzáadja a Student tárgyaihoz.
+     * Beállítja a transzisztor tulajdonosát a Student-re.
+     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      *
      * @param transistor a hozzáadandó tárgy
      */
@@ -116,8 +142,9 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * A paraméterként kapott SlideRule tárgyat hozzáadja a Student tárgyaihoz.
+     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * A hallgatók nyerték a játékot.
      *
      * @param slideRule a hozzáadandó tárgy
      */
@@ -126,13 +153,16 @@ public class Student extends AcademicPerson {
         SkeletonMenu.startCall("Student.acceptItem(SlideRule)");
         this.addItem(slideRule);
         location.removeItem(slideRule);
+        
+        slideRulePicked.execute(); // Jelzés a vezérlőnek, hogy a hallgató felvette a logarlécet
         SkeletonMenu.endCall();
     }
 
     /**
-     * Hozzáadja a tvsz-t a hallgatóhoz,  
-     * Hozzáadja a TVSZ effektjét a hallgatóhoz.
-     * Törli a szobából a tvsz-t.
+     * A paraméterként kapott TVSZ tárgyat hozzáadja a Student tárgyaihoz.
+     * A tárgy felvételét követően a játékos megkapja az TVSZ tárgyhoz tartozó hatást.
+     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * 
      * @param tvsz a hozzáadandó tárgy
      */
     @Override
@@ -145,8 +175,8 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * A paraméterként kapott Glass tárgyat hozzáadja a Student tárgyaihoz.
+     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      *
      * @param glass a hozzáadandó tárgy
      */
@@ -159,8 +189,8 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * A paraméterként kapott Rug tárgyat hozzáadja a Student tárgyaihoz.
+     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      *
      * @param rug a hozzáadandó tárgy
      */
@@ -206,7 +236,7 @@ public class Student extends AcademicPerson {
         room.onEnter(this);
     }
 
-        /**
+    /**
      * Felülírja az AcademicPerson effectConsumed metódusát, hogy a hallgatót megfelelően kezelje.
      * felhasználja az eredeti metódust, hogy a PoisonImmunityket kezelje.
      * 

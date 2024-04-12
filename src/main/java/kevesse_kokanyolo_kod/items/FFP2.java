@@ -36,9 +36,9 @@ public class FFP2 extends Item {
      * Ez a függvény akkor hívódik, ha a tárgyhoz tartozó hatás lejárt. 
      * (Az első hatás a tárgy felvételekor adódik a játékoshoz)
      * Ha a tárgy elhasználódott (immunityLength = 0) akkor törölteti a tárgyat a játékostól.
-     * Egyébként létrehoz egy PoisonImmunity hatást immunityLength hosszal és hozzáadja a játékoshoz.
+     * Egyébként vsökkenti 2 másodperccel az immunityLength-et.
+     * Létrehoz egy PoisonImmunity hatást immunityLength hosszal és hozzáadja a játékoshoz.
      * Beállítja a tárgy effect attribútumát a létrehozott hatásra.
-     * Csökkenti 2 másodperccel az immunityLength-et.
      * 
      * Ha a védettség lejárt és a szoba továbbra is mérgező, 
      * a játékos úőjbóli mérgezését a szoba felelőssége kezelni.
@@ -54,14 +54,15 @@ public class FFP2 extends Item {
             SkeletonMenu.endCall("A tárgy elhasználódott");
             return;
         }
+        immunityLength -= immunityLengthDecrease;
         PoisonImmunity poisonImmunity = new PoisonImmunity(this, immunityLength, academicPerson);
         academicPerson.addPoisonImmunity(poisonImmunity);
         effect = poisonImmunity; 
-        immunityLength -= immunityLengthDecrease;
         SkeletonMenu.endCall();
     }
 
     /**
+     * Létrehoz egy PoisonImmunityt firstImmunityLength hosszal. Beállítja a hatását erre.
      * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
      * Visitor design pattern része
      *
@@ -70,6 +71,7 @@ public class FFP2 extends Item {
     @Override
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("FFP2.accept(Player)");
+        this.effect = new PoisonImmunity(this, firstImmunityLength, academicPerson);
         academicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
@@ -92,7 +94,7 @@ public class FFP2 extends Item {
      */
     @Override
     public boolean interact(IItem item) {
-        return  item.interactItem(this);
+        return item.interactItem(this);
     }
 
     /**

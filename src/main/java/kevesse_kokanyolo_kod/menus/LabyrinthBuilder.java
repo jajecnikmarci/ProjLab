@@ -39,7 +39,7 @@ public class LabyrinthBuilder {
         ItemclassMap.put("SlideRule", SlideRule.class);
         ItemclassMap.put("Transistor", Transistor.class);
         ItemclassMap.put("TVSZ", TVSZ.class);
-    }
+}
 
     /**
      * Először ellenőrzi, hogy a szoba neve már szerepel-e a listában, ha nem akkor
