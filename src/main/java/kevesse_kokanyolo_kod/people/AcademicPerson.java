@@ -30,14 +30,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         return stunned;
     }
 
-    /**
-     * Visszaadja a játékos tárgylistájának méretét.
-     * @return a játékos tárgylistájának mérete
-     */
-    public int getInventorySize() {
-        return inventory.size();
-    }
-    
+      
     /**
      * Megmondja, hogy mérgezett-e a játékos.
      */
@@ -86,13 +79,13 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * Ha a játékos nincs lebénulva, a jelenlegi szobára meghívja a popItem függvényt.
+     * Ha a játékos nincs lebénulva, és kevesebb mint 5 tárgya van a jelenlegi szobára meghívja a popItem függvényt.
      * Ezzel elindítja a Visitor működést, 
      * mely végén felveszi a szoba tárgylistájának legfelső tárgyát, ha felveheti.
      */
     public void pickUpItem() {
         SkeletonMenu.startCall("Player.pickUpItem()");
-        if(!stunned)
+        if(!stunned && inventory.size() < 5)
             location.popItem(this);
         SkeletonMenu.endCall();
     }
