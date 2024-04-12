@@ -206,21 +206,7 @@ public class Student extends AcademicPerson {
         room.onEnter(this);
     }
 
-    /**
-     * Visszaadja a tárgyhoz tartozó KillImmunity-t, null-t ha nincs ilyen.
-     * 
-     * @param item a tárgy, amelyik az immunitást adja
-     */
-    public Effect findKillImmunityByItem(Item item) {
-        for (Effect killImmunity : killImmunities) {
-            if (killImmunity.getItem().equals(item)) {
-                return killImmunity;
-            }
-        }
-        return null;
-    }
-
-    /**
+        /**
      * Felülírja az AcademicPerson effectConsumed metódusát, hogy a hallgatót megfelelően kezelje.
      * felhasználja az eredeti metódust, hogy a PoisonImmunityket kezelje.
      * 

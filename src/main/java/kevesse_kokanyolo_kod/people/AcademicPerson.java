@@ -246,20 +246,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         SkeletonMenu.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
     }
 
-    /**
-     * Megkeresi a paraméterként kapott tárgyhoz tartozó immunitást a poisonImmunities-ból.
-     *
-     * @param item a tárgy, aminek az immunitását keresi
-     * @return a tárgyhoz tartozó immunitás
-     */
-    protected Effect findPoisonImmunityByItem(Item item) {
-        for (Effect poisonImmunity : poisonImmunities) {
-            if (poisonImmunity.getItem().equals(item)) {
-                return poisonImmunity;
-            }
-        }
-        return null;
-    }
+  
 
     /**
      * Hozzáad egy KillImmunity-t a játékoshoz.
@@ -314,7 +301,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     };
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
+     * A paraméterként kapott FFP2 tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
      * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
      *
      * @param ffp2 a hozzáadandó tárgy
