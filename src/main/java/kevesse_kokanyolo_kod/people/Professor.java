@@ -111,13 +111,12 @@ public class Professor extends AcademicPerson {
     }
 
     /**
-     * Elindítja a tárgy felvétel folyamatát (az ősosztályban definiált módon.), ha a játékosnak van helye a tárgyak között.
+     * A professzornál legföljebb 2 tárgy lehet egyszerre.
+     * @returns 2
      */
     @Override
-    public void pickUpItem() {
-        if (inventory.size() < 2) {
-            super.pickUpItem();
-        }
+    public int getMaxItemCount() {
+        return 2;
     }
 
     /**

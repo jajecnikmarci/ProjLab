@@ -102,14 +102,13 @@ public class Student extends AcademicPerson {
         SkeletonMenu.endCall();
     }
 
-    /**
-     * Elindítja a tárgy felvétel folyamatát (az ősosztályban definiált módon.), ha van hely a játékos tárgyai között.  
+     /**
+     * A hallgatónál legföljebb 5 tárgy lehet egyszerre.
+     * @returns 5
      */
-    @Override 
-    public void pickUpItem() {
-        if (inventory.size() < 5) {
-            super.pickUpItem();
-        }
+    @Override
+    public int getMaxItemCount() {
+        return 5;
     }
 
     /**

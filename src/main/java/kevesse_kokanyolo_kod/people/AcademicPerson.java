@@ -34,7 +34,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      * Megmondja, hogy mérgezett-e a játékos.
      */
     protected boolean stunned;
-
+    
     /**
      * Létrehozza a játékost
      * 
@@ -44,6 +44,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         super(room);
         inventory = new ArrayList<>();
         poisonImmunities = new ArrayList<>();
+        
     }
     /**
      * Megnézi, hogy a játékos bénult-e. Ha igen, akkor nem tud mozogni. 
@@ -78,15 +79,26 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * Ha a játékos nincs lebénulva a van a jelenlegi szobára meghívja a popItem függvényt.
+     * A Professornak és Studentnek felül kell írni és mefadni hogy legföljebb hány tárgy lehet náluk
+     *  */    
+    protected abstract int getMaxItemCount();
+    /**
+     * Ha a játékos nincs lebénulva és van elég helye a tárgyaknak,
+     * ha van a jelenlegi szobára meghívja a popItem függvényt.
      * Ezzel elindítja a Visitor működést, 
      * mely végén felveszi a szoba tárgylistájának legfelső tárgyát, ha felveheti.
-     * A Professornak és Studentnek felül kell írni és ellenőrizni, hogy van-e hely a tárgylistájában.
      */
     public void pickUpItem() {
         SkeletonMenu.startCall("Player.pickUpItem()");
-        if(!stunned)
-            location.popItem(this);
+        if(inventory.size() >= getMaxItemCount()) {
+            SkeletonMenu.endCall("A tárgy nem fér el a játékosnál.");
+            return;
+        }
+        if(stunned) {
+            SkeletonMenu.endCall("A játékos le van bénulva, nem vehet fel tárgyat.");
+            return;
+        }
+        location.popItem(this);
         SkeletonMenu.endCall();
     }
 
