@@ -124,7 +124,6 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     /**
      * A paraméterül kapott item-et eldobja a játékos, ha nincs lebénulva.
      * Az item a szobához kerül, nem tartozik többé a játékoshoz az item.
-     * //TODO: onDrop()?
      *
      * @param item a tárgy, amit eldob a játékos
      */
@@ -133,6 +132,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         if(!stunned) {
             inventory.remove(item);
             location.addItem(item);
+            item.onDrop(this);
         }
         SkeletonMenu.endCall();
     }
@@ -173,14 +173,13 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     }
 
     /**
-     * Kitörli a poisonImmunities-ból a paraméterként kapott tárgyhoz tartozó immunitást.
-     *
-     * @param item a tárgy amihez tartozik az immunitás
+     * Kitörli a paraméterként kapott immunitást a poisonImmunities-ból.
+     * A Hallgatóknak felül kell írni, hogy a KillImmunity-ket is töröljék, ha azt kaptak.
+     * @param a törlendő hatás
      */
-    public void removePoisonImmunity(Item item) {
-        SkeletonMenu.startCall("Player.removePoisonImmunity(Item)");
-        Effect effectToRemove = findPoisonImmunityByItem(item);
-        poisonImmunities.remove(effectToRemove);
+    public void removeEffect(Effect effect) {
+        SkeletonMenu.startCall("Player.removeEffect(Effect)");
+        poisonImmunities.remove(effect);
         SkeletonMenu.endCall();
     }
 
@@ -270,24 +269,15 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      *
      * @param killImmunity a hozzáadandó immunitás
      */
-    public void addKillImmunity(KillImmunity killImmunity) {
+    public void addKillImmunity(Effect killImmunity) {
     }
 
-    /**
-     * Kitörli a paraméterként kapott tárgyhoz tartozó KillImmunity-t a játékosból.
-     * Professor nem írja fölül mivel számára nem szükséges
-     * A Student osztályban felül kell írni.
-     *
-     * @param item a tárgy, aminek az immunitását törli
-     */
-    public void removeKillImmunity(Item item) {
-    }
-
+   
     /**
      * EffectConsumedObserver interfész implementációja.
      * Ha lejárt egy effekt akkor a játékos törli az effektet a poisonimmunity listájából, 
      * valamint az effektet adó tárgy use metódusát meghívja, ha a tárgy még a játékosnál van, 
-     * ezzel jelezve neki a használódást.
+     * ezzel jelezve neki a használódást. 
      * 
      * Ebben az osztályban a PoisonImmunity effekteket kell csak kezelni, 
      * a Student osztályban a KillImmunityket is kezelni kell.
@@ -300,17 +290,18 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     public void effectConsumed(Effect effect) {
         SkeletonMenu.startCall("Player.effectConsumed(Effect)");
         Item item = effect.getItem();
-        PoisonImmunity poisonImmunity = findPoisonImmunityByItem(item);
-        if (poisonImmunity != null) {
-            poisonImmunities.remove(poisonImmunity);
-            item.removeEffect();
-            if (inventory.contains(item)) {
-                item.use(location, this);
+        item.removeEffect();
+        for (Effect e : poisonImmunities) {
+            if (e == effect) {
+                if (inventory.contains(item)) {
+                    item.use(location, this);
+                }
+                location.tryPoison(this);
+                removeEffect(effect);
+                break;
+            
             }
         }
-
-        location.tryPoison(this);
-
         SkeletonMenu.endCall();
     }
 

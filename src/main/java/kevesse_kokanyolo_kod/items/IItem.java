@@ -1,6 +1,7 @@
 package kevesse_kokanyolo_kod.items;
 
 
+import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.items.fakes.FakeFFP2;
 import kevesse_kokanyolo_kod.items.fakes.FakeSlideRule;
 import kevesse_kokanyolo_kod.items.fakes.FakeTVSZ;
@@ -175,12 +176,25 @@ public interface IItem {
      * @param item a tárgy, amivel interakcióba lép
      * @return igaz, ha a 2 tárgy azonos fajta, egyébként hamis
      */
-    boolean interact(IItem item);
+    public boolean interact(IItem item);
 
     /**
      * Törli a tárgyhoz tartozó Effect-et
      */
-    void removeEffect();
+    public void removeEffect();
+
+    /**
+     * Visszaadja az
+     */
+    public Effect getEffect();
+
+    /**
+     * Ha egy tárgy eldobásra kerül, akkor ez a függvény hívódik meg.
+     * Az implementációkban felül kell írni, ha a tárgyhoz tartozik valamilyen speciális viselkedés
+     * @param person
+     */
+    public default void onDrop(AcademicPerson person) {} 
+
 
     public void printState(Printer printer, LabyrinthBuilder builder);
 

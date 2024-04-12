@@ -35,25 +35,32 @@ public class TVSZ extends Item {
     @Override
     public void use(Room room, AcademicPerson academicPerson) {
         SkeletonMenu.startCall("TVSZ.use(Room, Player)");
-        KillImmunity killImmunity = new KillImmunity(this, 0, academicPerson);
-        academicPerson.addKillImmunity(killImmunity);
         timesImmune--;
-
         if (timesImmune == 0) {
             academicPerson.removeItem(this);
+            SkeletonMenu.endCall();
+            return;
         }
+        KillImmunity killImmunity = new KillImmunity(this, 0, academicPerson);
+        academicPerson.addKillImmunity(killImmunity);
+
         SkeletonMenu.endCall();
     }
 
     /**
      * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
      * Visitor design pattern része
+     * Létrehozza a tárgyhoz tartozó KillImmunity-t, ami 0 (azaza végtelen) időtartamú, nem aktív. (Akkor aktiválódik, ha a játékosst megpróbálják megölni) 
+     * Beállítja az effectet a létrehozott killImmunityra.
+     * ami végtelen időtartamú, nem aktív. (Akkor aktiválódik, ha a játékosst megpróbálják megölni)
      *
      * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("TVSZ.accept(Player)");
         academicPerson.acceptItem(this);
+        KillImmunity immunity = new KillImmunity(this, 0, academicPerson);
+        this.effect = immunity;
         SkeletonMenu.endCall();
     }
 

@@ -95,6 +95,16 @@ public class FFP2 extends Item {
         return  item.interactItem(this);
     }
 
+    /**
+     * Ha a játékos eldobja az FFP2-t, akkor a játékosról leveszi az immunitást.
+     */
+    @Override
+    public void onDrop(AcademicPerson person) {
+        SkeletonMenu.startCall("FFP2.onDrop(AcademicPerson)");
+        person.removeEffect(this.effect);
+        SkeletonMenu.endCall();
+    }
+
     @Override
     public void printState(Printer printer, LabyrinthBuilder builder) {
         printer.startPrintObject(builder.getInstanceName(this));

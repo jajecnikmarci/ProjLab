@@ -1,7 +1,6 @@
 package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.effects.Effect;
-import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
@@ -22,7 +21,7 @@ public class Student extends AcademicPerson {
     /**
      * Nyilvántartja, a hallgató immunitásait a halálra.
      */
-    private List<KillImmunity> killImmunities;
+    private List<Effect> killImmunities;
 
     /**
      * Létrehozza a hallgatót
@@ -54,13 +53,13 @@ public class Student extends AcademicPerson {
             SkeletonMenu.endCall("A hallgató lelkét elszipolyozták.");
             return;
         }
-        for (KillImmunity killImmunity : killImmunities) {
+        for (Effect killImmunity : killImmunities) {
             if (killImmunity.isActive()) {
                 SkeletonMenu.endCall("A hallgatót megvédte egy már aktív tárgya.");
                 return;
             }
         }
-        KillImmunity killImmunity = killImmunities.get(0);
+        Effect killImmunity = killImmunities.get(0);
         killImmunity.activate();
         SkeletonMenu.endCall("A hallgatót megvédte egy most aktiválódott tárgya.");
     }
@@ -83,23 +82,21 @@ public class Student extends AcademicPerson {
      * @param killImmunity a hozzáadadndó killImmunity
      */
     @Override
-    public void addKillImmunity(KillImmunity killImmunity) {
+    public void addKillImmunity(Effect killImmunity) {
         SkeletonMenu.startCall("Student.addKillImmunity(KillImmunity)");
         killImmunities.add(killImmunity);
         SkeletonMenu.endCall();
     }
 
     /**
-     * Kitörli a killImmunities-ből a paraméterként kapott tárgyhoz tartozó immunitást.
+     * Kitörli a killImmunities-ből vagy a poisonimmunities-ből a kapott effectet, ha benne van valamelyikben.
      *
      * @param item a tárgy ami az immunitást adja
      */
     @Override
-    public void removeKillImmunity(Item item) {
-        SkeletonMenu.startCall("Student.removeKillImmunity(KillImmunity)");
-        KillImmunity killImmunityToRemove = findKillImmunityByItem(item);
-        killImmunities.remove(killImmunityToRemove);
-        SkeletonMenu.endCall();
+    public void removeEffect(Effect effect) {
+        super.removeEffect(effect); // Ha poisoneffect kitörli
+        killImmunities.remove(effect);
     }
 
     /**
@@ -133,18 +130,16 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     *
+     * Hozzáadja a tvsz-t a hallgatóhoz,  
+     * Hozzáadja a TVSZ effektjét a hallgatóhoz.
+     * Törli a szobából a tvsz-t.
      * @param tvsz a hozzáadandó tárgy
      */
     @Override
     public void acceptItem(TVSZ tvsz) {
         SkeletonMenu.startCall("Student.acceptItem(TVSZ)");
         this.addItem(tvsz);
-        KillImmunity killImmunity = new KillImmunity(tvsz, 10, this);
-        killImmunity.activate();
-        this.addKillImmunity(killImmunity);
+        this.addKillImmunity(tvsz.getEffect()); 
         location.removeItem(tvsz);
         SkeletonMenu.endCall();
     }
@@ -216,8 +211,8 @@ public class Student extends AcademicPerson {
      * 
      * @param item a tárgy, amelyik az immunitást adja
      */
-    public KillImmunity findKillImmunityByItem(Item item) {
-        for (KillImmunity killImmunity : killImmunities) {
+    public Effect findKillImmunityByItem(Item item) {
+        for (Effect killImmunity : killImmunities) {
             if (killImmunity.getItem().equals(item)) {
                 return killImmunity;
             }
@@ -237,14 +232,17 @@ public class Student extends AcademicPerson {
     @Override
     public void effectConsumed(Effect effect) {
         SkeletonMenu.startCall("Student.effectConsumed()");
-        super.effectConsumed(effect);
+        super.effectConsumed(effect); // Kezeli a mérgezés lejártát, ha mérgezés volt az effect
+        
         Item item = effect.getItem();
-        KillImmunity killImmunity = findKillImmunityByItem(item);
-        if (killImmunity != null) {
-            killImmunities.remove(killImmunity);
-            item.removeEffect();
-            if (inventory.contains(item)) {
-                item.use(location, this);
+        item.removeEffect();
+        for (Effect e: killImmunities) {
+            if (e == effect) {
+                if (inventory.contains(item)) {
+                    item.use(location, this);
+                }
+                removeEffect(effect);
+                break;
             }
         }
         SkeletonMenu.endCall();

@@ -18,4 +18,14 @@ public abstract class Item implements IItem {
     public void removeEffect() {
         effect = null;
     }
+
+    /**
+     * Visszaadja a tárgyhoz tartozó effektet
+     */
+    @Override 
+    public Effect getEffect() {
+        return effect;
+    }
+
+
 }
