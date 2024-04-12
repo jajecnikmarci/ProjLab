@@ -91,7 +91,7 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * Eldobja a hallgató egyik tárgyát.
+     * Eldobja a hallgató egyik tárgyát véletlenszerűen.
      */
     @Override
     public void dropRandomItem() {
@@ -100,6 +100,16 @@ public class Student extends AcademicPerson {
         IItem item = inventory.get(rand);
         dropItem(item);
         SkeletonMenu.endCall();
+    }
+
+    /**
+     * Elindítja a tárgy felvétel folyamatát (az ősosztályban definiált módon.), ha van hely a játékos tárgyai között.  
+     */
+    @Override 
+    public void pickUpItem() {
+        if (inventory.size() < 5) {
+            super.pickUpItem();
+        }
     }
 
     /**

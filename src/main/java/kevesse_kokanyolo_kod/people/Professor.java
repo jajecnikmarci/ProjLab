@@ -111,6 +111,16 @@ public class Professor extends AcademicPerson {
     }
 
     /**
+     * Elindítja a tárgy felvétel folyamatát (az ősosztályban definiált módon.), ha a játékosnak van helye a tárgyak között.
+     */
+    @Override
+    public void pickUpItem() {
+        if (inventory.size() < 2) {
+            super.pickUpItem();
+        }
+    }
+
+    /**
      * Meghívja a szoba onEnter metódusát átadva magát paraméterként, mint Professzor. 
      * @param room a szoba, ahova a professzor érkezik
      */
