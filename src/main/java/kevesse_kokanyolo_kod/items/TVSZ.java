@@ -64,6 +64,7 @@ public class TVSZ extends Item {
         SkeletonMenu.endCall();
     }
 
+
     /**
      * Felülírja az IItem interfész TVSZ interactItem metódusát,
      * felügyeli, hogy ne kerülhessen két TVSZ tárgy az AcademicPerson-höz

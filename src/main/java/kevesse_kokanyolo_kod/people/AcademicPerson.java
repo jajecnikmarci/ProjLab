@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.effects.EffectConsumedObserver;
-import kevesse_kokanyolo_kod.effects.KillImmunity;
 import kevesse_kokanyolo_kod.effects.PoisonImmunity;
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.FakeItem;
@@ -23,7 +22,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     /**
      * A játékos által használható mérgezés elleni immunitások listája.
      */
-    List<PoisonImmunity> poisonImmunities;
+    List<Effect> poisonImmunities;
 
     /**
      * Megmondja, hogy mérgezett-e a játékos.
@@ -238,11 +237,11 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
             SkeletonMenu.endCall("A játékos megmérgeződött.");
             return;
         }
-        if (poisonImmunities.stream().anyMatch(PoisonImmunity::isActive)) {
+        if (poisonImmunities.stream().anyMatch(Effect::isActive)) {
             SkeletonMenu.endCall("A játékos nem mérgeződött meg, mert volt aktív immunitása.");
             return;
         }
-        PoisonImmunity poisonImmunity = poisonImmunities.get(0);
+        Effect poisonImmunity = poisonImmunities.get(0);
         poisonImmunity.activate();
         SkeletonMenu.endCall("A játékos nem mérgeződött meg, mert egy tárgy megvédte.");
     }
@@ -253,8 +252,8 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      * @param item a tárgy, aminek az immunitását keresi
      * @return a tárgyhoz tartozó immunitás
      */
-    protected PoisonImmunity findPoisonImmunityByItem(Item item) {
-        for (PoisonImmunity poisonImmunity : poisonImmunities) {
+    protected Effect findPoisonImmunityByItem(Item item) {
+        for (Effect poisonImmunity : poisonImmunities) {
             if (poisonImmunity.getItem().equals(item)) {
                 return poisonImmunity;
             }
