@@ -4,7 +4,7 @@ import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.room.Room;
 
-public class Cleaner extends Person{
+public class Cleaner extends Person {
     /**
      * Létrehozza a takarítót.
      * 
@@ -49,7 +49,8 @@ public class Cleaner extends Person{
     }
 
     /**
-     * A takarító nem mérgeződik meg, amint egy mérgező szobába lép, megtisztítja a szobát
+     * A takarító nem mérgeződhet meg (Amint egy mérgező szobába lép, megtisztítja a szobát)
+     * Ez a metódus üres.
      */
     @Override
     public void poison() {}

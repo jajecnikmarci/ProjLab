@@ -10,18 +10,18 @@ import kevesse_kokanyolo_kod.room.Room;
 import java.util.*;
 
 /**
- * A Hallgatókat és oktatókat összefoglaló osztály reprezentáló osztály
+ * A Hallgatókat és oktatókat összefoglaló reprezentáló osztály
  */
 public abstract class AcademicPerson extends Person implements PickUpVisitor, EffectConsumedObserver {
     /**
      * A játékos tárgylistája.
      */
-    List<IItem> inventory;
+    protected List<IItem> inventory;
 
     /**
      * A játékos által használható mérgezés elleni immunitások listája.
      */
-    List<Effect> poisonImmunities;
+    protected List<Effect> poisonImmunities;
 
     /**
      * Megmondja, hogy mérgezett-e a játékos.
@@ -47,7 +47,9 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         
     }
     /**
-     * Megnézi, hogy a játékos bénult-e. Ha igen, akkor nem tud mozogni. 
+     * Megnézi, hogy a játékos bénult-e. 
+     * Ha igen, akkor nem tud mozogni. 
+     * Ha nem bénult átmegy a szobába, a Person.goToRoomban definiált módon.
      * Felülírja a Person goToRoom függvényét. 
      */
     @Override 
