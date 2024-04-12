@@ -82,13 +82,14 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
 
     /**
      * A Professornak és Studentnek felül kell írni és mefadni hogy legföljebb hány tárgy lehet náluk
-     *  */    
+     */    
     protected abstract int getMaxItemCount();
+
     /**
      * Ha a játékos nincs lebénulva és van elég helye a tárgyaknak,
-     * ha van a jelenlegi szobára meghívja a popItem függvényt.
-     * Ezzel elindítja a Visitor működést, 
-     * mely végén felveszi a szoba tárgylistájának legfelső tárgyát, ha felveheti.
+     * a jelenlegi szobára meghívja a popItem függvényt.
+     * (Ezzel elindítja a Visitor működést, 
+     * mely végén felveszi a szoba tárgylistájának legfelső tárgyát, ha felveheti.)
      */
     public void pickUpItem() {
         SkeletonMenu.startCall("Player.pickUpItem()");
@@ -106,7 +107,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
 
     /**
      * Megnézi, hogy a játékosnak van-e a paraméterként kapott tárgya. 
-     * Bővebben megnézi, hogy a játékos tárgyai tiltják-e a paraméterként kapott tárgy felvételét. 
+     * Bővebben megnézi, hogy a játékos tárgyai tiltják-e a paraméterként kapott tárgy felvételét. (lásd IItem.interact())
      * 
      * Ilyenkor természetesen a tárgyak interakcióba is lépnek egymással, ami egyelőre csak a tranzisztor párosítása során lényeges.
      * (Az interakció gondoskodik Tranzisztorok párosításáról. Ezt a metódust hívja a tranzisztor use metódusa, amikor párosításra van szükség.)
@@ -129,6 +130,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     /**
      * A paraméterül kapott item-et eldobja a játékos, ha nincs lebénulva.
      * Az item a szobához kerül, nem tartozik többé a játékoshoz az item.
+     * Értesíti a tárgyat, hogy el lett dobva. 
      *
      * @param item a tárgy, amit eldob a játékos
      */
@@ -309,7 +311,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     /**
      * A paraméterként kapott FFP2 tárgyat hozzáadja a Player tárgyaihoz.
      * A tárgy felvételét követően a játékos megkapja az FFP2 tárgyhoz tartozó hatást.
-     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
+     * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából. 
      *
      * @param ffp2 a hozzáadandó tárgy
      */

@@ -11,7 +11,6 @@ import kevesse_kokanyolo_kod.room.Room;
  * A professzort reprezentáló osztály
  */
 public class Professor extends AcademicPerson {
-
     public Professor(Room room) {
         super(room);
     }
@@ -31,7 +30,7 @@ public class Professor extends AcademicPerson {
 
     /**
      * Professzor találkozik egy professzorral, 
-     * ha a belépő professzor nincs lebénulva elhagyja a szobát. 
+     * ha a belépő professzor nincs lebénulva megpróbálja vele elhagyatni a szobát. 
      * (A paraméterként átadott oktató a belépő oktató.)  
      *
      * @param professor a professzor, akivel találkozik
@@ -46,9 +45,7 @@ public class Professor extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param transistor a felvevendő tárgy
      */
@@ -59,9 +56,7 @@ public class Professor extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param slideRule a felvevendő tárgy
      */
@@ -72,9 +67,7 @@ public class Professor extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param tvsz a felvevendő tárgy
      */
@@ -85,9 +78,7 @@ public class Professor extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param glass a felvevendő tárgy
      */
@@ -98,9 +89,7 @@ public class Professor extends AcademicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param rug a felvevendő tárgy
      */

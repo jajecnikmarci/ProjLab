@@ -17,7 +17,7 @@ public class Student extends AcademicPerson {
     /**
      * Egy olyan függvényt reprezentál, amely nem vesz át és nem ad vissza értéket.
      */
-    public interface VoidFunction {
+    public static interface VoidFunction {
         public void execute();
     }
     
