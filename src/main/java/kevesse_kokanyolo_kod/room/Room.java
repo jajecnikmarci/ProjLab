@@ -154,7 +154,10 @@ public class Room implements EffectConsumedObserver {
                 break;
             }
         }
-        people.forEach(person -> person.meet(professor));
+        for (int i = 0; i < people.size(); i++)  { // Nem használható forEach, mert a meet módosíthatja a person objektumot.
+            people.get(i).meet(professor);
+        };
+        // people.forEach(person -> person.meet(professor));
         if (stickiness!=null) stickiness.affect(professor);
         SkeletonMenu.endCall();
     }
