@@ -1,6 +1,5 @@
 package kevesse_kokanyolo_kod.items;
 
-
 import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.items.fakes.FakeFFP2;
 import kevesse_kokanyolo_kod.items.fakes.FakeSlideRule;
@@ -10,15 +9,22 @@ import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
+/**
+ * A tárgyak közös interfésze. 
+ * 
+ * Visitor Patternt valósít meg, a tárgyak interakcióba léptetéséhez. 
+ * (Egy tárgyból nem vehet fel egynél többet a játékos, kivéve tranzisztorok. Ezeknek a párosítását intézi.)
+ * Az összes interactItem függvvénynek alapértelmezett implementációt ad (ami hamissal tér vissza), megengedi a tárgy felvételét.
+ * Minden tárgynak a hozzá tartozó interactItem metódust felül kell írnia, ha nem akarja, hogy a játékos felvegyen belőle kettőt (vagy tranzisztor esete).
+ */
 public interface IItem {
-
     /**
      * A tárgy használata 
      *
      * @param room   a szoba, ahol a tárgyat használják
      * @param academicPerson a játékos, aki használja a tárgyat
      */
-    void use(Room room, AcademicPerson academicPerson);
+    public void use(Room room, AcademicPerson academicPerson);
 
     /**
      * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
@@ -26,7 +32,7 @@ public interface IItem {
      *
      * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
-    void accept(AcademicPerson academicPerson);
+    public void accept(AcademicPerson academicPerson);
 
     /**
      * Amikor az AcademicPerson felvesz egy tárgyat, 
@@ -184,7 +190,7 @@ public interface IItem {
     public void removeEffect();
 
     /**
-     * Visszaadja az
+     * Visszaadja a tárgyhoz tartozó effektet.
      */
     public Effect getEffect();
 

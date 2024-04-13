@@ -153,7 +153,7 @@ public class Student extends AcademicPerson {
     /**
      * A paraméterként kapott SlideRule tárgyat hozzáadja a Student tárgyaihoz.
      * Majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * A hallgatók nyerték a játékot.
+     * A hallgatók nyerték a játékot, jelez a vezérlőnek a slideRulePicked metódus meghívásával.
      *
      * @param slideRule a hozzáadandó tárgy
      */
@@ -236,9 +236,8 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * Kezeli a hallgató szobába érkezését
-     * 
-     * @param room a szoba, ahova érkezik a játékos
+     * Meghívja a szoba onEnter metódusát átadva magát paraméterként, mint Student. 
+     * @param room a szoba, ahova a hallgató érkezik
      */
     @Override
     protected void callOnEnter(Room room) {
