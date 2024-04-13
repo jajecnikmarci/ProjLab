@@ -1,0 +1,23 @@
+starttest
+add room room1 3
+add item room1 Camembert camembert
+add item room1 FFP2 ffp2
+add item room1 TVSZ tvsz
+add item room1 Transistor transistor
+add item room1 Rug rug
+add person room1 Student student1
+add person room1 Student student2
+add person room1 Student student3
+pickup student1
+pickup student1
+pickup student2
+pickup student2
+pickup student3
+printstate student1
+printstate student2
+printstate student3
+use student3 camembert
+printstate student1
+printstate student2
+printstate student3
+endtest

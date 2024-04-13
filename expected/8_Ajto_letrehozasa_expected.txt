@@ -1,11 +1,11 @@
 room1
 	- capacity: 3
 	- people: 
-		student1
-		professor1
-		cleaner1
+		student2
+		student3
 	- doors: 
 		door1
+		door2
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
@@ -13,31 +13,18 @@ room1
 room2
 	- capacity: 3
 	- people: 
-		student2
-	- doors: 
-		door1
-	- items: 
-	- poisonEffects: 
-	- stunEffects: 
-	- lastCleaning: null
-room1
-	- capacity: 3
-	- people: 
 		student1
-		professor1
-		cleaner1
 	- doors: 
 		door1
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-room2
+room3
 	- capacity: 3
 	- people: 
-		student2
 	- doors: 
-		door1
+		door2
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 

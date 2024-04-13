@@ -1,43 +1,49 @@
 room1
-	- capacity: 3
+	- capacity: 5
 	- people: 
 		student1
 		professor1
+	- doors: 
+		door1
+		door2
+		door3
+	- items: 
+	- poisonEffects: 
+		poison1
+	- stunEffects: 
+	- lastCleaning: null
+room1
+	- capacity: 5
+	- people: 
 		cleaner1
 	- doors: 
 		door1
-	- items: 
-	- poisonEffects: 
-	- stunEffects: 
-	- lastCleaning: null
-room2
-	- capacity: 3
-	- people: 
-		student2
-	- doors: 
-		door1
+		door2
+		door3
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
 room1
-	- capacity: 3
+	- capacity: 5
 	- people: 
-		student1
-		professor1
-		cleaner1
+		cleaner2
 	- doors: 
 		door1
+		door2
+		door3
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-room2
-	- capacity: 3
+room1
+	- capacity: 5
 	- people: 
-		student2
+		cleaner2
 	- doors: 
 		door1
+		door2
+		door3
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 

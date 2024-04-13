@@ -1,8 +1,11 @@
 starttest
 add room room1 3
+add room room2 3 poisonous
 add item room1 FFP2 ffp2
 add item room1 Transistor transistor
 add item room1 Camembert camembert
+add item room2 Transistor transistor2
+add door room1 room2 door1
 add person room1 Student student1
 pickup student1
 pickup student1 
@@ -10,5 +13,9 @@ printstate room1
 printstate student1
 drop student1 camembert
 printstate room1
+printstate student1
+gotoroom student1 room2
+pickup student1
+printstate room2
 printstate student1
 endtest

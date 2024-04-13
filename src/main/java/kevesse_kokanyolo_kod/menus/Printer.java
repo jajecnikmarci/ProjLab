@@ -91,7 +91,7 @@ public class Printer {
             } else if (value instanceof Door) {
                 println(builder.getInstanceName((Door) value));
             }else {
-                println(value.toString());
+                
             }
         }
         indentCounter--;

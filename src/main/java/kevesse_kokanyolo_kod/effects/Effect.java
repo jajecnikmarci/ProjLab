@@ -52,6 +52,8 @@ public abstract class Effect implements TimerObserver {
         active = true;
         timer.start(duration);
         SkeletonMenu.endCall();
+
+        LabyrinthBuilder.addTimer(timer);
     }
 
     /**

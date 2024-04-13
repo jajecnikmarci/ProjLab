@@ -101,6 +101,7 @@ public class ProtoMenu {
         initControlOptions.add(new Option("use", this::useOption));
         initControlOptions.add(new Option("gotoroom", this::gotoroomOption));
         initControlOptions.add(new Option("shake", this::shakeOption));
+        initControlOptions.add(new Option("endtimer", this::endtimerOption));
 
 
         Student.slideRulePicked = () -> printer.println("A diák felvette a logarlécet.");
@@ -393,6 +394,21 @@ public class ProtoMenu {
 
     private void shakeOption(String[] tokens) {
         labyrinthBuilder.shake(randomness);
+    }
+
+    private void endtimerOption(String[] tokens) {
+        if(timerControl == false){
+            printer.printError("Az időzítők vezérlése nincs engedélyezve.");
+            return;
+        }
+        if (tokens.length < 2) {
+            printer.printError("Hiányzó paraméter az 'endtimer' parancshoz.");
+            return;
+        }
+
+        labyrinthBuilder.endTimer(tokens[1]);
+        
+
     }
 
     class Option {

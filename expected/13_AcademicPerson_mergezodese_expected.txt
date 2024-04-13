@@ -1,0 +1,51 @@
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+		rug
+		transistor
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+student2
+	- location: room1
+	- stunned: false
+	- inventory: 
+		tvsz
+		ffp2
+	- killImmunities: 
+	- poisonImmunities: 
+		poison1
+	- souls: 3
+student3
+	- location: room1
+	- stunned: false
+	- inventory: 
+		camembert
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+student1
+	- location: room1
+	- stunned: true
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+student2
+	- location: room1
+	- stunned: false
+	- inventory: 
+		tvsz
+		ffp2
+	- killImmunities: 
+	- poisonImmunities: 
+		poison1
+	- souls: 3
+student3
+	- location: room1
+	- stunned: false
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3

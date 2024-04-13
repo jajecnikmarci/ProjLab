@@ -5,11 +5,6 @@ room1
 	- doors: 
 	- items: 
 		ffp2
-		transistor
-		glass
-		tvsz
-		rug
-		camembert
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
@@ -17,6 +12,8 @@ student1
 	- location: room1
 	- stunned: false
 	- inventory: 
+		camembert
+		transistor
 	- killImmunities: 
 	- poisonImmunities: 
 	- souls: 3
@@ -27,10 +24,7 @@ room1
 	- doors: 
 	- items: 
 		ffp2
-		transistor
-		glass
-		tvsz
-		rug
+		camembert
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
@@ -38,28 +32,25 @@ student1
 	- location: room1
 	- stunned: false
 	- inventory: 
-		camembert
+		transistor
 	- killImmunities: 
 	- poisonImmunities: 
 	- souls: 3
-room1
+room2
 	- capacity: 3
 	- people: 
 		student1
 	- doors: 
 	- items: 
-		ffp2
+		transistor2
 	- poisonEffects: 
+		poison1
 	- stunEffects: 
 	- lastCleaning: null
 student1
 	- location: room1
-	- stunned: false
+	- stunned: true
 	- inventory: 
-		camembert
-		rug
-		tvsz
-		glass
 		transistor
 	- killImmunities: 
 	- poisonImmunities: 

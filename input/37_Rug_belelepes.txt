@@ -1,0 +1,17 @@
+timercontrol enable
+starttest
+add room room1 3
+add room room2 3
+add door room1 room2 door1
+add item room1 Rug rug
+add person room1 Student student1
+add person room2 Professor professor1
+pickup student1
+use student1 rug
+printstate professor1
+gotoroom professor1 room1
+printstate professor1
+endtimer timer2
+printstate professor1
+printstate room1
+endtest

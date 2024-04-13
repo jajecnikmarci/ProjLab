@@ -12,6 +12,7 @@ import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Cleaner;
+import kevesse_kokanyolo_kod.effects.Timer;
 
 public class LabyrinthBuilder {
 
@@ -20,6 +21,8 @@ public class LabyrinthBuilder {
     Map<String, Door> doors = new HashMap<>();
     Map<String, Cleaner> cleaners = new HashMap<>();
     Map<String, AcademicPerson> academicPeople = new HashMap<>();
+
+    static Map<String, Timer> timers = new HashMap<>();
 
     Map<String, Class<?>> ItemclassMap = new HashMap<>();
 
@@ -106,7 +109,7 @@ public class LabyrinthBuilder {
         Room room1 = rooms.get(roomname1);
         Room room2 = rooms.get(roomname2);
 
-        Door door = new Door(room1, room2, passable, true, true, cursed);
+        Door door = new Door(room1, room2, true, passable, true, cursed);
         doors.put(doorName, door);
     }
 
@@ -301,5 +304,14 @@ public class LabyrinthBuilder {
         for (String key : academicPeople.keySet()) {
             academicPeople.get(key).printState(printer, this);
         }
+    }
+
+    static public void addTimer(Timer timer){
+        int num = timers.size()+1;
+        String name = "timer" + num;
+        timers.put(name, timer);
+    }
+    public void endTimer(String timerName) {
+        timers.get(timerName).cancel();
     }
 }

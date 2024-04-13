@@ -1,0 +1,43 @@
+student1
+	- location: room3
+	- stunned: false
+	- inventory: 
+		transistor2
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+transistor1
+	- pair: transistor2
+	- room: room1
+	- owner: student1
+transistor2
+	- pair: transistor1
+	- room: 
+	- owner: student1
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+		transistor1
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+room1
+	- capacity: 3
+	- people: 
+		student1
+	- doors: 
+		door1
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+room3
+	- capacity: 3
+	- people: 
+	- doors: 
+		door2
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null

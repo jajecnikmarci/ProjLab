@@ -1,0 +1,39 @@
+room2
+	- capacity: 3
+	- people: 
+		student1
+	- doors:
+		door1 
+	- items: 
+	- poisonEffects: 
+		poison1
+	- stunEffects: 
+	- lastCleaning: null
+student1
+	- location: room2
+	- stunned: false
+	- inventory: 
+		ffp2
+	- killImmunities: 
+	- poisonImmunities:
+		poisonImmunity1 
+	- souls: 3
+ffp2
+	-immunityLength: 8
+	-effect: 
+student1
+	- location: room2
+	- stunned: false
+	- inventory: 
+		ffp2
+	- killImmunities: 
+	- poisonImmunities:
+		poisonImmunity2
+	- souls: 3
+student1
+	- location: room2
+	- stunned: true
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities:
+	- souls: 3

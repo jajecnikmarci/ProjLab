@@ -1,0 +1,5 @@
+prof
+	- location: Room1
+	- stunned: false
+	- Inventory: 
+	- poisonImmunities: 

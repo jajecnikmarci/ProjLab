@@ -1,0 +1,26 @@
+student1
+	- location: room2
+	- stunned: false
+	- inventory: 
+		glass
+	- killImmunities: 
+		killImmunity1
+	- poisonImmunities:
+	- souls: 3
+student1
+	- location: room2
+	- stunned: false
+	- inventory: 
+		glass
+	- killImmunities: 
+		killImmunity1
+	- poisonImmunities:
+		poisonImmunity2
+	- souls: 3
+student1
+	- location: room2
+	- stunned: true
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities:
+	- souls: 3
