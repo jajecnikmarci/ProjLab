@@ -104,6 +104,7 @@ public class Door {
     }
 
     public void setRoom2(Room room2) {
+        this.room2 = room2;
     }
 
     public void printState(Printer printer, LabyrinthBuilder labyrinthBuilder ){

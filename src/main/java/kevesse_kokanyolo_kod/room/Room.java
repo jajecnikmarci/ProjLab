@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * A játékban szereplő szobákat reprezentáló osztály.
+ * A játékban szereplő szobákat reprezentáló osztály. Kezeli a benne találjató hatásokat. 
+ * Interakcióba lépteti a benne lévő játékosokat a belépő játékossal. Tárolja a benne lévő tárgyakat.
  */
 public class Room implements EffectConsumedObserver {
     /**
@@ -48,7 +49,7 @@ public class Room implements EffectConsumedObserver {
     private StickinessEffect stickiness;
 
     /**
-     * Létrehozza a szobát, a paraméterül kapott szoba kapacitásával
+     * Létrehozza a szobát, a paraméterül kapott szoba kapacitásával.
      * 
      * @param capacity a szoba kapacitása
      */
@@ -110,8 +111,8 @@ public class Room implements EffectConsumedObserver {
      * amit megpróbál felvenni a szobából.
      * 
      * Ha ezek a feltételek teljesülnek, 
-     * akkor az AcademicPerson megpróbálja felvenni a szoba tárgyai közül a legfelsőt. 
-     * A Visitor Patternt alkalmazza a tárgynak átadja az AcademicPerson-t, 
+     * akkor az AcademicPerson tárgyaival interakcióba lépteti a szoba tárgyai közül a legfelsőt. 
+     * A Visitor Patternt alkalmazza a legfölső tárgynak átadja az AcademicPerson-t, 
      * a tárgy áthelyezése a személyhez innentől nem a szoba felelőssége.
      *
      * @param academicPerson a játékos, aki a tárgyat fel akarja venni
@@ -140,7 +141,7 @@ public class Room implements EffectConsumedObserver {
      * Megpróbálja megmérgezni az oktatót, ha mérgező a szoba.
      * Megpróbálja bénítani az oktatót, ha van aktív bénító hatás a szobában.
      * Interakcióba hozza a professzort az összes szobában található személlyel.
-     * Ha a szobában van stickinessEffect, jelzi neki, hogy újabb személy lépett a szobába.
+     * Ha a szobában van stickinessEffect, jelzi az effektnek, hogy újabb személy lépett a szobába.
      * 
      * @param professor a belépő oktató
      */
@@ -178,9 +179,9 @@ public class Room implements EffectConsumedObserver {
      * Amikor egy takarító belép a szobába, ez a függvény gyakorolja rá a szoba hatásait.
      * Interakcióba hozza a szobában található játékosokkal.
      * A takarító:
-     * - kiszellőzteti a szobát (a szoba mérgező hatásait lenulázza)
-     * - kitakarítja a szobát, ha a szoba ragacsos
-     * A takarítást követően, az ötödik látogató után a szoba újra ragacsossá fog válni.
+     * - kiszellőzteti a szobát (a szoba mérgező hatásait törli)
+     * - kitakarítja a szobát, ha a szoba ragacsos, ha nem, 
+     *   a takarító belépését követően, az ötödik látogató után a szoba újra ragacsossá fog válni. (Létrehoz egy StickinessEffectet a szobában.)
      * A beléptető objektum felelőssége meghívni ezt a függvényt.
      *
      * @param cleaner a belépő takarító
@@ -197,8 +198,7 @@ public class Room implements EffectConsumedObserver {
     }
     /**
      * Ha van aktív mérgező hatás a szobában, akkor az első aktív mérgező hatást alkalmazza a személyre.
-     * 
-     * @param academicPerson a játékos, akire a mérgező hatást gyakorolja a szoba
+     * @param academicPerson a személy, akire a mérgező hatást gyakorolja a szoba
      */
     public void tryPoison(AcademicPerson academicPerson) {
         for (PoisonEffect effect : this.poisonEffects) {
@@ -322,17 +322,7 @@ public class Room implements EffectConsumedObserver {
         this.poisonEffects.add(effect);
         SkeletonMenu.endCall();
     }
-
-    /**
-     * Törli a megadott hatást a szobából
-     * @param effect a hatás, amit eltávolítunk a szoba hatásai közül
-     */
-    public void removePoisonEffect(PoisonEffect effect) {
-        SkeletonMenu.startCall("Room.removeEffect(RoomEffect)");
-        this.poisonEffects.remove(effect);
-        SkeletonMenu.endCall();
-    }
-    
+       
     /**
      * Hozzáadja a bénító hatást a szobához.
      * @param effect a hozzáadandó hatás
@@ -342,16 +332,7 @@ public class Room implements EffectConsumedObserver {
         this.stunEffects.add(effect);
         SkeletonMenu.endCall();
     }
-    
-    /**
-     * Törli a hatást a szobából.
-     * @param effect a törlendő hatás
-     */
-    public void removeStunEffect(StunEffect effect) {
-        SkeletonMenu.startCall("Room.removeEffect(RoomEffect)");
-        this.stunEffects.remove(effect);
-        SkeletonMenu.endCall();
-    }
+      
 
     /**
      * Ha egy játékos befér még a szobába, igaz értékkel tér vissza.
