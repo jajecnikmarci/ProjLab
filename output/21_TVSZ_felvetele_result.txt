@@ -21,7 +21,7 @@ student1
 	- inventory: 
 		tvsz
 	- killImmunities: 
-		kevesse_kokanyolo_kod.effects.KillImmunity@1de0aca6
+		KillImmunity
 	- poisonImmunities: 
 	- souls: 3
 room1

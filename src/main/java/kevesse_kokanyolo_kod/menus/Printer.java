@@ -98,6 +98,15 @@ public class Printer {
         indentCounter--;
     }
 
+    public void printFields(String name, String names,int size){
+        println("- " + name + ": ");
+        indentCounter++;
+        for (int i = 0; i < size; i++) {
+            println(names);
+        }
+        indentCounter--;
+    }
+
 
     public void endPrintObject() {
         indentCounter--;

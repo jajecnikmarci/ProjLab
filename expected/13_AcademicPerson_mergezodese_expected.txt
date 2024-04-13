@@ -14,8 +14,9 @@ student2
 		tvsz
 		ffp2
 	- killImmunities: 
+		KillImmunity
 	- poisonImmunities: 
-		poison1
+		PoisonImmunity
 	- souls: 3
 student3
 	- location: room1
@@ -39,12 +40,13 @@ student2
 		tvsz
 		ffp2
 	- killImmunities: 
+		KillImmunity
 	- poisonImmunities: 
-		poison1
+		PoisonImmunity
 	- souls: 3
 student3
 	- location: room1
-	- stunned: false
+	- stunned: true
 	- inventory: 
 	- killImmunities: 
 	- poisonImmunities: 

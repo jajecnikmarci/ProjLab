@@ -21,7 +21,7 @@ student1
 	- inventory: 
 		tvsz
 	- killImmunities: 
-		killImmunity1
+		KillImmunity
 	- poisonImmunities: 
 	- souls: 3
 room1
@@ -33,3 +33,4 @@ room1
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
+

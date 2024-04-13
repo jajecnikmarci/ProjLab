@@ -13,7 +13,8 @@ room1
 		student1
 	- doors: 
 	- items: 
+		camembert
 	- poisonEffects: 
-		poison1
+		poisonEffects
 	- stunEffects: 
 	- lastCleaning: null

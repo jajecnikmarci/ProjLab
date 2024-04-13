@@ -123,7 +123,7 @@ public class Professor extends AcademicPerson {
         printer.printField("location", builder.getInstanceName(this.location));
         printer.printField("stunned", this.stunned);
         printer.printFields("Inventory", this.inventory, builder);
-        printer.printFields("poisonImmunities", this.poisonImmunities, builder);
+        printer.printFields("poisonImmunities", "poisonImmunity", this.poisonImmunities.size());
         
         printer.endPrintObject();
     }

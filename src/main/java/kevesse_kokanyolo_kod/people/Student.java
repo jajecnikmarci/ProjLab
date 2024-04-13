@@ -278,8 +278,8 @@ public class Student extends AcademicPerson {
         printer.printField("location", builder.getInstanceName(this.location));
         printer.printField("stunned", this.stunned);
         printer.printFields("inventory", this.inventory, builder);
-        printer.printFields("killImmunities", this.killImmunities, builder);
-        printer.printFields("poisonImmunities", this.poisonImmunities, builder);
+        printer.printFields("killImmunities", "KillImmunity", this.killImmunities.size());
+        printer.printFields("poisonImmunities", "PoisonImmunity", this.poisonImmunities.size());
         printer.printField("souls", this.souls);
         printer.endPrintObject();
     }

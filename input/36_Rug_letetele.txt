@@ -3,6 +3,8 @@ add room room1 3
 add item room1 Rug rug
 add person room1 Student student1
 pickup student1
+printstate student1
+printstate room1
 use student1 rug
 printstate student1
 printstate room1

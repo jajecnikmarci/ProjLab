@@ -8,4 +8,11 @@ add person room2 Professor professor1
 pickup student1
 gotoroom professor1 room1
 printstate student1
+gotoroom professor1 room2
+gotoroom professor1 room1
+gotoroom professor1 room2
+gotoroom professor1 room1
+gotoroom professor1 room2
+gotoroom professor1 room1
+printstate student1
 endtest

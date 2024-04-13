@@ -21,7 +21,6 @@ student1
 	- inventory: 
 		glass
 	- killImmunities: 
-		killImmunity1
 	- poisonImmunities: 
 	- souls: 3
 room1
@@ -33,3 +32,4 @@ room1
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
+
