@@ -25,10 +25,11 @@ public class TVSZ extends Item {
     }
 
     /**
-     * A TVSZ használata. A játékosnak ad egy KillImmunity-t, ami 0 időtartamú, nem aktív. (Akkor aktiválódik ,ha a játékosst megpróbálják megölni)
+     * A TVSZ használata. 
      * Csökkenti a timesImmune-t eggyel.
      * Ha a csökkentés után a timesImmune elérte a 0-t, törölteti a tárgyat a játékossal.
-     *
+     * A játékosnak ad egy KillImmunity-t, ami 0 időtartamú, nem aktív. (Akkor aktiválódik ,ha a játékosst megpróbálják megölni)
+     * Az első killImmunity-t a játékos a tárgy felvételekor kapta.
      * @param room a szoba, ahol a tárgyat használják
      * @param academicPerson a játékos, aki használja a tárgyat
      */

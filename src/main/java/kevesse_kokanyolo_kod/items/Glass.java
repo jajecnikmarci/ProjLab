@@ -32,7 +32,7 @@ public class Glass extends Item {
      * akkor el kell dobnia az egyik tárgyát véletlenszerűen. 
      * 
      * Az effekt lejártakor a szoba meghívja a removeEffect metódust, 
-     * ezzel jelezve, hogy a hatás lejárt, majd meg kell hívnia ezt a függvényt, 
+     * ezzel jelezve, hogy a hatás lejárt, majd meg kell hívnia ezt a függvényt, jelezve az elhasználódást
      * ami törölteti ezt a tárgyat a játékossal.
      * 
      * @param room a szoba, ahol a tárgyat használják

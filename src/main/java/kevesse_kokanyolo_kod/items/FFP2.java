@@ -9,8 +9,8 @@ import kevesse_kokanyolo_kod.room.Room;
 
 /**
  * FFP2-es maszkot reprezentáló osztály. Ezt a tárgy automatikusan használódik, 
- * a játékos kézileg tudja használni.
- * Elhasználódáskor a Playerre PoisonImmunity-t rak, ami immunityLength ideig védelmet ad poison ellen.
+ * a játékos kézileg nem tudja használni.
+ * Használódáskor a Playerre PoisonImmunity-t rak, ami immunityLength ideig védelmet ad poison ellen.
  */
 public class FFP2 extends Item {
     /**
@@ -36,9 +36,10 @@ public class FFP2 extends Item {
      * Ez a függvény akkor hívódik, ha a tárgyhoz tartozó hatás lejárt. 
      * (Az első hatás a tárgy felvételekor adódik a játékoshoz)
      * Ha a tárgy elhasználódott (immunityLength = 0) akkor törölteti a tárgyat a játékostól.
-     * Egyébként vsökkenti 2 másodperccel az immunityLength-et.
+     * Egyébként csökkenti 2 másodperccel az immunityLength-et.
      * Létrehoz egy PoisonImmunity hatást immunityLength hosszal és hozzáadja a játékoshoz.
-     * Beállítja a tárgy effect attribútumát a létrehozott hatásra.
+     * Beállítja a tárgy effect attribútumát a létrehozott hatásra. 
+     * (Nem aktiválja a létrehozott hatást, azt majd csak akkor kell, ha mérgeződik.)
      * 
      * Ha a védettség lejárt és a szoba továbbra is mérgező, 
      * a játékos úőjbóli mérgezését a szoba felelőssége kezelni.

@@ -1,0 +1,14 @@
+@startuml
+
+[*] --> Használatlan
+Használatlan-->Használatban: use(Room, AcademicPerson)
+Használatban: efffect = KillImmunity
+
+Használatban --> Használatban:  use(Room, AcademicPerson), AcademicPerson.dropRandomItem()
+
+Használatban --> Elhasználódott: effect lejárt
+Elhasználódott: effect = null
+Elhasználódott --> [*]: use(Room, AcademicPerson)
+
+
+@enduml

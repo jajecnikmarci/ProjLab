@@ -178,6 +178,7 @@ public interface IItem {
      * Ez az implementációkban meghívja már az adott tárgyra vonatkozó interactItem függvényt
      * Az interactItem alapból (lásd fentebb) mindig false-sal tér vissza, azaz a tárgyak nem azonosak
      * Viszont minden tárgy a saját típusával valót felülírja, és true-val tér vissza, vagyis azonosak a tárgyak
+     * Minden tárgynak felül kell írnia és meg kell hívnia a kapott tárgyra  az interactItem függvényt átadva magát a saját típusaként.
      * 
      * @param item a tárgy, amivel interakcióba lép
      * @return igaz, ha a 2 tárgy azonos fajta, egyébként hamis

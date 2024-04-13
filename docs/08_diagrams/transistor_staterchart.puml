@@ -1,0 +1,27 @@
+@startuml
+
+[*] -> Birtokolatlan
+Birtokolatlan: owner = null
+    
+Birtokolatlan -> Birtokolt: felvétel
+
+state Birtokolt {
+    [*]-> Párosítatlan
+    Párosítatlan: pair = null
+
+    Párosítatlan -> Párosított: use()
+    Párosított: pair = AcademicPerson
+    
+    Párosított -> SzobáhozAdva: use()
+    SzobáhozAdva-> [*]: eldobják
+
+    
+}
+state SzobáhozAdva
+Birtokolt:owner = AcademicPerson
+
+
+
+
+
+@enduml
