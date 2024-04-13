@@ -38,6 +38,7 @@ public class Printer {
             scanner.close();
         }
     }
+
     public void println(String msg) {
         print(msg + "\n");
     }

@@ -5,4 +5,8 @@ add room room2 4
 add room room3 3
 add door room1 room2 door1
 add person room1 Student student1
+shake
+room3
+room1
+room2
 endtest

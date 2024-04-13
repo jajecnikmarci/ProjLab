@@ -3,6 +3,7 @@ package kevesse_kokanyolo_kod.menus;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.*;
@@ -225,9 +226,30 @@ public class LabyrinthBuilder {
             cleaners.get(personName).goToRoom(rooms.get(roomName));
     }
 
-    public void shake(boolean randomness) {
-        // TODO
+
+    public void shake() {
+        boolean isRandom = ProtoMenu.getRandomness();
+        Room roomToMergeInto, roomToMerge, roomToSplit;
+        if(!isRandom) {
+            while ((roomToSplit = rooms.get(ProtoMenu.readString("Melyik szoba osztódjon?"))) == null) {
+                System.err.println("Nincs ilyen nevű szoba.");
+            }
+            while ((roomToMergeInto = rooms.get(ProtoMenu.readString("Melyik szobába olvadjon bele a másik?"))) == null) {
+                System.err.println("Nincs ilyen nevű szoba.");
+            }
+            while ((roomToMerge = rooms.get(ProtoMenu.readString("Melyik szoba olvadjon bele a másikba?"))) == null) {
+                System.err.println("Nincs ilyen nevű szoba.");
+            }
+            roomToSplit.split();
+            roomToMergeInto.mergeWithRoom(roomToMerge);
+            
+        } else {
+
+        }
+        doors.values().forEach(door -> door.onShake());
+        
     }
+
 
     public String getInstanceName(Item item) {
         return items.keySet()

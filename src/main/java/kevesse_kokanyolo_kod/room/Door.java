@@ -40,6 +40,13 @@ public class Door {
     private boolean cursed;
 
     /**
+     * Tér-Idő rengéskor, ha az ajtó el van átkozva, akkor a láthatósága megváltozik
+     */
+    public void onShake() {
+        if(cursed) visible = !visible;
+    }
+
+    /**
      * Ajtó konstruktor. Tárolja a kapott paramétereket, valamint hozzáadja a hozzáadja a kapott szobákhoz az ajtót.
      */
     public Door(Room room1, Room room2, boolean room1Open, boolean room2Open, boolean visible, boolean cursed) {

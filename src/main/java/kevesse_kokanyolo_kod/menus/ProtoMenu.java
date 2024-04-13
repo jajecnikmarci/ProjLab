@@ -69,13 +69,20 @@ import kevesse_kokanyolo_kod.people.Student;
 public class ProtoMenu {
     private static Printer printer;
 
-    boolean randomness = false;
+    public static boolean randomness = false;
+    public static boolean getRandomness() {
+        return randomness;
+    }
     boolean timerControl = false;
     LabyrinthBuilder labyrinthBuilder = null; //null, ha konfigurációs módban vagyunk
 
     List<Option> configOptions = new ArrayList<>(); //Konfigurációs parancsokat tartalmazza
     List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
 
+    public static String readString(String msg) {
+        if(Printer.fileWriter == null) System.out.println(msg); // fontos, hogy a konzolra írjunk.
+        return Printer.scanner.nextLine();
+    }
     /**
      * Hozzáadja a parancsokat a 2 listához.
      */
@@ -393,7 +400,7 @@ public class ProtoMenu {
     }
 
     private void shakeOption(String[] tokens) {
-        labyrinthBuilder.shake(randomness);
+        labyrinthBuilder.shake();
     }
 
     private void endtimerOption(String[] tokens) {
