@@ -49,19 +49,19 @@ public class TVSZ extends Item {
     }
 
     /**
-     * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
-     * Visitor design pattern része
+     *
      * Létrehozza a tárgyhoz tartozó KillImmunity-t, ami 0 (azaza végtelen) időtartamú, nem aktív. (Akkor aktiválódik, ha a játékosst megpróbálják megölni) 
      * Beállítja az effectet a létrehozott killImmunityra.
      * ami végtelen időtartamú, nem aktív. (Akkor aktiválódik, ha a játékosst megpróbálják megölni)
-     *
+     * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
+     * Visitor design pattern része
      * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
     public void accept(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("TVSZ.accept(Player)");
-        academicPerson.acceptItem(this);
         KillImmunity immunity = new KillImmunity(this, 0, academicPerson);
         this.effect = immunity;
+        academicPerson.acceptItem(this);
         SkeletonMenu.endCall();
     }
 

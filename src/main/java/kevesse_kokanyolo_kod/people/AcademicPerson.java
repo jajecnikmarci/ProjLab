@@ -151,7 +151,9 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      */
     public void dropAll() {
         SkeletonMenu.startCall("Player.dropAll()");
-        inventory.forEach(item -> this.dropItem(item));
+        for (int i = inventory.size() - 1; i >=0 ; i--) { // nem hasznalhato forEach, mert torlodnek az elemek
+            this.dropItem(inventory.get(i));
+        }
         SkeletonMenu.endCall();
     }
 

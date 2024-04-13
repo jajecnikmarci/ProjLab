@@ -1,0 +1,8 @@
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+		tvsz
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3

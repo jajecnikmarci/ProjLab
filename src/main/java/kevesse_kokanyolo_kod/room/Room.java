@@ -140,7 +140,7 @@ public class Room implements EffectConsumedObserver {
      * Akkor hívódik, amikor egy oktató belép a szobába, ez a függvény gyakorolja rá a szoba hatásait
      * Megpróbálja megmérgezni az oktatót, ha mérgező a szoba.
      * Megpróbálja bénítani az oktatót, ha van aktív bénító hatás a szobában.
-     * Interakcióba hozza a professzort az összes szobában található személlyel.
+     * Interakcióba hozza a professzort az összes szobában található személlyel. saját magán kívűl.
      * Ha a szobában van stickinessEffect, jelzi az effektnek, hogy újabb személy lépett a szobába.
      * 
      * @param professor a belépő oktató
@@ -155,7 +155,8 @@ public class Room implements EffectConsumedObserver {
             }
         }
         for (int i = 0; i < people.size(); i++)  { // Nem használható forEach, mert a meet módosíthatja a person objektumot.
-            people.get(i).meet(professor);
+            Person person = people.get(i);
+            if(person != professor) person.meet(professor);
         };
         // people.forEach(person -> person.meet(professor));
         if (stickiness!=null) stickiness.affect(professor);
@@ -174,7 +175,9 @@ public class Room implements EffectConsumedObserver {
         SkeletonMenu.startCall("Room.onEnter(Student)");
         tryPoison(student);
         if (stickiness!=null) stickiness.affect(student);
-        people.forEach(person -> person.meet(student));
+        people.forEach(person -> {
+            if(person != student) person.meet(student);
+        });
         SkeletonMenu.endCall();
     }
 
@@ -191,7 +194,9 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Cleaner cleaner) {
         SkeletonMenu.startCall("Room.onEnter(Cleaner)");
-        for (Person person : this.people) person.meet(cleaner);
+        for (Person person : this.people) {
+            if(person != cleaner) person.meet(cleaner);
+        }
         this.poisonEffects.clear();
         if (stickiness!=null) stickiness.clean();
         else {
