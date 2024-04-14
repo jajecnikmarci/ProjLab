@@ -184,9 +184,10 @@ public class Room implements EffectConsumedObserver {
         SkeletonMenu.startCall("Room.onEnter(Student)");
         tryPoison(student);
         if (stickiness!=null) stickiness.affect(student);
-        people.forEach(person -> {
+        for (int i = 0; i < this.people.size(); i++) {
+            Person person = this.people.get(i);
             if(person != student) person.meet(student);
-        });
+        }
         SkeletonMenu.endCall();
     }
 
@@ -203,7 +204,8 @@ public class Room implements EffectConsumedObserver {
      */
     public void onEnter(Cleaner cleaner) {
         SkeletonMenu.startCall("Room.onEnter(Cleaner)");
-        for (Person person : this.people) {
+        for (int i = 0; i < this.people.size(); i++) {
+            Person person = this.people.get(i);
             if(person != cleaner) person.meet(cleaner);
         }
         this.poisonEffects.clear();
@@ -446,7 +448,8 @@ public class Room implements EffectConsumedObserver {
         printer.printFields("items", this.items, builder);
         printer.printFields("poisonEffects", "poisonEffects", this.poisonEffects.size());
         printer.printFields("stunEffects", "stunEffects", this.stunEffects.size());
-        printer.printField("lastCleaning", this.stickiness);
+        printer.printFields("lastCleaning", "StickinessEffect", 1);
+
         printer.endPrintObject();
     }
 }

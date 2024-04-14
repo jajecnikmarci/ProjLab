@@ -113,7 +113,7 @@ public class Professor extends AcademicPerson {
      * @param room a szoba, ahova a professzor érkezik
      */
     @Override
-    public void callOnEnter(Room room) {
+    protected void callOnEnter(Room room) {
         room.onEnter(this);
     }
 

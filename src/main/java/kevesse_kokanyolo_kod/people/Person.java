@@ -65,11 +65,14 @@ public abstract class Person {
     /**
      * A játékos megpróbálja elhagyni a szobát, addig próbál
      * a szoba ajtajain kimenni, amíg sikerrel nem jár, vagy
-     * megpróbált az összes ajtón átmenni.
+     * megpróbált az összes ajtón átmenni. 
      */
     public void leaveRoom() {
         SkeletonMenu.startCall("Person.leaveRoom()");
-        for(Door door: location.getDoors()) if(door.goThrough(this)) break;
+        for(Door door: location.getDoors()) if(door.goThrough(this)) { 
+            // callOnEnter(door.getRoom1() == location ? door.getRoom2() : door.getRoom1());
+            break;
+        };
         SkeletonMenu.endCall();
     }
     

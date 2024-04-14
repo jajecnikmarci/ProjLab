@@ -25,6 +25,7 @@ student1
 	- stunned: false
 	- inventory: 
 		rug1
+		stickyCamembert
 	- killImmunities: 
 	- poisonImmunities: 
 	- souls: 3
@@ -36,7 +37,7 @@ professor1
 cleaner1
 	- location: room1
 professor1
-	- location: room2
+	- location: room1
 	- stunned: false
 	- Inventory: 
 	- poisonImmunities: 
@@ -52,7 +53,7 @@ room3
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: 
-		StickinessEffect	
+		StickinessEffect
 cleaner1
 	- location: room3
 cleaner2
