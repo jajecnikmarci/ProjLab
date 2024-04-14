@@ -69,6 +69,7 @@ public class Room implements EffectConsumedObserver {
         if(poisonous){
             PoisonEffect poisonEffect = new PoisonEffect(null, Integer.MAX_VALUE, this);
             poisonEffects.add(poisonEffect);
+            poisonEffect.activate();
         }
     }
     /**
