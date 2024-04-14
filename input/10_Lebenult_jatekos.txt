@@ -7,11 +7,11 @@ add door room1 room3 door2
 add item room1 Rug rug
 add person room2 Student student1
 add person room3 Professor professor1
-gotoroom room1
+gotoroom student1 room1
 printstate room1
 printstate student1
 gotoroom student1  room2
-drop student1 rug
+pickup student1 rug
 printstate room1
 printstate student1
 gotoroom professor1 room1
