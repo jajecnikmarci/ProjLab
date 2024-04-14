@@ -75,6 +75,7 @@ roomToSplitEffectsAndDoors
 		poisonEffects
 		poisonEffects
 	- stunEffects: 
+		stunEffects
 	- lastCleaning: null
 door1
 	- room1: neighbour1
@@ -127,6 +128,7 @@ newRoom
 	- poisonEffects: 
 		poisonEffects
 	- stunEffects: 
+		stunEffects
 	- lastCleaning: null
 newDoor
 	- room1: roomToSplitEffectsAndDoors

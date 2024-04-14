@@ -52,8 +52,11 @@ public class Timer {
      */
     public void cancel() {
         SkeletonMenu.startCall("Timer.cancel()");
-        innerTimer.cancel();
-        timeIsUp(); // Az időzítő leállításakor is jelezni kell a hatás végét.
+        if(innerTimer!=null) {
+            innerTimer.cancel();
+
+            timeIsUp(); // Az időzítő leállításakor is jelezni kell a hatás végét.
+        }
         SkeletonMenu.endCall();
     }
 }

@@ -2,8 +2,10 @@ package kevesse_kokanyolo_kod.menus;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.*;
@@ -23,7 +25,7 @@ public class LabyrinthBuilder {
     Map<String, Cleaner> cleaners = new HashMap<>();
     Map<String, AcademicPerson> academicPeople = new HashMap<>();
 
-    static Map<String, Timer> timers = new HashMap<>(); // TODO: teszt végén mindet le kéne állítani az összeset és hibát dobni, esetleg hibát dobnni, ha nincs mind leállítva
+    static Map<String, Timer> timers = new HashMap<>(); 
 
     Map<String, Class<?>> ItemclassMap = new HashMap<>();
 
@@ -251,8 +253,12 @@ public class LabyrinthBuilder {
             while ((roomToMerge = rooms.get(ProtoMenu.readString("Melyik szoba olvadjon bele a másikba?"))) == null) {
                 System.err.println("Nincs ilyen nevű szoba.");
             }
-            roomToSplit.split();
-            roomToMergeInto.mergeWithRoom(roomToMerge);
+            List<Room> roms = rooms.values().stream().collect(Collectors.toList());
+            for(int i = 0; i < roms.size(); i++) {
+                roms.get(i).onShake(roomToSplit, roomToMergeInto, roomToMerge);
+            }
+            //roomToSplit.split();
+            //roomToMergeInto.mergeWithRoom(roomToMerge);
             
         } else {
 

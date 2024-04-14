@@ -36,7 +36,7 @@ roomToMerge
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-roomToMergeIntoHasPlayer
+roomToMergeInto
 	- capacity: 5
 	- people: 
 		student1
@@ -46,7 +46,7 @@ roomToMergeIntoHasPlayer
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-roomToMerge
+roomToMergeHasPlayer
 	- capacity: 5
 	- people: 
 	- doors: 
@@ -55,7 +55,7 @@ roomToMerge
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-roomToMergeIntoHasPlayer
+roomToMergeInto
 	- capacity: 5
 	- people: 
 		student1
@@ -65,7 +65,7 @@ roomToMergeIntoHasPlayer
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-roomToMerge
+roomToMergeHasPlayer
 	- capacity: 5
 	- people: 
 	- doors: 
@@ -74,3 +74,41 @@ roomToMerge
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
+thisDoorShouldDisappear
+	- room1: roomToMerge
+	- room2: roomToMergeInto
+	- room1Open: true
+	- room2Open: true
+	- visible: true
+	- cursed: false
+roomToMergeInto
+	- capacity: 5
+	- people: 
+	- doors: 
+		door4
+		door5
+		door6
+		door1
+		door2
+		door3
+	- items: 
+		ffp2
+		Camembert
+	- poisonEffects: 
+		poisonEffects
+	- stunEffects: 
+	- lastCleaning: null
+door1
+	- room1: roomToMergeInto
+	- room2: neighbour1
+	- room1Open: true
+	- room2Open: true
+	- visible: true
+	- cursed: false
+door4
+	- room1: roomToMergeInto
+	- room2: neighbour4
+	- room1Open: true
+	- room2Open: true
+	- visible: false
+	- cursed: true

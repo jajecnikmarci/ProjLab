@@ -236,11 +236,16 @@ public class Room implements EffectConsumedObserver {
     }
 
     /**
-     * Ha egy szoba kettéosztódik, akkor ez a függvény hívódik meg. Ezzel lehet a vezérlőnek jelezni, hogy új szoba és ajtó jött létre.
+     * Ha egy szoba kettéosztódik, akkor ez a függvény hívódik meg. Ezzel lehet a vezérlőnek jelezni, hogy új szoba és ajtó jött létre. A vezérlőnek fölül kell írni
      */
     public static BiConsumer<Room, Door> roomSplitEvent;
+    /**
+     * Ha egy szoba sikeresen beleolvad ebbe a szobába, ez a függvény hívódik meg. Ezzel lehet a vezérlőnek jelezni, melyik szoba és ajtó szűnt meg. A vezérlőnek fölül kell írni
+     */
+    public static BiConsumer<Room, Door> roomsMergedEvent;
     static {
         roomSplitEvent = (room, door) -> {};
+        roomSplitEvent = (deletedRoom, deletedDoor) -> {};
     }
     /**
      * Kettéosztja ezt a szobát, ha kapacitása 4 vagy nagyobb és nincs benne játékos.
@@ -298,6 +303,7 @@ public class Room implements EffectConsumedObserver {
      * A játékosok, tárgyak és hatások összeadódnak. (lásd split)
      * Az ajtók összegyűjtésekor azokat az ajtókat eldobjuk, amik a két szoba között vannak.
      * Az ajtók közül azokat, amik a kapott szobához vezetnek, átállítjuk, hogy erre a szobára vezessenek.
+     * Jelzi a roomsMergedEvent-nek, hogy melyik ajtót és szobát kell megszüntetni.
      *
      * @param room a szoba amit beleolvasztunk ebbe a szobába
      */
@@ -314,7 +320,15 @@ public class Room implements EffectConsumedObserver {
 
         doors.addAll(room.doors); 
         doors = doors.stream()
-                .filter(d -> !d.isBetween(this, room))
+                .filter(d -> {
+                    if (!d.isBetween(this, room)) {
+                        return true;
+                    } else {
+                        room.doors.remove(d);
+                        roomsMergedEvent.accept(room, d); // Jelezzük a controller felé, hogy egy ajtó megszűnt.
+                        return false;
+                    }
+                })
                 .distinct()
                 .collect(Collectors.toList());
         doors.forEach(d -> {

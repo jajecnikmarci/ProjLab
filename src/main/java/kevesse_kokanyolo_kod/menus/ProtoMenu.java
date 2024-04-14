@@ -74,7 +74,7 @@ public class ProtoMenu {
     public static boolean getRandomness() {
         return randomness;
     }
-    boolean timerControl = false;
+    public static boolean timerControl = false;
     LabyrinthBuilder labyrinthBuilder = null; //null, ha konfigurációs módban vagyunk
 
     List<Option> configOptions = new ArrayList<>(); //Konfigurációs parancsokat tartalmazza
@@ -117,6 +117,10 @@ public class ProtoMenu {
         Room.roomSplitEvent = (room, door) -> {
             labyrinthBuilder.doors.put(labyrinthBuilder.newDoorName, door);
             labyrinthBuilder.rooms.put(labyrinthBuilder.newRoomName, room);
+        };
+        Room.roomsMergedEvent = (deletedRoom, deletedDoor) -> {
+            labyrinthBuilder.rooms.entrySet().removeIf(entry -> entry.getValue().equals(deletedRoom));
+            labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(deletedDoor));
         };
         
     }
@@ -318,6 +322,7 @@ public class ProtoMenu {
      * @param tokens a parancs szavai
      */
     private void endTestOption(String[] tokens) {
+        // TODO: teszt végén mindet le kéne állítani az összeset és hibát dobni, esetleg hibát dobnni, ha nincs mind leállítva
         labyrinthBuilder = null;
     }
 
