@@ -3,9 +3,7 @@ room1
 	- people: 
 		student1
 	- doors: 
-		door1
 	- items: 
-		ffp2
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
@@ -23,9 +21,7 @@ room1
 	- people: 
 		student1
 	- doors: 
-		door1
 	- items: 
-		ffp2
 		camembert
 	- poisonEffects: 
 	- stunEffects: 
@@ -35,26 +31,6 @@ student1
 	- stunned: false
 	- inventory: 
 		transistor
-	- killImmunities: 
-	- poisonImmunities: 
-	- souls: 3
-room2
-	- capacity: 3
-	- people: 
-		student1
-	- doors: 
-		door1
-	- items: 
-	- poisonEffects: 
-		poisonEffects
-	- stunEffects: 
-	- lastCleaning: null
-student1
-	- location: room2
-	- stunned: false
-	- inventory: 
-		transistor
-		transistor2
 	- killImmunities: 
 	- poisonImmunities: 
 	- souls: 3
