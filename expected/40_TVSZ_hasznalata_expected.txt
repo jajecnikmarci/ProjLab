@@ -2,7 +2,7 @@ student1
 	- location: room1
 	- stunned: false
 	- inventory: 
-		glass
+		tvsz
 	- killImmunities: 
 		KillImmunity
 	- poisonImmunities: 
@@ -11,16 +11,6 @@ student1
 	- location: room1
 	- stunned: false
 	- inventory: 
-		glass
-	- killImmunities: 
-		KillImmunity
-	- poisonImmunities: 
-	- souls: 3
-student1
-	- location: room1
-	- stunned: false
-	- inventory: 
-		glass
 	- killImmunities: 
 	- poisonImmunities: 
-	- souls: 3
+	- souls: 2

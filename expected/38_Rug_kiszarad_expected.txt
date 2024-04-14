@@ -5,8 +5,8 @@ room1
 	- doors: 
 	- items: 
 	- poisonEffects: 
-	- stunEffects:
-		stunEffect1 
+	- stunEffects: 
+		stunEffects
 	- lastCleaning: null
 room1
 	- capacity: 3
@@ -15,5 +15,5 @@ room1
 	- doors: 
 	- items: 
 	- poisonEffects: 
-	- stunEffects:
+	- stunEffects: 
 	- lastCleaning: null

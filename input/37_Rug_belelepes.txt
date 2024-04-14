@@ -9,6 +9,7 @@ add person room2 Professor professor1
 pickup student1
 use student1 rug
 printstate professor1
+printstate room1
 gotoroom professor1 room1
 printstate professor1
 endtimer timer2
