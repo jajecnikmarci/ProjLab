@@ -53,7 +53,7 @@ public class LabyrinthBuilder {
      * @param capacity Szoba kapacitása
      * @param printer  Printer objektum
      */
-    public void addRoom(String name, int capacity, Printer printer) {
+    public void addRoom(String name, int capacity, boolean isPoisonous, Printer printer) {
 
         for (String key : rooms.keySet()) {
             if (rooms.get(key).equals(name)) {
@@ -62,7 +62,7 @@ public class LabyrinthBuilder {
             }
         }
 
-        rooms.put(name, new Room(capacity));
+        rooms.put(name, new Room(capacity, isPoisonous));
     }
 
     /**

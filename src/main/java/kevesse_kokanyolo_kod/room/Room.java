@@ -63,6 +63,13 @@ public class Room implements EffectConsumedObserver {
 
         stickiness = null;
     }
+    public Room(int capacity, boolean poisonous){
+        this(capacity);
+        if(poisonous){
+            PoisonEffect poisonEffect = new PoisonEffect(null, Integer.MAX_VALUE, this);
+            poisonEffects.add(poisonEffect);
+        }
+    }
     /**
      * Hozzáadja a szoba ajtóihoz a kapott ajtót.
      * @param door a kapott ajtó
