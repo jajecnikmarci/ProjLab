@@ -328,7 +328,7 @@ public class ProtoMenu {
         }
         switch (tokens[1]) {
             case "room":
-                boolean isPoisonous = (tokens.length > 4 && tokens[4].equals("true"));
+                boolean isPoisonous = (tokens.length > 4 && tokens[4].equals("poisonous"));
                 labyrinthBuilder.addRoom(tokens[2], Integer.parseInt(tokens[3]), isPoisonous, printer);
                 break;
             case "item":
