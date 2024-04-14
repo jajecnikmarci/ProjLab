@@ -18,3 +18,13 @@ room1
 		poisonEffects
 	- stunEffects: 
 	- lastCleaning: null
+room1
+	- capacity: 3
+	- people: 
+		student1
+	- doors: 
+	- items: 
+		camembert
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null

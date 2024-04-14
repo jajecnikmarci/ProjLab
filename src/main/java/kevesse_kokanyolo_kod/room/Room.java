@@ -450,7 +450,7 @@ public class Room implements EffectConsumedObserver {
         printer.printFields("items", this.items, builder);
         printer.printFields("poisonEffects", "poisonEffects", this.poisonEffects.size());
         printer.printFields("stunEffects", "stunEffects", this.stunEffects.size());
-        printer.printFields("lastCleaning", "StickinessEffect", 1);
+        printer.printField("lastCleaning", stickiness == null? "null" : "StickinessEffect");
 
         printer.endPrintObject();
     }
