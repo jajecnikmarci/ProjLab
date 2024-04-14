@@ -3,6 +3,7 @@ room1
 	- people: 
 		student1
 	- doors: 
+		door1
 	- items: 
 		ffp2
 	- poisonEffects: 
@@ -22,6 +23,7 @@ room1
 	- people: 
 		student1
 	- doors: 
+		door1
 	- items: 
 		ffp2
 		camembert
@@ -41,6 +43,7 @@ room2
 	- people: 
 		student1
 	- doors: 
+		door1
 	- items: 
 		transistor2
 	- poisonEffects: 
