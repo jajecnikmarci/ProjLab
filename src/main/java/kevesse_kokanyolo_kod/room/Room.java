@@ -240,7 +240,6 @@ public class Room implements EffectConsumedObserver {
     public static BiConsumer<Room, Door> roomSplitEvent;
     static {
         roomSplitEvent = (room, door) -> {};
-
     }
     /**
      * Kettéosztja ezt a szobát, ha kapacitása 4 vagy nagyobb és nincs benne játékos.

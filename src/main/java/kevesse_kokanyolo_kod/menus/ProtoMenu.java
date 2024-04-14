@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 import kevesse_kokanyolo_kod.people.Student;
+import kevesse_kokanyolo_kod.room.Room;
 
 
 // CONFIG:
@@ -111,8 +112,12 @@ public class ProtoMenu {
         initControlOptions.add(new Option("endtimer", this::endtimerOption));
 
 
-        Student.slideRulePicked = () -> printer.println("A diák felvette a logarlécet.");
-        Student.studentKilled = (student) -> printer.println(student + " meghalt.");
+        Student.slideRulePicked = () -> System.out.println("A diák felvette a logarlécet."); // konzolra
+        Student.studentKilled = (student) -> System.out.println(student + " meghalt."); // konzolra
+        Room.roomSplitEvent = (room, door) -> {
+            labyrinthBuilder.doors.put(labyrinthBuilder.newDoorName, door);
+            labyrinthBuilder.rooms.put(labyrinthBuilder.newRoomName, room);
+        };
         
     }
 
