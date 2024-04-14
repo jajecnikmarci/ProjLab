@@ -1,8 +1,31 @@
 randomness disable
 starttest
-add room room1 5
-add room room2 4
-add room room3 3
-add door room1 room2 door1
-add person room1 Student student1
+add room dummy 5
+add room roomToMergeIntoHasPlayer 5
+add room roomToMerge 5
+add door roomToMergeIntoHasPlayer roomToMerge door1
+add person roomToMergeIntoHasPlayer Student student1
+printstate roomToMergeIntoHasPlayer
+printstate roomToMerge
+shake
+dummy dummmyDoor dummyRoom
+roomToMergeIntoHasPlayer
+roomToMerge
+printstate roomToMergeIntoHasPlayer
+printstate roomToMerge
+endtest
+starttest
+add room dummy 5
+add room roomToMergeIntoHasPlayer 5
+add room roomToMerge 5
+add door roomToMergeIntoHasPlayer roomToMerge door1
+add person roomToMergeIntoHasPlayer Student student1
+printstate roomToMergeIntoHasPlayer
+printstate roomToMerge
+shake
+dummy dummmyDoor dummyRoom
+roomToMergeIntoHasPlayer
+roomToMerge
+printstate roomToMergeIntoHasPlayer
+printstate roomToMerge
 endtest

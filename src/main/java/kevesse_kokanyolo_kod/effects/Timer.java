@@ -38,12 +38,12 @@ public class Timer {
         innerTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                run();
+                timeIsUp();
             }
         }, durationInSeconds *1000L); 
         SkeletonMenu.endCall();
     }
-    protected void run() {
+    protected void timeIsUp() {
         ownerEffect.timeIsUp();
     }
 
@@ -53,7 +53,7 @@ public class Timer {
     public void cancel() {
         SkeletonMenu.startCall("Timer.cancel()");
         innerTimer.cancel();
-        run(); // Az időzítő leállításakor is jelezni kell a hatás végét.
+        timeIsUp(); // Az időzítő leállításakor is jelezni kell a hatás végét.
         SkeletonMenu.endCall();
     }
 }

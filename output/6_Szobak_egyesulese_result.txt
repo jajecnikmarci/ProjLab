@@ -1,58 +1,76 @@
-roomToSplitNotEnoughCapacity
-	- capacity: 3
-	- people: 
-	- doors: 
-	- items: 
-	- poisonEffects: 
-	- stunEffects: 
-	- lastCleaning: null
-roomToSplitNotEnoughCapacity
-	- capacity: 3
-	- people: 
-	- doors: 
-	- items: 
-	- poisonEffects: 
-	- stunEffects: 
-	- lastCleaning: null
-roomToSplitHasPerson
+roomToMergeIntoHasPlayer
 	- capacity: 5
 	- people: 
-		student
+		student1
 	- doors: 
+		door1
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-roomToSplitHappyPath
+roomToMerge
 	- capacity: 5
 	- people: 
 	- doors: 
+		door1
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-roomToSplitHappyPath
+roomToMergeIntoHasPlayer
+	- capacity: 5
+	- people: 
+		student1
+	- doors: 
+		door1
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+roomToMerge
 	- capacity: 5
 	- people: 
 	- doors: 
-		newDoor
+		door1
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-newRoom
-	- capacity: 2
+roomToMergeIntoHasPlayer
+	- capacity: 5
+	- people: 
+		student1
+	- doors: 
+		door1
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+roomToMerge
+	- capacity: 5
 	- people: 
 	- doors: 
-		newDoor
+		door1
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-newDoor
-	- room1: roomToSplitHappyPath
-	- room2: newRoom
-	- room1Open: true
-	- room2Open: true
-	- visible: true
-	- cursed: false
+roomToMergeIntoHasPlayer
+	- capacity: 5
+	- people: 
+		student1
+	- doors: 
+		door1
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+roomToMerge
+	- capacity: 5
+	- people: 
+	- doors: 
+		door1
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null

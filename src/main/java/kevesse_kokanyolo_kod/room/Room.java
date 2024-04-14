@@ -263,7 +263,15 @@ public class Room implements EffectConsumedObserver {
 
         Room newRoom = new Room(capacity / 2);
         for (int i = 0; i < doors.size(); i += 2) {
-            newRoom.doors.add(doors.remove(i));
+            Door door = doors.remove(i);
+            newRoom.doors.add(door);
+            if(door.getRoom1() == this) {
+                door.setRoom1(this);
+                door.setRoom2(newRoom);
+            } else {
+                door.setRoom2(this);
+                door.setRoom1(newRoom);
+            }
         }
 
         for (int i = 0; i < items.size(); i += 2) {
@@ -371,8 +379,8 @@ public class Room implements EffectConsumedObserver {
      * @param item a tárgy, amelyhez a tartozó hatást keresi
      */
     private void deleteRoomEffectByItem(Item item) {
-        stunEffects.removeIf(stunEffect -> stunEffect.getItem().equals(item));
-        poisonEffects.removeIf(poisonEffect -> poisonEffect.getItem().equals(item));
+        stunEffects.removeIf(stunEffect -> ( stunEffect.getItem() != null && stunEffect.getItem().equals(item)));
+        poisonEffects.removeIf(poisonEffect -> (poisonEffect.getItem() != null &&poisonEffect.getItem().equals(item)));
     }
 
     /**

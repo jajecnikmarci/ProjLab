@@ -116,8 +116,8 @@ public class Door {
 
     public void printState(Printer printer, LabyrinthBuilder labyrinthBuilder ){
         printer.startPrintObject(labyrinthBuilder.getInstanceName(this));
-        printer.printField("room1", this.room1);
-        printer.printField("room2", this.room2);
+        printer.printField("room1", labyrinthBuilder.getInstanceName(this.room1));
+        printer.printField("room2", labyrinthBuilder.getInstanceName(this.room2));
         printer.printField("room1Open", this.room1Open);
         printer.printField("room2Open", this.room2Open);
         printer.printField("visible", this.visible);

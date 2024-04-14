@@ -23,7 +23,7 @@ public class LabyrinthBuilder {
     Map<String, Cleaner> cleaners = new HashMap<>();
     Map<String, AcademicPerson> academicPeople = new HashMap<>();
 
-    static Map<String, Timer> timers = new HashMap<>();
+    static Map<String, Timer> timers = new HashMap<>(); // TODO: teszt végén mindet le kéne állítani az összeset és hibát dobni, esetleg hibát dobnni, ha nincs mind leállítva
 
     Map<String, Class<?>> ItemclassMap = new HashMap<>();
 
@@ -311,6 +311,7 @@ public class LabyrinthBuilder {
      */
     public void printState(String name, Printer printer) {  
         if (rooms.containsKey(name)) rooms.get(name).printState(printer, this);
+        if (doors.containsKey(name)) doors.get(name).printState(printer, this);
         if (items.containsKey(name)) items.get(name).printState(printer, this);
         if (cleaners.containsKey(name)) cleaners.get(name).printState(printer, this);
         if (academicPeople.containsKey(name)) academicPeople.get(name).printState(printer, this);
