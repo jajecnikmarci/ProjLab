@@ -10,6 +10,7 @@ import kevesse_kokanyolo_kod.people.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 /**
@@ -234,6 +235,14 @@ public class Room implements EffectConsumedObserver {
     }
 
     /**
+     * Ha egy szoba kettéosztódik, akkor ez a függvény hívódik meg. Ezzel lehet a vezérlőnek jelezni, hogy új szoba és ajtó jött létre.
+     */
+    public static BiConsumer<Room, Door> roomSplitEvent;
+    static {
+        roomSplitEvent = (room, door) -> {};
+
+    }
+    /**
      * Kettéosztja ezt a szobát, ha kapacitása 4 vagy nagyobb és nincs benne játékos.
      * Az újonnan létrehozott szobával megosztoznak az eredeti szoba tulajdonságain a következő módon:
      * a páros indexű dolgok átkerülnek a létrejövő szobához, a páratlan indexűek maradnak.
@@ -253,24 +262,25 @@ public class Room implements EffectConsumedObserver {
             return;
         }
 
-        Room room = new Room(capacity / 2);
+        Room newRoom = new Room(capacity / 2);
         for (int i = 0; i < doors.size(); i += 2) {
-            room.doors.add(doors.remove(i));
+            newRoom.doors.add(doors.remove(i));
         }
 
         for (int i = 0; i < items.size(); i += 2) {
-            room.items.add(items.remove(i));
+            newRoom.items.add(items.remove(i));
         }
 
         for (int i = 0; i < poisonEffects.size(); i += 2) {
-            room.poisonEffects.add(poisonEffects.remove(i));
+            newRoom.poisonEffects.add(poisonEffects.remove(i));
         }
         for (int i = 0; i < stunEffects.size(); i += 2) {
-            room.stunEffects.add(stunEffects.remove(i));
+            newRoom.stunEffects.add(stunEffects.remove(i));
         }
 
         // Jöhetne létre elátkozott ajtó...
-        new Door(this, room, true, true, true, false); 
+        Door newDoor = new Door(this, newRoom, true, true, true, false); 
+        Room.roomSplitEvent.accept(newRoom, newDoor); // Jelezzük a controller felé, hogy létrejött egy új szoba.
         SkeletonMenu.endCall("A szoba osztódott.");
     }
 
@@ -364,6 +374,22 @@ public class Room implements EffectConsumedObserver {
     private void deleteRoomEffectByItem(Item item) {
         stunEffects.removeIf(stunEffect -> stunEffect.getItem().equals(item));
         poisonEffects.removeIf(poisonEffect -> poisonEffect.getItem().equals(item));
+    }
+
+    /**
+     * Téridőrengéskor ha ez a szoba, amelyiknek ketté kell osztódnia, akkor meghívja a split() függvényt.
+     * Ha ez az a szoba, amelyikbe bele kell olvadnia a másiknak, akkor megpróbálja beolvasztani magába a másikat.
+     * @param roomToSplit
+     * @param roomToMergeInto
+     * @param roomToMerge
+     */
+    public void onShake(Room roomToSplit, Room roomToMergeInto, Room roomToMerge) {
+        if(this == roomToSplit) {
+            this.split();
+        }
+        if(this == roomToMergeInto) {
+            this.mergeWithRoom(roomToMerge);
+        }
     }
     
     /**

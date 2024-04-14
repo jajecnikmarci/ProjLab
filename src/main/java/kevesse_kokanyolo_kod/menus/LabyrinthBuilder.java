@@ -231,7 +231,16 @@ public class LabyrinthBuilder {
         boolean isRandom = ProtoMenu.getRandomness();
         Room roomToMergeInto, roomToMerge, roomToSplit;
         if(!isRandom) {
-            while ((roomToSplit = rooms.get(ProtoMenu.readString("Melyik szoba osztódjon?"))) == null) {
+            while (true) {
+                String input[] = ProtoMenu.readString("Melyik szoba osztódjon, mi legyen a neve? <RoomToSplit> <NewRoomName>").split(" ");
+                if (input.length < 2) System.err.println("Nem adott meg paramétert.");
+                if(rooms.containsKey(input[0])) {
+                    roomToSplit = rooms.get(input[0]);
+                    String newRoomName = input[1];
+                    break;
+                } else {
+                    System.err.println("Nincs ilyen nevű szoba.");
+                }
                 System.err.println("Nincs ilyen nevű szoba.");
             }
             while ((roomToMergeInto = rooms.get(ProtoMenu.readString("Melyik szobába olvadjon bele a másik?"))) == null) {
