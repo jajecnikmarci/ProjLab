@@ -81,7 +81,8 @@ public abstract class Effect implements TimerObserver {
      */
     public void timeIsUp() {
         SkeletonMenu.startCall("Effect.timeIsUp()");
-        observer.effectConsumed(this);
+        if(observer != null)
+            observer.effectConsumed(this);
         SkeletonMenu.endCall();
     }
     

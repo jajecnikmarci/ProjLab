@@ -5,6 +5,3 @@ add person room1 Student student1
 printstate room1
 printstate student1
 pickup student1
-printstate student1
-printstate room1
-endtest

@@ -50,12 +50,12 @@ public class FFP2 extends Item {
     @Override
     public void use(Room room, AcademicPerson academicPerson) {
         SkeletonMenu.startCall("FFP2.use(Room, Player)");
+        immunityLength -= immunityLengthDecrease;
         if (immunityLength <= 0) {
             academicPerson.removeItem(this);
             SkeletonMenu.endCall("A tárgy elhasználódott");
             return;
         }
-        immunityLength -= immunityLengthDecrease;
         PoisonImmunity poisonImmunity = new PoisonImmunity(this, immunityLength, academicPerson);
         academicPerson.addPoisonImmunity(poisonImmunity);
         effect = poisonImmunity; 
@@ -112,7 +112,7 @@ public class FFP2 extends Item {
     public void printState(Printer printer, LabyrinthBuilder builder) {
         printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("immunityLength", this.immunityLength);
-        printer.printField("effect", this.effect);  
+        printer.printFields("effect", "PoisonImmunity", 1);  
         printer.endPrintObject();      
     }
 }

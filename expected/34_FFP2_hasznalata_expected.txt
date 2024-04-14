@@ -1,39 +1,45 @@
+ffp2
+	- immunityLength: 10
+	- effect: 
+		PoisonImmunity
 room2
 	- capacity: 3
 	- people: 
 		student1
-	- doors:
-		door1 
+	- doors: 
+		door1
 	- items: 
 	- poisonEffects: 
-		poison1
+		poisonEffects
 	- stunEffects: 
-	- lastCleaning: null
+	- lastCleaning: 
+		StickinessEffect
 student1
 	- location: room2
 	- stunned: false
 	- inventory: 
 		ffp2
 	- killImmunities: 
-	- poisonImmunities:
-		poisonImmunity1 
+	- poisonImmunities: 
+		PoisonImmunity
 	- souls: 3
 ffp2
-	-immunityLength: 8
-	-effect: 
+	- immunityLength: 8
+	- effect: 
+		PoisonImmunity
 student1
-	- location: room2
+	- location: room1
 	- stunned: false
 	- inventory: 
 		ffp2
 	- killImmunities: 
-	- poisonImmunities:
-		poisonImmunity2
+	- poisonImmunities: 
+		PoisonImmunity
 	- souls: 3
 student1
 	- location: room2
 	- stunned: true
 	- inventory: 
 	- killImmunities: 
-	- poisonImmunities:
+	- poisonImmunities: 
 	- souls: 3

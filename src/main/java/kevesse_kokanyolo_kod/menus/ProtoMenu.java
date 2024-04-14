@@ -112,8 +112,19 @@ public class ProtoMenu {
         initControlOptions.add(new Option("endtimer", this::endtimerOption));
 
 
-        Student.slideRulePicked = () -> System.out.println("A diák felvette a logarlécet."); // konzolra
-        Student.studentKilled = (student) -> System.out.println(student + " meghalt."); // konzolra
+        Student.slideRulePicked = () -> {
+            printer.println("JATEK VEGE, hallgatok nyertek.");
+            labyrinthBuilder = null;
+        };
+        Student.studentKilled = (student) -> {
+            labyrinthBuilder.academicPeople.entrySet().removeIf(entry -> {
+                if(entry.getValue().equals(student)) {
+                    printer.println(entry.getKey() + " meghalt.");
+                    return true;
+                } 
+                return false;
+            });
+        };
         Room.roomSplitEvent = (room, door) -> {
             labyrinthBuilder.doors.put(labyrinthBuilder.newDoorName, door);
             labyrinthBuilder.rooms.put(labyrinthBuilder.newRoomName, room);
@@ -122,6 +133,7 @@ public class ProtoMenu {
             labyrinthBuilder.rooms.entrySet().removeIf(entry -> entry.getValue().equals(deletedRoom));
             labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(deletedDoor));
         };
+
         
     }
 

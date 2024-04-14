@@ -426,8 +426,10 @@ public class Room implements EffectConsumedObserver {
     public void effectConsumed(Effect effect) {
         SkeletonMenu.startCall("Room.effectConsumed()");
         Item item = effect.getItem();
-        deleteRoomEffectByItem(item);
-        item.removeEffect();
+        if(item!= null) {
+            deleteRoomEffectByItem(item);
+            item.removeEffect();
+        }
         SkeletonMenu.endCall();
     }
     

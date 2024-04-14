@@ -6,11 +6,18 @@ add door room1 room2 door1
 add item room1 FFP2 ffp2
 add person room1 Student student1
 pickup student1
+printstate ffp2
 gotoroom student1 room2
 printstate room2
 printstate student1
 gotoroom student1 room1
-endtimer timer1
+endtimer timer2
 printstate ffp2
+printstate student1
+gotoroom student1 room2
+endtimer timer3
+endtimer timer4
+endtimer timer5
+endtimer timer6
 printstate student1
 endtest

@@ -292,8 +292,8 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
                 if (inventory.contains(item)) {
                     item.use(location, this);
                 }
-                location.tryPoison(this);
                 removeEffect(effect);
+                location.tryPoison(this);
                 break;
             
             }
