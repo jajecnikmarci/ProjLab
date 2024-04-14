@@ -46,6 +46,7 @@ room2
 		door1
 	- items: 
 	- poisonEffects: 
+		poisonEffects
 	- stunEffects: 
 	- lastCleaning: null
 student1

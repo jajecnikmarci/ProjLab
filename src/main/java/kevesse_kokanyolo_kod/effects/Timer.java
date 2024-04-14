@@ -32,16 +32,19 @@ public class Timer {
      * Amikor véget ér az időzítő, meghívja az ownerEffect.timeIsUp metódust, ezzel jelezve a hatás végét.
      * @param durationInSeconds Az időzítő időtartama.
      */
-    void start(int durationInSeconds) {
+    public void start(int durationInSeconds) {
         SkeletonMenu.startCall("Timer.start(int)");
         innerTimer = new java.util.Timer();
         innerTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                ownerEffect.timeIsUp();
+                run();
             }
         }, durationInSeconds *1000L); 
         SkeletonMenu.endCall();
+    }
+    protected void run() {
+        ownerEffect.timeIsUp();
     }
 
     /**
@@ -50,6 +53,7 @@ public class Timer {
     public void cancel() {
         SkeletonMenu.startCall("Timer.cancel()");
         innerTimer.cancel();
+        run(); // Az időzítő leállításakor is jelezni kell a hatás végét.
         SkeletonMenu.endCall();
     }
 }
