@@ -1,0 +1,37 @@
+professor1
+	- location: room2
+	- stunned: false
+	- Inventory: 
+	- poisonImmunities: 
+room1
+	- capacity: 3
+	- people: 
+		student1
+	- doors: 
+		door1
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+		stunEffects
+	- lastCleaning: null
+professor1
+	- location: room1
+	- stunned: true
+	- Inventory: 
+	- poisonImmunities: 
+professor1
+	- location: room1
+	- stunned: false
+	- Inventory: 
+	- poisonImmunities: 
+room1
+	- capacity: 3
+	- people: 
+		student1
+		professor1
+	- doors: 
+		door1
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null

@@ -2,7 +2,10 @@ package kevesse_kokanyolo_kod.menus;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.*;
@@ -12,6 +15,7 @@ import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Cleaner;
+import kevesse_kokanyolo_kod.effects.Timer;
 
 public class LabyrinthBuilder {
 
@@ -20,6 +24,8 @@ public class LabyrinthBuilder {
     Map<String, Door> doors = new HashMap<>();
     Map<String, Cleaner> cleaners = new HashMap<>();
     Map<String, AcademicPerson> academicPeople = new HashMap<>();
+
+    static Map<String, Timer> timers = new HashMap<>(); 
 
     Map<String, Class<?>> ItemclassMap = new HashMap<>();
 
@@ -39,7 +45,7 @@ public class LabyrinthBuilder {
         ItemclassMap.put("SlideRule", SlideRule.class);
         ItemclassMap.put("Transistor", Transistor.class);
         ItemclassMap.put("TVSZ", TVSZ.class);
-    }
+}
 
     /**
      * Először ellenőrzi, hogy a szoba neve már szerepel-e a listában, ha nem akkor
@@ -49,7 +55,7 @@ public class LabyrinthBuilder {
      * @param capacity Szoba kapacitása
      * @param printer  Printer objektum
      */
-    public void addRoom(String name, int capacity, Printer printer) {
+    public void addRoom(String name, int capacity, boolean isPoisonous, Printer printer) {
 
         for (String key : rooms.keySet()) {
             if (rooms.get(key).equals(name)) {
@@ -58,7 +64,7 @@ public class LabyrinthBuilder {
             }
         }
 
-        rooms.put(name, new Room(capacity));
+        rooms.put(name, new Room(capacity, isPoisonous));
     }
 
     /**
@@ -106,7 +112,7 @@ public class LabyrinthBuilder {
         Room room1 = rooms.get(roomname1);
         Room room2 = rooms.get(roomname2);
 
-        Door door = new Door(room1, room2, passable, true, true, cursed);
+        Door door = new Door(room1, room2, true, passable, true, cursed);
         doors.put(doorName, door);
     }
 
@@ -206,7 +212,7 @@ public class LabyrinthBuilder {
      * @param roomName   Szoba neve
      */
     public void gotoroom(String personName, String roomName) {
-        if (!academicPeople.containsKey(personName)) {
+        if (!academicPeople.containsKey(personName) && !cleaners.containsKey(personName)) {
             System.err.println("Nincs ilyen nevű játékos.");
             return;
         }
@@ -214,13 +220,53 @@ public class LabyrinthBuilder {
             System.err.println("Nincs ilyen nevű szoba.");
             return;
         }
-        academicPeople.get(personName).goToRoom(rooms.get(roomName));
-        cleaners.get(personName).goToRoom(rooms.get(roomName));
+
+        if(academicPeople.containsKey(personName))
+            academicPeople.get(personName).goToRoom(rooms.get(roomName));
+
+        if(cleaners.containsKey(personName))
+            cleaners.get(personName).goToRoom(rooms.get(roomName));
     }
 
-    public void shake(boolean randomness) {
-        // TODO
+
+    public String newRoomName, newDoorName;
+    public void shake() {
+        boolean isRandom = ProtoMenu.getRandomness();
+        Room roomToMergeInto, roomToMerge, roomToSplit;
+        if(!isRandom) {
+            while (true) {
+                String input[] = ProtoMenu.readString("Melyik szoba osztódjon, mi legyen a neve? <RoomToSplit> <NewRoomName> <NewDoorName>").split(" ");
+                if (input.length < 3) System.err.println("Nem adott meg paramétert.");
+                if(rooms.containsKey(input[0])) {
+                    roomToSplit = rooms.get(input[0]);
+                    newRoomName = input[1];
+                    newDoorName = input[2];
+                    break;
+                } else {
+                    System.err.println("Nincs ilyen nevű szoba.");
+                }
+                System.err.println("Nincs ilyen nevű szoba.");
+            }
+            while ((roomToMergeInto = rooms.get(ProtoMenu.readString("Melyik szobába olvadjon bele a másik?"))) == null) {
+                System.err.println("Nincs ilyen nevű szoba.");
+            }
+            while ((roomToMerge = rooms.get(ProtoMenu.readString("Melyik szoba olvadjon bele a másikba?"))) == null) {
+                System.err.println("Nincs ilyen nevű szoba.");
+            }
+            List<Room> roms = rooms.values().stream().collect(Collectors.toList());
+            for(int i = 0; i < roms.size(); i++) {
+                roms.get(i).onShake(roomToSplit, roomToMergeInto, roomToMerge);
+            }
+            //roomToSplit.split();
+            //roomToMergeInto.mergeWithRoom(roomToMerge);
+            
+        } else {
+
+        }
+        doors.values().forEach(door -> door.onShake());
+        
     }
+
 
     public String getInstanceName(Item item) {
         return items.keySet()
@@ -271,6 +317,7 @@ public class LabyrinthBuilder {
      */
     public void printState(String name, Printer printer) {  
         if (rooms.containsKey(name)) rooms.get(name).printState(printer, this);
+        if (doors.containsKey(name)) doors.get(name).printState(printer, this);
         if (items.containsKey(name)) items.get(name).printState(printer, this);
         if (cleaners.containsKey(name)) cleaners.get(name).printState(printer, this);
         if (academicPeople.containsKey(name)) academicPeople.get(name).printState(printer, this);
@@ -297,5 +344,14 @@ public class LabyrinthBuilder {
         for (String key : academicPeople.keySet()) {
             academicPeople.get(key).printState(printer, this);
         }
+    }
+
+    static public void addTimer(Timer timer){
+        int num = timers.size()+1;
+        String name = "timer" + num;
+        timers.put(name, timer);
+    }
+    public void endTimer(String timerName) {
+        timers.get(timerName).cancel();
     }
 }

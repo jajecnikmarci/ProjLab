@@ -10,10 +10,12 @@ import kevesse_kokanyolo_kod.people.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 /**
- * A játékban szereplő szobákat reprezentáló osztály.
+ * A játékban szereplő szobákat reprezentáló osztály. Kezeli a benne találjató hatásokat. 
+ * Interakcióba lépteti a benne lévő játékosokat a belépő játékossal. Tárolja a benne lévő tárgyakat.
  */
 public class Room implements EffectConsumedObserver {
     /**
@@ -48,7 +50,7 @@ public class Room implements EffectConsumedObserver {
     private StickinessEffect stickiness;
 
     /**
-     * Létrehozza a szobát, a paraméterül kapott szoba kapacitásával
+     * Létrehozza a szobát, a paraméterül kapott szoba kapacitásával.
      * 
      * @param capacity a szoba kapacitása
      */
@@ -62,7 +64,21 @@ public class Room implements EffectConsumedObserver {
 
         stickiness = null;
     }
-
+    public Room(int capacity, boolean poisonous){
+        this(capacity);
+        if(poisonous){
+            PoisonEffect poisonEffect = new PoisonEffect(null, Integer.MAX_VALUE, this);
+            poisonEffects.add(poisonEffect);
+            poisonEffect.activate();
+        }
+    }
+    /**
+     * Hozzáadja a szoba ajtóihoz a kapott ajtót.
+     * @param door a kapott ajtó
+     */
+    public void addDoor(Door door) {
+        doors.add(door);
+    }
     /**
      * Visszaadja a szoba ajatajainak listáját.
      * @return
@@ -104,8 +120,8 @@ public class Room implements EffectConsumedObserver {
      * amit megpróbál felvenni a szobából.
      * 
      * Ha ezek a feltételek teljesülnek, 
-     * akkor az AcademicPerson megpróbálja felvenni a szoba tárgyai közül a legfelsőt. 
-     * A Visitor Patternt alkalmazza a tárgynak átadja az AcademicPerson-t, 
+     * akkor az AcademicPerson tárgyaival interakcióba lépteti a szoba tárgyai közül a legfelsőt. 
+     * A Visitor Patternt alkalmazza a legfölső tárgynak átadja az AcademicPerson-t, 
      * a tárgy áthelyezése a személyhez innentől nem a szoba felelőssége.
      *
      * @param academicPerson a játékos, aki a tárgyat fel akarja venni
@@ -124,7 +140,7 @@ public class Room implements EffectConsumedObserver {
             // Csak utána lépjenek interakcióba a tárgyak. 
             SkeletonMenu.endCall("A játékosnak már van ilyen tárgya.");
             return;
-        } 
+        }
         topItem.accept(academicPerson);
         SkeletonMenu.endCall();
     }
@@ -133,8 +149,8 @@ public class Room implements EffectConsumedObserver {
      * Akkor hívódik, amikor egy oktató belép a szobába, ez a függvény gyakorolja rá a szoba hatásait
      * Megpróbálja megmérgezni az oktatót, ha mérgező a szoba.
      * Megpróbálja bénítani az oktatót, ha van aktív bénító hatás a szobában.
-     * Interakcióba hozza a professzort az összes szobában található személlyel.
-     * Ha a szobában van stickinessEffect, jelzi neki, hogy újabb személy lépett a szobába.
+     * Interakcióba hozza a professzort az összes szobában található személlyel. saját magán kívűl.
+     * Ha a szobában van stickinessEffect, jelzi az effektnek, hogy újabb személy lépett a szobába.
      * 
      * @param professor a belépő oktató
      */
@@ -147,7 +163,11 @@ public class Room implements EffectConsumedObserver {
                 break;
             }
         }
-        people.forEach(person -> person.meet(professor));
+        for (int i = 0; i < people.size(); i++)  { // Nem használható forEach, mert a meet módosíthatja a person objektumot.
+            Person person = people.get(i);
+            if(person != professor) person.meet(professor);
+        };
+        // people.forEach(person -> person.meet(professor));
         if (stickiness!=null) stickiness.affect(professor);
         SkeletonMenu.endCall();
     }
@@ -164,7 +184,10 @@ public class Room implements EffectConsumedObserver {
         SkeletonMenu.startCall("Room.onEnter(Student)");
         tryPoison(student);
         if (stickiness!=null) stickiness.affect(student);
-        people.forEach(person -> person.meet(student));
+        for (int i = 0; i < this.people.size(); i++) {
+            Person person = this.people.get(i);
+            if(person != student) person.meet(student);
+        }
         SkeletonMenu.endCall();
     }
 
@@ -172,16 +195,19 @@ public class Room implements EffectConsumedObserver {
      * Amikor egy takarító belép a szobába, ez a függvény gyakorolja rá a szoba hatásait.
      * Interakcióba hozza a szobában található játékosokkal.
      * A takarító:
-     * - kiszellőzteti a szobát (a szoba mérgező hatásait lenulázza)
-     * - kitakarítja a szobát, ha a szoba ragacsos
-     * A takarítást követően, az ötödik látogató után a szoba újra ragacsossá fog válni.
+     * - kiszellőzteti a szobát (a szoba mérgező hatásait törli)
+     * - kitakarítja a szobát, ha a szoba ragacsos, ha nem, 
+     *   a takarító belépését követően, az ötödik látogató után a szoba újra ragacsossá fog válni. (Létrehoz egy StickinessEffectet a szobában.)
      * A beléptető objektum felelőssége meghívni ezt a függvényt.
      *
      * @param cleaner a belépő takarító
      */
     public void onEnter(Cleaner cleaner) {
         SkeletonMenu.startCall("Room.onEnter(Cleaner)");
-        for (Person person : this.people) person.meet(cleaner);
+        for (int i = 0; i < this.people.size(); i++) {
+            Person person = this.people.get(i);
+            if(person != cleaner) person.meet(cleaner);
+        }
         this.poisonEffects.clear();
         if (stickiness!=null) stickiness.clean();
         else {
@@ -191,8 +217,7 @@ public class Room implements EffectConsumedObserver {
     }
     /**
      * Ha van aktív mérgező hatás a szobában, akkor az első aktív mérgező hatást alkalmazza a személyre.
-     * 
-     * @param academicPerson a játékos, akire a mérgező hatást gyakorolja a szoba
+     * @param academicPerson a személy, akire a mérgező hatást gyakorolja a szoba
      */
     public void tryPoison(AcademicPerson academicPerson) {
         for (PoisonEffect effect : this.poisonEffects) {
@@ -213,6 +238,18 @@ public class Room implements EffectConsumedObserver {
     }
 
     /**
+     * Ha egy szoba kettéosztódik, akkor ez a függvény hívódik meg. Ezzel lehet a vezérlőnek jelezni, hogy új szoba és ajtó jött létre. A vezérlőnek fölül kell írni
+     */
+    public static BiConsumer<Room, Door> roomSplitEvent;
+    /**
+     * Ha egy szoba sikeresen beleolvad ebbe a szobába, ez a függvény hívódik meg. Ezzel lehet a vezérlőnek jelezni, melyik szoba és ajtó szűnt meg. A vezérlőnek fölül kell írni
+     */
+    public static BiConsumer<Room, Door> roomsMergedEvent;
+    static {
+        roomSplitEvent = (room, door) -> {};
+        roomSplitEvent = (deletedRoom, deletedDoor) -> {};
+    }
+    /**
      * Kettéosztja ezt a szobát, ha kapacitása 4 vagy nagyobb és nincs benne játékos.
      * Az újonnan létrehozott szobával megosztoznak az eredeti szoba tulajdonságain a következő módon:
      * a páros indexű dolgok átkerülnek a létrejövő szobához, a páratlan indexűek maradnak.
@@ -232,26 +269,33 @@ public class Room implements EffectConsumedObserver {
             return;
         }
 
-        Room room = new Room(capacity / 2);
+        Room newRoom = new Room(capacity / 2);
         for (int i = 0; i < doors.size(); i += 2) {
-            room.doors.add(doors.remove(i));
+            Door door = doors.remove(i);
+            newRoom.doors.add(door);
+            if(door.getRoom1() == this) {
+                door.setRoom1(this);
+                door.setRoom2(newRoom);
+            } else {
+                door.setRoom2(this);
+                door.setRoom1(newRoom);
+            }
         }
 
         for (int i = 0; i < items.size(); i += 2) {
-            room.items.add(items.remove(i));
+            newRoom.items.add(items.remove(i));
         }
 
         for (int i = 0; i < poisonEffects.size(); i += 2) {
-            room.poisonEffects.add(poisonEffects.remove(i));
+            newRoom.poisonEffects.add(poisonEffects.remove(i));
         }
         for (int i = 0; i < stunEffects.size(); i += 2) {
-            room.stunEffects.add(stunEffects.remove(i));
+            newRoom.stunEffects.add(stunEffects.remove(i));
         }
 
         // Jöhetne létre elátkozott ajtó...
-        Door door = new Door(this, room, true, true, true, false); 
-        doors.add(door);
-        room.doors.add(door);
+        Door newDoor = new Door(this, newRoom, true, true, true, false); 
+        Room.roomSplitEvent.accept(newRoom, newDoor); // Jelezzük a controller felé, hogy létrejött egy új szoba.
         SkeletonMenu.endCall("A szoba osztódott.");
     }
 
@@ -261,6 +305,7 @@ public class Room implements EffectConsumedObserver {
      * A játékosok, tárgyak és hatások összeadódnak. (lásd split)
      * Az ajtók összegyűjtésekor azokat az ajtókat eldobjuk, amik a két szoba között vannak.
      * Az ajtók közül azokat, amik a kapott szobához vezetnek, átállítjuk, hogy erre a szobára vezessenek.
+     * Jelzi a roomsMergedEvent-nek, hogy melyik ajtót és szobát kell megszüntetni.
      *
      * @param room a szoba amit beleolvasztunk ebbe a szobába
      */
@@ -275,10 +320,17 @@ public class Room implements EffectConsumedObserver {
         this.poisonEffects.addAll(room.poisonEffects);
         this.stunEffects.addAll(room.stunEffects);
 
-        doors.addAll(room.doors);
+        doors.addAll(room.doors); 
         doors = doors.stream()
-                .filter(d -> !(d.getRoom1() == room && d.getRoom2() == this
-                        || d.getRoom1() == this && d.getRoom2() == room))
+                .filter(d -> {
+                    if (!d.isBetween(this, room)) {
+                        return true;
+                    } else {
+                        room.doors.remove(d);
+                        roomsMergedEvent.accept(room, d); // Jelezzük a controller felé, hogy egy ajtó megszűnt.
+                        return false;
+                    }
+                })
                 .distinct()
                 .collect(Collectors.toList());
         doors.forEach(d -> {
@@ -319,17 +371,7 @@ public class Room implements EffectConsumedObserver {
         this.poisonEffects.add(effect);
         SkeletonMenu.endCall();
     }
-
-    /**
-     * Törli a megadott hatást a szobából
-     * @param effect a hatás, amit eltávolítunk a szoba hatásai közül
-     */
-    public void removePoisonEffect(PoisonEffect effect) {
-        SkeletonMenu.startCall("Room.removeEffect(RoomEffect)");
-        this.poisonEffects.remove(effect);
-        SkeletonMenu.endCall();
-    }
-    
+       
     /**
      * Hozzáadja a bénító hatást a szobához.
      * @param effect a hozzáadandó hatás
@@ -339,16 +381,7 @@ public class Room implements EffectConsumedObserver {
         this.stunEffects.add(effect);
         SkeletonMenu.endCall();
     }
-    
-    /**
-     * Törli a hatást a szobából.
-     * @param effect a törlendő hatás
-     */
-    public void removeStunEffect(StunEffect effect) {
-        SkeletonMenu.startCall("Room.removeEffect(RoomEffect)");
-        this.stunEffects.remove(effect);
-        SkeletonMenu.endCall();
-    }
+      
 
     /**
      * Ha egy játékos befér még a szobába, igaz értékkel tér vissza.
@@ -363,8 +396,24 @@ public class Room implements EffectConsumedObserver {
      * @param item a tárgy, amelyhez a tartozó hatást keresi
      */
     private void deleteRoomEffectByItem(Item item) {
-        stunEffects.removeIf(stunEffect -> stunEffect.getItem().equals(item));
-        poisonEffects.removeIf(poisonEffect -> poisonEffect.getItem().equals(item));
+        stunEffects.removeIf(stunEffect -> ( stunEffect.getItem() != null && stunEffect.getItem().equals(item)));
+        poisonEffects.removeIf(poisonEffect -> (poisonEffect.getItem() != null &&poisonEffect.getItem().equals(item)));
+    }
+
+    /**
+     * Téridőrengéskor ha ez a szoba, amelyiknek ketté kell osztódnia, akkor meghívja a split() függvényt.
+     * Ha ez az a szoba, amelyikbe bele kell olvadnia a másiknak, akkor megpróbálja beolvasztani magába a másikat.
+     * @param roomToSplit
+     * @param roomToMergeInto
+     * @param roomToMerge
+     */
+    public void onShake(Room roomToSplit, Room roomToMergeInto, Room roomToMerge) {
+        if(this == roomToSplit) {
+            this.split();
+        }
+        if(this == roomToMergeInto) {
+            this.mergeWithRoom(roomToMerge);
+        }
     }
     
     /**
@@ -377,8 +426,10 @@ public class Room implements EffectConsumedObserver {
     public void effectConsumed(Effect effect) {
         SkeletonMenu.startCall("Room.effectConsumed()");
         Item item = effect.getItem();
-        deleteRoomEffectByItem(item);
-        item.removeEffect();
+        if(item!= null) {
+            deleteRoomEffectByItem(item);
+            item.removeEffect();
+        }
         SkeletonMenu.endCall();
     }
     
@@ -397,9 +448,10 @@ public class Room implements EffectConsumedObserver {
         printer.printFields("people", this.people, builder);
         printer.printFields("doors", this.doors, builder);
         printer.printFields("items", this.items, builder);
-        printer.printFields("poisonEffects", this.poisonEffects, builder);
-        printer.printFields("stunEffects", this.stunEffects, builder);
-        printer.printField("lastCleaning", this.stickiness);
+        printer.printFields("poisonEffects", "poisonEffects", this.poisonEffects.size());
+        printer.printFields("stunEffects", "stunEffects", this.stunEffects.size());
+        printer.printField("lastCleaning", stickiness == null? "null" : "StickinessEffect");
+
         printer.endPrintObject();
     }
 }

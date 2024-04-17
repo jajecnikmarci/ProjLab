@@ -1,0 +1,41 @@
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+		tvsz
+	- killImmunities: 
+		KillImmunity
+	- poisonImmunities: 
+	- souls: 3
+student2
+	- location: room1
+	- stunned: false
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+		tvsz
+	- killImmunities: 
+		KillImmunity
+		KillImmunity
+	- poisonImmunities: 
+	- souls: 3
+student2
+	- location: room1
+	- stunned: false
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 2
+student2 meghalt.
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3

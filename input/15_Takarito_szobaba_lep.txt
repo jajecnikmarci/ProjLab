@@ -1,0 +1,51 @@
+starttest
+add room roomToClean 5 poisonous
+add room room1 4
+add room room2 4
+add door room1 roomToClean door1
+add door room2 roomToClean door2
+add item roomToClean Camembert stickyCamembert
+add item roomToClean Rug rug1
+add person room1 Cleaner cleaner1
+add person room2 Student student1
+printstate roomToClean
+gotoroom cleaner1 roomToClean
+gotoroom cleaner1 room2
+gotoroom student1 room1
+gotoroom student1 roomToClean
+gotoroom student1 room1
+gotoroom student1 roomToClean
+gotoroom student1 room1
+gotoroom student1 roomToClean
+pickup student1
+printstate student1
+gotoroom student1 room1
+gotoroom student1 roomToClean
+pickup student1
+printstate student1
+endtest
+starttest 
+add room room1 4
+add room room2 4
+add door room1 room2 door1
+add person room1 Cleaner cleaner1
+add person room2 Professor professor1
+printstate professor1
+printstate cleaner1
+gotoroom cleaner1 room2
+printstate professor1
+printstate cleaner1
+endtest
+starttest 
+add room room3 4
+add room room4 4
+add door room3 room4 door1
+add person room3 Cleaner cleaner1
+add person room4 Cleaner cleaner2
+printstate room3
+printstate cleaner1
+printstate cleaner2
+gotoroom cleaner1 room4
+printstate cleaner1
+printstate cleaner2
+endtest

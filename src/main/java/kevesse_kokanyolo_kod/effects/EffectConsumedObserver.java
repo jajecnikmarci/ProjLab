@@ -7,5 +7,5 @@ public interface EffectConsumedObserver {
     /**
      * A hatás lejártakor kezeli a végrehajtandó eseményeket.
      */
-    void effectConsumed(Effect effect);
+    public void effectConsumed(Effect effect);
 }

@@ -1,3 +1,0 @@
-FFP1
-	- immunityLength: 10
-	- effect: null

@@ -1,0 +1,24 @@
+starttest
+add room room1 3
+add item room1 FFP2 ffp2
+add item room1 Transistor transistor1
+add item room1 Transistor transistor2
+add item room1 Transistor transistor3
+add item room1 Glass glass1
+add item room1 Glass glass2
+add person room1 Student student1
+add person room1 Student student2
+printstate room1
+printstate student1
+pickup student1
+pickup student1
+printstate room1
+printstate student1
+printstate student2
+pickup student2
+pickup student2
+pickup student2
+pickup student2
+printstate room1
+printstate student2
+endtest

@@ -20,6 +20,7 @@ public class StickinessEffect extends RoomEffect{
      */
     public StickinessEffect() {
         super(null, 0, null);
+        visitCount = 5;
     }
 
     /**

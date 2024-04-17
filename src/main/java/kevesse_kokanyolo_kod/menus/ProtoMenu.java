@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
+import kevesse_kokanyolo_kod.people.Student;
+import kevesse_kokanyolo_kod.room.Room;
+
 
 // CONFIG:
     // randomness <enable|disable> - véletlenszerűség be- vagy kikapcsolása, 
@@ -28,7 +31,7 @@ import java.util.function.Consumer;
     // add item <RoomName> <ItemType> <ItemName> 
 
     // 3. Ajtók létrehozása (Adjon hozzá ajtókat a szobához: [!]<RoomName> <RoomName> [?cursed] Tegyen felkiáltójelet az 1. szoba neve elé, ha nem átjárható abból az irányból. A cursed opcionális true/false értéket lehet megadni, default = false.) 
-    // add door [!]<RoomName> <RoomName>  [?cursed]
+    // add door [!]<RoomName> <RoomName>  <DoorName> [?cursed]
 
     // 4. Személyek létrehozása, szobához adása. (Adjon hozzá személyeket a szobához: <RoomName> <PersonType> <PersonName>) 
     // add person <RoomName> <PersonType> <PersonName>
@@ -67,13 +70,20 @@ import java.util.function.Consumer;
 public class ProtoMenu {
     private static Printer printer;
 
-    boolean randomness = false;
-    boolean timerControl = false;
+    public static boolean randomness = false;
+    public static boolean getRandomness() {
+        return randomness;
+    }
+    public static boolean timerControl = false;
     LabyrinthBuilder labyrinthBuilder = null; //null, ha konfigurációs módban vagyunk
 
     List<Option> configOptions = new ArrayList<>(); //Konfigurációs parancsokat tartalmazza
     List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
 
+    public static String readString(String msg) {
+        if(Printer.fileWriter == null) System.out.println(msg); // fontos, hogy a konzolra írjunk.
+        return Printer.scanner.nextLine();
+    }
     /**
      * Hozzáadja a parancsokat a 2 listához.
      */
@@ -99,6 +109,32 @@ public class ProtoMenu {
         initControlOptions.add(new Option("use", this::useOption));
         initControlOptions.add(new Option("gotoroom", this::gotoroomOption));
         initControlOptions.add(new Option("shake", this::shakeOption));
+        initControlOptions.add(new Option("endtimer", this::endtimerOption));
+
+
+        Student.slideRulePicked = () -> {
+            printer.println("JATEK VEGE, hallgatok nyertek.");
+            labyrinthBuilder = null;
+        };
+        Student.studentKilled = (student) -> {
+            labyrinthBuilder.academicPeople.entrySet().removeIf(entry -> {
+                if(entry.getValue().equals(student)) {
+                    printer.println(entry.getKey() + " meghalt.");
+                    return true;
+                } 
+                return false;
+            });
+        };
+        Room.roomSplitEvent = (room, door) -> {
+            labyrinthBuilder.doors.put(labyrinthBuilder.newDoorName, door);
+            labyrinthBuilder.rooms.put(labyrinthBuilder.newRoomName, room);
+        };
+        Room.roomsMergedEvent = (deletedRoom, deletedDoor) -> {
+            labyrinthBuilder.rooms.entrySet().removeIf(entry -> entry.getValue().equals(deletedRoom));
+            labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(deletedDoor));
+        };
+
+        
     }
 
     private void runTest(String inputFileName, String expectedFileName) throws IOException {
@@ -298,6 +334,7 @@ public class ProtoMenu {
      * @param tokens a parancs szavai
      */
     private void endTestOption(String[] tokens) {
+        // TODO: teszt végén mindet le kéne állítani az összeset és hibát dobni, esetleg hibát dobnni, ha nincs mind leállítva
         labyrinthBuilder = null;
     }
 
@@ -313,7 +350,8 @@ public class ProtoMenu {
         }
         switch (tokens[1]) {
             case "room":
-                labyrinthBuilder.addRoom(tokens[2], Integer.parseInt(tokens[3]), printer);
+                boolean isPoisonous = (tokens.length > 4 && tokens[4].equals("poisonous"));
+                labyrinthBuilder.addRoom(tokens[2], Integer.parseInt(tokens[3]), isPoisonous, printer);
                 break;
             case "item":
                 if (tokens.length < 5) {
@@ -385,7 +423,22 @@ public class ProtoMenu {
     }
 
     private void shakeOption(String[] tokens) {
-        labyrinthBuilder.shake(randomness);
+        labyrinthBuilder.shake();
+    }
+
+    private void endtimerOption(String[] tokens) {
+        if(timerControl == false){
+            printer.printError("Az időzítők vezérlése nincs engedélyezve.");
+            return;
+        }
+        if (tokens.length < 2) {
+            printer.printError("Hiányzó paraméter az 'endtimer' parancshoz.");
+            return;
+        }
+
+        labyrinthBuilder.endTimer(tokens[1]);
+        
+
     }
 
     class Option {

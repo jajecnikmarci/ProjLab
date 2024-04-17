@@ -37,6 +37,7 @@ public class SkeletonMenu {
     static boolean disablePrint = false;
     static boolean fromAndToFile;
     static FileWriter fileWriter;
+    
     static Scanner scanner;
     private static int indentCounter = 0;
     private static boolean verbose = true;

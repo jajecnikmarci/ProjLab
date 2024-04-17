@@ -1,0 +1,90 @@
+randomness disable
+starttest
+add room roomToSplitNotEnoughCapacity 3
+add room dummy1 4
+add room dummy2 4
+printstate roomToSplitNotEnoughCapacity
+shake
+roomToSplitNotEnoughCapacity ThisRoomShouldNotExist ThisDoorShouldNotExist 
+dummy1
+dummy2
+printstate roomToSplitNotEnoughCapacity
+printstate ThisRoomShouldNotExist
+printstate ThisDoorShouldNotExist
+endtest
+starttest
+add room roomToSplitHasPerson 5
+add room dummy1 4
+add room dummy2 4
+add person roomToSplitHasPerson Student student
+printstate roomToSplitHasPerson
+shake
+roomToSplitHasPerson ThisRoomShouldNotExist ThisDoorShouldNotExist 
+dummy1
+dummy2
+printstate roomToSplitHappyPath
+printstate ThisRoomShouldNotExist
+printstate ThisDoorShouldNotExist
+endtest
+starttest
+add room roomToSplitHappyPath 5
+add room dummy1 4
+add room dummy2 4
+add item roomToSplitHappyPath FFP2 ffp
+add item roomToSplitHappyPath Camembert camembert1
+add item roomToSplitHappyPath Camembert camembert2
+printstate roomToSplitHappyPath
+shake
+roomToSplitHappyPath newRoom newDoor 
+dummy1
+dummy2
+printstate roomToSplitHappyPath
+printstate newRoom
+printstate newDoor
+endtest
+timercontrol enable
+starttest 
+add room roomToSplitEffectsAndDoors 5 poisonous
+add room neighbour1 4
+add room neighbour2 4
+add room neighbour3 5
+add room neighbour4 6
+add room dummy1 6
+add room dummy2 6
+add door dummy1 dummy2 dummydoor
+add item roomToSplitEffectsAndDoors Camembert camembert1
+add item roomToSplitEffectsAndDoors Rug rug1
+add item roomToSplitEffectsAndDoors FFP2 ffp
+add person roomToSplitEffectsAndDoors Student student
+add door neighbour1 roomToSplitEffectsAndDoors door1
+add door !roomToSplitEffectsAndDoors neighbour2 door2
+add door roomToSplitEffectsAndDoors neighbour3 door3
+add door roomToSplitEffectsAndDoors neighbour4 door4 true
+pickup student
+pickup student
+pickup student
+use student rug1
+use student camembert1
+gotoroom student neighbour1
+endtimer timer1
+printstate roomToSplitEffectsAndDoors
+printstate newRoom
+printstate newDoor
+printstate door1
+printstate door2
+printstate door3
+printstate door4
+shake
+roomToSplitEffectsAndDoors newRoom newDoor
+dummy1
+dummy2
+printstate roomToSplitEffectsAndDoors
+printstate newRoom
+printstate newDoor
+printstate door1
+printstate door2
+printstate door3
+printstate door4
+endtimer timer2
+endtimer timer3
+endtest

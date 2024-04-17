@@ -1,0 +1,28 @@
+starttest
+add room dummy1 3
+add room dummy2 2
+add room dummy3 2
+add room dummy4 2
+add room dummy5 2
+add room room1 3
+add room room2 3
+add room room3 3
+add door room1 room2 door1 true
+add door !room3 room2 door2 true
+add door !room1 room3 door3
+printstate door1 
+printstate door2 
+printstate door3
+shake
+dummy1 noRoom noDoor
+dummy2
+dummy3
+printstate door1 
+printstate door2 
+printstate door3
+shake
+dummy1 noRoom noDoor
+dummy4
+dummy5
+printstate door1
+endtest

@@ -152,9 +152,9 @@ public class Transistor extends Item {
     @Override
     public void printState(Printer printer, LabyrinthBuilder builder) {
         printer.startPrintObject(builder.getInstanceName(this));
-        printer.printField("pair", this.pair);
-        printer.printField("room", this.room);
-        printer.printField("owner", this.owner);
+        printer.printField("pair", builder.getInstanceName(this.pair));
+        printer.printField("room", builder.getInstanceName(this.room));
+        printer.printField("owner", builder.getInstanceName(this.owner));
         printer.endPrintObject();
     }
 }

@@ -1,0 +1,12 @@
+starttest
+add room room1 3
+add item room1 Transistor transistor1
+add item room1 Transistor transistor2
+add person room1 Student student1
+pickup student1
+pickup student1
+use student1 transistor1
+printstate student1
+printstate transistor1
+printstate transistor2
+endtest

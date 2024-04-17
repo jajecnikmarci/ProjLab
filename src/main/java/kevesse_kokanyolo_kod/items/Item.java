@@ -7,7 +7,8 @@ import kevesse_kokanyolo_kod.effects.Effect;
  */
 public abstract class Item implements IItem {
     /**
-     * A tárgyhoz tartozó effektet tárolja, hogy meg lehessen szüntetni eldobáskor. 
+     * A tárgyhoz tartozó effektet tárolja, hogy meg lehessen szüntetni eldobáskor, 
+     * vagy felvételkor a játékoshoz lehessen adni.
      */
     protected Effect effect;
 
@@ -17,5 +18,13 @@ public abstract class Item implements IItem {
     @Override
     public void removeEffect() {
         effect = null;
+    }
+
+    /**
+     * Visszaadja a tárgyhoz tartozó effektet
+     */
+    @Override 
+    public Effect getEffect() {
+        return effect;
     }
 }

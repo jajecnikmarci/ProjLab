@@ -1,6 +1,6 @@
 package kevesse_kokanyolo_kod.items;
 
-
+import kevesse_kokanyolo_kod.effects.Effect;
 import kevesse_kokanyolo_kod.items.fakes.FakeFFP2;
 import kevesse_kokanyolo_kod.items.fakes.FakeSlideRule;
 import kevesse_kokanyolo_kod.items.fakes.FakeTVSZ;
@@ -9,15 +9,22 @@ import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.room.Room;
 
+/**
+ * A tárgyak közös interfésze. 
+ * 
+ * Visitor Patternt valósít meg, a tárgyak interakcióba léptetéséhez. 
+ * (Egy tárgyból nem vehet fel egynél többet a játékos, kivéve tranzisztorok. Ezeknek a párosítását intézi.)
+ * Az összes interactItem függvvénynek alapértelmezett implementációt ad (ami hamissal tér vissza), megengedi a tárgy felvételét.
+ * Minden tárgynak a hozzá tartozó interactItem metódust felül kell írnia, ha nem akarja, hogy a játékos felvegyen belőle kettőt (vagy tranzisztor esete).
+ */
 public interface IItem {
-
     /**
      * A tárgy használata 
      *
      * @param room   a szoba, ahol a tárgyat használják
      * @param academicPerson a játékos, aki használja a tárgyat
      */
-    void use(Room room, AcademicPerson academicPerson);
+    public void use(Room room, AcademicPerson academicPerson);
 
     /**
      * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
@@ -25,7 +32,7 @@ public interface IItem {
      *
      * @param academicPerson a játékos aki próbálja felvenni a tárgyat
      */
-    void accept(AcademicPerson academicPerson);
+    public void accept(AcademicPerson academicPerson);
 
     /**
      * Amikor az AcademicPerson felvesz egy tárgyat, 
@@ -171,16 +178,30 @@ public interface IItem {
      * Ez az implementációkban meghívja már az adott tárgyra vonatkozó interactItem függvényt
      * Az interactItem alapból (lásd fentebb) mindig false-sal tér vissza, azaz a tárgyak nem azonosak
      * Viszont minden tárgy a saját típusával valót felülírja, és true-val tér vissza, vagyis azonosak a tárgyak
+     * Minden tárgynak felül kell írnia és meg kell hívnia a kapott tárgyra  az interactItem függvényt átadva magát a saját típusaként.
      * 
      * @param item a tárgy, amivel interakcióba lép
      * @return igaz, ha a 2 tárgy azonos fajta, egyébként hamis
      */
-    boolean interact(IItem item);
+    public boolean interact(IItem item);
 
     /**
      * Törli a tárgyhoz tartozó Effect-et
      */
-    void removeEffect();
+    public void removeEffect();
+
+    /**
+     * Visszaadja a tárgyhoz tartozó effektet.
+     */
+    public Effect getEffect();
+
+    /**
+     * Ha egy tárgy eldobásra kerül, akkor ez a függvény hívódik meg.
+     * Az implementációkban felül kell írni, ha a tárgyhoz tartozik valamilyen speciális viselkedés
+     * @param person
+     */
+    public default void onDrop(AcademicPerson person) {} 
+
 
     public void printState(Printer printer, LabyrinthBuilder builder);
 

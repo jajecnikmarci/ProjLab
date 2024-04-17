@@ -32,7 +32,7 @@ public class Glass extends Item {
      * akkor el kell dobnia az egyik tárgyát véletlenszerűen. 
      * 
      * Az effekt lejártakor a szoba meghívja a removeEffect metódust, 
-     * ezzel jelezve, hogy a hatás lejárt, majd meg kell hívnia ezt a függvényt, 
+     * ezzel jelezve, hogy a hatás lejárt, majd meg kell hívnia ezt a függvényt, jelezve az elhasználódást
      * ami törölteti ezt a tárgyat a játékossal.
      * 
      * @param room a szoba, ahol a tárgyat használják
@@ -47,7 +47,7 @@ public class Glass extends Item {
                 SkeletonMenu.endCall("A tárgyat úgy próbálták használni, hogy már egyszer ezt megtették");
                 return;
             } else {
-                academicPerson.removeKillImmunity(this);
+                academicPerson.removeEffect(this.effect);
                 SkeletonMenu.endCall("A tárgy már elhasználódott ezért törlésre került");
                 return;
             }
@@ -91,6 +91,19 @@ public class Glass extends Item {
     @Override
     public boolean interact(IItem item) {
         return  item.interactItem(this);
+    }
+
+    /**
+     * Ha a tárgyat eldobták, és már aktiválva volt,
+     * akkor a hatása megmarad, de a tárgy megszűnik.
+     */
+    @Override
+    public void onDrop(AcademicPerson person) {
+        SkeletonMenu.startCall("Glass.onDrop(AcademicPerson)");
+        if(effect.isActive()) {
+            person.getLocation().removeItem(this);
+        }
+        SkeletonMenu.endCall();
     }
 
     @Override

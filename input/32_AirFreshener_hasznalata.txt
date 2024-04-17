@@ -1,0 +1,14 @@
+starttest
+add room room1 3
+add room room2 3 poisonous
+add door room1 room2 door1
+add item room1 AirFreshener airFreshener
+add item room1 FFP2 ffp2
+add person room1 Student student1
+pickup student1
+pickup student1
+gotoroom student1 room2
+printstate room2
+use student1 airFreshener
+printstate room2
+endtest

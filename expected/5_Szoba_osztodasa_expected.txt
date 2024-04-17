@@ -1,0 +1,58 @@
+roomToSplitNotEnoughCapacity
+	- capacity: 3
+	- people: 
+	- doors: 
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+roomToSplitNotEnoughCapacity
+	- capacity: 3
+	- people: 
+	- doors: 
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+roomToSplitHasPerson
+	- capacity: 5
+	- people: 
+		student
+	- doors: 
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+roomToSplitHappyPath
+	- capacity: 5
+	- people: 
+	- doors: 
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+roomToSplitHappyPath
+	- capacity: 5
+	- people: 
+	- doors: 
+		newDoor
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+newRoom
+	- capacity: 2
+	- people: 
+	- doors: 
+		newDoor
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+newDoor
+	- room1: roomToSplitHappyPath
+	- room2: newRoom
+	- room1Open: true
+	- room2Open: true
+	- visible: true
+	- cursed: false

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Cleaner;
+import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.items.Item;
 
@@ -37,6 +38,7 @@ public class Printer {
             scanner.close();
         }
     }
+
     public void println(String msg) {
         print(msg + "\n");
     }
@@ -87,9 +89,20 @@ public class Printer {
                 println(builder.getInstanceName((Room) value));
             } else if (value instanceof Item) {
                 println(builder.getInstanceName((Item) value));
-            } else {
-                println(value.toString());
+            } else if (value instanceof Door) {
+                println(builder.getInstanceName((Door) value));
+            }else {
+                
             }
+        }
+        indentCounter--;
+    }
+
+    public void printFields(String name, String names,int size){
+        println("- " + name + ": ");
+        indentCounter++;
+        for (int i = 0; i < size; i++) {
+            println(names);
         }
         indentCounter--;
     }

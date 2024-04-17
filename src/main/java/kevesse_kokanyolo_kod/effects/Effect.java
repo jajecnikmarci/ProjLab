@@ -3,6 +3,7 @@ package kevesse_kokanyolo_kod.effects;
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
+import kevesse_kokanyolo_kod.menus.ProtoMenu;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 /**
@@ -50,8 +51,13 @@ public abstract class Effect implements TimerObserver {
         SkeletonMenu.startCall("Effect.activate()");
         timer = new Timer(this);
         active = true;
-        timer.start(duration);
+        if(!ProtoMenu.timerControl) {
+            timer.start(duration);
+        } else {
+            LabyrinthBuilder.addTimer(timer);
+        }
         SkeletonMenu.endCall();
+
     }
 
     /**
@@ -75,7 +81,8 @@ public abstract class Effect implements TimerObserver {
      */
     public void timeIsUp() {
         SkeletonMenu.startCall("Effect.timeIsUp()");
-        observer.effectConsumed(this);
+        if(observer != null)
+            observer.effectConsumed(this);
         SkeletonMenu.endCall();
     }
     

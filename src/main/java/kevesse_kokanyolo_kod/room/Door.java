@@ -39,9 +39,21 @@ public class Door {
      */
     private boolean cursed;
 
+    /**
+     * Tér-Idő rengéskor, ha az ajtó el van átkozva, akkor a láthatósága megváltozik
+     */
+    public void onShake() {
+        if(cursed) visible = !visible;
+    }
+
+    /**
+     * Ajtó konstruktor. Tárolja a kapott paramétereket, valamint hozzáadja a hozzáadja a kapott szobákhoz az ajtót.
+     */
     public Door(Room room1, Room room2, boolean room1Open, boolean room2Open, boolean visible, boolean cursed) {
         this.room1 = room1;
         this.room2 = room2;
+        room1.addDoor(this);
+        room2.addDoor(this);
         this.room1Open = room1Open;
         this.room2Open = room2Open;
         this.visible = visible;
@@ -99,12 +111,13 @@ public class Door {
     }
 
     public void setRoom2(Room room2) {
+        this.room2 = room2;
     }
 
     public void printState(Printer printer, LabyrinthBuilder labyrinthBuilder ){
         printer.startPrintObject(labyrinthBuilder.getInstanceName(this));
-        printer.printField("room1", this.room1);
-        printer.printField("room2", this.room2);
+        printer.printField("room1", labyrinthBuilder.getInstanceName(this.room1));
+        printer.printField("room2", labyrinthBuilder.getInstanceName(this.room2));
         printer.printField("room1Open", this.room1Open);
         printer.printField("room2Open", this.room2Open);
         printer.printField("visible", this.visible);
