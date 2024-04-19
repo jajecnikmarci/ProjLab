@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.items.*;
@@ -257,8 +256,6 @@ public class LabyrinthBuilder {
             for(int i = 0; i < roms.size(); i++) {
                 roms.get(i).onShake(roomToSplit, roomToMergeInto, roomToMerge);
             }
-            //roomToSplit.split();
-            //roomToMergeInto.mergeWithRoom(roomToMerge);
             
         } else {
 

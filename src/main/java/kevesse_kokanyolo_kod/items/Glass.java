@@ -47,7 +47,7 @@ public class Glass extends Item {
                 SkeletonMenu.endCall("A tárgyat úgy próbálták használni, hogy már egyszer ezt megtették");
                 return;
             } else {
-                academicPerson.removeEffect(this.effect);
+                academicPerson.removeItem(this);
                 SkeletonMenu.endCall("A tárgy már elhasználódott ezért törlésre került");
                 return;
             }

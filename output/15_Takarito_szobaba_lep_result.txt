@@ -1,48 +1,3 @@
-roomToClean
-	- capacity: 5
-	- people: 
-	- doors: 
-		door1
-		door2
-	- items: 
-		stickyCamembert
-		rug1
-	- poisonEffects: 
-		poisonEffects
-	- stunEffects: 
-	- lastCleaning: 
-		StickinessEffect
-student1
-	- location: roomToClean
-	- stunned: false
-	- inventory: 
-		rug1
-	- killImmunities: 
-	- poisonImmunities: 
-	- souls: 3
-student1
-	- location: roomToClean
-	- stunned: false
-	- inventory: 
-		rug1
-		stickyCamembert
-	- killImmunities: 
-	- poisonImmunities: 
-	- souls: 3
-professor1
-	- location: room2
-	- stunned: false
-	- Inventory: 
-	- poisonImmunities: 
-cleaner1
-	- location: room1
-professor1
-	- location: room1
-	- stunned: false
-	- Inventory: 
-	- poisonImmunities: 
-cleaner1
-	- location: room2
 room3
 	- capacity: 4
 	- people: 
@@ -52,13 +7,12 @@ room3
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
-	- lastCleaning: 
-		StickinessEffect
+	- lastCleaning: null
 cleaner1
 	- location: room3
 cleaner2
 	- location: room4
 cleaner1
-	- location: room4
-cleaner2
 	- location: room3
+cleaner2
+	- location: room4
