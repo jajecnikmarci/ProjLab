@@ -45,7 +45,7 @@ public class Cleaner extends Person {
      */
     @Override
     public void meet(Cleaner cleaner) {
-        leaveRoom();
+        cleaner.leaveRoom();
     }
 
     /**

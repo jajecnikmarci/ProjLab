@@ -262,10 +262,11 @@ public class Student extends AcademicPerson {
         item.removeEffect();
         for (Effect e: killImmunities) {
             if (e == effect) {
-                if (inventory.contains(item)) {
+                removeEffect(effect); // Előbb töröljük az effectet
+                item.removeEffect(); 
+                if (inventory.contains(item)) { // Majd jelezzük a tárgynak, hogy használódotzt
                     item.use(location, this);
                 }
-                removeEffect(effect);
                 break;
             }
         }

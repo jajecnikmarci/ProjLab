@@ -334,7 +334,6 @@ public class ProtoMenu {
      * @param tokens a parancs szavai
      */
     private void endTestOption(String[] tokens) {
-        // TODO: teszt végén mindet le kéne állítani az összeset és hibát dobni, esetleg hibát dobnni, ha nincs mind leállítva
         labyrinthBuilder = null;
     }
 

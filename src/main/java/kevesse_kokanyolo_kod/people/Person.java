@@ -70,7 +70,8 @@ public abstract class Person {
     public void leaveRoom() {
         SkeletonMenu.startCall("Person.leaveRoom()");
         for(Door door: location.getDoors()) if(door.goThrough(this)) { 
-            // callOnEnter(door.getRoom1() == location ? door.getRoom2() : door.getRoom1());
+            callOnEnter(door.getRoom1() == location ? door.getRoom1() : door.getRoom2());
+            // https://github.com/jajecnikmarci/ProjLab/issues/119
             break;
         };
         SkeletonMenu.endCall();

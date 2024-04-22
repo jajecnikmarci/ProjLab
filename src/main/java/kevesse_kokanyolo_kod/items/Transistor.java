@@ -27,17 +27,6 @@ public class Transistor extends Item {
     private Student owner;
 
     /**
-     * A tranzisztor párjának megadása
-     *
-     * @param transistor a tranzisztor párja
-     */
-    public void setPair(Transistor transistor) {
-        SkeletonMenu.startCall("Transistor.setPair(Transistor)");
-        this.pair = transistor;
-        SkeletonMenu.endCall();
-    }
-
-    /**
      * Beállítja atranzisztor tulajdonosát a megadott hallgatóra.
      *
      * @param student a megadott halglató

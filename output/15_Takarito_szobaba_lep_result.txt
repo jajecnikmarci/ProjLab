@@ -10,8 +10,7 @@ roomToClean
 	- poisonEffects: 
 		poisonEffects
 	- stunEffects: 
-	- lastCleaning: 
-		StickinessEffect
+	- lastCleaning: null
 student1
 	- location: roomToClean
 	- stunned: false
@@ -25,7 +24,6 @@ student1
 	- stunned: false
 	- inventory: 
 		rug1
-		stickyCamembert
 	- killImmunities: 
 	- poisonImmunities: 
 	- souls: 3
@@ -52,13 +50,12 @@ room3
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
-	- lastCleaning: 
-		StickinessEffect
+	- lastCleaning: null
 cleaner1
 	- location: room3
 cleaner2
 	- location: room4
 cleaner1
-	- location: room4
-cleaner2
 	- location: room3
+cleaner2
+	- location: room4
