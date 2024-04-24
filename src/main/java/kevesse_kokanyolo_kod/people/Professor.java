@@ -109,6 +109,15 @@ public class Professor extends AcademicPerson {
     }
 
     /**
+     * Mivel nem hallgató a személy, hamis értékkel tér vissza
+     * @returns false
+     */
+    @Override
+    public boolean isStudent() {
+        return false;
+    }
+
+    /**
      * Meghívja a szoba onEnter metódusát átadva magát paraméterként, mint Professzor. 
      * @param room a szoba, ahova a professzor érkezik
      */

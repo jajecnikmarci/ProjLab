@@ -144,7 +144,7 @@ public class LabyrinthBuilder {
             rooms.get(roomName).addPlayer(cleaner);
 
         } else if (personType.equals("Student")) {
-            Student student = new Student(rooms.get(roomName));
+            Student student = new Student(rooms.get(roomName), ProtoMenu.observable);
             academicPeople.put(personName, student);
             rooms.get(roomName).addPlayer(student);
 
