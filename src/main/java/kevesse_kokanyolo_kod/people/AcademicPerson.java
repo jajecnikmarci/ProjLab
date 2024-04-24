@@ -86,11 +86,6 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     protected abstract int getMaxItemCount();
 
     /**
-     * Megmondja, hogy hallgató-e a személy
-     */
-    public abstract boolean isStudent();
-
-    /**
      * Ha a játékos nincs lebénulva és van elég helye a tárgyaknak,
      * a jelenlegi szobára meghívja a popItem függvényt.
      * (Ezzel elindítja a Visitor működést, 

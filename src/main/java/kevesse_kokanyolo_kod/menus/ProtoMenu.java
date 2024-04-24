@@ -437,12 +437,13 @@ public class ProtoMenu implements StudentObserver {
             }
             return false;
         });
-        //Ellenőrizzük, hogy minden hallgatót elbocsájtottak-e
-        for(AcademicPerson academic : labyrinthBuilder.academicPeople.values()) if(academic.isStudent()) return;
+        labyrinthBuilder.studentDied();
         //Ha nincs már hallgató a labirintusban
-        System.out.println("JATEK VEGE, oktatok nyertek");
-        printer.println("JATEK VEGE, oktatok nyertek.");
-        labyrinthBuilder = null;
+        if(labyrinthBuilder.getStudentCounter() == 0) {
+            System.out.println("JATEK VEGE, oktatok nyertek");
+            printer.println("JATEK VEGE, oktatok nyertek.");
+            labyrinthBuilder = null;
+        }
     }
 
     @Override

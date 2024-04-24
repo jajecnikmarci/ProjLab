@@ -96,15 +96,6 @@ public class Student extends AcademicPerson {
     }
 
     /**
-     * Mivel hallgató a személy, igaz értékkel tér vissza
-     * @returns true
-     */
-    @Override
-    public boolean isStudent() {
-        return true;
-    }
-
-    /**
      * Hozzáadja a killImmunities-hez a paraméterként kapott immuntitást.
      *
      * @param killImmunity a hozzáadadndó killImmunity
