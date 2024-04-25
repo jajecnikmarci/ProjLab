@@ -12,8 +12,7 @@ room2
 	- poisonEffects: 
 		poisonEffects
 	- stunEffects: 
-	- lastCleaning: 
-		StickinessEffect
+	- lastCleaning: null
 student1
 	- location: room2
 	- stunned: false
@@ -24,7 +23,7 @@ student1
 		PoisonImmunity
 	- souls: 3
 ffp2
-	- immunityLength: 8
+	- immunityLength: 10
 	- effect: 
 		PoisonImmunity
 student1
@@ -38,8 +37,10 @@ student1
 	- souls: 3
 student1
 	- location: room2
-	- stunned: true
+	- stunned: false
 	- inventory: 
+		ffp2
 	- killImmunities: 
 	- poisonImmunities: 
+		PoisonImmunity
 	- souls: 3
