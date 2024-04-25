@@ -71,7 +71,7 @@ public class Printer {
         } else if(result != null) {
             result += formattedMsg;
         } else {
-            System.out.println(formattedMsg);
+            System.out.print(formattedMsg);
         }
     }
 

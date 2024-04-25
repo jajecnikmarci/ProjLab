@@ -12,9 +12,6 @@ public class App {
     }
     
     public static ProtoMenu proto;
-    static {
-        proto = new ProtoMenu();
-    }
 
     public static void main(String[] args) {  // TODO: proto menu usage kiírása 
         if(args.length == 0) {

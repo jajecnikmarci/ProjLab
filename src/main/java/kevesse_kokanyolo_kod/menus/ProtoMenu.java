@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Room;
@@ -71,11 +70,11 @@ import kevesse_kokanyolo_kod.room.Room;
  * 
  */
 public class ProtoMenu {
-    private static Printer printer;
+    private Printer printer;
 
     public static boolean randomness = false;
 
-    private boolean testMode = false;
+    private static boolean testMode = false;
     private String testExpectedFileName;
 
     public static boolean getRandomness() {
@@ -88,7 +87,7 @@ public class ProtoMenu {
     List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
 
     public static String readString(String msg) {
-        if(Printer.fileWriter == null) System.out.println(msg); // fontos, hogy a konzolra írjunk.
+        if(Printer.fileWriter != null || testMode) System.out.println(msg); // fontos, hogy a konzolra írjunk.
         return Printer.scanner.nextLine();
     }
     /**
@@ -170,7 +169,6 @@ public class ProtoMenu {
         printer = new Printer("input" + File.separatorChar + inputFileName + ".txt", true); 
 
         testExpectedFileName = expectedFileName;
-
         menu();
     }
 
@@ -238,7 +236,10 @@ public class ProtoMenu {
 
     public ProtoMenu(String mode, String inputFileName, String outputFileName) throws IOException {
         initProtoMenu();
-        if(mode == null) return;
+        if(mode == null) {
+            printer = new Printer();
+            menu();
+        }
         if(mode.equals("-f")){
             runFileMode(inputFileName, outputFileName);
             return;
@@ -252,11 +253,7 @@ public class ProtoMenu {
         System.exit(1);
 
     }
-    
-    public ProtoMenu() { 
-        initProtoMenu();
-        printer = new Printer();
-    }
+
 
     public void menu() {
         do {
@@ -271,10 +268,8 @@ public class ProtoMenu {
 
         } while (Printer.scanner.hasNextLine());
         
-
         if(testMode) {
             String result = printer.getOutput();
-
             if(compareFiles(result, "expected/" + testExpectedFileName)) {
                 System.out.println("Teszt sikeres.");
             } else {
