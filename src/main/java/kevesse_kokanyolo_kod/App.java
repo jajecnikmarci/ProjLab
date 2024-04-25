@@ -24,13 +24,14 @@ public class App {
         else if(args.length >= 1){
             if(args[0].equals("skeleton")) skeleton.menu();
             if(args[0].equals("proto")) {
+                skeleton.mute();
                 String arg[] = new String[]{null, null, null, null};
                 for(int i = 0; i < args.length; i++) {
                     arg[i] = args[i];
                 }
                 try {
                     proto = new ProtoMenu(arg[1], arg[2], arg[3]);
-                    proto.menu();
+                    //proto.menu();
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.exit(1);

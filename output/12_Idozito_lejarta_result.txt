@@ -33,8 +33,6 @@ student1
 	- location: room1
 	- stunned: false
 	- inventory: 
-		glass
 	- killImmunities: 
-		KillImmunity
 	- poisonImmunities: 
 	- souls: 3
