@@ -170,15 +170,33 @@ public class ProtoMenu {
         printer = new Printer("input" + File.separatorChar + inputFileName + ".txt", true); 
 
         testExpectedFileName = expectedFileName;
-        
-        // menu() is called in App.java
+
+        menu();
     }
 
     private void runTestMode(String inputFileName, String expectedFileName) throws IOException{
         if (inputFileName == null) {
             // TODO: go through files in input directory AND CALL RUNTEST FOR EACH
+            File folder = new File("input");
+            if(folder.isDirectory() && folder.exists()){
+                File[] files = folder.listFiles();
+                for (File file : files) {
+                    if (file.isFile()) {
+                        System.out.println(file.getName());
+                        runTest(file.getName().substring(0,file.getName().length()-4),null);
+                    }
+                }
+                try {                    
+                    printer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+                System.exit(0);
+            }
         } else {
             runTest(inputFileName, expectedFileName);
+            System.exit(0);
         }
     }
 
@@ -189,7 +207,6 @@ public class ProtoMenu {
         printer = new Printer("input" + File.separatorChar + inputFileName + ".txt", 
                               "output" + File.separatorChar + outputFileName); 
 
-        // menu() is called in App.java
         menu();
     }
 
@@ -212,11 +229,13 @@ public class ProtoMenu {
                     e.printStackTrace();
                     System.exit(1);
                 }
+                System.exit(0);
             }
                 
             
         } else {
             runFile(inputFileName, outputFileName);
+            System.exit(0);
         }
     }
 
