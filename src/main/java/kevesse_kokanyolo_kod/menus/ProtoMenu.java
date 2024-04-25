@@ -177,6 +177,7 @@ public class ProtoMenu {
                 File[] files = folder.listFiles();
                 for (File file : files) {
                     if (file.isFile()) {
+                        System.out.println(file.getName());
                         runFile(file.getName().substring(0,file.getName().length()-4),null);
                     }
                 }

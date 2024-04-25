@@ -41,6 +41,7 @@ public class SkeletonMenu {
     static Scanner scanner;
     private static int indentCounter = 0;
     private static boolean verbose = true;
+    public void mute() {verbose = false;}
     private void initializeTest(){
         tests = new ArrayList<>();
         /**
