@@ -31,7 +31,7 @@ public class App {
                 }
                 try {
                     proto = new ProtoMenu(arg[1], arg[2], arg[3]);
-                    proto.menu();
+                    //proto.menu();
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.exit(1);
