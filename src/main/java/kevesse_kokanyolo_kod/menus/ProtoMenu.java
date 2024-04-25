@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
-import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.people.StudentObservable;
 import kevesse_kokanyolo_kod.people.StudentObserver;
+import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
+import kevesse_kokanyolo_kod.room.RoomObservable;
+import kevesse_kokanyolo_kod.room.RoomObserver;
 
 
 // CONFIG:
@@ -69,7 +71,7 @@ import kevesse_kokanyolo_kod.room.Room;
  *  <változó2>: 
  *  ...
  */
-public class ProtoMenu implements StudentObserver {
+public class ProtoMenu implements StudentObserver, RoomObserver {
     private static Printer printer;
 
     public static boolean randomness = false;
@@ -78,7 +80,8 @@ public class ProtoMenu implements StudentObserver {
     }
     public static boolean timerControl = false;
     LabyrinthBuilder labyrinthBuilder = null; //null, ha konfigurációs módban vagyunk
-    public static StudentObservable observable;
+    public static StudentObservable studentObservable;
+    public static RoomObservable roomObservable;
 
     List<Option> configOptions = new ArrayList<>(); //Konfigurációs parancsokat tartalmazza
     List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
@@ -114,17 +117,10 @@ public class ProtoMenu implements StudentObserver {
         initControlOptions.add(new Option("shake", this::shakeOption));
         initControlOptions.add(new Option("endtimer", this::endtimerOption));
 
-        observable = new StudentObservable();
-        observable.addObserver(this);
-
-        Room.roomSplitEvent = (room, door) -> {
-            labyrinthBuilder.doors.put(labyrinthBuilder.newDoorName, door);
-            labyrinthBuilder.rooms.put(labyrinthBuilder.newRoomName, room);
-        };
-        Room.roomsMergedEvent = (deletedRoom, deletedDoor) -> {
-            labyrinthBuilder.rooms.entrySet().removeIf(entry -> entry.getValue().equals(deletedRoom));
-            labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(deletedDoor));
-        };
+        studentObservable = new StudentObservable();
+        studentObservable.addObserver(this);
+        roomObservable = new RoomObservable();
+        roomObservable.addObserver(this);
     }
 
     private void runTest(String inputFileName, String expectedFileName) throws IOException {
@@ -440,7 +436,6 @@ public class ProtoMenu implements StudentObserver {
         labyrinthBuilder.studentDied();
         //Ha nincs már hallgató a labirintusban
         if(labyrinthBuilder.getStudentCounter() == 0) {
-            System.out.println("JATEK VEGE, oktatok nyertek");
             printer.println("JATEK VEGE, oktatok nyertek.");
             labyrinthBuilder = null;
         }
@@ -448,9 +443,20 @@ public class ProtoMenu implements StudentObserver {
 
     @Override
     public void slideRulePicked() {
-        System.out.println("JATEK VEGE, hallgatok nyertek");
         printer.println("JATEK VEGE, hallgatok nyertek.");
         labyrinthBuilder = null;
+    }
+
+    @Override
+    public void roomSplit(Room room, Door door) {
+        labyrinthBuilder.doors.put(labyrinthBuilder.newDoorName, door);
+        labyrinthBuilder.rooms.put(labyrinthBuilder.newRoomName, room);
+    }
+
+    @Override
+    public void roomsMerged(Room room, Door door) {
+        labyrinthBuilder.rooms.entrySet().removeIf(entry -> entry.getValue().equals(room));
+        labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(door));
     }
 
     class Option {

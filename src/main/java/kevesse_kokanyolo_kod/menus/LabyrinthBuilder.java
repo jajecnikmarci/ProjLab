@@ -64,7 +64,7 @@ public class LabyrinthBuilder {
             }
         }
 
-        rooms.put(name, new Room(capacity, isPoisonous));
+        rooms.put(name, new Room(capacity, isPoisonous, ProtoMenu.roomObservable));
     }
 
     /**
@@ -145,7 +145,7 @@ public class LabyrinthBuilder {
             rooms.get(roomName).addPlayer(cleaner);
 
         } else if (personType.equals("Student")) {
-            Student student = new Student(rooms.get(roomName), ProtoMenu.observable);
+            Student student = new Student(rooms.get(roomName), ProtoMenu.studentObservable);
             studentCounter++;
             academicPeople.put(personName, student);
             rooms.get(roomName).addPlayer(student);
