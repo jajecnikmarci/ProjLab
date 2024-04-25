@@ -165,11 +165,29 @@ public class ProtoMenu {
                               "output" + File.separatorChar + outputFileName); 
 
         // menu() is called in App.java
+        runPapam();
     }
 
     private void runFileMode(String inputFileName, String outputFileName) throws IOException {
         if (inputFileName == null) {
             // TODO: go through files in input directory AND CALL RUNFile FOR EACH
+            String folderPath = File.separatorChar+"input"+File.separatorChar;
+            File folder = new File("input");
+            if(folder.isDirectory() && folder.exists()){
+                File[] files = folder.listFiles();
+                for (File file : files) {
+                    if (file.isFile()) {
+                        runFile(file.getName().substring(0,file.getName().length()-4),null);
+                    }
+                }
+            }
+                
+            try {                    
+                printer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
         } else {
             runFile(inputFileName, outputFileName);
         }
@@ -215,6 +233,20 @@ public class ProtoMenu {
             System.exit(1);
         }
         
+    }
+
+    public void runPapam() {
+        do {
+            String input;
+            try {
+                input = Printer.scanner.nextLine();
+                execute(input);
+
+            } catch (NoSuchElementException e) {
+                break;
+            }
+
+        } while (Printer.scanner.hasNextLine());  
     }
 
     protected void execute(String line){
