@@ -1,0 +1,18 @@
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+		tvsz
+	- killImmunities: 
+		KillImmunity
+	- poisonImmunities: 
+	- souls: 3
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+		tvsz
+	- killImmunities: 
+		KillImmunity
+	- poisonImmunities: 
+	- souls: 3

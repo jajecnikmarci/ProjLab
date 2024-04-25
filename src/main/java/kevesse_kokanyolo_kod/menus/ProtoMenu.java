@@ -182,12 +182,7 @@ public class ProtoMenu {
                 }
             }
                 
-            try {                    
-                printer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
+            
         } else {
             runFile(inputFileName, outputFileName);
         }
@@ -247,6 +242,12 @@ public class ProtoMenu {
             }
 
         } while (Printer.scanner.hasNextLine());  
+        try {                    
+            printer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     protected void execute(String line){
