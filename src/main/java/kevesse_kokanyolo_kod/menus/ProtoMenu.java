@@ -176,7 +176,6 @@ public class ProtoMenu {
 
     private void runTestMode(String inputFileName, String expectedFileName) throws IOException{
         if (inputFileName == null) {
-            // TODO: go through files in input directory AND CALL RUNTEST FOR EACH
             File folder = new File("input");
             if(folder.isDirectory() && folder.exists()){
                 File[] files = folder.listFiles();
@@ -212,8 +211,6 @@ public class ProtoMenu {
 
     private void runFileMode(String inputFileName, String outputFileName) throws IOException {
         if (inputFileName == null) {
-            // TODO: go through files in input directory AND CALL RUNFile FOR EACH
-            String folderPath = File.separatorChar+"input"+File.separatorChar;
             File folder = new File("input");
             if(folder.isDirectory() && folder.exists()){
                 File[] files = folder.listFiles();
