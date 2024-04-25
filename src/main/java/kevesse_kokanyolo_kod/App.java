@@ -24,6 +24,7 @@ public class App {
         else if(args.length >= 1){
             if(args[0].equals("skeleton")) skeleton.menu();
             if(args[0].equals("proto")) {
+                skeleton.mute();
                 String arg[] = new String[]{null, null, null, null};
                 for(int i = 0; i < args.length; i++) {
                     arg[i] = args[i];
