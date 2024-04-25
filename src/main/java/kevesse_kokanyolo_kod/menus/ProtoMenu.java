@@ -165,7 +165,23 @@ public class ProtoMenu {
                               "output" + File.separatorChar + outputFileName); 
 
         // menu() is called in App.java
-        runPapam();
+        do {
+            String input;
+            try {
+                input = Printer.scanner.nextLine();
+                execute(input);
+
+            } catch (NoSuchElementException e) {
+                break;
+            }
+
+        } while (Printer.scanner.hasNextLine());  
+        try {                    
+            printer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     private void runFileMode(String inputFileName, String outputFileName) throws IOException {
@@ -177,13 +193,10 @@ public class ProtoMenu {
                 File[] files = folder.listFiles();
                 for (File file : files) {
                     if (file.isFile()) {
-                        System.out.println(file.getName());
                         runFile(file.getName().substring(0,file.getName().length()-4),null);
                     }
                 }
-            }
-                
-            
+            } 
         } else {
             runFile(inputFileName, outputFileName);
         }
@@ -229,26 +242,6 @@ public class ProtoMenu {
             System.exit(1);
         }
         
-    }
-
-    public void runPapam() {
-        do {
-            String input;
-            try {
-                input = Printer.scanner.nextLine();
-                execute(input);
-
-            } catch (NoSuchElementException e) {
-                break;
-            }
-
-        } while (Printer.scanner.hasNextLine());  
-        try {                    
-            printer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
     }
 
     protected void execute(String line){
