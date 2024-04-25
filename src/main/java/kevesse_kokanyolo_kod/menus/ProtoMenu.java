@@ -3,10 +3,13 @@ package kevesse_kokanyolo_kod.menus;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Room;
@@ -71,6 +74,10 @@ public class ProtoMenu {
     private static Printer printer;
 
     public static boolean randomness = false;
+
+    private boolean testMode = false;
+    private String testExpectedFileName;
+
     public static boolean getRandomness() {
         return randomness;
     }
@@ -137,15 +144,33 @@ public class ProtoMenu {
         
     }
 
+    public boolean compareFiles(String outputContent, String expectedFileName) {
+        try {
+
+            List<String> allLines = Files.readAllLines(Paths.get(expectedFileName));
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String line : allLines) {
+                stringBuilder.append(line).append("\n");
+            }
+
+            String expectedContent = stringBuilder.toString();
+
+            return outputContent.equals(expectedContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private void runTest(String inputFileName, String expectedFileName) throws IOException {
+
         if (expectedFileName == null) expectedFileName = inputFileName + "_expected";
         expectedFileName += ".txt";
 
-        printer = new Printer("input" + File.separatorChar + inputFileName + ".txt"); 
-        String result = printer.getOutput();
+        printer = new Printer("input" + File.separatorChar + inputFileName + ".txt", true); 
 
-        // TODO: compare result with contet of expectedFile
-
+        testExpectedFileName = expectedFileName;
+        
         // menu() is called in App.java
     }
 
@@ -203,7 +228,8 @@ public class ProtoMenu {
             return;
         }
         if(mode.equals("test")){
-            runTestMode(inputFileName, inputFileName);
+            runTestMode(inputFileName, outputFileName);
+            testMode = true;
             return;
         }
         System.err.println("Hibás argumentum.");
@@ -228,13 +254,24 @@ public class ProtoMenu {
             }
 
         } while (Printer.scanner.hasNextLine());
+        
+
+        if(testMode) {
+            String result = printer.getOutput();
+
+            if(compareFiles(result, "expected/" + testExpectedFileName)) {
+                System.out.println("Teszt sikeres.");
+            } else {
+                System.out.println("Teszt sikertelen.");
+            }
+        }
+
         try {
             printer.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
-        
     }
 
     protected void execute(String line){

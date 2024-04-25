@@ -25,6 +25,13 @@ public class Printer {
         scanner = new Scanner(new File(inputFileName));
         fileWriter=null;
     } 
+    public Printer(String inputFileName, boolean testMode) throws IOException{
+        scanner = new Scanner(new File(inputFileName));
+        fileWriter=null;
+        if(testMode){
+            result = "";
+        }
+    } 
     public Printer() {
         fileWriter=null;
         scanner = new Scanner(System.in);
