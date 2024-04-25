@@ -26,5 +26,6 @@ room1
 	- items: 
 		camembert
 	- poisonEffects: 
+		poisonEffects
 	- stunEffects: 
 	- lastCleaning: null

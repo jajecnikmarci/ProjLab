@@ -3,6 +3,8 @@ package kevesse_kokanyolo_kod.menus;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -72,9 +74,13 @@ import kevesse_kokanyolo_kod.room.RoomObserver;
  *  ...
  */
 public class ProtoMenu implements StudentObserver, RoomObserver {
-    private static Printer printer;
+    private Printer printer;
 
     public static boolean randomness = false;
+
+    private static boolean testMode = false;
+    private String testExpectedFileName;
+
     public static boolean getRandomness() {
         return randomness;
     }
@@ -87,7 +93,7 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
     List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
 
     public static String readString(String msg) {
-        if(Printer.fileWriter == null) System.out.println(msg); // fontos, hogy a konzolra írjunk.
+        if(Printer.fileWriter != null || testMode) System.out.println(msg); // fontos, hogy a konzolra írjunk.
         return Printer.scanner.nextLine();
     }
     /**
@@ -123,23 +129,57 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
         roomObservable.addObserver(this);
     }
 
+    public boolean compareFiles(String outputContent, String expectedFileName) {
+        try {
+
+            List<String> allLines = Files.readAllLines(Paths.get(expectedFileName));
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String line : allLines) {
+                stringBuilder.append(line).append("\n");
+            }
+
+            String expectedContent = stringBuilder.toString();
+
+            return outputContent.equals(expectedContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private void runTest(String inputFileName, String expectedFileName) throws IOException {
+
         if (expectedFileName == null) expectedFileName = inputFileName + "_expected";
         expectedFileName += ".txt";
 
-        printer = new Printer("input" + File.separatorChar + inputFileName + ".txt"); 
-        String result = printer.getOutput();
+        printer = new Printer("input" + File.separatorChar + inputFileName + ".txt", true); 
 
-        // TODO: compare result with contet of expectedFile
-
-        // menu() is called in App.java
+        testExpectedFileName = expectedFileName;
+        menu();
     }
 
     private void runTestMode(String inputFileName, String expectedFileName) throws IOException{
         if (inputFileName == null) {
-            // TODO: go through files in input directory AND CALL RUNTEST FOR EACH
+            File folder = new File("input");
+            if(folder.isDirectory() && folder.exists()){
+                File[] files = folder.listFiles();
+                for (File file : files) {
+                    if (file.isFile()) {
+                        System.out.println(file.getName());
+                        runTest(file.getName().substring(0,file.getName().length()-4),null);
+                    }
+                }
+                try {                    
+                    printer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+                System.exit(0);
+            }
         } else {
             runTest(inputFileName, expectedFileName);
+            System.exit(0);
         }
     }
 
@@ -150,37 +190,56 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
         printer = new Printer("input" + File.separatorChar + inputFileName + ".txt", 
                               "output" + File.separatorChar + outputFileName); 
 
-        // menu() is called in App.java
+        menu();
     }
 
     private void runFileMode(String inputFileName, String outputFileName) throws IOException {
         if (inputFileName == null) {
-            // TODO: go through files in input directory AND CALL RUNFile FOR EACH
+            File folder = new File("input");
+            if(folder.isDirectory() && folder.exists()){
+                File[] files = folder.listFiles();
+                for (File file : files) {
+                    if (file.isFile()) {
+                        System.out.println(file.getName());
+                        runFile(file.getName().substring(0,file.getName().length()-4),null);
+                    }
+                }
+                try {                    
+                    printer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+                System.exit(0);
+            }
+                
+            
         } else {
             runFile(inputFileName, outputFileName);
+            System.exit(0);
         }
     }
 
     public ProtoMenu(String mode, String inputFileName, String outputFileName) throws IOException {
         initProtoMenu();
-        if(mode == null) return;
+        if(mode == null) {
+            printer = new Printer();
+            menu();
+        }
         if(mode.equals("-f")){
             runFileMode(inputFileName, outputFileName);
             return;
         }
         if(mode.equals("test")){
-            runTestMode(inputFileName, inputFileName);
+            runTestMode(inputFileName, outputFileName);
+            testMode = true;
             return;
         }
         System.err.println("Hibás argumentum.");
         System.exit(1);
 
     }
-    
-    public ProtoMenu() { 
-        initProtoMenu();
-        printer = new Printer();
-    }
+
 
     public void menu() {
         do {
@@ -194,13 +253,22 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
             }
 
         } while (Printer.scanner.hasNextLine());
+        
+        if(testMode) {
+            String result = printer.getOutput();
+            if(compareFiles(result, "expected/" + testExpectedFileName)) {
+                System.out.println("Teszt sikeres.");
+            } else {
+                System.out.println("Teszt sikertelen.");
+            }
+        }
+
         try {
             printer.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
-        
     }
 
     protected void execute(String line){

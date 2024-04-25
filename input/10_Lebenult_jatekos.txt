@@ -10,7 +10,7 @@ add person room3 Professor professor1
 gotoroom student1 room1
 printstate room1
 printstate student1
-gotoroom student1  room2
+gotoroom student1 room2
 pickup student1 rug
 printstate room1
 printstate student1
