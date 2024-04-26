@@ -7,8 +7,7 @@ room1
 		slide
 	- poisonEffects: 
 	- stunEffects: 
-	- lastCleaning: 
-		StickinessEffect
+	- lastCleaning: null
 student1
 	- location: room1
 	- stunned: false
