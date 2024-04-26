@@ -44,8 +44,8 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         super(room);
         inventory = new ArrayList<>();
         poisonImmunities = new ArrayList<>();
-        
     }
+
     /**
      * Megnézi, hogy a játékos bénult-e. 
      * Ha igen, akkor nem tud mozogni. 
@@ -115,6 +115,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      * @param item a keresett tárgy
      * @return true, ha a játékosnak van a tárgya, false egyébként
      */
+
     public boolean checkHasItem(IItem item){
         SkeletonMenu.startCall("Player.pickUpItem()");
         for(IItem i : inventory){
@@ -184,7 +185,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     /**
      * Kitörli a paraméterként kapott immunitást a poisonImmunities-ból.
      * A Hallgatóknak felül kell írni, hogy a KillImmunity-ket is töröljék, ha azt kaptak.
-     * @param a törlendő hatás
+     * @param effect törlendő hatás
      */
     public void removeEffect(Effect effect) {
         SkeletonMenu.startCall("Player.removeEffect(Effect)");

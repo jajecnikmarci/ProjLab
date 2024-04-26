@@ -10,7 +10,6 @@ import kevesse_kokanyolo_kod.people.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 /**
@@ -49,23 +48,26 @@ public class Room implements EffectConsumedObserver {
      */
     private StickinessEffect stickiness;
 
+    private RoomObservable observable;
+
     /**
      * Létrehozza a szobát, a paraméterül kapott szoba kapacitásával.
      * 
      * @param capacity a szoba kapacitása
      */
-    public Room(int capacity) {
+    public Room(int capacity, RoomObservable observable) {
         this.capacity = capacity;
         this.people = new ArrayList<>();
         this.doors = new ArrayList<>();
         this.items = new ArrayList<>();
         this.poisonEffects = new ArrayList<>();
         this.stunEffects = new ArrayList<>();
+        this.observable = observable;
 
         stickiness = null;
     }
-    public Room(int capacity, boolean poisonous){
-        this(capacity);
+    public Room(int capacity, boolean poisonous, RoomObservable observable){
+        this(capacity, observable);
         if(poisonous){
             PoisonEffect poisonEffect = new PoisonEffect(null, Integer.MAX_VALUE, this);
             poisonEffects.add(poisonEffect);
@@ -236,19 +238,6 @@ public class Room implements EffectConsumedObserver {
         people.forEach(Person::poison);
         SkeletonMenu.endCall();
     }
-
-    /**
-     * Ha egy szoba kettéosztódik, akkor ez a függvény hívódik meg. Ezzel lehet a vezérlőnek jelezni, hogy új szoba és ajtó jött létre. A vezérlőnek fölül kell írni
-     */
-    public static BiConsumer<Room, Door> roomSplitEvent;
-    /**
-     * Ha egy szoba sikeresen beleolvad ebbe a szobába, ez a függvény hívódik meg. Ezzel lehet a vezérlőnek jelezni, melyik szoba és ajtó szűnt meg. A vezérlőnek fölül kell írni
-     */
-    public static BiConsumer<Room, Door> roomsMergedEvent;
-    static {
-        roomSplitEvent = (room, door) -> {};
-        roomSplitEvent = (deletedRoom, deletedDoor) -> {};
-    }
     /**
      * Kettéosztja ezt a szobát, ha kapacitása 4 vagy nagyobb és nincs benne játékos.
      * Az újonnan létrehozott szobával megosztoznak az eredeti szoba tulajdonságain a következő módon:
@@ -269,7 +258,7 @@ public class Room implements EffectConsumedObserver {
             return;
         }
 
-        Room newRoom = new Room(capacity / 2);
+        Room newRoom = new Room(capacity / 2, observable);
         for (int i = 0; i < doors.size(); i += 2) {
             Door door = doors.remove(i);
             newRoom.doors.add(door);
@@ -294,8 +283,8 @@ public class Room implements EffectConsumedObserver {
         }
 
         // Jöhetne létre elátkozott ajtó...
-        Door newDoor = new Door(this, newRoom, true, true, true, false); 
-        Room.roomSplitEvent.accept(newRoom, newDoor); // Jelezzük a controller felé, hogy létrejött egy új szoba.
+        Door newDoor = new Door(this, newRoom, true, true, true, false);
+        observable.notifyRoomSplit(newRoom, newDoor);
         SkeletonMenu.endCall("A szoba osztódott.");
     }
 
@@ -327,7 +316,7 @@ public class Room implements EffectConsumedObserver {
                         return true;
                     } else {
                         room.doors.remove(d);
-                        roomsMergedEvent.accept(room, d); // Jelezzük a controller felé, hogy egy ajtó megszűnt.
+                        observable.notifyRoomsMerged(room, d);
                         return false;
                     }
                 })

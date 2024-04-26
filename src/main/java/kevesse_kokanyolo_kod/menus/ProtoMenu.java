@@ -11,7 +11,12 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 import kevesse_kokanyolo_kod.people.Student;
+import kevesse_kokanyolo_kod.people.StudentObservable;
+import kevesse_kokanyolo_kod.people.StudentObserver;
+import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
+import kevesse_kokanyolo_kod.room.RoomObservable;
+import kevesse_kokanyolo_kod.room.RoomObserver;
 
 
 // CONFIG:
@@ -66,10 +71,9 @@ import kevesse_kokanyolo_kod.room.Room;
  * <Osztálynév>: 
  *  <változó1>: <érték1> 
  *  <változó2>: 
- *  ... 
- * 
+ *  ...
  */
-public class ProtoMenu {
+public class ProtoMenu implements StudentObserver, RoomObserver {
     private Printer printer;
 
     public static boolean randomness = false;
@@ -82,6 +86,8 @@ public class ProtoMenu {
     }
     public static boolean timerControl = false;
     LabyrinthBuilder labyrinthBuilder = null; //null, ha konfigurációs módban vagyunk
+    public static StudentObservable studentObservable;
+    public static RoomObservable roomObservable;
 
     List<Option> configOptions = new ArrayList<>(); //Konfigurációs parancsokat tartalmazza
     List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
@@ -117,30 +123,10 @@ public class ProtoMenu {
         initControlOptions.add(new Option("shake", this::shakeOption));
         initControlOptions.add(new Option("endtimer", this::endtimerOption));
 
-
-        Student.slideRulePicked = () -> {
-            printer.println("JATEK VEGE, hallgatok nyertek.");
-            labyrinthBuilder = null;
-        };
-        Student.studentKilled = (student) -> {
-            labyrinthBuilder.academicPeople.entrySet().removeIf(entry -> {
-                if(entry.getValue().equals(student)) {
-                    printer.println(entry.getKey() + " meghalt.");
-                    return true;
-                } 
-                return false;
-            });
-        };
-        Room.roomSplitEvent = (room, door) -> {
-            labyrinthBuilder.doors.put(labyrinthBuilder.newDoorName, door);
-            labyrinthBuilder.rooms.put(labyrinthBuilder.newRoomName, room);
-        };
-        Room.roomsMergedEvent = (deletedRoom, deletedDoor) -> {
-            labyrinthBuilder.rooms.entrySet().removeIf(entry -> entry.getValue().equals(deletedRoom));
-            labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(deletedDoor));
-        };
-
-        
+        studentObservable = new StudentObservable();
+        studentObservable.addObserver(this);
+        roomObservable = new RoomObservable();
+        roomObservable.addObserver(this);
     }
 
     public boolean compareFiles(String outputContent, String expectedFileName) {
@@ -504,8 +490,41 @@ public class ProtoMenu {
         }
 
         labyrinthBuilder.endTimer(tokens[1]);
-        
+    }
 
+    @Override
+    public void studentKilled(Student student) {
+        labyrinthBuilder.academicPeople.entrySet().removeIf(entry -> {
+            if(entry.getValue().equals(student)) {
+                printer.println(entry.getKey() + " meghalt.");
+                return true;
+            }
+            return false;
+        });
+        labyrinthBuilder.studentDied();
+        //Ha nincs már hallgató a labirintusban
+        if(labyrinthBuilder.getStudentCount() == 0) {
+            printer.println("JATEK VEGE, oktatok nyertek.");
+            labyrinthBuilder = null;
+        }
+    }
+
+    @Override
+    public void slideRulePicked() {
+        printer.println("JATEK VEGE, hallgatok nyertek.");
+        labyrinthBuilder = null;
+    }
+
+    @Override
+    public void roomSplit(Room room, Door door) {
+        labyrinthBuilder.doors.put(labyrinthBuilder.newDoorName, door);
+        labyrinthBuilder.rooms.put(labyrinthBuilder.newRoomName, room);
+    }
+
+    @Override
+    public void roomsMerged(Room room, Door door) {
+        labyrinthBuilder.rooms.entrySet().removeIf(entry -> entry.getValue().equals(room));
+        labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(door));
     }
 
     class Option {

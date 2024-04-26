@@ -8,36 +8,11 @@ import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * A Hallgató viselkedését megvalósító osztály.
  */
 public class Student extends AcademicPerson {
-    /**
-     * Egy olyan függvényt reprezentál, amely nem vesz át és nem ad vissza értéket.
-     */
-    public static interface VoidFunction {
-        public void execute();
-    }
-    
-    /**
-     * A játék menete közben figyeli, hogy hány hallgatót bocsájtottak el.
-     * Ha az összes hallgatót elbocsájtották, a professzorok nyertek.
-     * A controllernek kell beállítania.
-     */
-    public static Consumer<Student> studentKilled;
-
-    /**
-     * Ez a függvény hívódik meg, ha egy hallgató felveszi a logarlécet.
-     * A controllernek kell beállítania.
-     */
-    public static VoidFunction slideRulePicked;
-
-    static {
-        studentKilled = (Student) -> {};
-        slideRulePicked = () -> {};
-    }
     /**
      * A hallgató lelkeinek számát tárolja.
      */
@@ -49,12 +24,21 @@ public class Student extends AcademicPerson {
     private List<Effect> killImmunities;
 
     /**
+     * Observer pattern része, ha egy hallgatót elbocsájtanak, vagy felveszi a logarlécet,
+     * a programnak kezelnie kell a ttovábbi történéseket. Ha az utolsó hallgatót is
+     * elbocsájtották, a játéknak vége, a professzorok nyertek. Ha egy hallgató felvette
+     * a logarlécet, akkor a hallgatók nyerték a játékot.
+     */
+    private StudentObservable observable;
+
+    /**
      * Létrehozza a hallgatót
      * 
      * @param room a szoba, ahova a hallgató kerül
      */
-    public Student(Room room) {
+    public Student(Room room, StudentObservable observable) {
         super(room);
+        this.observable = observable;
         souls = 3;
         killImmunities = new ArrayList<>();
     }
@@ -71,8 +55,7 @@ public class Student extends AcademicPerson {
         if (killImmunities.isEmpty()) {
             souls--;
             if (souls == 0) {
-                studentKilled.accept(this);  // Jelzés a vezérlőnek, hogy a hallgató meghalt
-
+                observable.notifyStudentKilled(this);
                 SkeletonMenu.endCall(" A játékos meghalt");
                 return;
             }
@@ -126,7 +109,7 @@ public class Student extends AcademicPerson {
     /**
      * Kitörli a killImmunities-ből vagy a poisonimmunities-ből a kapott effectet, ha benne van valamelyikben.
      *
-     * @param item a tárgy ami az immunitást adja
+     * @param effect a hatás ami az immunitást adja
      */
     @Override
     public void removeEffect(Effect effect) {
@@ -162,8 +145,8 @@ public class Student extends AcademicPerson {
         SkeletonMenu.startCall("Student.acceptItem(SlideRule)");
         this.addItem(slideRule);
         location.removeItem(slideRule);
-        
-        slideRulePicked.execute(); // Jelzés a vezérlőnek, hogy a hallgató felvette a logarlécet
+
+        observable.notifySlideRulePicked();
         SkeletonMenu.endCall();
     }
 
@@ -215,7 +198,6 @@ public class Student extends AcademicPerson {
      * Interakcióba lép egy oktatóval, elszipolyozódik a lelke.
      *
      * @param professor a hallgatóval interakcióba lépő oktató
-     * @param room a szoba, ahol az interakció történik
      */
     @Override
     public void meet(Professor professor) {
