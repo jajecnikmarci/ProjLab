@@ -93,7 +93,7 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
     List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
 
     public static String readString(String msg) {
-        if(Printer.fileWriter != null || testMode) System.out.println(msg); // fontos, hogy a konzolra írjunk.
+        if(Printer.fileWriter != null && !testMode) System.out.println(msg); // fontos, hogy a konzolra írjunk.
         return Printer.scanner.nextLine();
     }
     /**
@@ -257,9 +257,9 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
         if(testMode) {
             String result = printer.getOutput();
             if(compareFiles(result, "expected/" + testExpectedFileName)) {
-                System.out.println("Teszt sikeres.");
+                System.out.println("Teszt sikeres.\n");
             } else {
-                System.out.println("Teszt sikertelen.");
+                System.out.println("Teszt sikertelen.\n");
             }
         }
 
