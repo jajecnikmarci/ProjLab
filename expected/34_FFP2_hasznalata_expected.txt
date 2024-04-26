@@ -12,8 +12,7 @@ room2
 	- poisonEffects: 
 		poisonEffects
 	- stunEffects: 
-	- lastCleaning: 
-		StickinessEffect
+	- lastCleaning: null
 student1
 	- location: room2
 	- stunned: false
