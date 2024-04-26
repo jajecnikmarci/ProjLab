@@ -24,7 +24,7 @@ public class LabyrinthBuilder {
     Map<String, Cleaner> cleaners = new HashMap<>();
     Map<String, AcademicPerson> academicPeople = new HashMap<>();
 
-    private int studentCounter = 0;
+    private int studentCount = 0; 
     static Map<String, Timer> timers = new HashMap<>(); 
 
     Map<String, Class<?>> ItemclassMap = new HashMap<>();
@@ -146,7 +146,7 @@ public class LabyrinthBuilder {
 
         } else if (personType.equals("Student")) {
             Student student = new Student(rooms.get(roomName), ProtoMenu.studentObservable);
-            studentCounter++;
+            studentCount++;
             academicPeople.put(personName, student);
             rooms.get(roomName).addPlayer(student);
 
@@ -354,11 +354,11 @@ public class LabyrinthBuilder {
         timers.get(timerName).cancel();
     }
 
-    public int getStudentCounter() {
-        return studentCounter;
+    public int getStudentCount() {
+        return studentCount;
     }
 
     public void studentDied() {
-        studentCounter--;
+        studentCount--;
     }
 }

@@ -8,7 +8,6 @@ import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.room.Room;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * A Hallgató viselkedését megvalósító osztály.

@@ -503,7 +503,7 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
         });
         labyrinthBuilder.studentDied();
         //Ha nincs már hallgató a labirintusban
-        if(labyrinthBuilder.getStudentCounter() == 0) {
+        if(labyrinthBuilder.getStudentCount() == 0) {
             printer.println("JATEK VEGE, oktatok nyertek.");
             labyrinthBuilder = null;
         }
