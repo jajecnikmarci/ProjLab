@@ -231,8 +231,8 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
             return;
         }
         if(mode.equals("test")){
-            runTestMode(inputFileName, outputFileName);
             testMode = true;
+            runTestMode(inputFileName, outputFileName);
             return;
         }
         System.err.println("Hibás argumentum.");
