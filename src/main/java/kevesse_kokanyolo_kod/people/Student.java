@@ -24,9 +24,9 @@ public class Student extends AcademicPerson {
     private List<Effect> killImmunities;
 
     /**
-     * Observer pattern része, ha egy hallgatót elbocsájtanak, vagy felveszi a logarlécet,
-     * a programnak kezelnie kell a ttovábbi történéseket. Ha az utolsó hallgatót is
-     * elbocsájtották, a játéknak vége, a professzorok nyertek. Ha egy hallgató felvette
+     * Ha egy hallgatót elbocsájtanak, vagy felveszi a logarlécet,
+     * a programnak kezelnie kell a további történéseket. Ha az utolsó hallgatót is
+     * elbocsájtották, a játéknak vége, az oktatók nyertek. Ha egy hallgató felvette
      * a logarlécet, akkor a hallgatók nyerték a játékot.
      */
     private StudentObservable observable;
@@ -35,6 +35,7 @@ public class Student extends AcademicPerson {
      * Létrehozza a hallgatót
      * 
      * @param room a szoba, ahova a hallgató kerül
+     * @param observable a feliratkozók értesítése
      */
     public Student(Room room, StudentObservable observable) {
         super(room);

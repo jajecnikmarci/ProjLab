@@ -19,7 +19,6 @@ public class StudentObservable {
     /**
      * A játék menete közben figyeli, hogy hány hallgatót bocsájtottak el.
      * Ha az összes hallgatót elbocsájtották, a professzorok nyertek.
-     * A controllernek kell beállítania.
      */
     public void notifyStudentKilled(Student student) {
         for (StudentObserver observer : observers) {
@@ -29,7 +28,6 @@ public class StudentObservable {
 
     /**
      * Ez a függvény hívódik meg, ha egy hallgató felveszi a logarlécet.
-     * A controllernek kell beállítania.
      */
     public void notifySlideRulePicked() {
         for (StudentObserver observer : observers) {

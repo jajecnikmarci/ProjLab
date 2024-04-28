@@ -48,12 +48,20 @@ public class Room implements EffectConsumedObserver {
      */
     private StickinessEffect stickiness;
 
+    /**
+     * Amikor egy szoba osztódik, vagy szobák egyesülnek, jelezzük az
+     * eseményre feliratkozott osztályoknak. Azért nem implementálja az
+     * osztály a RoomObserver interfészt, mert ez az implementáció
+     * nem a szoba felelőssége. Emiatt a szoba konstruktora is módosul.
+     */
     private RoomObservable observable;
 
     /**
-     * Létrehozza a szobát, a paraméterül kapott szoba kapacitásával.
+     * Létrehozza a szobát, a paraméterül kapott szoba kapacitásával és
+     * a feliratkozók értesítéséhez szükséges observable-el.
      * 
      * @param capacity a szoba kapacitása
+     * @param observable a feliratkozók értesítése
      */
     public Room(int capacity, RoomObservable observable) {
         this.capacity = capacity;
@@ -66,7 +74,7 @@ public class Room implements EffectConsumedObserver {
 
         stickiness = null;
     }
-    public Room(int capacity, boolean poisonous, RoomObservable observable){
+    public Room(int capacity, boolean poisonous, RoomObservable observable) {
         this(capacity, observable);
         if(poisonous){
             PoisonEffect poisonEffect = new PoisonEffect(null, Integer.MAX_VALUE, this);
