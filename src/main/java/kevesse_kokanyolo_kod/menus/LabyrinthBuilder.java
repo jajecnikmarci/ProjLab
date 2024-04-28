@@ -351,9 +351,12 @@ public class LabyrinthBuilder {
         timers.put(name, timer);
     }
     public void endTimer(String timerName) {
-        timers.get(timerName).cancel();
+        timers.get(timerName).cancel(); 
     }
-
+    public void clearTimers() {
+        timers.clear();
+    
+    }
     public int getStudentCount() {
         return studentCount;
     }

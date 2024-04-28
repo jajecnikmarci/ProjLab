@@ -12,6 +12,7 @@ printstate roomToSplitNotEnoughCapacity
 printstate ThisRoomShouldNotExist
 printstate ThisDoorShouldNotExist
 endtest
+randomness disable
 starttest
 add room roomToSplitHasPerson 5
 add room dummy1 4
@@ -26,6 +27,7 @@ printstate roomToSplitHasPerson
 printstate ThisRoomShouldNotExist
 printstate ThisDoorShouldNotExist
 endtest
+randomness disable
 starttest
 add room roomToSplitHappyPath 5
 add room dummy1 4
@@ -43,6 +45,7 @@ printstate newRoom
 printstate newDoor
 endtest
 timercontrol enable
+randomness disable
 starttest 
 add room roomToSplitEffectsAndDoors 5 poisonous
 add room neighbour1 4

@@ -156,6 +156,7 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
 
         testExpectedFileName = expectedFileName;
         menu();
+
     }
 
     private void runTestMode(String inputFileName, String expectedFileName) throws IOException{
@@ -166,6 +167,7 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
                 for (File file : files) {
                     if (file.isFile()) {
                         System.out.println(file.getName());
+
                         runTest(file.getName().substring(0,file.getName().length()-4),null);
                     }
                 }
@@ -388,7 +390,10 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
      * @param tokens a parancs szavai
      */
     private void endTestOption(String[] tokens) {
+        labyrinthBuilder.clearTimers();
         labyrinthBuilder = null;
+        timerControl = false;
+        randomness = true;
     }
 
     /**
@@ -512,6 +517,9 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
     @Override
     public void slideRulePicked() {
         printer.println("JATEK VEGE, hallgatok nyertek.");
+        labyrinthBuilder.clearTimers();
+        randomness = true;
+        timerControl = false;
         labyrinthBuilder = null;
     }
 

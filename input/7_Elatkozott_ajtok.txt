@@ -1,3 +1,4 @@
+randomness disable
 starttest
 add room dummy1 3
 add room dummy2 2

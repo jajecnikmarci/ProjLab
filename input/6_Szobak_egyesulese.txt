@@ -14,6 +14,7 @@ roomToMerge
 printstate roomToMergeIntoHasPlayer
 printstate roomToMerge
 endtest
+randomness disable
 starttest
 add room dummy 5
 add room roomToMergeInto 5
@@ -29,6 +30,7 @@ roomToMergeHasPlayer
 printstate roomToMergeInto
 printstate roomToMergeHasPlayer 
 endtest
+randomness disable
 starttest
 add room dummy 5
 add room roomToMergeInto 5
