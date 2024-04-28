@@ -23,6 +23,15 @@ roomToSplitHasPerson
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
+roomToSplitHasPerson
+	- capacity: 5
+	- people: 
+		student
+	- doors: 
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
 roomToSplitHappyPath
 	- capacity: 5
 	- people: 

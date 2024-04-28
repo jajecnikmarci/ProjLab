@@ -21,7 +21,7 @@ professor1
 	- poisonImmunities: 
 professor1
 	- location: room1
-	- stunned: false
+	- stunned: true
 	- Inventory: 
 	- poisonImmunities: 
 room1

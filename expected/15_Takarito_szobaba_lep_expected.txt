@@ -10,8 +10,7 @@ roomToClean
 	- poisonEffects: 
 		poisonEffects
 	- stunEffects: 
-	- lastCleaning: 
-		StickinessEffect
+	- lastCleaning: null
 student1
 	- location: roomToClean
 	- stunned: false
@@ -36,7 +35,7 @@ professor1
 cleaner1
 	- location: room1
 professor1
-	- location: room2
+	- location: room1
 	- stunned: false
 	- Inventory: 
 	- poisonImmunities: 
@@ -51,13 +50,12 @@ room3
 	- items: 
 	- poisonEffects: 
 	- stunEffects: 
-	- lastCleaning: 
-		StickinessEffect	
+	- lastCleaning: null
 cleaner1
 	- location: room3
 cleaner2
 	- location: room4
 cleaner1
-	- location: room4
-cleaner2
 	- location: room3
+cleaner2
+	- location: room4

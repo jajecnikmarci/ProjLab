@@ -12,7 +12,7 @@ printstate professor1
 printstate room1
 gotoroom professor1 room1
 printstate professor1
-endtimer timer2
+endtimer timer1
 printstate professor1
 printstate room1
 endtest

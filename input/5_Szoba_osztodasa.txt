@@ -22,7 +22,7 @@ shake
 roomToSplitHasPerson ThisRoomShouldNotExist ThisDoorShouldNotExist 
 dummy1
 dummy2
-printstate roomToSplitHappyPath
+printstate roomToSplitHasPerson
 printstate ThisRoomShouldNotExist
 printstate ThisDoorShouldNotExist
 endtest
