@@ -1,3 +1,4 @@
+timercontrol enable
 starttest
 add room room1 3
 add room room2 3
@@ -7,11 +8,14 @@ add person room1 Student student1
 add person room2 Professor professor1
 pickup student1
 gotoroom professor1 room1
+endtimer timer1
 printstate student1
 gotoroom professor1 room2
 gotoroom professor1 room1
+endtimer timer2
 gotoroom professor1 room2
 gotoroom professor1 room1
+endtimer timer3
 gotoroom professor1 room2
 gotoroom professor1 room1
 printstate student1
