@@ -1,10 +1,120 @@
-student1
-	- location: room2
+studentCamembert
+	- location: room1
 	- stunned: false
 	- inventory: 
-		ffp1
+		camembert1
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+studentFFP2
+	- location: room1
+	- stunned: false
+	- inventory: 
+		ffp2
 	- killImmunities: 
 	- poisonImmunities: 
 		PoisonImmunity
 	- souls: 3
-Hiba: Ismeretlen parancs.
+room2
+	- capacity: 3
+	- people: 
+		studentCamembert
+	- doors: 
+		door1
+	- items: 
+		camembert1
+	- poisonEffects: 
+		poisonEffects
+	- stunEffects: 
+	- lastCleaning: null
+studentCamembert
+	- location: room2
+	- stunned: true
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+room2
+	- capacity: 3
+	- people: 
+		studentCamembert
+		studentFFP2
+	- doors: 
+		door1
+	- items: 
+		camembert1
+	- poisonEffects: 
+		poisonEffects
+	- stunEffects: 
+	- lastCleaning: null
+studentFFP2
+	- location: room2
+	- stunned: false
+	- inventory: 
+		ffp2
+	- killImmunities: 
+	- poisonImmunities: 
+		PoisonImmunity
+	- souls: 3
+professorCamembert
+	- location: room4
+	- stunned: false
+	- Inventory: 
+		camembert2
+	- poisonImmunities: 
+room5
+	- capacity: 3
+	- people: 
+		professorCamembert
+	- doors: 
+		door2
+	- items: 
+		camembert2
+	- poisonEffects: 
+		poisonEffects
+	- stunEffects: 
+	- lastCleaning: null
+professorCamembert
+	- location: room5
+	- stunned: true
+	- Inventory: 
+	- poisonImmunities: 
+professorFFP2
+	- location: room6
+	- stunned: false
+	- Inventory: 
+		ffp2
+	- poisonImmunities: 
+		poisonImmunity
+room7
+	- capacity: 3
+	- people: 
+		professorFFP2
+	- doors: 
+		door3
+	- items: 
+	- poisonEffects: 
+		poisonEffects
+	- stunEffects: 
+	- lastCleaning: null
+professorFFP2
+	- location: room7
+	- stunned: false
+	- Inventory: 
+		ffp2
+	- poisonImmunities: 
+		poisonImmunity
+cleaner1
+	- location: room8
+room9
+	- capacity: 3
+	- people: 
+		cleaner1
+	- doors: 
+		door4
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: StickinessEffect
+cleaner1
+	- location: room9
