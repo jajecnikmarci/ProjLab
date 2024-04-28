@@ -62,5 +62,6 @@ student1
 		glass
 		transistor
 	- killImmunities: 
+		KillImmunity
 	- poisonImmunities: 
 	- souls: 3

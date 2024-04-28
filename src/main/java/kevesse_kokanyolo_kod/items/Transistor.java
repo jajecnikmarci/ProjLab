@@ -27,11 +27,23 @@ public class Transistor extends Item {
     private Student owner;
 
     /**
+     * A tranzisztor találkozott-e már egy másik transzisztorral
+     * Akkor van jelentősége, amikor egy 3. tranzisztort akarunk hozzáadni a játékoshoz (ennek megakadályozásában)
+     * Működésének lényege: Új tranzisztor felvételékor mennek az interactok, amikor az új 
+     * találkozik egy másikkal, akkor a metTransistor változó igazra vált, ezután ha találkozik egy harmadikkal,
+     * akkor már tudni fogjuk, hogy nem lehet hozzáadni a játékoshoz.
+     * Fontos hogy az intekrakciók után bármi is lett az eredmény (hozzáadás vagy nem),
+     * a metTransistort értéke hamisra áll vissza (setOwnerben és a interactItemben látszik)
+     */
+    private boolean metTransistor = false;
+
+    /**
      * Beállítja atranzisztor tulajdonosát a megadott hallgatóra.
      *
      * @param student a megadott halglató
      */
     public void setOwner(Student student) {
+        metTransistor = false;
         this.owner = student;
     }
 
@@ -64,8 +76,9 @@ public class Transistor extends Item {
 
         } else if (this.pair != null && this.pair.room.canPlayerEnter()) {
             room.removePlayer(academicPerson);
-
             this.pair.room.addPlayer(academicPerson);
+            academicPerson.setLocation(this.pair.room);
+
             this.pair.room.onEnter(owner);
 
             this.setRoom(room);
@@ -120,7 +133,13 @@ public class Transistor extends Item {
         if(transistor.pair != null){
             return true;
         }else if(this.owner == null){
-            return false;
+
+            if(!metTransistor){
+                metTransistor = true;
+                return false;
+            }
+            metTransistor = false;
+            return true;
         }
 
         this.pair = transistor;

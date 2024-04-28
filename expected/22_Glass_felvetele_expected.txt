@@ -32,4 +32,3 @@ room1
 	- poisonEffects: 
 	- stunEffects: 
 	- lastCleaning: null
-
