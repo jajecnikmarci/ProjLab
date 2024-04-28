@@ -2,12 +2,52 @@ starttest
 add room room1 3
 add room room2 3 poisonous
 add door room1 room2 door1
-add item room1 FFP2 ffp1
-add person room1 Student student1
-add person room1 Student student2
-pickup student1
-gotoroom student1 room2
-gotoroom student2 room2
-printstate student1
-printtsate student2
+add item room1 FFP2 ffp2
+add item room1 Camembert camembert1
+add person room1 Student studentCamembert
+add person room1 Student studentFFP2
+pickup studentCamembert
+pickup studentFFP2
+printstate studentCamembert
+printstate studentFFP2
+gotoroom studentCamembert room2
+printstate room2
+printstate studentCamembert
+gotoroom studentFFP2 room2
+printstate room2
+printstate studentFFP2
+endtest
+starttest
+add room room4 3
+add item room4 Camembert camembert2
+add room room5 3 poisonous
+add door room4 room5 door2
+add person room4 Professor professorCamembert
+pickup professorCamembert
+printstate professorCamembert
+gotoroom professorCamembert room5
+printstate room5
+printstate professorCamembert
+endtest
+starttest
+add room room6 3
+add item room6 FFP2 ffp2
+add room room7 3 poisonous
+add door room6 room7 door3
+add person room6 Professor professorFFP2
+pickup professorFFP2
+printstate professorFFP2
+gotoroom professorFFP2 room7
+printstate room7
+printstate professorFFP2
+endtest
+starttest
+add room room8 3
+add room room9 3 poisonous
+add door room8 room9 door4
+add person room8 Cleaner cleaner1
+printstate cleaner1
+gotoroom cleaner1 room9
+printstate room9
+printstate cleaner1
 endtest
