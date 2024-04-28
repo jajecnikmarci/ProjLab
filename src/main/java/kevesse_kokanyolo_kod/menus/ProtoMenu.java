@@ -23,7 +23,6 @@ import kevesse_kokanyolo_kod.room.RoomObserver;
     // randomness <enable|disable> - véletlenszerűség be- vagy kikapcsolása, 
     //   bármi ami véletlenszerű viselkedést kér, a ProtoMenüvel kiválasztatja az eredményt, ha a randomness ki van kapcsolva.
     // timercontrol <enable|disable> - Ha be van kapcsolva, a felhasználó átveszi az időzítők vezérlését a programtól, ezzel aktiválja a timer parancsot.   
-    // load <CONFIG_FILE_PATH> - konfigurációs fájl betöltése (a proto nyelvén írt)
     // printstate <InstanceName> - A megadott objektum állapotának kiírása 
     // printall - Az összes objektum állapotának kiírása
 
@@ -52,7 +51,6 @@ import kevesse_kokanyolo_kod.room.RoomObserver;
     // shake - Tér-Idő rengést hajt végre
     // endtimer <TimerName> - Leállítja az időzítőt
     // Ctrl+C - kilépés
-
 
     // Megjegyzések: 
     // - A <> közötti szavak kötelező paramétereket jelölnek.
@@ -102,7 +100,6 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
     public void initProtoMenu() { // TODO: ez az egész lehetne static, csak viszonylag sok munka.
         configOptions.add(new Option("randomness", this::randomnessOption));
         configOptions.add(new Option("timercontrol", this::timerControlOption));
-        configOptions.add(new Option("load", this::loadOption));
         configOptions.add(new Option("starttest", this::startTestOption));
 
         initControlOptions.add(new Option("printstate", this::printStateOption));
@@ -342,18 +339,7 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
         }
     }
 
-    /**
-     * A konfigurációs fájl betöltése.
-     * @param tokens a parancs szavai
-     */
-    private void loadOption(String[] tokens) {
-        if (tokens.length < 2) {
-            printer.printError("Hiányzó paraméter a 'load' parancshoz.");
-            return;
-        }
-        //A konfiguráció betöltése
-    }
-
+    
     /**
      * A tesztelés kezdete.
      * @param tokens a parancs szavai
