@@ -1,5 +1,7 @@
 # A felület működési elve
-Ha valamilyen objektum állapota megváltozik, értesíti a felületet (lehetőség szerint a változást közvetlen kiváltó metódus értesít). A felület dolga ilyenkor frissíteni a menük, és a megjelenő labirintus állapotát és a változásokat megjeleníteni a képernyőn. 
+*push*: Ha valamilyen objektum állapota megváltozik, értesíti a felületet (Éehetőség szerint a változást közvetlen kiváltó metódus értesít).
+
+*pull:* A felület dolga ilyenkor frissíteni a menük, és a megjelenő labirintus állapotát és a változásokat megjeleníteni a képernyőn. Ezt az objektumok állapotának lekérdezésével teszi. 
 
 
 # Események és az ezeket kiváltó metódusok
@@ -32,6 +34,3 @@ Ha valamilyen objektum állapota megváltozik, értesíti a felületet (lehetős
 
 ## Item 
 - StateChanged: Ha a kijelölt játékosnál van a tárgy, az Inventory menü frissítése
-
-
-
