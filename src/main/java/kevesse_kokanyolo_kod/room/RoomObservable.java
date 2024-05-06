@@ -19,18 +19,18 @@ public class RoomObservable {
     /**
      * A játék menete közben figyeli, a szoba osztódott-e.
      */
-    public void notifyRoomSplit(Room room,Door door) {
+    public void notifyRoomSplit(Room newRoom,Door newDoor) {
         for (RoomObserver observer : observers) {
-            observer.roomSplit(room, door);
+            observer.roomSplit(newRoom, newDoor);
         }
     }
 
     /**
      * A játék menete közben figyeli, a szobák egyesültek-e.
      */
-    public void notifyRoomsMerged(Room room, Door door) {
+    public void notifyRoomsMerged(Room mergedRoom, Door mergedDoor) {
         for (RoomObserver observer : observers) {
-            observer.roomsMerged(room, door);
+            observer.roomsMerged(mergedRoom, mergedDoor);
         }
     }
 }
