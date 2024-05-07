@@ -143,10 +143,12 @@ public class Controller implements StudentObserver, RoomObserver {
     public void selectPerson(String personName) {
     }
 
+    // TODO
     @Override
     public void studentKilled(Student student) {
     }
 
+    // TODO 
     @Override
     public void slideRulePicked() {
     }

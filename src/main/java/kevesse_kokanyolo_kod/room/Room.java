@@ -6,7 +6,11 @@ import kevesse_kokanyolo_kod.items.IItem;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.observer.IRoomObservable;
+import kevesse_kokanyolo_kod.observer.IStateChangedObservable;
 import kevesse_kokanyolo_kod.observer.RoomObservable;
+import kevesse_kokanyolo_kod.observer.RoomObserver;
+import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.people.*;
 
 import java.util.ArrayList;
@@ -17,7 +21,7 @@ import java.util.stream.Collectors;
  * A játékban szereplő szobákat reprezentáló osztály. Kezeli a benne találjató hatásokat. 
  * Interakcióba lépteti a benne lévő játékosokat a belépő játékossal. Tárolja a benne lévő tárgyakat.
  */
-public class Room implements EffectConsumedObserver {
+public class Room implements EffectConsumedObserver, IRoomObservable, IStateChangedObservable<Room> {
     /**
      * Megadja, hogy legfeljebb hány játékos tartózkodhat egyszerre a szobában.
      */
@@ -451,5 +455,30 @@ public class Room implements EffectConsumedObserver {
         printer.printField("lastCleaning", stickiness == null? "null" : "StickinessEffect");
 
         printer.endPrintObject();
+    }
+    @Override
+    public void notifyRoomSplit(Room room, Door door) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyRoomSplit'");
+    }
+    @Override
+    public void notifyRoomsMerged(Room room, Door door) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyRoomsMerged'");
+    }
+    @Override
+    public void addObserver(RoomObserver observer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+    }
+    @Override
+    public void addObserver(StateChangedObserver<Room> observer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+    }
+    @Override
+    public void notifyStateChanged() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyStateChanged'");
     }
 }

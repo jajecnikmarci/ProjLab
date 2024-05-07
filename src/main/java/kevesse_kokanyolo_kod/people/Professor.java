@@ -4,6 +4,7 @@ import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.room.Room;
 
 
@@ -126,5 +127,17 @@ public class Professor extends AcademicPerson {
         printer.printFields("poisonImmunities", "poisonImmunity", this.poisonImmunities.size());
         
         printer.endPrintObject();
+    }
+
+    @Override
+    public void addObserver(StateChangedObserver<Person> observer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+    }
+
+    @Override
+    public void notifyStateChanged() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyStateChanged'");
     }
 }
