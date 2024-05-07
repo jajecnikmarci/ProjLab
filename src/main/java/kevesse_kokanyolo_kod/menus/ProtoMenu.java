@@ -11,12 +11,12 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 import kevesse_kokanyolo_kod.people.Student;
-import kevesse_kokanyolo_kod.people.StudentObservable;
-import kevesse_kokanyolo_kod.people.StudentObserver;
+import kevesse_kokanyolo_kod.observer.StudentObservable;
+import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.room.RoomObservable;
-import kevesse_kokanyolo_kod.room.RoomObserver;
+import kevesse_kokanyolo_kod.observer.RoomObservable;
+import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 
 // CONFIG:
