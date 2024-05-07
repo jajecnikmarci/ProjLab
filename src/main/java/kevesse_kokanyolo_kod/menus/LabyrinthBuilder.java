@@ -97,7 +97,7 @@ public class LabyrinthBuilder {
     }
 
     /**
-     * Szoba hozzáadása
+     * Ajtó hozzáadása
      * 
      * @param roomname1 Első szoba neve
      * @param roomname2 Második szoba neve
