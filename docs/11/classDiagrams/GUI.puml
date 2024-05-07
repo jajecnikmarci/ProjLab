@@ -1,0 +1,193 @@
+@startuml GUI
+
+interface IStateChangedObservable<T> {
+    + void addObserver(StateChangedObserver<T> observer)
+    + void notifyStateChanged()
+}
+"IStateChangedObservable" *-- StateChangedObserver
+
+class StateChangedObserver<T> {
+    - Consumer<T> callback
+    + void onStateChanged(T observable)
+}
+
+class StateChangedObservable<T> implements IStateChangedObservable<T>{
+    - List<StateChangedObserver<T>> observers
+    - T observable
+    + void addObserver(StateChangedObserver<T> observer)
+    # void notifyStateChanged()
+}
+
+interface RoomObserver {
+    + void roomSplit(Room room, Door door)
+    + void roomsMerged(Room room, Door door)
+}
+
+class RoomObservable {
+    - List<RoomObserver> observers
+    + void addObserver(RoomObserver observer)
+    + void notifyRoomSplit(Room room, Door door)
+    + void notifyRoomsMerged(Room room, Door door)
+}
+ RoomObservable ..|> IRoomObservable
+
+
+interface IRoomObservable {
+    + void notifyRoomSplit(Room room, Door door)
+    + void notifyRoomsMerged(Room room, Door door)
+    + void addObserver(RoomObserver observer)
+}
+
+interface IStudentObservable {
+    + void notifyStudentKilled(Student student)
+    + void notifySlideRulePicked()
+    + void addObserver(StudentObserver observer)
+}
+
+interface StudentObserver {
+    + void studentKilled(Student student)
+    + void slideRulePicked()
+}
+
+class StudentObservable {
+    - List<StudentObserver> observers
+    - Student observable
+    + void addObserver(StudentObserver observer)
+    + void notifyStudentKilled(Student student)
+    + void notifySlideRulePicked()
+}
+
+StudentObservable ..|> IStudentObservable
+
+class Student {
+    - StudentObservable studentObservable
+    # void notifyStudentKilled(Student student)
+    # void notifySliderulePicked()
+    + void addObserver(StudentObserver observer)
+}
+
+Student "1" *-- StudentObservable
+Student ..|> IStudentObservable
+
+class Person {
+    - StateChangedObservable<Person> stateChangedObservable
+    # void notifyStateChanged()
+    + void addObserver(StateChangedObserver<Person> observer)
+}
+
+Person ..|> "IStateChangedObservable"
+
+class Room {
+    - StateChangedObservable<Room> stateChangedObservable
+    # void notifyStateChanged()
+    + void addObserver(StateChangedObserver<Room> observer)
+}
+Room "1" *-- RoomObservable
+Room ..|> "IStateChangedObservable"
+Room ..|> IRoomObservable
+
+
+class Door {
+    - StateChangedObservable<Door> stateChangedObservable
+    # void notifyStateChanged()
+    + void addObserver(StateChangedObserver<Door> observer)
+}
+
+Door ..|> "IStateChangedObservable"
+
+class Item {
+    - StateChangedObservable<Item> stateChangedObservable
+    # void notifyStateChanged()
+    + void addObserver(StateChangedObserver<Item> observer)
+    + isPassive(): boolean
+}
+
+Item ..|> "IStateChangedObservable"
+
+class LabyrinthView {
+    + void display(LabyrinthBuilder labyrinth)
+    - void drawRoom(Room room, Point position)
+    - void drawDoor(Door door)
+    - void handleClick()
+}
+LabyrinthView -- Controller::LabyrinthBuilder
+
+class Point {
+    + int x
+    + int y
+}
+
+class PlayerInfoView {
+    + void display(Cleaner cleaner)
+    + void display(AcademicPerson person)
+}
+
+class LabyrinthBuilder {
+    + HashMap<String, Room> rooms
+    + HashMap<String, Point> roomLocations
+    + HashMap<String, Item> items
+    + HashMap<String, Door> doors
+    + HashMap<String, Cleaner> cleaners
+    + HashMap<String, AcademicPerson> academicPeople
+    - String selectedPerson
+    
+    + String getInstanceName(Room room)
+    + String getInstanceName(Item item)
+    + String getInstanceName(Door door)
+    + String getInstanceName(Cleaner cleaner)
+    + String getInstanceName(AcademicPerson academic)
+    
+    + Room addRoom(String name, int capacity, boolean isPoisonous, Point point)
+    + Item addItem(String roomName, String itemType, String itemName)
+    + Door addDoor(String roomname1, String roomname2, boolean passable, String doorName, boolean cursed)
+    + Person addPerson(String roomName, String personType, String personName)
+    + Room getInstance(String name)
+    + Item getInstance(String name)
+    + Door getInstance(String name)
+    + AcademicPerson getInstance(String name)
+    + Cleaner getInstance(String name)
+    + void selectPerson(String personName)
+    + Person getSelectedPerson()
+}
+
+interface StudentObserver
+interface RoomObserver
+
+class Controller {
+    - int studentCount
+    - LabyrinthBuilder labyrinthBuilder
+    - StateChangedObserver<Person> personStateChangedObserver
+    - StateChangedObserver<Item> itemStateChangedObserver
+    - StateChangedObserver<Door> doorStateChangedObserver
+    - StateChangedObserver<Room> roomStateChangedObserver
+
+    + void pickUp(String academicName)
+    + void drop(String academicName, String itemName)
+    + void use(String academicName, String itemName)
+    + void goToRoom(String personName, String roomName)
+    + void shake()
+    + void studentKilled()  // Implementálja StudentObserver-t
+    + void roomSplit(Room newRoom, Door newDoor)  // Implementálja RoomObserver-t
+    + void roomsMerged(Room mergedRoom, Door mergedDoor)  // Implementálja RoomObserver-t
+    + void createRoom(String name, int capacity, bool isPoisonous, Point point)
+    + void createDoor(String roomname1, String roomname2, boolean passable, String doorName, boolean cursed)
+    + void createItem(String roomName, String itemType, String itemName)
+    + void createStudent(String roomName, String personName)
+    + void createProfessor(String roomName, String personName)
+    + void createCleaner(String roomName, String personName)
+    + void selectPerson(String personName)
+}
+Controller *-- StateChangedObserver
+Controller ..|> StudentObserver
+Controller ..|> RoomObserver
+
+
+LabyrinthBuilder "1" *-- "N" Room
+LabyrinthBuilder "1" *-- "N" Point
+LabyrinthBuilder "1" *-- "N" Item
+LabyrinthBuilder "1" *-- "N" Door
+LabyrinthBuilder "1" *-- "N" Cleaner
+LabyrinthBuilder "1" *-- "N" AcademicPerson
+
+
+@enduml
