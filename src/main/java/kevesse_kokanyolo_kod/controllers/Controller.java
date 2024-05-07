@@ -2,12 +2,13 @@ package kevesse_kokanyolo_kod.controllers;
 
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
+import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.people.Person;
 import kevesse_kokanyolo_kod.people.Student;
-import kevesse_kokanyolo_kod.people.StudentObserver;
+import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.room.RoomObserver;
+import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 import java.awt.*;
 

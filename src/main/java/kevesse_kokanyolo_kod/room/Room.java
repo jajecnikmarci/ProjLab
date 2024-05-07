@@ -6,6 +6,7 @@ import kevesse_kokanyolo_kod.items.IItem;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.observer.RoomObservable;
 import kevesse_kokanyolo_kod.people.*;
 
 import java.util.ArrayList;

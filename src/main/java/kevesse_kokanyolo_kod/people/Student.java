@@ -5,6 +5,7 @@ import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.observer.StudentObservable;
 import kevesse_kokanyolo_kod.room.Room;
 
 import java.util.*;
