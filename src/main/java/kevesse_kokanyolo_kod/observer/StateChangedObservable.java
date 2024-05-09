@@ -26,8 +26,8 @@ public class StateChangedObservable<T> {
      * átadja nekik paraméterként a vizsgált objektumot (observable).
      */
     public void notifyStateChanged() {
-        for (var observer : observers) {
-            
+        for (StateChangedObserver<T> observer : observers) {
+            observer.onStateChanged(observable);
         }
     }
 }
