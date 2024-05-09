@@ -345,7 +345,7 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
      * @param tokens a parancs szavai
      */
     private void startTestOption(String[] tokens) {
-        labyrinthBuilder = new LabyrinthBuilder();
+        labyrinthBuilder = new LabyrinthBuilder(printer);
     }
 
     /**
@@ -395,14 +395,14 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
         switch (tokens[1]) {
             case "room":
                 boolean isPoisonous = (tokens.length > 4 && tokens[4].equals("poisonous"));
-                labyrinthBuilder.addRoom(tokens[2], Integer.parseInt(tokens[3]), isPoisonous, printer);
+                labyrinthBuilder.addRoom(tokens[2], Integer.parseInt(tokens[3]), isPoisonous);
                 break;
             case "item":
                 if (tokens.length < 5) {
                     printer.printError("Hiányzó paraméter az 'item' parancshoz.");
                     return;
                 }
-                labyrinthBuilder.addItem(tokens[2], tokens[3], tokens[4], printer);
+                labyrinthBuilder.addItem(tokens[2], tokens[3], tokens[4]);
                 break;
             case "door":
                 if (tokens.length < 4) {
@@ -426,7 +426,7 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
                     return;
                 }
                 
-                labyrinthBuilder.addPerson(tokens[2], tokens[3], tokens[4], printer);
+                labyrinthBuilder.addPerson(tokens[2], tokens[3], tokens[4]);
                 break;
             default:
                 printer.printError("Ismeretlen 'add' parancs.");

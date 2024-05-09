@@ -18,12 +18,16 @@ public class StateChangedObservable<T> {
      * @param observer amit feliratkoztat
      */
     public void addObserver(StateChangedObserver<T> observer) {
+        observers.add(observer);
     }
 
     /**
      * Értesíti az összes feliratkozót, hogy a vizsgált objektum állapota megváltozott és
      * átadja nekik paraméterként a vizsgált objektumot (observable).
      */
-    protected void notifyStateChanged() {
+    public void notifyStateChanged() {
+        for (var observer : observers) {
+            
+        }
     }
 }
