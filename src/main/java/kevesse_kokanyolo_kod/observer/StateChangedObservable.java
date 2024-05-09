@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.observer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StateChangedObservable<T> {
@@ -12,6 +13,13 @@ public class StateChangedObservable<T> {
      * A vizsgált objektum.
      */
     T observable;
+
+
+    
+    public StateChangedObservable(T observable) {
+        this.observers = new ArrayList<>();
+        this.observable = observable;
+    }
 
     /**
      * Feliratkoztatja a megadott observert.

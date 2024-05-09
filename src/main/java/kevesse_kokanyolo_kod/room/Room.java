@@ -80,6 +80,9 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         this.stunEffects = new ArrayList<>();
 
         stickiness = null;
+
+        roomObservable = new RoomObservable();
+        stateChangedObservable = new StateChangedObservable<>(this);
     }
     public Room(int capacity, boolean poisonous) {
         this(capacity);

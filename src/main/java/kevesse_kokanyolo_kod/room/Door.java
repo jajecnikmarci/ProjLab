@@ -64,6 +64,7 @@ public class Door implements IStateChangedObservable<Door> {
         this.room2Open = room2Open;
         this.visible = visible;
         this.cursed = cursed;
+        stateChangedObservable = new StateChangedObservable<>(this);
     }
 
     /**

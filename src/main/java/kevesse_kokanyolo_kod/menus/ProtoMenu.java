@@ -85,7 +85,6 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
     public static boolean timerControl = false;
     LabyrinthBuilder labyrinthBuilder = null; //null, ha konfigurációs módban vagyunk
     public static StudentObservable studentObservable;
-    public static RoomObservable roomObservable;
 
     List<Option> configOptions = new ArrayList<>(); //Konfigurációs parancsokat tartalmazza
     List<Option> initControlOptions = new ArrayList<>(); //Inicializálási és vezérlő parancsokat tartalmazza
@@ -122,8 +121,6 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
 
         studentObservable = new StudentObservable();
         studentObservable.addObserver(this);
-        roomObservable = new RoomObservable();
-        roomObservable.addObserver(this);
     }
 
     public boolean compareFiles(String outputContent, String expectedFileName) {
@@ -395,7 +392,9 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
         switch (tokens[1]) {
             case "room":
                 boolean isPoisonous = (tokens.length > 4 && tokens[4].equals("poisonous"));
-                labyrinthBuilder.addRoom(tokens[2], Integer.parseInt(tokens[3]), isPoisonous);
+                Room newRoom = new Room(Integer.parseInt(tokens[3]), isPoisonous);
+                newRoom.addObserver(this);
+                labyrinthBuilder.addRoom(tokens[2], newRoom);
                 break;
             case "item":
                 if (tokens.length < 5) {
