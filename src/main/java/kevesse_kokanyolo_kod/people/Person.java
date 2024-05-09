@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.observer.IStateChangedObservable;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
@@ -11,7 +12,7 @@ import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 /**
  * A személyeket reprezentáló absztrakt osztály.
  */
-public abstract class Person {
+public abstract class Person implements IStateChangedObservable<Person> {
     Person(Room room) {
         location = room;
     }

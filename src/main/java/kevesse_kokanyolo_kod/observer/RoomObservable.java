@@ -1,32 +1,35 @@
-package kevesse_kokanyolo_kod.room;
+package kevesse_kokanyolo_kod.observer;
+
+import kevesse_kokanyolo_kod.room.Door;
+import kevesse_kokanyolo_kod.room.Room;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomObservable {
+public class RoomObservable implements IRoomObservable {
     /**
      * Az Observer-ek listája
      */
     private List<RoomObserver> observers = new ArrayList<>();
 
     /**
-     * Metódusok az Observer-ek regisztrálásához és eltávolításához
+     * Lehetővé teszi a megfigyelők hozzáadását a szoba objektumhoz.
      */
     public void addObserver(RoomObserver observer) {
         observers.add(observer);
     }
 
     /**
-     * A játék menete közben figyeli, a szoba osztódott-e.
+     * Értesíti a feliratkozott osztályokat a szobák osztódásáról.
      */
-    public void notifyRoomSplit(Room room,Door door) {
+    public void notifyRoomSplit(Room room, Door door) {
         for (RoomObserver observer : observers) {
             observer.roomSplit(room, door);
         }
     }
 
     /**
-     * A játék menete közben figyeli, a szobák egyesültek-e.
+     * Értesíti a feliratkozott osztályokat a szobák egyesüléséről.
      */
     public void notifyRoomsMerged(Room room, Door door) {
         for (RoomObserver observer : observers) {

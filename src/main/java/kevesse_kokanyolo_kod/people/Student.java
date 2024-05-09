@@ -5,6 +5,10 @@ import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.observer.IStudentObservable;
+import kevesse_kokanyolo_kod.observer.StateChangedObserver;
+import kevesse_kokanyolo_kod.observer.StudentObservable;
+import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Room;
 
 import java.util.*;
@@ -12,7 +16,7 @@ import java.util.*;
 /**
  * A Hallgató viselkedését megvalósító osztály.
  */
-public class Student extends AcademicPerson {
+public class Student extends AcademicPerson implements IStudentObservable {
     /**
      * A hallgató lelkeinek számát tárolja.
      */
@@ -266,5 +270,35 @@ public class Student extends AcademicPerson {
         printer.printFields("poisonImmunities", "PoisonImmunity", this.poisonImmunities.size());
         printer.printField("souls", this.souls);
         printer.endPrintObject();
+    }
+
+    @Override
+    public void notifyStudentKilled(Student student) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyStudentKilled'");
+    }
+
+    @Override
+    public void notifySlideRulePicked() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifySlideRulePicked'");
+    }
+
+    @Override
+    public void addObserver(StudentObserver observer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+    }
+
+    @Override
+    public void addObserver(StateChangedObserver<Person> observer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+    }
+
+    @Override
+    public void notifyStateChanged() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyStateChanged'");
     }
 }

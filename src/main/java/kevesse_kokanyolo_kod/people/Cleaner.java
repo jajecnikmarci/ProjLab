@@ -2,6 +2,7 @@ package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
+import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.room.Room;
 
 public class Cleaner extends Person {
@@ -70,5 +71,17 @@ public class Cleaner extends Person {
         printer.startPrintObject(builder.getInstanceName(this));
         printer.printField("location", builder.getInstanceName(this.location));
         printer.endPrintObject();
+    }
+
+    @Override
+    public void addObserver(StateChangedObserver<Person> observer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+    }
+
+    @Override
+    public void notifyStateChanged() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyStateChanged'");
     }
 }

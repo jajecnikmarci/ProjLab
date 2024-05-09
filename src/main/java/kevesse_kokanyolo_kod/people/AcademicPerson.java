@@ -74,7 +74,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      *
      * @param item a kitörlendő tárgy
      */
-    public void removeItem(Item item) {
+    public void removeItem(IItem item) {
         SkeletonMenu.startCall("Player.removeItem(Item)");
         inventory.remove(item);
         SkeletonMenu.endCall();
@@ -138,7 +138,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     public void dropItem(IItem item) {
         SkeletonMenu.startCall("Player.dropItem(Item)");
         if(!stunned) {
-            inventory.remove(item);
+            removeItem(item);
             location.addItem(item);
             item.onDrop(this);
         }
