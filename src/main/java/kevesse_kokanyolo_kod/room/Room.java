@@ -112,6 +112,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void removeItem(IItem item) {
         SkeletonMenu.startCall("Room.removeItem(Item)");
         items.remove(item);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -123,6 +124,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void addItem(IItem item) {
         SkeletonMenu.startCall("Room.addItem(Item)");
         items.add(item);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -352,6 +354,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void addPlayer(Person person) {
         SkeletonMenu.startCall("Room.addPlayer(Player)");
         this.people.add(person);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -363,6 +366,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void removePlayer(Person person) {
         SkeletonMenu.startCall("Room.removePlayer(Player)");
         this.people.remove(person);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -373,6 +377,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void addPoisonEffect(PoisonEffect effect) {
         SkeletonMenu.startCall("Room.addEffect(RoomEffect)");
         this.poisonEffects.add(effect);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
        
@@ -383,6 +388,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void addStunEffect(StunEffect effect) {
         SkeletonMenu.startCall("Room.addEffect(RoomEffect)");
         this.stunEffects.add(effect);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
       
@@ -433,6 +439,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         if(item!= null) {
             deleteRoomEffectByItem(item);
             item.removeEffect();
+            stateChangedObservable.notifyStateChanged();
         }
         SkeletonMenu.endCall();
     }
@@ -443,6 +450,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void clearPoisonEffects() {
         SkeletonMenu.startCall("Room.clearPoisonEffects()");
         poisonEffects.clear();
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -458,7 +466,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
 
         printer.endPrintObject();
     }
-    
+
     @Override
     public void notifyRoomSplit(Room room, Door door) {
         roomObservable.notifyRoomSplit(room, door);

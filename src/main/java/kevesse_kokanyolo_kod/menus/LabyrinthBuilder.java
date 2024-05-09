@@ -29,7 +29,7 @@ public class LabyrinthBuilder {
 
     Map<String, Class<?>> ItemclassMap = new HashMap<>();
 
-    Printer printer; //TODO ??
+    Printer printer;
 
     /**
      * Csak feltölti a nevekhez a megfelelő osztályokat
@@ -68,7 +68,7 @@ public class LabyrinthBuilder {
 
     /**
      * Először ellenőrzi, hogy a szoba neve már szerepel-e a listában, ha nem akkor
-     * hozzáadja
+     * létrehozza és hozzáadja
      * 
      * @param name     Szoba neve
      * @param capacity Szoba kapacitása
@@ -106,7 +106,7 @@ public class LabyrinthBuilder {
     }
 
     /**
-     * Kitöröli a kapott szobát a tárolt szobákból
+     * Kitörli a kapott szobát a tárolt szobákból
      * 
      * @param room kitörlendő szoba
      */
@@ -148,7 +148,7 @@ public class LabyrinthBuilder {
     }
 
     /**
-     * Ajtó hozzáadása
+     * Ajtó létrehozása és hozzáadása
      * 
      * @param roomname1 Első szoba neve
      * @param roomname2 Második szoba neve
@@ -168,7 +168,7 @@ public class LabyrinthBuilder {
     }
 
     /**
-     * Ajtó hozzáadása kész ajtóval
+     * Ajtó hozzáadása
      * 
      * @param doorName  Ajtó neve
      * @param door      Kész ajtó
@@ -178,7 +178,7 @@ public class LabyrinthBuilder {
     }
 
     /**
-     * Kitöröli a kapott ajtót a tárolt ajtókból
+     * Kitörli a kapott ajtót a tárolt ajtókból
      * 
      * @param room kitörlendő ajtó
      */

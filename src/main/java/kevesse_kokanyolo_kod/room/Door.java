@@ -4,6 +4,7 @@ import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.observer.IStateChangedObservable;
+import kevesse_kokanyolo_kod.observer.StateChangedObservable;
 import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.people.Person;
 
@@ -41,11 +42,14 @@ public class Door implements IStateChangedObservable<Door> {
      */
     private boolean cursed;
 
+    StateChangedObservable<Door> stateChangedObservable;
+
     /**
      * Tér-Idő rengéskor, ha az ajtó el van átkozva, akkor a láthatósága megváltozik
      */
     public void onShake() {
         if(cursed) visible = !visible;
+        stateChangedObservable.notifyStateChanged();
     }
 
     /**
@@ -129,13 +133,11 @@ public class Door implements IStateChangedObservable<Door> {
 
     @Override
     public void addObserver(StateChangedObserver<Door> observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+        stateChangedObservable.addObserver(observer);
     }
 
     @Override
     public void notifyStateChanged() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyStateChanged'");
+        stateChangedObservable.notifyStateChanged();
     }
 }
