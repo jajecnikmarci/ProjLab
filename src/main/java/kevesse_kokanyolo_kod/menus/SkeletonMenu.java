@@ -260,7 +260,7 @@ public class SkeletonMenu {
 
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         Item camembert = new Camembert();
         room.addItem(camembert);
         student.pickUpItem();
@@ -281,7 +281,7 @@ public class SkeletonMenu {
 
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         Transistor transistor1 = new Transistor();
         Transistor transistor2 = new Transistor();
 
@@ -354,7 +354,7 @@ public class SkeletonMenu {
     public void testPickUpFFP2() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         FFP2 item = new FFP2();
         room.addPlayer(student);
         room.addItem(item);
@@ -365,7 +365,7 @@ public class SkeletonMenu {
     public void testPickUpCamembert() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         Camembert camembert = new Camembert();
         room.addPlayer(student);
         room.addItem(camembert);
@@ -377,7 +377,7 @@ public class SkeletonMenu {
     public void testPickUpGlass() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         Glass glass = new Glass();
         room.addPlayer(student);
         room.addItem(glass);
@@ -389,7 +389,7 @@ public class SkeletonMenu {
     public void testPickUpTVSZ() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         TVSZ tvsz = new TVSZ();
         room.addPlayer(student);
         room.addItem(tvsz);
@@ -401,7 +401,7 @@ public class SkeletonMenu {
     public void testPickUpAirFreshener() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         AirFreshener airFreshener = new AirFreshener();
         room.addPlayer(student);
         room.addItem(airFreshener);
@@ -413,7 +413,7 @@ public class SkeletonMenu {
     public void testPickUpFakeSlideRule() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         FakeSlideRule fakeSlideRule = new FakeSlideRule();
         room.addPlayer(student);
         room.addItem(fakeSlideRule);
@@ -429,7 +429,7 @@ public class SkeletonMenu {
         room.addPlayer(cleaner);
         room.onEnter(cleaner);
         room.removePlayer(cleaner);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         room.addPlayer(student);
         //Szimuláljuk, hogy bejön 5 hallgató
         room.onEnter(student);
@@ -447,7 +447,7 @@ public class SkeletonMenu {
     public void testPickUpTransistor() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         Transistor transistor = new Transistor();
         room.addPlayer(student);
         room.addItem(transistor);
@@ -459,7 +459,7 @@ public class SkeletonMenu {
     public void testPickUpRug() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         Rug rug = new Rug();
         room.addPlayer(student);
         room.addItem(rug);
@@ -471,7 +471,7 @@ public class SkeletonMenu {
     public void testPickUpSlideRule() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         SlideRule slideRule = new SlideRule();
         room.addPlayer(student);
         room.addItem(slideRule);
@@ -483,7 +483,7 @@ public class SkeletonMenu {
     public void testUseRug() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         Rug rug = new Rug();
         room.addPlayer(student);
         student.addItem(rug);
@@ -495,7 +495,7 @@ public class SkeletonMenu {
     public void testUseAirFreshener() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         AirFreshener airFreshener = new AirFreshener();
         room.addPlayer(student);
         student.addItem(airFreshener);
@@ -510,7 +510,7 @@ public class SkeletonMenu {
     public void testRoomPoisonsAcademic() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         PoisonEffect poisonEffect = new PoisonEffect(new Camembert(), 5, room);
         room.addPoisonEffect(poisonEffect);
         poisonEffect.activate();
@@ -532,7 +532,7 @@ public class SkeletonMenu {
         verbose = false;
         Room room = new Room(capacity);
         if (hasPlayer) {
-            room.addPlayer(new Student(null, null));
+            room.addPlayer(new Student(null));
         }
         verbose = true;
         room.split();
@@ -545,7 +545,7 @@ public class SkeletonMenu {
         verbose = false;
         Room room1 = new Room(capacity1);
         if (hasPlayer) {
-            room1.addPlayer(new Student(null, null));
+            room1.addPlayer(new Student(null));
         }
         Room room2 = new Room(capacity2);
         verbose = true;
@@ -558,7 +558,7 @@ public class SkeletonMenu {
         Room room1 = new Room(104);
         Room room2 = new Room(104);
         Door door = new Door(room1, room2, true, true, true , false);
-        Student student = new Student(room1, ProtoMenu.studentObservable);
+        Student student = new Student(room1);
         room1.addPlayer(student);
         verbose = true;
         door.goThrough(student);
@@ -567,7 +567,7 @@ public class SkeletonMenu {
     private void testUseGlass() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         room.addPlayer(student);
         Glass glass = new Glass();
         student.addItem(glass);
@@ -578,7 +578,7 @@ public class SkeletonMenu {
     private void testTVSZdefendsStudent() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         room.addPlayer(student);
         TVSZ tvsz = new TVSZ();
         room.addItem(tvsz);
@@ -591,7 +591,7 @@ public class SkeletonMenu {
     private void testGlassdefendsStudent() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         room.addPlayer(student);
         Glass glass = new Glass();
         room.addItem(glass);
@@ -605,7 +605,7 @@ public class SkeletonMenu {
     private void testFFP2defendsAcademic() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         PoisonEffect poisonEffect = new PoisonEffect(new Camembert(), 5, room);
         room.addPoisonEffect(poisonEffect);
         poisonEffect.activate();
@@ -619,7 +619,7 @@ public class SkeletonMenu {
     private void testProfessorMeetsStudent() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         room.addPlayer(student);
         verbose = true;
         Professor professor = new Professor(room);
@@ -639,7 +639,7 @@ public class SkeletonMenu {
     private void testCleanerMeetsAcademic() {
         verbose = false;
         Room room = new Room(10);
-        Student student = new Student(room, ProtoMenu.studentObservable);
+        Student student = new Student(room);
         room.addPlayer(student);
         Cleaner cleaner = new Cleaner(room);
         verbose = true;

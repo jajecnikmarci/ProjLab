@@ -96,7 +96,7 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
     /**
      * Hozzáadja a parancsokat a 2 listához.
      */
-    public void initProtoMenu() { // TODO: ez az egész lehetne static, csak viszonylag sok munka.
+    public void initProtoMenu() {
         configOptions.add(new Option("randomness", this::randomnessOption));
         configOptions.add(new Option("timercontrol", this::timerControlOption));
         configOptions.add(new Option("starttest", this::startTestOption));

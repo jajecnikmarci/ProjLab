@@ -11,11 +11,8 @@ public class StudentObservable {
      */
     private List<StudentObserver> observers = new ArrayList<>();
 
-    /**
-     * A megfigyelt hallgató.
-     */
-    Student observable;
-
+    public StudentObservable() {
+    }
     /**
      * Feliratkoztatja a megadott StudentObservert az objektumot figyelők listájára.
      */

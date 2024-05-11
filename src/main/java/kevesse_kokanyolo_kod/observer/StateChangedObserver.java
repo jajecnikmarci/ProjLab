@@ -19,6 +19,6 @@ public class StateChangedObserver<T> {
      * Ez a metódus meghívja a konstruktorban beállított callback függvényt.
      */
     public void onStateChanged(T observable) {
-        this.callback.accept(observable);
+        callback.accept(observable);
     }
 }
