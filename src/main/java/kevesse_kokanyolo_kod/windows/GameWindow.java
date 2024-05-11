@@ -12,6 +12,7 @@ public class GameWindow extends JFrame {
     private JPanel bottomPanel;
     private JPanel inventoryPanel;
     private JPanel roomPanel;
+    private JPanel labyrinthPanel;
     private List<RoomPanel> roomPanels = new ArrayList<>();
 
     public GameWindow() {
@@ -24,6 +25,7 @@ public class GameWindow extends JFrame {
         frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
 
+        createLines();
         createLabyrinth();
         createPlayerInfo();
         createInventoryInfo();
@@ -40,6 +42,7 @@ public class GameWindow extends JFrame {
         }
     }
 
+    //Egy szobát tárol, ami fel van osztva 4 sorra, 3 oszlopra, ezekben a részekben jelennek meg a játékosok, szoba kapacitása
     public class RoomPanel {
         public JPanel room;
         private List<JPanel> roomInfoPanels = new ArrayList<>();
@@ -49,115 +52,14 @@ public class GameWindow extends JFrame {
         }
     }
 
+    //Szobák megjelenítése
     private void createLabyrinth() {
         //Szobák helyének meghatározása, IntPair osztályt emiatt hoztam létre
         List<IntPair> roomsLocation = new ArrayList<>();
-        roomsLocation.add(new IntPair(840, 90)); //1. szoba
-        roomsLocation.add(new IntPair(1190, 90)); //2. szoba
-        roomsLocation.add(new IntPair(700, 220)); //3. szoba
-        roomsLocation.add(new IntPair(990, 220)); //4. szoba
-        roomsLocation.add(new IntPair(1330, 220)); //5. szoba
-        roomsLocation.add(new IntPair(525, 340)); //6. szoba
-        roomsLocation.add(new IntPair(700, 340)); //7. szoba
-        roomsLocation.add(new IntPair(1190, 340)); //8. szoba
-        roomsLocation.add(new IntPair(700, 460)); //9. szoba
-        roomsLocation.add(new IntPair(990, 460)); //10. szoba
-        roomsLocation.add(new IntPair(525, 590)); //11. szoba
-        roomsLocation.add(new IntPair(840, 590)); //12. szoba
-        roomsLocation.add(new IntPair(1190, 590)); //13. szoba
+        int[] roomsLocations = { 840, 90, 1190, 90, 700, 220, 990, 220, 1330, 220, 525,
+                340, 700, 340, 1190, 340, 700, 460, 990, 460, 525, 590, 840, 590, 1190, 590 };
 
-        //Vonalak, nyilak kirajzolása a szobák között
-        JPanel labyrinthPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setStroke(new BasicStroke(3));
-                
-                //1. szoba
-                g2d.drawLine(840, 130, 1190, 130);
-                //2. szoba
-                g2d.drawLine(1270, 130, 1370, 220);
-                g2d.drawLine(1230, 170, 1230, 340);
-                //3. szoba
-                g2d.drawLine(700, 260, 605, 380);
-                g2d.drawLine(740, 300, 740, 340);
-                g2d.drawLine(780, 260, 990, 260);
-                //4. szoba
-                g2d.drawLine(1030, 300, 780, 500);
-                //7. szoba
-                g2d.drawLine(740, 420, 740, 460);
-                //8. szoba
-                g2d.drawLine(1230, 420, 1070, 500);
-                //9. szoba
-                g2d.drawLine(780, 500, 990, 500);
-                g2d.drawLine(740, 540, 605, 630);
-                //10. szoba
-                g2d.drawLine(990, 500, 880, 590);
-                //11. szoba
-                g2d.drawLine(605, 630, 840, 630);
-
-                //Nyilak feje (háromszögek) kirajzolása
-                Polygon secondRoomArrow = new Polygon();
-                secondRoomArrow.addPoint(1230, 340);
-                secondRoomArrow.addPoint(1220, 330);
-                secondRoomArrow.addPoint(1240, 330);
-                g2d.fill(secondRoomArrow);
-                Polygon thirdRoomArrow = new Polygon();
-                thirdRoomArrow.addPoint(780, 260);
-                thirdRoomArrow.addPoint(790, 250);
-                thirdRoomArrow.addPoint(790, 270);
-                g2d.fill(thirdRoomArrow);
-                Polygon fourthRoomArrow = new Polygon();
-                fourthRoomArrow.addPoint(780, 500);
-                fourthRoomArrow.addPoint(794, 501);
-                fourthRoomArrow.addPoint(782, 485);
-                g2d.fill(fourthRoomArrow);
-                Polygon seventhRoomArrow = new Polygon();
-                seventhRoomArrow.addPoint(740, 420);
-                seventhRoomArrow.addPoint(730, 430);
-                seventhRoomArrow.addPoint(750, 430);
-                g2d.fill(seventhRoomArrow);
-                Polygon ninthRoomArrow = new Polygon();
-                ninthRoomArrow.addPoint(605, 630);
-                ninthRoomArrow.addPoint(619, 631);
-                ninthRoomArrow.addPoint(607, 615);
-                g2d.fill(ninthRoomArrow);
-                Polygon tenthRoomArrow = new Polygon();
-                tenthRoomArrow.addPoint(990, 500);
-                tenthRoomArrow.addPoint(976, 501);
-                tenthRoomArrow.addPoint(988, 516);
-                g2d.fill(tenthRoomArrow);
-                Polygon eleventhRoomArrow = new Polygon();
-                eleventhRoomArrow.addPoint(840, 630);
-                eleventhRoomArrow.addPoint(830, 620);
-                eleventhRoomArrow.addPoint(830, 640);
-                g2d.fill(eleventhRoomArrow);
-
-                //Lila vonalak, nyilak hozzáadása
-                g2d.setColor(new Color(102,0,153));
-                //1. szoba
-                g2d.drawLine(840, 130, 740, 220);
-                g2d.drawLine(920, 130, 1030, 220);
-                //5. szoba
-                g2d.drawLine(1370, 300, 1270, 380);
-                //6. szoba
-                g2d.drawLine(605, 380, 700, 500);
-                //12. szoba
-                g2d.drawLine(920, 630, 1190, 630);
-
-                Polygon firstRoomArrow = new Polygon();
-                firstRoomArrow.addPoint(920, 130);
-                firstRoomArrow.addPoint(934, 131);
-                firstRoomArrow.addPoint(922, 145);
-                g2d.fill(firstRoomArrow);
-                Polygon fifthRoomArrow = new Polygon();
-                fifthRoomArrow.addPoint(1370, 300);
-                fifthRoomArrow.addPoint(1356, 301);
-                fifthRoomArrow.addPoint(1368, 315);
-                g2d.fill(fifthRoomArrow);
-            }
-        };
+        for (int i = 0; i < roomsLocations.length; i++) if(i % 2 == 1) roomsLocation.add(new IntPair(roomsLocations[i-1], roomsLocations[i]));
 
         labyrinthPanel.setLayout(null); // Kell a setBounds() használatához
         for (int i = 0; i < roomsLocation.size(); i++) {
@@ -196,6 +98,7 @@ public class GameWindow extends JFrame {
         frame.add(labyrinthPanel);
     }
 
+    //A bal alsó sarokban lévő játékos információt tároló részt jeleníti meg
     private void createPlayerInfo() {
         playerPanel = new JPanel();
         playerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -226,6 +129,7 @@ public class GameWindow extends JFrame {
         bottomPanel.add(playerPanel);
     }
 
+    //Középen alul lévő Inventory információt tároló részt jeleníti meg
     private void createInventoryInfo() {
         inventoryPanel = new JPanel();
         JLabel inventoryInfo = new JLabel("Inventory");
@@ -262,6 +166,7 @@ public class GameWindow extends JFrame {
         bottomPanel.add(inventoryPanel);
     }
 
+    //Jobb alul lévő szobában lévő tárgyakat tároló részt jeleníti meg
     private void createRoomInfo() {
         roomPanel = new JPanel();
         JLabel roomInfo = new JLabel("Items in room");
@@ -288,5 +193,59 @@ public class GameWindow extends JFrame {
         }
 
         bottomPanel.add(roomPanel);
+    }
+
+    //A szobák közötti vonalakat, nyilakat rajzolja ki
+    private void createLines() {
+        labyrinthPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setStroke(new BasicStroke(3));
+
+                //Fekete vonalak pozíciói
+                int[] blackRoomLines = { 840, 130, 1190, 130, 1270, 130, 1370, 220, 1230, 170, 1230, 340, 700, 260, 605,
+                        380, 740, 300, 740, 340, 780, 260, 990, 260, 1030, 300, 780, 500, 740, 420, 740, 460, 1230,
+                        420, 1070, 500, 780, 500, 990, 500, 740, 540, 605, 630, 990, 500, 880, 590, 605, 630, 840, 630 };
+
+                //Fekete vonalak kirajzolása
+                for (int i = 1; i < blackRoomLines.length + 1; i++) if(i % 4 == 0) g2d.drawLine(blackRoomLines[i-4], blackRoomLines[i-3], blackRoomLines[i-2], blackRoomLines[i-1]);
+
+                int[] arrows = { 1230, 340, 1220, 330, 1240, 330, 780, 260, 790, 250, 790, 270, 780,
+                        500, 794, 501, 782, 485, 740, 420, 730, 430, 750, 430, 605, 630, 619, 631, 607,
+                        615, 990, 500, 976, 501, 988, 516, 840, 630, 830, 620, 830, 640 };
+
+                //Fekete nyilak feje (háromszögek) kirajzolása
+                for (int i = 1; i < arrows.length + 1; i++) {
+                    if(i % 6 == 0) {
+                        Polygon arrow = new Polygon();
+                        arrow.addPoint(arrows[i-6], arrows[i-5]);
+                        arrow.addPoint(arrows[i-4], arrows[i-3]);
+                        arrow.addPoint(arrows[i-2], arrows[i-1]);
+                        g2d.fill(arrow);
+                    }
+                }
+
+                g2d.setColor(new Color(102,0,153));
+                int[] purpleRoomLines = { 840, 130, 740, 220, 920, 130, 1030, 220, 1370,
+                        300, 1270, 380, 605, 380, 700, 500, 920, 630, 1190, 630 };
+
+                //Lila vonalak kirajzolása
+                for (int i = 1; i < purpleRoomLines.length + 1; i++) if(i % 4 == 0) g2d.drawLine(purpleRoomLines[i-4], purpleRoomLines[i-3], purpleRoomLines[i-2], purpleRoomLines[i-1]);
+
+                //Lila nyilak feje (háromszögek) kirajzolása
+                int[] purpleArrows = { 920, 130, 934, 131, 922, 145, 1370, 300, 1356, 301, 1368, 315 };
+                for (int i = 1; i < purpleArrows.length + 1; i++) {
+                    if(i % 6 == 0) {
+                        Polygon arrow = new Polygon();
+                        arrow.addPoint(purpleArrows[i-6], purpleArrows[i-5]);
+                        arrow.addPoint(purpleArrows[i-4], purpleArrows[i-3]);
+                        arrow.addPoint(purpleArrows[i-2], purpleArrows[i-1]);
+                        g2d.fill(arrow);
+                    }
+                }
+            }
+        };
     }
 }
