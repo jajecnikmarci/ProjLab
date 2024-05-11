@@ -20,7 +20,7 @@ public class Controller implements StudentObserver, RoomObserver {
     private StateChangedObserver<Person> personStateChangedObserver;
     private StateChangedObserver<Item> itemStateChangedObserver;
     private StateChangedObserver<Door> doorStateChangedObserver;
-    private StateChangedObserver<RoomObserver> roomStateChangedObserver;
+    private StateChangedObserver<Room> roomStateChangedObserver;
     /**
      * A controller tartalmazza a pályát.
      */
@@ -161,6 +161,14 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     @Override
     public void roomSplit(Room newRoom, Door newDoor) {
+        newRoom.addObserver(this);
+        newRoom.addObserver(roomStateChangedObserver);
+        newDoor.addObserver(doorStateChangedObserver);
+        //TODO nevekre hátha lesz jobb
+        String roomName = "room"+String.valueOf(labyrinthBuilder.getRoomMapSize()+1);
+        String doorName = "door"+String.valueOf(labyrinthBuilder.getDoorMapSize()+1);
+        labyrinthBuilder.addRoom(roomName, newRoom);
+        labyrinthBuilder.addDoor(doorName, newDoor);
     }
 
     /**
@@ -170,5 +178,7 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     @Override
     public void roomsMerged(Room mergedRoom, Door mergedDoor) {
+        labyrinthBuilder.removeRoom(mergedRoom);
+        labyrinthBuilder.removeDoor(mergedDoor);
     }
 }

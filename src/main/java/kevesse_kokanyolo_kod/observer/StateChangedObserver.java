@@ -9,9 +9,8 @@ public class StateChangedObserver<T> {
      * vissza semmilyen értéket)
      */
     private Consumer<T> callback;
-    private T observable;
     
-    StateChangedObserver(T observable, Consumer<T> callback) {
+    StateChangedObserver(Consumer<T> callback) {
         this.callback = callback;
     }
 
@@ -19,7 +18,7 @@ public class StateChangedObserver<T> {
      * Ezt a metódust hívja meg az Observable átadva magát (kontextusként).
      * Ez a metódus meghívja a konstruktorban beállított callback függvényt.
      */
-    public void onStateChanged() {
+    public void onStateChanged(T observable) {
         this.callback.accept(observable);
     }
 }

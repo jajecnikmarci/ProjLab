@@ -10,6 +10,7 @@ import kevesse_kokanyolo_kod.observer.IRoomObservable;
 import kevesse_kokanyolo_kod.observer.IStateChangedObservable;
 import kevesse_kokanyolo_kod.observer.RoomObservable;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
+import kevesse_kokanyolo_kod.observer.StateChangedObservable;
 import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.people.*;
 
@@ -59,7 +60,9 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
      * osztály a RoomObserver interfészt, mert ez az implementáció
      * nem a szoba felelőssége. Emiatt a szoba konstruktora is módosul.
      */
-    private RoomObservable observable;
+    private RoomObservable roomObservable;
+
+    private StateChangedObservable<Room> stateChangedObservable;
 
     /**
      * Létrehozza a szobát, a paraméterül kapott szoba kapacitásával és
@@ -68,19 +71,21 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
      * @param capacity a szoba kapacitása
      * @param observable a feliratkozók értesítése
      */
-    public Room(int capacity, RoomObservable observable) {
+    public Room(int capacity) {
         this.capacity = capacity;
         this.people = new ArrayList<>();
         this.doors = new ArrayList<>();
         this.items = new ArrayList<>();
         this.poisonEffects = new ArrayList<>();
         this.stunEffects = new ArrayList<>();
-        this.observable = observable;
 
         stickiness = null;
+
+        roomObservable = new RoomObservable();
+        stateChangedObservable = new StateChangedObservable<>(this);
     }
-    public Room(int capacity, boolean poisonous, RoomObservable observable) {
-        this(capacity, observable);
+    public Room(int capacity, boolean poisonous) {
+        this(capacity);
         if(poisonous){
             PoisonEffect poisonEffect = new PoisonEffect(null, Integer.MAX_VALUE, this);
             poisonEffects.add(poisonEffect);
@@ -110,6 +115,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void removeItem(IItem item) {
         SkeletonMenu.startCall("Room.removeItem(Item)");
         items.remove(item);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -121,6 +127,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void addItem(IItem item) {
         SkeletonMenu.startCall("Room.addItem(Item)");
         items.add(item);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -271,7 +278,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
             return;
         }
 
-        Room newRoom = new Room(capacity / 2, observable);
+        Room newRoom = new Room(capacity / 2);
         for (int i = 0; i < doors.size(); i += 2) {
             Door door = doors.remove(i);
             newRoom.doors.add(door);
@@ -297,7 +304,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
 
         // Jöhetne létre elátkozott ajtó...
         Door newDoor = new Door(this, newRoom, true, true, true, false);
-        observable.notifyRoomSplit(newRoom, newDoor);
+        roomObservable.notifyRoomSplit(newRoom, newDoor);
         SkeletonMenu.endCall("A szoba osztódott.");
     }
 
@@ -329,7 +336,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
                         return true;
                     } else {
                         room.doors.remove(d);
-                        observable.notifyRoomsMerged(room, d);
+                        roomObservable.notifyRoomsMerged(room, d);
                         return false;
                     }
                 })
@@ -350,6 +357,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void addPlayer(Person person) {
         SkeletonMenu.startCall("Room.addPlayer(Player)");
         this.people.add(person);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -361,6 +369,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void removePlayer(Person person) {
         SkeletonMenu.startCall("Room.removePlayer(Player)");
         this.people.remove(person);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -371,6 +380,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void addPoisonEffect(PoisonEffect effect) {
         SkeletonMenu.startCall("Room.addEffect(RoomEffect)");
         this.poisonEffects.add(effect);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
        
@@ -381,6 +391,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void addStunEffect(StunEffect effect) {
         SkeletonMenu.startCall("Room.addEffect(RoomEffect)");
         this.stunEffects.add(effect);
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
       
@@ -431,6 +442,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         if(item!= null) {
             deleteRoomEffectByItem(item);
             item.removeEffect();
+            stateChangedObservable.notifyStateChanged();
         }
         SkeletonMenu.endCall();
     }
@@ -441,6 +453,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void clearPoisonEffects() {
         SkeletonMenu.startCall("Room.clearPoisonEffects()");
         poisonEffects.clear();
+        stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -456,29 +469,29 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
 
         printer.endPrintObject();
     }
+
     @Override
     public void notifyRoomSplit(Room room, Door door) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyRoomSplit'");
+        roomObservable.notifyRoomSplit(room, door);
     }
+
     @Override
     public void notifyRoomsMerged(Room room, Door door) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyRoomsMerged'");
+        roomObservable.notifyRoomsMerged(room, door);
     }
+
     @Override
     public void addObserver(RoomObserver observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+        roomObservable.addObserver(observer);
     }
+
     @Override
     public void addObserver(StateChangedObserver<Room> observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+        stateChangedObservable.addObserver(observer);
     }
+    
     @Override
     public void notifyStateChanged() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyStateChanged'");
+        stateChangedObservable.notifyStateChanged();
     }
 }
