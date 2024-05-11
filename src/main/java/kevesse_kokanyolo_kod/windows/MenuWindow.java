@@ -44,25 +44,14 @@ public class MenuWindow extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        new GameWindow();
-                    }
-                });
+                SwingUtilities.invokeLater(GameWindow::new);
             }
         });
 
         addStudentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        //TODO
-                    }
-                });
+                //SwingUtilities.invokeLater(); TODO
             }
         });
 
