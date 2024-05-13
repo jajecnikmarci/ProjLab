@@ -41,21 +41,21 @@ public class Controller implements StudentObserver, RoomObserver {
     private PlayerInfoView playerInfoView;
 
     Controller() {
-        personStateChangedObserver = new StateChangedObserver<Person>((Person p) -> redisplay(p));
-        itemStateChangedObserver = new StateChangedObserver<Item>(redisplay);
-        doorStateChangedObserver = new StateChangedObserver<Door>(redisplay);
-        roomStateChangedObserver = new StateChangedObserver<Room>(redisplay);
-        labyrinthBuilder = new LabyrinthBuilder(new Printer());
+        
+        // TODO: EZEK itt példák az eseménykezelésre.  
+        // personStateChangedObserver = new StateChangedObserver<Person>((Person p) -> redisplay(p));
+        // itemStateChangedObserver = new StateChangedObserver<Item>(i -> redisplay(i));
+        // doorStateChangedObserver = new StateChangedObserver<Door>(redisplay);
+        // roomStateChangedObserver = new StateChangedObserver<Room>(redisplay);
+        // labyrinthBuilder = new LabyrinthBuilder(new Printer());
 
         //view-ket meg kell kapni
     }
-
+    
     private void redisplay(Person p) {
         labyrinthView.display(labyrinthBuilder);
         //többi view frissítése
     }
-    /*Szerintem egyszerűbb lenne az élet, ha egy értesítéskor az összes view-t frissítenénk mindig és
-    akkor nem kéne külön statechangedek*/
 
     /**
      * Egy hallgató vagy professzor tárgy felvételét kezeli, a tárgy a hallgatóhoz
