@@ -186,6 +186,15 @@ public interface IItem {
     public boolean interact(IItem item);
 
     /**
+     * Visszaadja, hogy a tárgy manuálisan használható-e a játékosnak. Pl.: true -> nem használható manuálisan (játékos direkt parancsára)
+     * 
+     * @return passzív-e a tárgy
+     */
+    public default boolean isPassive(){
+        return false;
+    }
+
+    /**
      * Törli a tárgyhoz tartozó Effect-et
      */
     public void removeEffect();

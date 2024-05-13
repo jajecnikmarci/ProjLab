@@ -12,8 +12,10 @@ import kevesse_kokanyolo_kod.people.Professor;
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
+import kevesse_kokanyolo_kod.views.IntPair;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Cleaner;
+import kevesse_kokanyolo_kod.people.Person;
 import kevesse_kokanyolo_kod.effects.Timer;
 
 public class LabyrinthBuilder {
@@ -23,6 +25,11 @@ public class LabyrinthBuilder {
     Map<String, Door> doors = new HashMap<>();
     Map<String, Cleaner> cleaners = new HashMap<>();
     Map<String, AcademicPerson> academicPeople = new HashMap<>();
+    Map<String, Student> students = new HashMap<>();
+    Map<String, Professor> professors = new HashMap<>();
+
+    Map<Room, IntPair> roomLocations = new HashMap<>();
+    Map<Door, IntPair[]> doorOffsets = new HashMap<>(); // maps doorName to first and second endpoint offset
 
     private int studentCount = 0; 
     static Map<String, Timer> timers = new HashMap<>(); 
@@ -31,6 +38,7 @@ public class LabyrinthBuilder {
 
     Printer printer;
 
+    private String selectedPerson;
     /**
      * Csak feltölti a nevekhez a megfelelő osztályokat
      */
@@ -50,6 +58,14 @@ public class LabyrinthBuilder {
         ItemclassMap.put("TVSZ", TVSZ.class);
     }
 
+
+    public void setSelectedPerson(String selectedPerson) {
+        this.selectedPerson = selectedPerson;
+    }
+    public String getSelectedPerson() {
+        return selectedPerson;
+    }
+
     /**
      * Visszaadja a tárolt szobák számát
      * @return tárolt szobák száma
@@ -65,6 +81,47 @@ public class LabyrinthBuilder {
     public int getDoorMapSize(){
         return doors.size();
     }
+    public Map<String, Door> getDoors() {
+        return doors;
+    }
+
+    public Map<String, Student> getStudents() {
+        return students;
+    }
+    
+    public Map<String, Professor> getProfessors() {
+        return professors;
+    }
+
+    public Map<String, Cleaner> getCleaners() {
+        return cleaners;
+    }
+
+    public Map<String, Room> getRooms() {
+        return rooms;
+    }
+
+    public Map<Room, IntPair> getRoomLocations() {
+        return roomLocations;
+    }
+
+    public IntPair[] getDoorOffsets(Door door) {
+        return doorOffsets.get(door);
+    }
+
+    public void setRoomLocation(Room room, IntPair location){
+        roomLocations.put(room, location);
+    }
+
+    public void setRoomLocation(Room room, int x, int y){
+        roomLocations.put(room, new IntPair(x,y));
+    }
+
+    public void setDoorEndpointOffsets(String doorName, IntPair startOffset, IntPair endOffset){
+        // TODO: error handling
+        doorOffsets.put(doors.get(doorName), new IntPair [] {startOffset, endOffset});
+    }
+
 
     /**
      * Először ellenőrzi, hogy a szoba neve már szerepel-e a listában, ha nem akkor
@@ -74,16 +131,17 @@ public class LabyrinthBuilder {
      * @param capacity Szoba kapacitása
      * @param printer  Printer objektum
      */
-    public void addRoom(String name, int capacity, boolean isPoisonous) {
+    public Room addRoom(String name, int capacity, boolean isPoisonous) {
 
         for (String key : rooms.keySet()) {
             if (rooms.get(key).equals(name)) {
                 printer.printError("A szoba már szerepel a listában!");
-                return;
+                return null;
             }
         }
-
-        rooms.put(name, new Room(capacity, isPoisonous));
+        Room room = new Room(capacity, isPoisonous);
+        rooms.put(name, room);
+        return room;
     }
 
     /**
@@ -94,7 +152,6 @@ public class LabyrinthBuilder {
      * @param Room     Kész Szoba 
      */
     public void addRoom(String name, Room room) {
-
         for (String key : rooms.keySet()) {
             if (rooms.get(key).equals(name)) {
                 printer.printError("A szoba már szerepel a listában!");
@@ -129,14 +186,14 @@ public class LabyrinthBuilder {
      * @param itemName tárgy neve
      * @param printer  Printer objektum
      */
-    public void addItem(String roomName, String itemType, String itemName)
+    public Item addItem(String roomName, String itemType, String itemName)
             throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
             NoSuchMethodException, SecurityException {
 
         for (String key : items.keySet()) {
             if (items.get(key).equals(itemName)) {
                 printer.printError("A tárgy már szerepel a listában!");
-                return;
+                return null;
             }
         }
 
@@ -145,6 +202,8 @@ public class LabyrinthBuilder {
 
         items.put(itemName, item);
         rooms.get(roomName).addItem(item);
+
+        return item;
     }
 
     /**
@@ -155,16 +214,17 @@ public class LabyrinthBuilder {
      * @param passable  Átjárható-e az első szoba felől
      * @param cursed    Átkos-e az ajtó
      */
-    public void addDoor(String roomname1, String roomname2, boolean passable, String doorName, boolean cursed) {
+    public Door addDoor(String roomname1, String roomname2, boolean passable, String doorName, boolean cursed) {
         if (!rooms.containsKey(roomname1) || !rooms.containsKey(roomname2)) {
             printer.printError("Nincs ilyen nevű szoba.");
-            return;
+            return null;
         }
         Room room1 = rooms.get(roomname1);
         Room room2 = rooms.get(roomname2);
 
         Door door = new Door(room1, room2, true, passable, true, cursed);
         doors.put(doorName, door);
+        return door;
     }
 
     /**
@@ -199,37 +259,45 @@ public class LabyrinthBuilder {
      * @param personName Játékos neve
      * @param printer    Printer objektum
      */
-    public void addPerson(String roomName, String personType, String personName) {
+    public Person addPerson(String roomName, String personType, String personName) {
         for (String key : cleaners.keySet()) {
             if (cleaners.get(key).equals(personName)) {
                 printer.printError("A játékos már szerepel a listában!");
-                return;
+                return null;
             }
         }
         for (String key : academicPeople.keySet()) {
             if (academicPeople.get(key).equals(personName)) {
                 printer.printError("A játékos már szerepel a listában!");
-                return;
+                return null;
             }
         }
 
+        Person person = null;
+
         if (personType.equals("Cleaner")) {
             Cleaner cleaner = new Cleaner(rooms.get(roomName));
+            person = cleaner;
             cleaners.put(personName, cleaner);
             rooms.get(roomName).addPlayer(cleaner);
 
         } else if (personType.equals("Student")) {
             Student student = new Student(rooms.get(roomName));
-            
+            person = student;
             studentCount++;
             academicPeople.put(personName, student);
             rooms.get(roomName).addPlayer(student);
+            students.put(personName, student);
 
         } else if (personType.equals("Professor")) {
             Professor professor = new Professor(rooms.get(roomName));
+            person = professor;
             academicPeople.put(personName, professor);
             rooms.get(roomName).addPlayer(professor);
+            professors.put(personName, professor);
         }
+
+        return person;
     }
 
     /**

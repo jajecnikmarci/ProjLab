@@ -10,7 +10,7 @@ public class StateChangedObserver<T> {
      */
     private Consumer<T> callback;
     
-    StateChangedObserver(Consumer<T> callback) {
+    public StateChangedObserver(Consumer<T> callback) {
         this.callback = callback;
     }
 

@@ -49,6 +49,15 @@ public class TVSZ extends Item {
     }
 
     /**
+     * Visszaadja, hogy a tárgy manuálisan használható-e a játékosnak. Pl.: true -> nem használható manuálisan (játékos direkt parancsára)
+     * 
+     * @return passzív-e a tárgy
+     */
+    public boolean isPassive(){
+        return true;
+    }
+
+    /**
      *
      * Létrehozza a tárgyhoz tartozó KillImmunity-t, ami 0 (azaza végtelen) időtartamú, nem aktív. (Akkor aktiválódik, ha a játékosst megpróbálják megölni) 
      * Beállítja az effectet a létrehozott killImmunityra.

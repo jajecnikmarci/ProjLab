@@ -121,6 +121,20 @@ public class Door implements IStateChangedObservable<Door> {
         this.room2 = room2;
     }
 
+    public boolean isCursed() {
+        return cursed;
+    }
+    public boolean isRoom1Open() {
+        return room1Open;
+    }
+    public boolean isRoom2Open() {
+        return room2Open;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
     public void printState(Printer printer, LabyrinthBuilder labyrinthBuilder ){
         printer.startPrintObject(labyrinthBuilder.getInstanceName(this));
         printer.printField("room1", labyrinthBuilder.getInstanceName(this.room1));

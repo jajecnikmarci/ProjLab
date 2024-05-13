@@ -92,6 +92,19 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
             poisonEffect.activate();
         }
     }
+
+    public boolean isPoisonous() {
+        if(poisonEffects.isEmpty()) 
+            return false;
+        else
+            return true;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+
     /**
      * Hozzáadja a szoba ajtóihoz a kapott ajtót.
      * @param door a kapott ajtó
@@ -493,5 +506,12 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     @Override
     public void notifyStateChanged() {
         stateChangedObservable.notifyStateChanged();
+    }
+
+    public boolean isSticky() {
+        return stickiness != null && stickiness.isSticky();
+    }
+    public boolean hasStunEffect() {
+        return !stunEffects.isEmpty();
     }
 }

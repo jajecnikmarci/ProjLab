@@ -74,7 +74,7 @@ import kevesse_kokanyolo_kod.observer.RoomObserver;
 public class ProtoMenu implements StudentObserver, RoomObserver {
     private Printer printer;
 
-    public static boolean randomness = false;
+    public static boolean randomness = true;
 
     private static boolean testMode = false;
     private String testExpectedFileName;
