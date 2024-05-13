@@ -29,6 +29,7 @@ public class LabyrinthBuilder {
     Map<String, Professor> professors = new HashMap<>();
 
     Map<String, IntPair> roomLocations = new HashMap<>();
+    Map<IntPair, IntPair> lineLocations = new HashMap<>();
 
     private int studentCount = 0; 
     static Map<String, Timer> timers = new HashMap<>(); 
@@ -101,9 +102,17 @@ public class LabyrinthBuilder {
         return roomLocations;
     }
 
+    public Map<IntPair, IntPair> getLineLocations() {
+        return lineLocations;
+    }
+
     //TODO ezeket hol adjuk meg?
-    public void setLocation(String roomName, IntPair location){
+    public void setRoomLocation(String roomName, IntPair location){
         roomLocations.put(roomName, location);
+    }
+
+    public void setLineLocation(IntPair startLocation, IntPair endLocation){
+        lineLocations.put(startLocation, endLocation);
     }
 
     public void setLocation(String roomName, int x, int y){
