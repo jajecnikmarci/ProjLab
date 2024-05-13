@@ -42,6 +42,4 @@ public class GameWindow extends JFrame {
         itemsInRoomView = new ItemsInRoomView();
         menuContainer.add(itemsInRoomView);
     }
-    
-     
 }

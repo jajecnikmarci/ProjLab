@@ -10,10 +10,7 @@ import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.views.InventoryView;
-import kevesse_kokanyolo_kod.views.ItemsInRoomView;
-import kevesse_kokanyolo_kod.views.LabyrinthView;
-import kevesse_kokanyolo_kod.views.PlayerInfoView;
+import kevesse_kokanyolo_kod.views.*;
 import kevesse_kokanyolo_kod.windows.MenuWindow;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
@@ -56,6 +53,29 @@ public class Controller implements StudentObserver, RoomObserver {
         // labyrinthBuilder = new LabyrinthBuilder(new Printer());
 
         //view-ket meg kell kapni
+    }
+
+    private void initGame() {
+        int[] roomLocations = { 840, 90, 1190, 90, 700, 220, 990, 220, 1330, 220, 525, 340, 700, 340, 1190, 340, 700,
+                460, 990, 460, 525, 590, 840, 590, 1190, 590 };
+        for (int i = 0; i < roomLocations.length; i++) {
+            if (i % 2 == 1) {
+                Room room;
+                if(i == 1 || i == 10 || i == 12) room = new Room(4, true);
+                else room = new Room(4);
+                labyrinthBuilder.addRoom("room" + i, room);
+                labyrinthBuilder.setRoomLocation("room" + i, new IntPair(roomLocations[i - 1], roomLocations[i]));
+            }
+        }
+
+        int[] roomLineLocations = { 840, 130, 1190, 130, 1270, 130, 1370, 220, 1230, 170, 1230, 340, 700, 260, 605, 380,
+                740, 300, 740, 340, 780, 260, 990, 260, 1030, 300, 780, 500, 740, 420, 740, 460, 1230, 420, 1070, 500,
+                780, 500, 990, 500, 740, 540, 605, 630, 990, 500, 880, 590, 605, 630, 840, 630, 840, 130, 740, 220, 920,
+                130, 1030, 220, 1370, 300, 1270, 380, 605, 380, 700, 500, 920, 630, 1190, 630 };
+
+        for (int i = 1; i < roomLineLocations.length + 1; i++)
+            if (i % 4 == 0)
+                labyrinthBuilder.setLineLocation(new IntPair(roomLineLocations[i - 4], roomLineLocations[i - 3]), new IntPair(roomLineLocations[i - 2], roomLineLocations[i - 1]));
     }
     
     private void redisplay(Person p) {
