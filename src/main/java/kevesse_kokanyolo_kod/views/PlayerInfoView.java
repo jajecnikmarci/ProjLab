@@ -42,7 +42,7 @@ public class PlayerInfoView extends JPanel {
      * @param person a személy, akinek az információit meg kell jeleníteni
      */
     public void display(AcademicPerson person) {
-        for (var studentEntry : controller.getLabyrinthBuilder().getStudents().entrySet()) {
+        for (var studentEntry : controller.getStudents().entrySet()) {
             if(studentEntry.getValue().equals(person)) {
                 playerInfoLabel.setText("Student");
                 playerNameLabel.setText("Name: "+studentEntry.getKey());
@@ -50,7 +50,7 @@ public class PlayerInfoView extends JPanel {
             }
         }
         
-        for (var professorEntry : controller.getLabyrinthBuilder().getProfessors().entrySet()) {
+        for (var professorEntry : controller.getProfessors().entrySet()) {
             if(professorEntry.getValue().equals(person)) {
                 playerInfoLabel.setText("Professor");
                 playerSoulsLabel.setVisible(false);
@@ -65,7 +65,7 @@ public class PlayerInfoView extends JPanel {
      */
     public void display(Cleaner cleaner) {
         playerSoulsLabel.setVisible(false);
-        for (var cleanerEntry : controller.getLabyrinthBuilder().getCleaners().entrySet()) {
+        for (var cleanerEntry : controller.getCleaners().entrySet()) {
             if(cleanerEntry.getValue().equals(cleaner)) {
                 playerInfoLabel.setText("Cleaner");
                 playerNameLabel.setText("Name: "+cleanerEntry.getKey());

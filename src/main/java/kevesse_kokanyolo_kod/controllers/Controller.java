@@ -5,7 +5,9 @@ import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
+import kevesse_kokanyolo_kod.people.Cleaner;
 import kevesse_kokanyolo_kod.people.Person;
+import kevesse_kokanyolo_kod.people.Professor;
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Door;
@@ -16,6 +18,7 @@ import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 public class Controller implements StudentObserver, RoomObserver {
     /**
@@ -280,5 +283,25 @@ public class Controller implements StudentObserver, RoomObserver {
 
     public LabyrinthBuilder getLabyrinthBuilder() {
         return labyrinthBuilder;
+    }
+
+    public Map<String, Student> getStudents() {
+        return labyrinthBuilder.getStudents();
+    }
+    
+    public Map<String, Professor> getProfessors() {
+        return labyrinthBuilder.getProfessors();
+    }
+
+    public Map<String, Cleaner> getCleaners() {
+        return labyrinthBuilder.getCleaners();
+    }
+
+    public Map<String, Room> getRooms() {
+        return labyrinthBuilder.getRooms();
+    }
+
+    public Map<String, IntPair> getRoomLocations() {
+        return labyrinthBuilder.getRoomLocations();
     }
 }

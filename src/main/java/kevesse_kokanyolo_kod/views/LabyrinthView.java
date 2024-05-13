@@ -102,8 +102,8 @@ public class LabyrinthView extends JPanel {
     // Szobák megjelenítése
     private void createLabyrinth() {
         //ez már lackó féle
-        for (var roomEntry : controller.getLabyrinthBuilder().getRooms().entrySet()) {
-            IntPair position = controller.getLabyrinthBuilder().getRoomLocations().get(roomEntry.getKey());
+        for (var roomEntry : controller.getRooms().entrySet()) {
+            IntPair position = controller.getRoomLocations().get(roomEntry.getKey());
             drawRoom(roomEntry.getValue(), position);
         }
 
