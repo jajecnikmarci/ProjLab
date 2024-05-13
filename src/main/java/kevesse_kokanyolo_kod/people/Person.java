@@ -5,6 +5,8 @@ import java.util.Optional;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.observer.IStateChangedObservable;
+import kevesse_kokanyolo_kod.observer.StateChangedObservable;
+import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
@@ -13,8 +15,10 @@ import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
  * A személyeket reprezentáló absztrakt osztály.
  */
 public abstract class Person implements IStateChangedObservable<Person> {
+    private StateChangedObservable<Person> stateChangedObservable;
     Person(Room room) {
         location = room;
+        stateChangedObservable = new StateChangedObservable<>(this);
     }
     /**
      * A szoba amelyben a player jelenleg tartózkodik.
@@ -107,4 +111,14 @@ public abstract class Person implements IStateChangedObservable<Person> {
         SkeletonMenu.endCall("A személy nem ment át a szobába.");
     }
     public abstract void printState(Printer printer, LabyrinthBuilder builder);
+
+    @Override
+    public void addObserver(StateChangedObserver<Person> observer) {
+        stateChangedObservable.addObserver(observer);
+    }
+
+    @Override
+    public void notifyStateChanged() {
+        stateChangedObservable.notifyStateChanged();
+    }
 }

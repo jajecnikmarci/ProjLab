@@ -58,7 +58,8 @@ public class FFP2 extends Item {
         }
         PoisonImmunity poisonImmunity = new PoisonImmunity(this, immunityLength, academicPerson);
         academicPerson.addPoisonImmunity(poisonImmunity);
-        effect = poisonImmunity; 
+        effect = poisonImmunity;
+        notifyStateChanged();
         SkeletonMenu.endCall();
     }
 

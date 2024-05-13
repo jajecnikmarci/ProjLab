@@ -2,36 +2,69 @@ package kevesse_kokanyolo_kod.controllers;
 
 import kevesse_kokanyolo_kod.items.Item;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.observer.StateChangedObserver;
+import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Person;
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
+import kevesse_kokanyolo_kod.views.InventoryView;
+import kevesse_kokanyolo_kod.views.ItemsInRoomView;
+import kevesse_kokanyolo_kod.views.LabyrinthView;
+import kevesse_kokanyolo_kod.views.PlayerInfoView;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 
 public class Controller implements StudentObserver, RoomObserver {
     /**
      * Az életben maradt hallgatók számát tárolja.
      */
-    private int studentCount;
+    //private int studentCount; //Ez benne van a LabyrinthBuilderben
+
     private StateChangedObserver<Person> personStateChangedObserver;
     private StateChangedObserver<Item> itemStateChangedObserver;
     private StateChangedObserver<Door> doorStateChangedObserver;
-    private StateChangedObserver<RoomObserver> roomStateChangedObserver;
+    private StateChangedObserver<Room> roomStateChangedObserver;
     /**
      * A controller tartalmazza a pályát.
      */
     private LabyrinthBuilder labyrinthBuilder;
 
+
+    private InventoryView inventoryView;
+    private ItemsInRoomView itemsInRoomView;
+    private LabyrinthView labyrinthView;
+    private PlayerInfoView playerInfoView;
+
+    Controller() {
+        personStateChangedObserver = new StateChangedObserver<Person>((Person p) -> redisplay(p));
+        itemStateChangedObserver = new StateChangedObserver<Item>(redisplay);
+        doorStateChangedObserver = new StateChangedObserver<Door>(redisplay);
+        roomStateChangedObserver = new StateChangedObserver<Room>(redisplay);
+        labyrinthBuilder = new LabyrinthBuilder(new Printer());
+
+        //view-ket meg kell kapni
+    }
+
+    private void redisplay(Person p) {
+        labyrinthView.display(labyrinthBuilder);
+        //többi view frissítése
+    }
+    /*Szerintem egyszerűbb lenne az élet, ha egy értesítéskor az összes view-t frissítenénk mindig és
+    akkor nem kéne külön statechangedek*/
+
     /**
      * Egy hallgató vagy professzor tárgy felvételét kezeli, a tárgy a hallgatóhoz
      * vagy professzorhoz kerül, a tárgyhoz tartozó hatásokat megkapja a játékos.
+     * A PlayerInfoView Pick up Item gombjára kattintva hívódik meg.
      * @param academicName a hallgató vagy oktató, akihez a tárgy kerül
      */
     public void pickUp(String academicName) {
+        labyrinthBuilder.pickup(academicName);
     }
 
     /**
@@ -41,6 +74,7 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param itemName a tárgy neve, amit elejt a hallgató vagy professzor
      */
     public void drop(String academicName, String itemName) {
+        labyrinthBuilder.drop(academicName, itemName);
     }
 
     /**
@@ -50,6 +84,7 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param itemName a tárgy, ami a hatást adja
      */
     public void use(String academicName, String itemName) {
+        labyrinthBuilder.use(academicName, itemName);
     }
 
     /**
@@ -60,12 +95,14 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param roomName a szoba, ahova a játékos megy
      */
     public void goToRoom(String personName, String roomName) {
+        labyrinthBuilder.gotoroom(personName, roomName);
     }
 
     /**
      * A labirintus tér-idő rengését valósítja meg.
      */
     public void shake() {
+        labyrinthBuilder.shake();
     }
 
     /**
@@ -73,6 +110,7 @@ public class Controller implements StudentObserver, RoomObserver {
      * száma csökken. (StudentObserver implementációja)
      */
     public void studentKilled() {
+        labyrinthBuilder.studentDied();
     }
 
     /**
@@ -85,6 +123,12 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param point a szoba elhelyezkedése a képernyőn
      */
     public void createRoom(String name, int capacity, boolean isPoisonous, Point point) {
+
+        Room room = labyrinthBuilder.addRoom(name, capacity, isPoisonous);
+        if(room != null) {
+            room.addObserver(roomStateChangedObserver);
+            room.addObserver(this);
+        }
     }
 
     /**
@@ -97,6 +141,12 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param cursed az ajtó elátkozottsága
      */
     public void createDoor(String roomname1, String roomname2, boolean passable, String doorName, boolean cursed) {
+
+
+        Door door = labyrinthBuilder.addDoor(roomname1, roomname2, passable, doorName, cursed);
+        if(door != null) {
+            door.addObserver(doorStateChangedObserver);
+        }
     }
 
     /**
@@ -106,7 +156,13 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param itemType a tárgy típusa
      * @param itemName a tárgy neve
      */
-    public void createItem(String roomName, String itemType, String itemName) {
+    public void createItem(String roomName, String itemType, String itemName) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+            NoSuchMethodException, SecurityException{
+
+        Item item = labyrinthBuilder.addItem(roomName, itemType, itemName);
+        if(item != null) {
+            item.addObserver(itemStateChangedObserver);
+        }
     }
 
     /**
@@ -116,6 +172,10 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a hallgató neve
      */
     public void createStudent(String roomName, String personName) {
+        Person person = labyrinthBuilder.addPerson(roomName, "Student", personName);
+        if(person != null) {
+            person.addObserver(personStateChangedObserver);
+        }
     }
 
     /**
@@ -125,6 +185,10 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a hallgató vagy professzor neve
      */
     public void createProfessor(String roomName, String personName) {
+        Person person = labyrinthBuilder.addPerson(roomName, "Professor", personName);
+        if(person != null) {
+            person.addObserver(personStateChangedObserver);
+        }
     }
 
     /**
@@ -134,6 +198,10 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a takarító neve
      */
     public void createCleaner(String roomName, String personName) {
+        Person person = labyrinthBuilder.addPerson(roomName, "Cleaner", personName);
+        if(person != null) {
+            person.addObserver(personStateChangedObserver);
+        }
     }
 
     /**
@@ -141,7 +209,9 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a játékos, akit kiválaszt
      */
     public void selectPerson(String personName) {
+        labyrinthBuilder.setSelectedPerson(personName);
     }
+
 
     // TODO
     @Override
@@ -161,6 +231,14 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     @Override
     public void roomSplit(Room newRoom, Door newDoor) {
+        newRoom.addObserver(this);
+        newRoom.addObserver(roomStateChangedObserver);
+        newDoor.addObserver(doorStateChangedObserver);
+        //TODO nevekre hátha lesz jobb
+        String roomName = "room"+String.valueOf(labyrinthBuilder.getRoomMapSize()+1);
+        String doorName = "door"+String.valueOf(labyrinthBuilder.getDoorMapSize()+1);
+        labyrinthBuilder.addRoom(roomName, newRoom);
+        labyrinthBuilder.addDoor(doorName, newDoor);
     }
 
     /**
@@ -170,5 +248,7 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     @Override
     public void roomsMerged(Room mergedRoom, Door mergedDoor) {
+        labyrinthBuilder.removeRoom(mergedRoom);
+        labyrinthBuilder.removeDoor(mergedDoor);
     }
 }

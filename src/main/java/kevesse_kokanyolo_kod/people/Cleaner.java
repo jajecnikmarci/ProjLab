@@ -73,15 +73,4 @@ public class Cleaner extends Person {
         printer.endPrintObject();
     }
 
-    @Override
-    public void addObserver(StateChangedObserver<Person> observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
-    }
-
-    @Override
-    public void notifyStateChanged() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyStateChanged'");
-    }
 }
