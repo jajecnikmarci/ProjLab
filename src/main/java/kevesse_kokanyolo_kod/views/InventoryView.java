@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -34,19 +35,27 @@ public class InventoryView extends JPanel {
         public JButton dropButton;
 
         public ItemPanel(){
-            //TODO Borderek még nem jól ha jól látom
-            this.setLayout(new FlowLayout(FlowLayout.LEFT));
+            //TODO Borderek még nem jók ha jól látom
+            this.setLayout(new BorderLayout());
             this.setBorder(BorderFactory.createEmptyBorder(10, 5, 0, 5));
             
             itemName = new JLabel("ItemName");
             itemName.setBorder(new EmptyBorder(0, 0, 0, 60));
             itemName.setFont(itemName.getFont().deriveFont(20f));
             this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
             useButton = new JButton("Use");
             useButton.setFont(useButton.getFont().deriveFont(18f));
+            
+            dropButton = new JButton("Drop");
+            dropButton.setFont(dropButton.getFont().deriveFont(18f));
+            
+            
+            /*
             useButton.addActionListener(new ActionListener() {
-
+                
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     itemName.setText("xd");;
@@ -54,13 +63,21 @@ public class InventoryView extends JPanel {
                 
             });
 
-            dropButton = new JButton("Drop");
-            dropButton.setFont(dropButton.getFont().deriveFont(18f));
+            dropButton.addActionListener(new ActionListener() {
 
-            this.add(itemName);
-            this.add(useButton);
-            this.add(dropButton);
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    itemName.setText("ItemName");;
+                }
+                
+            });
+            */
             
+            this.add(itemName,BorderLayout.WEST);
+            buttonPanel.add(useButton);
+            buttonPanel.add(dropButton);
+            this.add(buttonPanel,BorderLayout.EAST);
+
             this.setPreferredSize(new Dimension(330, 40));
         }
     }
