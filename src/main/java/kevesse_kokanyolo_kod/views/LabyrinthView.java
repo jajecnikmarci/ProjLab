@@ -112,8 +112,8 @@ public class LabyrinthView extends JPanel {
         IntPair n2 = new IntPair(-v.y, v.x); 
 
         if(!door.isRoom1Open()) { // r1 --> r2
-            var p1 = r2.sub(v).add(n1);
-            var p2 = r2.sub(v).add(n2);
+            var p1 = r1.sub(v).add(n1);
+            var p2 = r1.sub(v).add(n2);
             Polygon arrow = new Polygon();
             arrow.addPoint(r1.x, r1.y);
             arrow.addPoint(p1.x, p1.y); // r2 - v + n1

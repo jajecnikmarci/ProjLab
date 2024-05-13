@@ -77,8 +77,8 @@ public class Controller implements StudentObserver, RoomObserver {
         IntPair bottomOffset = new IntPair(0, 1);
         IntPair leftOffset = new IntPair(-1, 0);
 
-        labyrinthBuilder.addDoor("room1", "room2", false, "door1", true);
-        labyrinthBuilder.setDoorEndpointOffsets("door1", leftOffset,rightOffset);
+        labyrinthBuilder.addDoor("room2", "room1", false, "door1", true);
+        labyrinthBuilder.setDoorEndpointOffsets("door1",rightOffset, leftOffset );
     }
 
 
