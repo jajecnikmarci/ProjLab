@@ -2,8 +2,11 @@ package kevesse_kokanyolo_kod;
 
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+
 import kevesse_kokanyolo_kod.menus.ProtoMenu;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.windows.MenuWindow;
 
 public class App {
     public static SkeletonMenu skeleton;
@@ -15,8 +18,9 @@ public class App {
 
     public static void main(String[] args) {  // TODO: proto menu usage kiírása 
         if(args.length == 0) {
-            System.out.println("Nincs megadva argumentum");
-            System.exit(1);
+            SwingUtilities.invokeLater(MenuWindow::new);
+            // System.out.println("Nincs megadva argumentum");
+            // System.exit(1);
         }
         else if(args.length >= 1){
             if(args[0].equals("skeleton")) skeleton.menu();
