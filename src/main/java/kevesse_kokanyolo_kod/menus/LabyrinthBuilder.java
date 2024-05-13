@@ -28,8 +28,8 @@ public class LabyrinthBuilder {
     Map<String, Student> students = new HashMap<>();
     Map<String, Professor> professors = new HashMap<>();
 
-    Map<String, IntPair> roomLocations = new HashMap<>();
-    Map<IntPair, IntPair> lineLocations = new HashMap<>();
+    Map<Room, IntPair> roomLocations = new HashMap<>();
+    Map<Door, IntPair[]> doorOffsets = new HashMap<>(); // maps doorName to first and second endpoint offset
 
     private int studentCount = 0; 
     static Map<String, Timer> timers = new HashMap<>(); 
@@ -81,6 +81,9 @@ public class LabyrinthBuilder {
     public int getDoorMapSize(){
         return doors.size();
     }
+    public Map<String, Door> getDoors() {
+        return doors;
+    }
 
     public Map<String, Student> getStudents() {
         return students;
@@ -98,26 +101,27 @@ public class LabyrinthBuilder {
         return rooms;
     }
 
-    public Map<String, IntPair> getRoomLocations() {
+    public Map<Room, IntPair> getRoomLocations() {
         return roomLocations;
     }
 
-    public Map<IntPair, IntPair> getLineLocations() {
-        return lineLocations;
+    public IntPair[] getDoorOffsets(Door door) {
+        return doorOffsets.get(door);
     }
 
-    //TODO ezeket hol adjuk meg?
-    public void setRoomLocation(String roomName, IntPair location){
-        roomLocations.put(roomName, location);
+    public void setRoomLocation(Room room, IntPair location){
+        roomLocations.put(room, location);
     }
 
-    public void setLineLocation(IntPair startLocation, IntPair endLocation){
-        lineLocations.put(startLocation, endLocation);
+    public void setRoomLocation(Room room, int x, int y){
+        roomLocations.put(room, new IntPair(x,y));
     }
 
-    public void setLocation(String roomName, int x, int y){
-        roomLocations.put(roomName, new IntPair(x,y));
+    public void setDoorEndpointOffsets(String doorName, IntPair startOffset, IntPair endOffset){
+        // TODO: error handling
+        doorOffsets.put(doors.get(doorName), new IntPair [] {startOffset, endOffset});
     }
+
 
     /**
      * Először ellenőrzi, hogy a szoba neve már szerepel-e a listában, ha nem akkor
@@ -148,7 +152,6 @@ public class LabyrinthBuilder {
      * @param Room     Kész Szoba 
      */
     public void addRoom(String name, Room room) {
-
         for (String key : rooms.keySet()) {
             if (rooms.get(key).equals(name)) {
                 printer.printError("A szoba már szerepel a listában!");
