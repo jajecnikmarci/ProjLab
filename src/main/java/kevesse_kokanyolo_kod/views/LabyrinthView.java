@@ -13,11 +13,14 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Polygon;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 
 public class LabyrinthView extends JPanel {
     private List<RoomPanel> roomPanels = new ArrayList<>();
@@ -47,15 +50,40 @@ public class LabyrinthView extends JPanel {
     private void createRoomPanel(Room room, IntPair position) {
         RoomPanel roomPanel = new RoomPanel();
         roomPanel.setLayout(new GridLayout(4, 3));
-        roomPanel.setBounds(position.x, position.y, 80, 80);
+        roomPanel.setBounds(position.x(), position.y(), 80, 80);
 
-        // Mergező szobákat kékre színezzük TODO: kék? és a többi hatás?
-        if (room.isPoisonous())
-            roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-        else{
-            roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-
+        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
+        Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
+        Border blueBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
+        Border yellowBorder = BorderFactory.createLineBorder(Color.YELLOW, 2);
+        List<Boolean> flags = Arrays.asList(
+            room.isPoisonous(), room.isSticky(), room.hasStunEffect()
+        );
+        
+        int count = flags.stream().mapToInt(b -> b ? 1 : 0).sum(); // calculate flag count
+        // ronda, de működik
+        if (count == 1) {
+            if (room.isPoisonous()) {
+                roomPanel.setBorder(greenBorder);
+            } else if (room.isSticky()) {
+                roomPanel.setBorder(blueBorder);
+            } else if (room.hasStunEffect()) {
+                roomPanel.setBorder(yellowBorder);
+            }
+        } else if (count == 2) {
+            if (room.isPoisonous() && room.isSticky()) {
+                roomPanel.setBorder(new CompoundBorder(greenBorder, blueBorder));
+            } else if (room.isPoisonous() && room.hasStunEffect()) {
+                roomPanel.setBorder(new CompoundBorder(greenBorder, yellowBorder));
+            } else if (room.isSticky() && room.hasStunEffect()) {
+                roomPanel.setBorder(new CompoundBorder(blueBorder, yellowBorder));
+            }
+        } else if (count == 3) {
+            roomPanel.setBorder(new CompoundBorder(new CompoundBorder(greenBorder, blueBorder), yellowBorder));
+        } else {
+            roomPanel.setBorder(blackBorder);
         }
+
         
         for (int j = 0; j < 12; j++) {
             roomPanel.slots.add(new JPanel());
@@ -85,49 +113,50 @@ public class LabyrinthView extends JPanel {
         IntPair room2Offset = offsets[1];
 
         // scale offset 
-        room1Offset.x *= roomWidth / 2; room1Offset.y *= roomHeight / 2;
-        room2Offset.x *= roomWidth / 2; room2Offset.y *= roomHeight / 2;
+        int r1x = room1Offset.x() * roomWidth / 2; int r1y = room1Offset.y() * roomHeight / 2;
+        int r2x = room2Offset.x() * roomWidth / 2; int r2y = room2Offset.y() * roomHeight / 2;
         // offset is given from room center
-        room1Offset.x += roomWidth / 2; room1Offset.y += roomHeight / 2;
-        room2Offset.x += roomWidth / 2; room2Offset.y += roomHeight / 2;
+        r1x += roomWidth / 2; r1y += roomHeight / 2;
+        r2x += roomWidth / 2; r2y += roomHeight / 2;
 
+        
         if(door.isCursed()) { 
             g2d.setColor(Color.MAGENTA);
         } else {
             g2d.setColor(Color.BLACK);
         }
 
-        g2d.drawLine(room1Location.x + room1Offset.x, room1Location.y + room1Offset.y,
-                room2Location.x + room2Offset.x, room2Location.y + room2Offset.y);
+        g2d.drawLine(room1Location.x() + r1x, room1Location.y() + r1y,
+                room2Location.x() + r2x, room2Location.y() + r2y);
 
         // Calculate arrow
         
-        IntPair r2 = new IntPair(room2Location.x + room2Offset.x, room2Location.y + room2Offset.y);
-        IntPair r1 = new IntPair(room1Location.x + room1Offset.x, room1Location.y + room1Offset.y);
+        IntPair r2 = new IntPair(room2Location.x() + r2x, room2Location.y() + r2y);
+        IntPair r1 = new IntPair(room1Location.x() + r1x, room1Location.y() + r1y);
             
-        IntPair v = r1.sub(r2); // r1 - r2 
+        IntPair v = r2.sub(r1); // r1 - r2 
         double arrowSize = 10;
         v = v.scale(arrowSize);
-        IntPair n1 = new IntPair(v.y, -v.x); 
-        IntPair n2 = new IntPair(-v.y, v.x); 
+        IntPair n1 = new IntPair(v.y(), -v.x()); 
+        IntPair n2 = new IntPair(-v.y(), v.x()); 
 
         if(!door.isRoom1Open()) { // r1 --> r2
-            var p1 = r1.sub(v).add(n1);
-            var p2 = r1.sub(v).add(n2);
-            Polygon arrow = new Polygon();
-            arrow.addPoint(r1.x, r1.y);
-            arrow.addPoint(p1.x, p1.y); // r2 - v + n1
-            arrow.addPoint(p2.x, p2.y); // r2 - v + n2 
-            g2d.fillPolygon(arrow);
-            
-        } else if(!door.isRoom2Open()) { // r2 --> r1
-            v = new IntPair(-v.x, -v.y);
             var p1 = r2.sub(v).add(n1);
             var p2 = r2.sub(v).add(n2);
             Polygon arrow = new Polygon();
-            arrow.addPoint(r2.x, r2.y);
-            arrow.addPoint(p1.x, p1.y); // r1 - v + n1
-            arrow.addPoint(p2.x, p2.y); // r1 - v + n2 
+            arrow.addPoint(r2.x(), r2.y());
+            arrow.addPoint(p1.x(), p1.y()); // r2 - v + n1
+            arrow.addPoint(p2.x(), p2.y()); // r2 - v + n2 
+            g2d.fillPolygon(arrow);
+            
+        } else if(!door.isRoom2Open()) { // r2 --> r1
+            v = new IntPair(-v.x(), -v.y());
+            var p1 = r1.sub(v).add(n1);
+            var p2 = r1.sub(v).add(n2);
+            Polygon arrow = new Polygon();
+            arrow.addPoint(r1.x(), r1.y());
+            arrow.addPoint(p1.x(), p1.y()); // r1 - v + n1
+            arrow.addPoint(p2.x(), p2.y()); // r1 - v + n2 
             g2d.fillPolygon(arrow);
         }
 

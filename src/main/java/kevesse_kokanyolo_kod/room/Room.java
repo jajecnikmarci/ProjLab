@@ -507,4 +507,11 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void notifyStateChanged() {
         stateChangedObservable.notifyStateChanged();
     }
+
+    public boolean isSticky() {
+        return stickiness != null && stickiness.isSticky();
+    }
+    public boolean hasStunEffect() {
+        return !stunEffects.isEmpty();
+    }
 }
