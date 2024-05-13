@@ -13,12 +13,15 @@ import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.views.*;
+import kevesse_kokanyolo_kod.windows.GameWindow;
 import kevesse_kokanyolo_kod.windows.MenuWindow;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+
+import javax.swing.SwingUtilities;
 
 public class Controller implements StudentObserver, RoomObserver {
     /**
@@ -34,29 +37,38 @@ public class Controller implements StudentObserver, RoomObserver {
      * A controller tartalmazza a pályát.
      */
     private LabyrinthBuilder labyrinthBuilder;
-
-
     private InventoryView inventoryView;
     private ItemsInRoomView itemsInRoomView;
     private LabyrinthView labyrinthView;
     private PlayerInfoView playerInfoView;
 
-    private MenuWindow menuWindow;
+    // private MenuWindow menuWindow;
+    private GameWindow gameWindow;
     Printer printer;
     
     public Controller() {
-        menuWindow = new MenuWindow(this);
+        // menuWindow = new MenuWindow(this);
         printer = new Printer();
         labyrinthBuilder = new LabyrinthBuilder(printer);
+
+
         // TODO: EZEK itt példák az eseménykezelésre.  
         // personStateChangedObserver = new StateChangedObserver<Person>((Person p) -> redisplay(p));
         // itemStateChangedObserver = new StateChangedObserver<Item>(i -> redisplay(i));
-        // doorStateChangedObserver = new StateChangedObserver<Door>(redisplay);
+        doorStateChangedObserver = new StateChangedObserver<Door>(d->{
+            System.out.println("Door changed");
+            labyrinthView.repaint();
+        } 
+        );
         // roomStateChangedObserver = new StateChangedObserver<Room>(redisplay);
-        // labyrinthBuilder = new LabyrinthBuilder(new Printer());
 
-        //view-ket meg kell kapni
         initGame();
+
+        // innentől kezdve eseményvezérelt a programunk!
+        SwingUtilities.invokeLater(() ->  {
+            gameWindow = new GameWindow(this);
+            labyrinthView = gameWindow.labyrinthView;
+        });
     }
 
     private void initGame() {
@@ -144,9 +156,6 @@ public class Controller implements StudentObserver, RoomObserver {
         
         createDoor("room11", "room12", true, "door17", true);
         labyrinthBuilder.setDoorEndpointOffsets("door17", rightOffset, leftOffset);
-        
-        
-
     }
 
 
