@@ -46,6 +46,10 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         poisonImmunities = new ArrayList<>();
     }
 
+    public List<IItem> getInventory() {
+        return inventory;
+    }
+
     /**
      * Megnézi, hogy a játékos bénult-e. 
      * Ha igen, akkor nem tud mozogni. 

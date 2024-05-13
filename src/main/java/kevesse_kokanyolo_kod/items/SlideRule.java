@@ -18,6 +18,15 @@ public class SlideRule extends Item {
     }
 
     /**
+     * Visszaadja, hogy a tárgy manuálisan használható-e a játékosnak. Pl.: true -> nem használható manuálisan (játékos direkt parancsára)
+     * 
+     * @return passzív-e a tárgy
+     */
+    public boolean isPassive(){
+        return true;
+    }
+
+    /**
      * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
      * Visitor design pattern része
      *

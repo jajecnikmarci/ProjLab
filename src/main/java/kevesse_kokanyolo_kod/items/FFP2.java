@@ -64,6 +64,15 @@ public class FFP2 extends Item {
     }
 
     /**
+     * Visszaadja, hogy a tárgy manuálisan használható-e a játékosnak. Pl.: true -> nem használható manuálisan (játékos direkt parancsára)
+     * 
+     * @return passzív-e a tárgy
+     */
+    public boolean isPassive(){
+        return true;
+    }
+
+    /**
      * Létrehoz egy PoisonImmunityt firstImmunityLength hosszal. Beállítja a hatását erre.
      * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
      * Visitor design pattern része
