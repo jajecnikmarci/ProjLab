@@ -6,7 +6,6 @@ import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 import kevesse_kokanyolo_kod.observer.IStudentObservable;
-import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.observer.StudentObservable;
 import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Room;
@@ -33,19 +32,19 @@ public class Student extends AcademicPerson implements IStudentObservable {
      * elbocsájtották, a játéknak vége, az oktatók nyertek. Ha egy hallgató felvette
      * a logarlécet, akkor a hallgatók nyerték a játékot.
      */
-    private StudentObservable observable;
+    private StudentObservable studentObservable;
+
 
     /**
      * Létrehozza a hallgatót
      * 
      * @param room a szoba, ahova a hallgató kerül
-     * @param observable a feliratkozók értesítése
      */
-    public Student(Room room, StudentObservable observable) {
+    public Student(Room room) {
         super(room);
-        this.observable = observable;
         souls = 3;
         killImmunities = new ArrayList<>();
+        studentObservable = new StudentObservable();
     }
 
     /**
@@ -60,7 +59,7 @@ public class Student extends AcademicPerson implements IStudentObservable {
         if (killImmunities.isEmpty()) {
             souls--;
             if (souls == 0) {
-                observable.notifyStudentKilled(this);
+                studentObservable.notifyStudentKilled(this);
                 SkeletonMenu.endCall(" A játékos meghalt");
                 return;
             }
@@ -151,7 +150,7 @@ public class Student extends AcademicPerson implements IStudentObservable {
         this.addItem(slideRule);
         location.removeItem(slideRule);
 
-        observable.notifySlideRulePicked();
+        studentObservable.notifySlideRulePicked();
         SkeletonMenu.endCall();
     }
 
@@ -274,31 +273,16 @@ public class Student extends AcademicPerson implements IStudentObservable {
 
     @Override
     public void notifyStudentKilled(Student student) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyStudentKilled'");
+        studentObservable.notifyStudentKilled(student);
     }
 
     @Override
     public void notifySlideRulePicked() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifySlideRulePicked'");
+        studentObservable.notifySlideRulePicked();
     }
 
     @Override
     public void addObserver(StudentObserver observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
-    }
-
-    @Override
-    public void addObserver(StateChangedObserver<Person> observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
-    }
-
-    @Override
-    public void notifyStateChanged() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyStateChanged'");
+        studentObservable.addObserver(observer);
     }
 }

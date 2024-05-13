@@ -44,7 +44,7 @@ public class TVSZ extends Item {
         }
         KillImmunity killImmunity = new KillImmunity(this, 0, academicPerson);
         academicPerson.addKillImmunity(killImmunity);
-
+        notifyStateChanged();
         SkeletonMenu.endCall();
     }
 

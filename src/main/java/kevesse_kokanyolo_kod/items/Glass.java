@@ -44,6 +44,7 @@ public class Glass extends Item {
         if(hasBeenUsed) {
             if (effect != null) {
                 academicPerson.dropRandomItem();
+                notifyStateChanged();
                 SkeletonMenu.endCall("A tárgyat úgy próbálták használni, hogy már egyszer ezt megtették");
                 return;
             } else {

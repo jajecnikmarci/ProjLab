@@ -66,6 +66,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     public void addItem(Item item) {
         SkeletonMenu.startCall("Player.addItem(Item)");
         inventory.add(item);
+        notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -77,6 +78,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
     public void removeItem(IItem item) {
         SkeletonMenu.startCall("Player.removeItem(Item)");
         inventory.remove(item);
+        notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -223,6 +225,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
         // TODO: timercontrol
         Timer timer = new Timer();
         stunned=true;
+        notifyStateChanged();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {

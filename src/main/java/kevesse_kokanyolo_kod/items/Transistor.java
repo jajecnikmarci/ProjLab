@@ -65,12 +65,15 @@ public class Transistor extends Item {
         if(this.pair==null){
             academicPerson.checkHasItem(this);
 
-            if(this.pair!=null)
+            if(this.pair!=null) {
+                notifyStateChanged();
                 SkeletonMenu.endCall("A tranzisztor párosítva lett egy másikkal.");
+            }
 
         }else if (this.pair != null && this.pair.room == null) {
 
             this.setRoom(room);
+            notifyStateChanged();
             academicPerson.removeItem(this);
             SkeletonMenu.endCall("A tranzisztor a szobához lett hozzáadva.");
 
@@ -82,7 +85,7 @@ public class Transistor extends Item {
             this.pair.room.onEnter(owner);
 
             this.setRoom(room);
-            this.pair.room = null;
+            this.pair.setRoom(null);
 
             academicPerson.removeItem(this);
             academicPerson.addItem(this.pair);
@@ -98,6 +101,7 @@ public class Transistor extends Item {
     public void setRoom(Room room) {
         SkeletonMenu.startCall("Transistor.setRoom(Room)");
         this.room = room;
+        notifyStateChanged();
         SkeletonMenu.endCall();
     }
 
@@ -141,7 +145,7 @@ public class Transistor extends Item {
             metTransistor = false;
             return true;
         }
-
+        notifyStateChanged();
         this.pair = transistor;
         transistor.pair = this;
 
@@ -154,6 +158,7 @@ public class Transistor extends Item {
      */
     @Override
     public boolean interact(IItem item) {
+
         return  item.interactItem(this);
     }
 
