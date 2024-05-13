@@ -1,5 +1,6 @@
 package kevesse_kokanyolo_kod.views;
 
+import kevesse_kokanyolo_kod.controllers.Controller;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
@@ -21,9 +22,11 @@ import javax.swing.JPanel;
 
 public class LabyrinthView extends JPanel {
     private List<RoomPanel> roomPanels = new ArrayList<>();
+    Controller controller;
 
-    public LabyrinthView() {
+    public LabyrinthView(Controller controller) {
         setLayout(null); // Kell a setBounds() használatához
+        this.controller = controller;
         createLabyrinth();
     }
 
@@ -32,7 +35,7 @@ public class LabyrinthView extends JPanel {
      * 
      * @param labyrinth
      */
-    public void display(LabyrinthBuilder labyrinth) {
+    public void display(LabyrinthBuilder labyrinthBuilder) {
 
     }
 
@@ -42,7 +45,28 @@ public class LabyrinthView extends JPanel {
      * @param room     a szoba, amit kirajzol
      * @param position a pozíció, ahova kirajzolja
      */
-    private void drawRoom(Room room, Point position) {
+    private void drawRoom(Room room, IntPair position) {
+        RoomPanel roomPanel = new RoomPanel(new JPanel());
+        roomPanel.room.setLayout(new GridLayout(4, 3));
+        roomPanel.room.setBounds(position.x, position.y, 80, 80);
+
+        // Mergező szobákat kékre színezzük
+        if (room.isPoisonous())
+            roomPanel.room.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+        else{
+            roomPanel.room.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+        }
+        
+        for (int j = 0; j < 12; j++) {
+            roomPanel.slots.add(new JPanel());
+            if (j == 11) {
+                JLabel capacityLabel = new JLabel(String.valueOf(room.getCapacity()));
+                capacityLabel.setFont(new Font("Arial", Font.BOLD, 12));
+                roomPanel.slots.get(j).add(capacityLabel);
+            }
+            roomPanel.room.add(roomPanel.slots.get(j));
+        }
     }
 
     /**
@@ -74,19 +98,19 @@ public class LabyrinthView extends JPanel {
             this.room = room;
         }
     }
-    
-    public class IntPair {
-        public int x;
-        public int y;
-
-        public IntPair(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
 
     // Szobák megjelenítése
     private void createLabyrinth() {
+        //ez már lackó féle
+        for (var roomEntry : controller.getLabyrinthBuilder().getRooms().entrySet()) {
+            IntPair position = controller.getLabyrinthBuilder().getRoomLocations().get(roomEntry.getKey());
+            drawRoom(roomEntry.getValue(), position);
+        }
+
+
+
+
+        //Kilikód:
         // Szobák helyének meghatározása, IntPair osztályt emiatt hoztam létre
         List<IntPair> roomsLocation = new ArrayList<>();
         int[] roomsLocations = { 840, 90, 1190, 90, 700, 220, 990, 220, 1330, 220, 525, 340, 700, 340, 1190, 340, 700,

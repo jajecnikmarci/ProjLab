@@ -12,6 +12,7 @@ import kevesse_kokanyolo_kod.people.Professor;
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
+import kevesse_kokanyolo_kod.views.IntPair;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Cleaner;
 import kevesse_kokanyolo_kod.people.Person;
@@ -24,6 +25,10 @@ public class LabyrinthBuilder {
     Map<String, Door> doors = new HashMap<>();
     Map<String, Cleaner> cleaners = new HashMap<>();
     Map<String, AcademicPerson> academicPeople = new HashMap<>();
+    Map<String, Student> students = new HashMap<>();
+    Map<String, Professor> professors = new HashMap<>();
+
+    Map<String, IntPair> roomLocations = new HashMap<>();
 
     private int studentCount = 0; 
     static Map<String, Timer> timers = new HashMap<>(); 
@@ -74,6 +79,35 @@ public class LabyrinthBuilder {
      */
     public int getDoorMapSize(){
         return doors.size();
+    }
+
+    public Map<String, Student> getStudents() {
+        return students;
+    }
+    
+    public Map<String, Professor> getProfessors() {
+        return professors;
+    }
+
+    public Map<String, Cleaner> getCleaners() {
+        return cleaners;
+    }
+
+    public Map<String, Room> getRooms() {
+        return rooms;
+    }
+
+    public Map<String, IntPair> getRoomLocations() {
+        return roomLocations;
+    }
+
+    //TODO ezeket hol adjuk meg?
+    public void setLocation(String roomName, IntPair location){
+        roomLocations.put(roomName, location);
+    }
+
+    public void setLocation(String roomName, int x, int y){
+        roomLocations.put(roomName, new IntPair(x,y));
     }
 
     /**
@@ -241,12 +275,14 @@ public class LabyrinthBuilder {
             studentCount++;
             academicPeople.put(personName, student);
             rooms.get(roomName).addPlayer(student);
+            students.put(personName, student);
 
         } else if (personType.equals("Professor")) {
             Professor professor = new Professor(rooms.get(roomName));
             person = professor;
             academicPeople.put(personName, professor);
             rooms.get(roomName).addPlayer(professor);
+            professors.put(personName, professor);
         }
 
         return person;

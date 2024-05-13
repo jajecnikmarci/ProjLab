@@ -1,12 +1,17 @@
 package kevesse_kokanyolo_kod.windows;
 
 import javax.swing.*;
+
+import kevesse_kokanyolo_kod.controllers.Controller;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuWindow extends JFrame {
-    public MenuWindow() {
+    Controller controller; //tokeletesen rossz megoldas
+    public MenuWindow(Controller controller) {
+        this.controller=controller;
         JFrame frame = new JFrame("Labyrinth");
         frame.setSize(1920, 1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,7 +49,7 @@ public class MenuWindow extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameWindow gameWindow = new GameWindow();
+                GameWindow gameWindow = new GameWindow(controller);
             }
         });
 

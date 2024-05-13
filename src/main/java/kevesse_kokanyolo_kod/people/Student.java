@@ -47,6 +47,10 @@ public class Student extends AcademicPerson implements IStudentObservable {
         studentObservable = new StudentObservable();
     }
 
+    public int getSouls(){
+        return souls;
+    }
+
     /**
      * Megpróbálja elszipolyozni a hallgató lelkét. 
      * Ha van neki aktív immunitása, akkor az megvédi-

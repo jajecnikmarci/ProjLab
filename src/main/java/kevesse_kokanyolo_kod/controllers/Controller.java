@@ -14,6 +14,7 @@ import kevesse_kokanyolo_kod.views.InventoryView;
 import kevesse_kokanyolo_kod.views.ItemsInRoomView;
 import kevesse_kokanyolo_kod.views.LabyrinthView;
 import kevesse_kokanyolo_kod.views.PlayerInfoView;
+import kevesse_kokanyolo_kod.windows.MenuWindow;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 import java.awt.*;
@@ -40,8 +41,13 @@ public class Controller implements StudentObserver, RoomObserver {
     private LabyrinthView labyrinthView;
     private PlayerInfoView playerInfoView;
 
-    Controller() {
-        
+    private MenuWindow menuWindow;
+    Printer printer;
+    
+    public Controller() {
+        menuWindow = new MenuWindow(this);
+        printer = new Printer();
+        labyrinthBuilder = new LabyrinthBuilder(printer);
         // TODO: EZEK itt példák az eseménykezelésre.  
         // personStateChangedObserver = new StateChangedObserver<Person>((Person p) -> redisplay(p));
         // itemStateChangedObserver = new StateChangedObserver<Item>(i -> redisplay(i));
@@ -250,5 +256,9 @@ public class Controller implements StudentObserver, RoomObserver {
     public void roomsMerged(Room mergedRoom, Door mergedDoor) {
         labyrinthBuilder.removeRoom(mergedRoom);
         labyrinthBuilder.removeDoor(mergedDoor);
+    }
+
+    public LabyrinthBuilder getLabyrinthBuilder() {
+        return labyrinthBuilder;
     }
 }
