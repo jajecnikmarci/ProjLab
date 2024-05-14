@@ -22,13 +22,11 @@ import kevesse_kokanyolo_kod.people.Student;
 public class PlayerInfoView extends JPanel {
 
     String playerNameString;
-    int souls; //???
+    //int souls; //???
     Controller controller;
     JLabel playerInfoLabel;
     JLabel playerNameLabel;
-    JLabel playerName;
     JLabel playerSoulsLabel;
-    JLabel playerSouls;
     JButton pickUpButton;
 
 
@@ -47,6 +45,7 @@ public class PlayerInfoView extends JPanel {
                 playerInfoLabel.setText("Student");
                 playerNameLabel.setText("Name: "+studentEntry.getKey());
                 playerSoulsLabel.setText("Souls: "+String.valueOf(studentEntry.getValue().getSouls()));
+                playerNameString=studentEntry.getKey();
             }
         }
         
@@ -55,8 +54,19 @@ public class PlayerInfoView extends JPanel {
                 playerInfoLabel.setText("Professor");
                 playerSoulsLabel.setVisible(false);
                 playerNameLabel.setText("Name: "+professorEntry.getKey());
+                playerNameString=professorEntry.getKey();
             }
         }
+
+        pickUpButton.removeActionListener(pickUpButton.getActionListeners()[0]);
+        pickUpButton.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.pickUp(playerNameString);
+                }
+            }
+        );
     }
 
     /**
