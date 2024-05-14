@@ -122,6 +122,22 @@ public class LabyrinthBuilder {
         doorOffsets.put(doors.get(doorName), new IntPair [] {startOffset, endOffset});
     }
 
+    public Person getPerson(String personName){
+        if(students.get(personName) != null){
+            return students.get(personName);
+        }
+
+        if(professors.get(personName) != null){
+            return professors.get(personName);
+        }
+
+        if(cleaners.get(personName) != null){
+            return cleaners.get(personName);
+        }
+
+        return null;
+    }
+
 
     /**
      * Először ellenőrzi, hogy a szoba neve már szerepel-e a listában, ha nem akkor

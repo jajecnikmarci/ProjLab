@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import kevesse_kokanyolo_kod.controllers.Controller;
 import kevesse_kokanyolo_kod.items.FFP2; //TODO torlendo
-import kevesse_kokanyolo_kod.items.TVSZ;
+import kevesse_kokanyolo_kod.items.TVSZ; //TODO torlendo
 import kevesse_kokanyolo_kod.room.Room;
 
 public class ItemsInRoomView extends JPanel{

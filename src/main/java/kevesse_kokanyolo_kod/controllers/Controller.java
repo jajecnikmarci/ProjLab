@@ -54,13 +54,53 @@ public class Controller implements StudentObserver, RoomObserver {
 
         // TODO: EZEK itt példák az eseménykezelésre.  
         // personStateChangedObserver = new StateChangedObserver<Person>((Person p) -> redisplay(p));
-        // itemStateChangedObserver = new StateChangedObserver<Item>(i -> redisplay(i));
+        personStateChangedObserver = new StateChangedObserver<Person>(person->{
+            System.out.println("Player changed");
+            String name = labyrinthBuilder.getSelectedPerson();
+            if(labyrinthBuilder.getPerson(name) == person){
+                redisplayLabyrinth(); //TODO bénulás jelölés. játékos törlés + kill nem máshol van? 
+                redisplayPlayerInfo(person);
+                redisplayInventory(person);
+                redisplayItemsInRoom(person.getLocation());
+            }
+        } );
+
+
+        //itemStateChangedObserver = new StateChangedObserver<Item>(i -> redisplay(i));
+        itemStateChangedObserver = new StateChangedObserver<Item>(i->{
+            System.out.println("Item changed");
+            String name = labyrinthBuilder.getSelectedPerson();
+
+            if(labyrinthBuilder.getStudents().get(name) != null){
+                if(labyrinthBuilder.getStudents().get(name).getInventory().contains(i)) redisplayInventory(labyrinthBuilder.getStudents().get(name));
+            }
+            else if(labyrinthBuilder.getProfessors().get(name) != null){
+                if(labyrinthBuilder.getProfessors().get(name).getInventory().contains(i)) redisplayInventory(labyrinthBuilder.getProfessors().get(name));
+            }
+            else if (labyrinthBuilder.getCleaners().get(name) != null) {
+                redisplayInventory(labyrinthBuilder.getCleaners().get(name));
+            }
+            else{
+                System.out.println("Nem talált xd");
+            }
+        } 
+        );
+        
         doorStateChangedObserver = new StateChangedObserver<Door>(d->{
             System.out.println("Door changed");
-            labyrinthView.repaint();
+            labyrinthView.repaint(); // nem redisplayLabyrinth() ?
         } 
         );
         // roomStateChangedObserver = new StateChangedObserver<Room>(redisplay);
+        roomStateChangedObserver = new StateChangedObserver<Room>(room->{
+                System.out.println("Rooom changed");
+                redisplayLabyrinth();
+                String name = labyrinthBuilder.getSelectedPerson();
+                if(labyrinthBuilder.getPerson(name).getLocation() == room){
+                    redisplayItemsInRoom(room);
+                }
+            }
+        );
 
         initGame();
 
@@ -159,10 +199,28 @@ public class Controller implements StudentObserver, RoomObserver {
     }
 
 
-    private void redisplay(Person p) {
+    private void redisplayLabyrinth(Person p) { //TODO miért kap person-t?
         labyrinthView.display(labyrinthBuilder);
         //többi view frissítése
     }
+
+    private void redisplayLabyrinth() {
+        labyrinthView.display(labyrinthBuilder);
+        //többi view frissítése
+    }
+
+    private void redisplayInventory(Person person){
+        //inventoryView.display(person);
+    }
+
+    private void redisplayItemsInRoom(Room room){
+        itemsInRoomView.display(room);
+    }
+
+    private void redisplayPlayerInfo(Person person){
+        //playerInfoView.display(person);
+    }
+
 
     /**
      * Egy hallgató vagy professzor tárgy felvételét kezeli, a tárgy a hallgatóhoz
