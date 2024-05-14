@@ -37,7 +37,7 @@ public class LabyrinthView extends JPanel {
         this.controller = controller;
         createLabyrinth();
         //controller.createStudent("room1", "S1"); //TODO torlendo, csak teszt
-        drawPlayers(controller);
+        drawPlayers(controller.getLabyrinthBuilder());
     }
 
     /**
@@ -47,7 +47,7 @@ public class LabyrinthView extends JPanel {
      */
     public void display(LabyrinthBuilder labyrinthBuilder) {
         makeRooms(labyrinthBuilder);
-        drawPlayers(controller);
+        drawPlayers(labyrinthBuilder);
         repaint();
     }
 
@@ -186,16 +186,19 @@ public class LabyrinthView extends JPanel {
     private void handleClick() {
     }
 
-    private void drawPlayers(Controller controller){
+    private void drawPlayers(LabyrinthBuilder labyrinthBuilder){
         for (RoomPanel roomPanel : roomPanels) {
             for (int i = 0; i < roomPanel.room.getPeople().size(); i++) {
                 JPanel current = roomPanel.slots.get(i);
                 if(current.getMouseListeners().length!=0) current.removeMouseListener(current.getMouseListeners()[0]);
+                current.removeAll();
                 Person person = roomPanel.room.getPeople().get(i);
-                String personName = controller.getLabyrinthBuilder().getPersonName(person);
+                String personName = labyrinthBuilder.getPersonName(person);
                 JLabel nameLabel = new JLabel(personName);
-                roomPanel.slots.get(i).add(nameLabel);
-                roomPanel.slots.get(i).addMouseListener(new MouseAdapter() {
+                if(labyrinthBuilder.getSelectedPerson()==personName) current.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                else current.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
+                current.add(nameLabel);
+                current.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         controller.selectPerson(personName);

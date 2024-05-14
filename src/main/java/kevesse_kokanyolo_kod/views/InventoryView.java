@@ -86,37 +86,46 @@ public class InventoryView extends JPanel {
      * Megjeleníti a kapott AcademicPerson tárgylistáját.
      */
     public void display(AcademicPerson person) {
-        for (int i = 0; i < person.getInventory().size(); i++) {
-            IItem selectedItem = person.getInventory().get(i);
-            String nameString = selectedItem.getClass().getName();
-            String fullString = nameString.substring(nameString.lastIndexOf(".")+1);
-            if(selectedItem.getDescription() != null) fullString = fullString + selectedItem.getDescription();
-            ((ItemPanel)itemPanels.getComponents()[i]).itemName.setText(fullString); 
-            if(!selectedItem.isPassive()){
-                ((ItemPanel)itemPanels.getComponents()[i]).useButton.addActionListener(new ActionListener() {
+        for (int i = 0; i < 5; i++) {
+            if(i<person.getInventory().size()){
+                IItem selectedItem = person.getInventory().get(i);
+                String nameString = selectedItem.getClass().getName();
+                String fullString = nameString.substring(nameString.lastIndexOf(".")+1);
+                if(selectedItem.getDescription() != null) fullString = fullString + selectedItem.getDescription();
+                ((ItemPanel)itemPanels.getComponents()[i]).setVisible(true);
+                ((ItemPanel)itemPanels.getComponents()[i]).itemName.setText(fullString); 
+                if(!selectedItem.isPassive()){
+                    ((ItemPanel)itemPanels.getComponents()[i]).useButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            person.useItem((Item)selectedItem);
+                        }
+                    });
+                }
+                else{
+                    ((ItemPanel)itemPanels.getComponents()[i]).useButton.setEnabled(false);
+                }
+
+                ((ItemPanel)itemPanels.getComponents()[i]).dropButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        person.useItem((Item)selectedItem); //TODO ez most jó?? nem, kell egy itemUsable();
+                        person.dropItem(selectedItem); //TODO ha eldobunk egy tárgyat akkor el kell tűnnie
                     }
                 });
             }
-            else{
-                ((ItemPanel)itemPanels.getComponents()[i]).useButton.setEnabled(false);
+            else {
+                ((ItemPanel)itemPanels.getComponents()[i]).setVisible(false);
+
             }
-
-            ((ItemPanel)itemPanels.getComponents()[i]).dropButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    person.dropItem(selectedItem);
-                }
-            });
         }
-
+        /*
+         
         if(person.getInventory().size()<5) {
             for (int i = 0; i < 5-person.getInventory().size(); i++) {
                 ((ItemPanel)itemPanels.getComponents()[i]).setVisible(false);
             }
         }
+        */
     }
 
     /**

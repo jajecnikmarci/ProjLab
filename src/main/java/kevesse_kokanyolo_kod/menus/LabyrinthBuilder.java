@@ -292,7 +292,7 @@ public class LabyrinthBuilder {
      * @param personName Játékos neve
      * @param printer    Printer objektum
      */
-    public Person addPerson(String roomName, String personType, String personName, StateChangedObserver<Person> observer) {
+    public Person addPerson(String roomName, String personType, String personName) {
         for (String key : cleaners.keySet()) {
             if (cleaners.get(key).equals(personName)) {
                 printer.printError("A játékos már szerepel a listában!");
@@ -311,25 +311,22 @@ public class LabyrinthBuilder {
         if (personType.equals("Cleaner")) {
             Cleaner cleaner = new Cleaner(rooms.get(roomName));
             person = cleaner;
-            cleaner.addObserver(observer);
             cleaners.put(personName, cleaner);
-            rooms.get(roomName).addPlayer(cleaner);
+            rooms.get(roomName).addNewPlayer(cleaner);
 
         } else if (personType.equals("Student")) {
             Student student = new Student(rooms.get(roomName));
             person = student;
-            student.addObserver(observer);
             studentCount++;
             academicPeople.put(personName, student);
-            rooms.get(roomName).addPlayer(student);
+            rooms.get(roomName).addNewPlayer(student);
             students.put(personName, student);
 
         } else if (personType.equals("Professor")) {
             Professor professor = new Professor(rooms.get(roomName));
             person = professor;
-            professor.addObserver(observer);
             academicPeople.put(personName, professor);
-            rooms.get(roomName).addPlayer(professor);
+            rooms.get(roomName).addNewPlayer(professor);
             professors.put(personName, professor);
         }
 

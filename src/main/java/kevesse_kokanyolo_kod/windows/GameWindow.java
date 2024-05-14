@@ -12,10 +12,10 @@ import java.awt.*;
 
 public class GameWindow extends JFrame {
     private JPanel menuContainer;
-    private ItemsInRoomView itemsInRoomView;
+    public ItemsInRoomView itemsInRoomView;
     public LabyrinthView labyrinthView;    
-    private PlayerInfoView playerInfoView;
-    private InventoryView inventoryView;
+    public PlayerInfoView playerInfoView;
+    public InventoryView inventoryView;
     Controller controller;
 
     public GameWindow(Controller controller) {

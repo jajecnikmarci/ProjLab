@@ -170,11 +170,12 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
      */
     public void popItem(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Room.popItem(Player)");
-        IItem topItem = items.get(items.size() - 1);
-         if (items.isEmpty()) {
+        if (items.isEmpty()) {
             SkeletonMenu.endCall("Nincs több tárgy a szobában.");
             return;
-        } else if (stickiness != null && stickiness.isSticky()) {
+        }
+        IItem topItem = items.get(items.size() - 1);
+        if (stickiness != null && stickiness.isSticky()) {
             SkeletonMenu.endCall("Túl rég volt takarítás a szobában így a tárgyak ragacsosak lettek");
             return;
         } else if(academicPerson.checkHasItem(topItem)){  
@@ -378,6 +379,12 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         SkeletonMenu.startCall("Room.addPlayer(Player)");
         this.people.add(person);
         stateChangedObservable.notifyStateChanged();
+        SkeletonMenu.endCall();
+    }
+
+    public void addNewPlayer(Person person) {
+        SkeletonMenu.startCall("Room.addPlayer(Player)");
+        this.people.add(person);
         SkeletonMenu.endCall();
     }
 

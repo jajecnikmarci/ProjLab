@@ -88,27 +88,37 @@ public class Controller implements StudentObserver, RoomObserver {
         
         doorStateChangedObserver = new StateChangedObserver<Door>(d->{
             System.out.println("Door changed");
-            labyrinthView.repaint(); // nem redisplayLabyrinth() ?
+            redisplayLabyrinth();
+            //labyrinthView.repaint(); // nem redisplayLabyrinth() ?
         } 
         );
         // roomStateChangedObserver = new StateChangedObserver<Room>(redisplay);
         roomStateChangedObserver = new StateChangedObserver<Room>(room->{
-                System.out.println("Rooom changed");
+                System.out.println("Room changed");
                 redisplayLabyrinth();
                 String name = labyrinthBuilder.getSelectedPerson();
-                if(labyrinthBuilder.getPerson(name).getLocation() == room){
-                    redisplayItemsInRoom(room);
+                if(name!=null){
+                    if(labyrinthBuilder.getPerson(name).getLocation() == room){
+                        redisplayItemsInRoom(room);
+                    }
                 }
             }
         );
 
-        initGame();
+
 
         // innentől kezdve eseményvezérelt a programunk!
-        SwingUtilities.invokeLater(() ->  {
+        //SwingUtilities.invokeLater(() ->  {
             gameWindow = new GameWindow(this);
             labyrinthView = gameWindow.labyrinthView;
-        });
+            inventoryView = gameWindow.inventoryView;
+            itemsInRoomView = gameWindow.itemsInRoomView;
+            playerInfoView = gameWindow.playerInfoView;
+        //});
+    }
+
+    public void init(){
+        initGame();
     }
 
     private void initGame() {
@@ -196,6 +206,54 @@ public class Controller implements StudentObserver, RoomObserver {
         
         createDoor("room11", "room12", true, "door17", true);
         labyrinthBuilder.setDoorEndpointOffsets("door17", rightOffset, leftOffset);
+
+        createStudent("room1", "S1");
+        createCleaner("room1", "C3");
+        createProfessor("room3", "P3");
+        try {
+            createItem("room1", "FFP2", "FFP2");
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        try {
+            createItem("room1", "Camembert", "Camembert");
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -210,7 +268,14 @@ public class Controller implements StudentObserver, RoomObserver {
     }
 
     private void redisplayInventory(Person person){
-        //inventoryView.display(person);
+        if(labyrinthBuilder.getStudents().get(labyrinthBuilder.getPersonName(person))!=null || labyrinthBuilder.getProfessors().get(labyrinthBuilder.getPersonName(person))!=null) {
+            AcademicPerson academicPerson = (AcademicPerson) person;
+            inventoryView.display(academicPerson);
+        }
+        else if(labyrinthBuilder.getCleaners().get(labyrinthBuilder.getPersonName(person))!=null){
+            Cleaner cleaner = (Cleaner) person;
+            inventoryView.display(cleaner);
+        }
     }
 
     private void redisplayItemsInRoom(Room room){
@@ -218,6 +283,14 @@ public class Controller implements StudentObserver, RoomObserver {
     }
 
     private void redisplayPlayerInfo(Person person){
+        if(labyrinthBuilder.getStudents().get(labyrinthBuilder.getPersonName(person))!=null || labyrinthBuilder.getProfessors().get(labyrinthBuilder.getPersonName(person))!=null) {
+            AcademicPerson academicPerson = (AcademicPerson) person;
+            playerInfoView.display(academicPerson);
+        }
+        else if(labyrinthBuilder.getCleaners().get(labyrinthBuilder.getPersonName(person))!=null){
+            Cleaner cleaner = (Cleaner) person;
+            playerInfoView.display(cleaner);
+        }
         //playerInfoView.display(person);
     }
 
@@ -335,8 +408,8 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a hallgató neve
      */
     public void createStudent(String roomName, String personName) {
-        Person person = labyrinthBuilder.addPerson(roomName, "Student", personName, personStateChangedObserver);
-        //if(person != null) {person.addObserver(personStateChangedObserver);} //hamarabb bele kellett tenni mert a roomban notify van
+        Person person = labyrinthBuilder.addPerson(roomName, "Student", personName);
+        if(person != null) {person.addObserver(personStateChangedObserver);} //hamarabb bele kellett tenni mert a roomban notify van
     }
 
     /**
@@ -346,7 +419,7 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a hallgató vagy professzor neve
      */
     public void createProfessor(String roomName, String personName) {
-        Person person = labyrinthBuilder.addPerson(roomName, "Professor", personName, personStateChangedObserver);
+        Person person = labyrinthBuilder.addPerson(roomName, "Professor", personName);
         if(person != null) {
             person.addObserver(personStateChangedObserver);
         }
@@ -359,7 +432,7 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a takarító neve
      */
     public void createCleaner(String roomName, String personName) {
-        Person person = labyrinthBuilder.addPerson(roomName, "Cleaner", personName, personStateChangedObserver);
+        Person person = labyrinthBuilder.addPerson(roomName, "Cleaner", personName);
         if(person != null) {
             person.addObserver(personStateChangedObserver);
         }
@@ -371,6 +444,12 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     public void selectPerson(String personName) {
         labyrinthBuilder.setSelectedPerson(personName);
+        //labyrinthView.display(labyrinthBuilder);
+        redisplayLabyrinth();
+        redisplayItemsInRoom(labyrinthBuilder.getPerson(personName).getLocation());
+        //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        redisplayInventory(labyrinthBuilder.getPerson(personName));
+        redisplayPlayerInfo(labyrinthBuilder.getPerson(personName));
     }
 
 
