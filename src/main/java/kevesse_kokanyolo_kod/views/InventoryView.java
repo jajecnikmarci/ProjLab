@@ -88,7 +88,8 @@ public class InventoryView extends JPanel {
     public void display(AcademicPerson person) {
         for (int i = 0; i < person.getInventory().size(); i++) {
             IItem selectedItem = person.getInventory().get(i);
-            ((ItemPanel)itemPanels.getComponents()[i]).itemName.setText(person.getInventory().get(i).getClass().getName()); //TODO leírások hozzáadása
+            String nameString = person.getInventory().get(i).getClass().getName();
+            ((ItemPanel)itemPanels.getComponents()[i]).itemName.setText(nameString.substring(nameString.lastIndexOf(".")+1)); //TODO leírások hozzáadása
             if(!selectedItem.isPassive()){
                 ((ItemPanel)itemPanels.getComponents()[i]).useButton.addActionListener(new ActionListener() {
                     @Override
