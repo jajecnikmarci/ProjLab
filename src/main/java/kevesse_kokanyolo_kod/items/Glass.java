@@ -62,6 +62,16 @@ public class Glass extends Item {
     }
 
     /**
+     * Visszaadja a tárgy leírását (ha van)
+     * 
+     * @return ha van leírás akkor a leírás (String), ha nincs null
+     */
+    public String getDescription(){
+        if(hasBeenUsed) return "(used)";
+        else return "(unused)";
+    }
+
+    /**
      * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
      * Visitor design pattern része
      *

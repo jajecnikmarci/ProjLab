@@ -30,7 +30,7 @@ public class InventoryView extends JPanel {
     private class ItemPanel extends JPanel{
         //public String itemName="ItemName";
         public JLabel itemName;
-        public String itemDescription = "";
+        //public String itemDescription = "";
         public JButton useButton;
         public JButton dropButton;
 
@@ -88,8 +88,10 @@ public class InventoryView extends JPanel {
     public void display(AcademicPerson person) {
         for (int i = 0; i < person.getInventory().size(); i++) {
             IItem selectedItem = person.getInventory().get(i);
-            String nameString = person.getInventory().get(i).getClass().getName();
-            ((ItemPanel)itemPanels.getComponents()[i]).itemName.setText(nameString.substring(nameString.lastIndexOf(".")+1)); //TODO leírások hozzáadása
+            String nameString = selectedItem.getClass().getName();
+            String fullString = nameString.substring(nameString.lastIndexOf(".")+1);
+            if(selectedItem.getDescription() != null) fullString = fullString + selectedItem.getDescription();
+            ((ItemPanel)itemPanels.getComponents()[i]).itemName.setText(fullString); 
             if(!selectedItem.isPassive()){
                 ((ItemPanel)itemPanels.getComponents()[i]).useButton.addActionListener(new ActionListener() {
                     @Override

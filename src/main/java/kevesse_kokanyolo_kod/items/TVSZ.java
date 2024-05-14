@@ -58,6 +58,15 @@ public class TVSZ extends Item {
     }
 
     /**
+     * Visszaadja a tárgy leírását (ha van)
+     * 
+     * @return ha van leírás akkor a leírás (String), ha nincs null
+     */
+    public String getDescription(){
+        return "("+String.valueOf(timesImmune)+")";
+    }
+
+    /**
      *
      * Létrehozza a tárgyhoz tartozó KillImmunity-t, ami 0 (azaza végtelen) időtartamú, nem aktív. (Akkor aktiválódik, ha a játékosst megpróbálják megölni) 
      * Beállítja az effectet a létrehozott killImmunityra.

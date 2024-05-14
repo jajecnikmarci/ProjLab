@@ -73,6 +73,15 @@ public class FFP2 extends Item {
     }
 
     /**
+     * Visszaadja a tárgy leírását (ha van)
+     * 
+     * @return ha van leírás akkor a leírás (String), ha nincs null
+     */
+    public String getDescription(){
+        return "("+String.valueOf(immunityLength)+")";
+    }
+
+    /**
      * Létrehoz egy PoisonImmunityt firstImmunityLength hosszal. Beállítja a hatását erre.
      * Meghívja a paraméterként kapott AcademicPerson-re a tárgyhoz tartozó acceptItem függvényt. 
      * Visitor design pattern része

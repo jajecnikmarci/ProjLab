@@ -94,6 +94,16 @@ public class Transistor extends Item {
     }
 
     /**
+     * Visszaadja a tárgy leírását (ha van)
+     * 
+     * @return ha van leírás akkor a leírás (String), ha nincs null
+     */
+    public String getDescription(){
+        if(metTransistor) return "(paired)";
+        else return "(unpaired)";
+    }
+
+    /**
      * Beállítja a tranzisztor szobáját ahol eldobták
      *
      * @param room a szoba ahol a tranzisztor található
