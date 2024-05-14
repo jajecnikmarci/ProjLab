@@ -123,6 +123,10 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         return doors;
     }
 
+    public List<Person> getPeople() {
+        return people;
+    }
+
     /**
      * Kitörli a megadott tárgyat a szoba tárgyai közül.
      *

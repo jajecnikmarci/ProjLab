@@ -2,6 +2,8 @@ package kevesse_kokanyolo_kod.views;
 
 import kevesse_kokanyolo_kod.controllers.Controller;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
+import kevesse_kokanyolo_kod.people.AcademicPerson;
+import kevesse_kokanyolo_kod.people.Person;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 
@@ -12,6 +14,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Polygon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +26,8 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
+import java.awt.*;
+
 public class LabyrinthView extends JPanel {
     private List<RoomPanel> roomPanels = new ArrayList<>();
     Controller controller;
@@ -30,6 +36,8 @@ public class LabyrinthView extends JPanel {
         setLayout(null); // Kell a setBounds() használatához
         this.controller = controller;
         createLabyrinth();
+        //controller.createStudent("room1", "S1"); //TODO torlendo, csak teszt
+        drawPlayers(controller);
     }
 
     /**
@@ -38,7 +46,9 @@ public class LabyrinthView extends JPanel {
      * @param labyrinth
      */
     public void display(LabyrinthBuilder labyrinthBuilder) {
-
+        makeRooms(labyrinthBuilder);
+        drawPlayers(controller);
+        repaint();
     }
 
     /**
@@ -48,7 +58,7 @@ public class LabyrinthView extends JPanel {
      * @param position a pozíció, ahova kirajzolja
      */
     private void createRoomPanel(Room room, IntPair position) {
-        RoomPanel roomPanel = new RoomPanel();
+        RoomPanel roomPanel = new RoomPanel(room);
         roomPanel.setLayout(new GridLayout(4, 3));
         roomPanel.setBounds(position.x(), position.y(), 80, 80);
 
@@ -94,6 +104,7 @@ public class LabyrinthView extends JPanel {
             }
             roomPanel.add(roomPanel.slots.get(j));
         }
+        roomPanels.add(roomPanel);
         add(roomPanel);
     }
 
@@ -175,12 +186,36 @@ public class LabyrinthView extends JPanel {
     private void handleClick() {
     }
 
+    private void drawPlayers(Controller controller){
+        for (RoomPanel roomPanel : roomPanels) {
+            for (int i = 0; i < roomPanel.room.getPeople().size(); i++) {
+                JPanel current = roomPanel.slots.get(i);
+                if(current.getMouseListeners().length!=0) current.removeMouseListener(current.getMouseListeners()[0]);
+                Person person = roomPanel.room.getPeople().get(i);
+                String personName = controller.getLabyrinthBuilder().getPersonName(person);
+                JLabel nameLabel = new JLabel(personName);
+                roomPanel.slots.get(i).add(nameLabel);
+                roomPanel.slots.get(i).addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        controller.selectPerson(personName);
+                    }
+                });
+            }
+        }
+    }
+
     // Egy szobát tárol, ami fel van osztva 4 sorra, 3 oszlopra, ezekben a részekben
     // jelennek meg a játékosok, szoba kapacitása
-    public class RoomPanel extends JPanel { 
+    private class RoomPanel extends JPanel { 
         private List<JPanel> slots = new ArrayList<>();
+        public int playerCount=0;
+        public Room room;
+        public RoomPanel(Room room) {
+            this.room = room;
+        }
+        public void addPlayer(Person person){
 
-        public RoomPanel() {
         }
     }
 
@@ -189,12 +224,15 @@ public class LabyrinthView extends JPanel {
     // Szobák megjelenítése
     private void createLabyrinth() {
         //ez már lackó féle
-        for (var roomEntry : controller.getRooms().entrySet()) {
-            IntPair position = controller.getRoomLocations().get(roomEntry.getValue());
+        makeRooms(controller.getLabyrinthBuilder());
+    }
+
+    private void makeRooms(LabyrinthBuilder labyrinthBuilder){
+        for (var roomEntry : labyrinthBuilder.getRooms().entrySet()) {
+            IntPair position = labyrinthBuilder.getRoomLocations().get(roomEntry.getValue());
             createRoomPanel(roomEntry.getValue(), position);
         }
     }
-
 
     @Override
     protected void paintComponent(Graphics g) {

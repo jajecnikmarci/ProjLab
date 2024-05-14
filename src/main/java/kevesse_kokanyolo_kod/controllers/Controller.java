@@ -50,7 +50,7 @@ public class Controller implements StudentObserver, RoomObserver {
         // menuWindow = new MenuWindow(this);
         printer = new Printer();
         labyrinthBuilder = new LabyrinthBuilder(printer);
-
+        
 
         // TODO: EZEK itt példák az eseménykezelésre.  
         // personStateChangedObserver = new StateChangedObserver<Person>((Person p) -> redisplay(p));
@@ -335,10 +335,8 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a hallgató neve
      */
     public void createStudent(String roomName, String personName) {
-        Person person = labyrinthBuilder.addPerson(roomName, "Student", personName);
-        if(person != null) {
-            person.addObserver(personStateChangedObserver);
-        }
+        Person person = labyrinthBuilder.addPerson(roomName, "Student", personName, personStateChangedObserver);
+        //if(person != null) {person.addObserver(personStateChangedObserver);} //hamarabb bele kellett tenni mert a roomban notify van
     }
 
     /**
@@ -348,7 +346,7 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a hallgató vagy professzor neve
      */
     public void createProfessor(String roomName, String personName) {
-        Person person = labyrinthBuilder.addPerson(roomName, "Professor", personName);
+        Person person = labyrinthBuilder.addPerson(roomName, "Professor", personName, personStateChangedObserver);
         if(person != null) {
             person.addObserver(personStateChangedObserver);
         }
@@ -361,7 +359,7 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param personName a takarító neve
      */
     public void createCleaner(String roomName, String personName) {
-        Person person = labyrinthBuilder.addPerson(roomName, "Cleaner", personName);
+        Person person = labyrinthBuilder.addPerson(roomName, "Cleaner", personName, personStateChangedObserver);
         if(person != null) {
             person.addObserver(personStateChangedObserver);
         }

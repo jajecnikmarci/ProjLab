@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.*;
+import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.people.Professor;
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Door;
@@ -133,6 +134,22 @@ public class LabyrinthBuilder {
 
         if(cleaners.get(personName) != null){
             return cleaners.get(personName);
+        }
+
+        return null;
+    }
+
+    public String getPersonName(Person person){
+        for (var studentEntry : students.entrySet()) {
+            if(studentEntry.getValue()==person) return studentEntry.getKey();
+        }
+
+        for (var professorEntry : professors.entrySet()) {
+            if(professorEntry.getValue()==person) return professorEntry.getKey();
+        }
+
+        for (var cleanerEntry : cleaners.entrySet()) {
+            if(cleanerEntry.getValue()==person) return cleanerEntry.getKey();
         }
 
         return null;
@@ -275,7 +292,7 @@ public class LabyrinthBuilder {
      * @param personName Játékos neve
      * @param printer    Printer objektum
      */
-    public Person addPerson(String roomName, String personType, String personName) {
+    public Person addPerson(String roomName, String personType, String personName, StateChangedObserver<Person> observer) {
         for (String key : cleaners.keySet()) {
             if (cleaners.get(key).equals(personName)) {
                 printer.printError("A játékos már szerepel a listában!");
@@ -294,12 +311,14 @@ public class LabyrinthBuilder {
         if (personType.equals("Cleaner")) {
             Cleaner cleaner = new Cleaner(rooms.get(roomName));
             person = cleaner;
+            cleaner.addObserver(observer);
             cleaners.put(personName, cleaner);
             rooms.get(roomName).addPlayer(cleaner);
 
         } else if (personType.equals("Student")) {
             Student student = new Student(rooms.get(roomName));
             person = student;
+            student.addObserver(observer);
             studentCount++;
             academicPeople.put(personName, student);
             rooms.get(roomName).addPlayer(student);
@@ -308,6 +327,7 @@ public class LabyrinthBuilder {
         } else if (personType.equals("Professor")) {
             Professor professor = new Professor(rooms.get(roomName));
             person = professor;
+            professor.addObserver(observer);
             academicPeople.put(personName, professor);
             rooms.get(roomName).addPlayer(professor);
             professors.put(personName, professor);
