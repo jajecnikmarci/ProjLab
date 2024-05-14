@@ -19,6 +19,7 @@ import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.SwingUtilities;
@@ -47,6 +48,7 @@ public class Controller implements StudentObserver, RoomObserver {
     Printer printer;
     
     public Controller() {
+
         // menuWindow = new MenuWindow(this);
         printer = new Printer();
         labyrinthBuilder = new LabyrinthBuilder(printer);
@@ -61,6 +63,33 @@ public class Controller implements StudentObserver, RoomObserver {
         } 
         );
         // roomStateChangedObserver = new StateChangedObserver<Room>(redisplay);
+
+        personStateChangedObserver = new StateChangedObserver<Person>(p -> {
+            System.out.println("Person changed");
+            //Ha ez a kijelölt személy, Inventory, Player menük frissítése, bénulás
+            //jelölése, ha meghalt a játékos törlése, ha mindenki meghalt, a játék befejezése
+            playerInfoView.repaint();
+            inventoryView.repaint();
+        });
+        itemStateChangedObserver = new StateChangedObserver<Item>(i -> {
+            System.out.println("Item changed");
+            //Ha a kijelölt játékosnál van a tárgy, az Inventory menü frissítése
+            inventoryView.repaint();
+        });
+        roomStateChangedObserver = new StateChangedObserver<Room>(r -> {
+            System.out.println("Room changed");
+            
+            //Labirintus újrarajzolása, ha ebben a szobában van a kijelölt játékos, az
+            //Items in Room menü frissítése
+
+            if(labyrinthView!=null)
+                labyrinthView.repaint();
+
+            if(itemsInRoomView!=null)
+                itemsInRoomView.repaint();
+
+        });
+
 
         initGame();
 
@@ -156,13 +185,36 @@ public class Controller implements StudentObserver, RoomObserver {
         
         createDoor("room11", "room12", true, "door17", true);
         labyrinthBuilder.setDoorEndpointOffsets("door17", rightOffset, leftOffset);
+
+        createStudent("room1", "s1");
+        createStudent("room1", "s2");
+        createStudent("room3", "s3");
+        createStudent("room4", "s4");
+        createStudent("room5", "s5");
     }
 
 
-    private void redisplay(Person p) {
-        labyrinthView.display(labyrinthBuilder);
-        //többi view frissítése
+    public ArrayList<String> getPeopleInRoom(Room room) {
+
+        ArrayList<String> personNames = new ArrayList<>();
+
+
+        for (Person person :  room.getPeople()) {
+            if (person instanceof AcademicPerson) {
+                AcademicPerson academicPerson = (AcademicPerson) person;
+                String academicName = labyrinthBuilder.getInstanceName(academicPerson);
+                personNames.add(academicName);
+            }
+
+            if(person instanceof Cleaner) {
+                Cleaner cleaner = (Cleaner) person;
+                String cleanerName = labyrinthBuilder.getInstanceName(cleaner);
+                personNames.add(cleanerName);
+            }
+        }
+        return personNames;
     }
+
 
     /**
      * Egy hallgató vagy professzor tárgy felvételét kezeli, a tárgy a hallgatóhoz
@@ -315,6 +367,11 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     public void selectPerson(String personName) {
         labyrinthBuilder.setSelectedPerson(personName);
+        labyrinthView.repaint();
+    }
+
+    public String getSelectedPerson() {
+        return labyrinthBuilder.getSelectedPerson();
     }
 
 

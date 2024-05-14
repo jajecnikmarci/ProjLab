@@ -104,6 +104,9 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         return capacity;
     }
 
+    public List<Person> getPeople() {
+        return people;
+    }
 
     /**
      * Hozzáadja a szoba ajtóihoz a kapott ajtót.

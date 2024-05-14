@@ -7,6 +7,7 @@ import kevesse_kokanyolo_kod.room.Room;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,10 +18,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LabyrinthView extends JPanel {
     private List<RoomPanel> roomPanels = new ArrayList<>();
@@ -83,19 +89,57 @@ public class LabyrinthView extends JPanel {
         } else {
             roomPanel.setBorder(blackBorder);
         }
-
         
-        for (int j = 0; j < 12; j++) {
+        //Játékosok megjelenítése az adott szobában
+        int j = 0;
+        for(String personName: controller.getPeopleInRoom(room)){
             roomPanel.slots.add(new JPanel());
+
+            JButton personButton = new JButton(personName);
+            personButton.setFont(new Font("Arial", Font.BOLD, 9));
+
+            // Ha a játékos ki van választva, piros keretet kap
+            if(controller.getSelectedPerson()!= null && controller.getSelectedPerson().equals(personName))
+                personButton.setBorder(new LineBorder(Color.RED));
+
+            personButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    personButtonClicked(personName);
+                }
+            });
+
+            roomPanel.slots.get(j).add(personButton);
+
+            roomPanel.add(roomPanel.slots.get(j));
+
+            j++;
+            if(j == 11) break;
+        }
+
+        // Szoba kapacitásának megjelenítése
+        while (j < 12) {
+            roomPanel.slots.add(new JPanel());
+
             if (j == 11) {
                 JLabel capacityLabel = new JLabel(String.valueOf(room.getCapacity()));
                 capacityLabel.setFont(new Font("Arial", Font.BOLD, 12));
                 roomPanel.slots.get(j).add(capacityLabel);
             }
             roomPanel.add(roomPanel.slots.get(j));
+
+            j++;
         }
+
+
         add(roomPanel);
     }
+
+    public void personButtonClicked(String personName) {
+        controller.selectPerson(personName);
+        System.out.println("Selected person: " + personName);
+    }
+    
 
     /**
      * Kirajzolja az ajtót a két végpontja közé.
@@ -194,6 +238,7 @@ public class LabyrinthView extends JPanel {
             createRoomPanel(roomEntry.getValue(), position);
         }
     }
+
 
 
     @Override
