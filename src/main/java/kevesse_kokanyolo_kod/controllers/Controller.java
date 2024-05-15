@@ -57,8 +57,8 @@ public class Controller implements StudentObserver, RoomObserver {
         personStateChangedObserver = new StateChangedObserver<Person>(person->{
             System.out.println("Player changed");
             String name = labyrinthBuilder.getSelectedPerson();
+            redisplayLabyrinth(); //TODO bénulás jelölés. játékos törlés + kill nem máshol van?
             if(labyrinthBuilder.getPerson(name) == person){
-                redisplayLabyrinth(); //TODO bénulás jelölés. játékos törlés + kill nem máshol van? 
                 redisplayPlayerInfo(person);
                 redisplayInventory(person);
                 redisplayItemsInRoom(person.getLocation());

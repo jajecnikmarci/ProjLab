@@ -200,7 +200,7 @@ public class LabyrinthView extends JPanel {
 
     private void drawPlayers(LabyrinthBuilder labyrinthBuilder){
         for (RoomPanel roomPanel : roomPanels) {
-            for (int i = 0; i < 11;i++) {
+            for (int i = 0; i < 11; i++) {
                 JPanel panel = roomPanel.slots.get(i);
                 panel.removeAll();
                 panel.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -214,9 +214,22 @@ public class LabyrinthView extends JPanel {
                 Person person = roomPanel.room.getPeople().get(i);
                 String personName = labyrinthBuilder.getPersonName(person);
                 JLabel nameLabel = new JLabel(personName);
-                if(labyrinthBuilder.getSelectedPerson()==personName) current.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                if(labyrinthBuilder.getSelectedPerson() == personName) current.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
                 else current.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
                 current.add(nameLabel);
+                boolean personIsStudent = false;
+                for (var key : labyrinthBuilder.getStudents().keySet()) {
+                    if (personName.equals(key) && labyrinthBuilder.getStudents().get(key).isStunned()) {
+                        current.setBorder(BorderFactory.createLineBorder(Color.CYAN, 2));
+                        personIsStudent = true;
+                    }
+                }
+                if(!personIsStudent) {
+                    for (var key : labyrinthBuilder.getProfessors().keySet()) {
+                        if (personName.equals(key) && labyrinthBuilder.getProfessors().get(key).isStunned())
+                            current.setBorder(BorderFactory.createLineBorder(Color.CYAN, 2));
+                    }
+                }
                 current.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {

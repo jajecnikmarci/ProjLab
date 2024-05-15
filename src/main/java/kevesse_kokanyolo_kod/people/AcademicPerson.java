@@ -235,6 +235,7 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
             public void run() {
                 stunned = false;
                 SkeletonMenu.endCall("Játékos már nem bénult");
+                notifyStateChanged();
             }
         }, duration * 1000L);
         SkeletonMenu.endCall("A játékos lebénult.");
