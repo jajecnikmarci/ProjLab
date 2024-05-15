@@ -103,6 +103,7 @@ public class InventoryView extends JPanel {
                             person.useItem((Item)selectedItem);
                         }
                     });
+                    ((ItemPanel)itemPanels.getComponents()[i]).useButton.setEnabled(true);
                 }
                 else{
                     ((ItemPanel)itemPanels.getComponents()[i]).useButton.setEnabled(false);

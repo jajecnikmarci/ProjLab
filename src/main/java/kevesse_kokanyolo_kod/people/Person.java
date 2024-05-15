@@ -105,6 +105,7 @@ public abstract class Person implements IStateChangedObservable<Person> {
 
         if (door.isPresent() && door.get().goThrough(this)) {
             callOnEnter(room);
+            stateChangedObservable.notifyStateChanged();
             SkeletonMenu.endCall("A személy átment a szobába.");
             return;
         }

@@ -409,7 +409,10 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     public void createStudent(String roomName, String personName) {
         Person person = labyrinthBuilder.addPerson(roomName, "Student", personName);
-        if(person != null) {person.addObserver(personStateChangedObserver);} //hamarabb bele kellett tenni mert a roomban notify van
+        if(person != null) {
+            person.addObserver(personStateChangedObserver);
+            ((Student)person).addObserver(this);
+        }
     }
 
     /**
@@ -456,6 +459,8 @@ public class Controller implements StudentObserver, RoomObserver {
     // TODO
     @Override
     public void studentKilled(Student student) {
+        student.getLocation().removePlayer(student);
+        labyrinthBuilder.getStudents().remove(labyrinthBuilder.getPersonName(student));
     }
 
     // TODO 
