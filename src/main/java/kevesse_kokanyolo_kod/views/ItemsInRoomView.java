@@ -31,7 +31,7 @@ public class ItemsInRoomView extends JPanel{
     public void display(Room room) {
         itemPanels.removeAll();
         if(room.getItems().size()==0) itemPanels.add(new JPanel());
-        for (int i = 0; i < room.getItems().size(); i++) {
+        for (int i = room.getItems().size()-1; i >= 0; i--) {
             ItemPanel itemPanel = new ItemPanel();
             String nameString = room.getItems().get(i).getClass().getName();
             itemPanel.itemName.setText(nameString.substring(nameString.lastIndexOf(".")+1)); 

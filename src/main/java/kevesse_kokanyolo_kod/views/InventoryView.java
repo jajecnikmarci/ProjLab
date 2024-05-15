@@ -94,6 +94,8 @@ public class InventoryView extends JPanel {
                 if(selectedItem.getDescription() != null) fullString = fullString + selectedItem.getDescription();
                 ((ItemPanel)itemPanels.getComponents()[i]).setVisible(true);
                 ((ItemPanel)itemPanels.getComponents()[i]).itemName.setText(fullString); 
+                JButton useShort = ((ItemPanel)itemPanels.getComponents()[i]).useButton;
+                if(useShort.getActionListeners().length !=0) useShort.removeActionListener(useShort.getActionListeners()[0]);
                 if(!selectedItem.isPassive()){
                     ((ItemPanel)itemPanels.getComponents()[i]).useButton.addActionListener(new ActionListener() {
                         @Override
@@ -106,6 +108,8 @@ public class InventoryView extends JPanel {
                     ((ItemPanel)itemPanels.getComponents()[i]).useButton.setEnabled(false);
                 }
 
+                JButton dropShort = ((ItemPanel)itemPanels.getComponents()[i]).dropButton;
+                if(dropShort.getActionListeners().length !=0) dropShort.removeActionListener(dropShort.getActionListeners()[0]);
                 ((ItemPanel)itemPanels.getComponents()[i]).dropButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
