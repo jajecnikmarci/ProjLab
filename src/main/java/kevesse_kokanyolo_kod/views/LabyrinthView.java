@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.views;
 
 import kevesse_kokanyolo_kod.controllers.Controller;
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
-import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Person;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
@@ -25,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 
@@ -104,8 +104,20 @@ public class LabyrinthView extends JPanel {
             }
             roomPanel.add(roomPanel.slots.get(j));
         }
+        roomPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                onRoomClicked(room, roomPanel);
+            }
+        });
         roomPanels.add(roomPanel);
         add(roomPanel);
+    }
+
+    private void onRoomClicked(Room room, JPanel roomPanel) {
+        for (var entry : controller.getLabyrinthBuilder().getRooms().entrySet()) {
+            if (room == entry.getValue()) controller.goToRoom(entry.getKey());
+        }
     }
 
     /**
@@ -188,6 +200,13 @@ public class LabyrinthView extends JPanel {
 
     private void drawPlayers(LabyrinthBuilder labyrinthBuilder){
         for (RoomPanel roomPanel : roomPanels) {
+            for (int i = 0; i < 11;i++) {
+                JPanel panel = roomPanel.slots.get(i);
+                panel.removeAll();
+                panel.setBorder(new EmptyBorder(0, 0, 0, 0));
+                if(panel.getMouseListeners().length != 0) panel.removeMouseListener(panel.getMouseListeners()[0]);
+                panel = new JPanel();
+            }
             for (int i = 0; i < roomPanel.room.getPeople().size(); i++) {
                 JPanel current = roomPanel.slots.get(i);
                 if(current.getMouseListeners().length!=0) current.removeMouseListener(current.getMouseListeners()[0]);

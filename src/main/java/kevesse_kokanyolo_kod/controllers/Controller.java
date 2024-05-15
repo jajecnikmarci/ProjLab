@@ -328,12 +328,12 @@ public class Controller implements StudentObserver, RoomObserver {
     /**
      * A játékosok szobák közötti mozgását kezeli, a paraméterként kapott personName-hez
      * tartozó objektumot lekérdezi a LabyrinthBuilder-től, majd a játékost átküldi a
-     * roomName paraméterhez tartozó objektumba, szobába.
-     * @param personName a játékos, aki más szobába megy
+     * roomName paraméterhez tartozó objektumba, szobába
      * @param roomName a szoba, ahova a játékos megy
      */
-    public void goToRoom(String personName, String roomName) {
-        labyrinthBuilder.gotoroom(personName, roomName);
+    public void goToRoom(String roomName) {
+        if(!labyrinthBuilder.getSelectedPerson().isEmpty())
+            labyrinthBuilder.gotoroom(labyrinthBuilder.getSelectedPerson(), roomName);
     }
 
     /**
