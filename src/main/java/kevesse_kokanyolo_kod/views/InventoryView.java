@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,9 +27,7 @@ public class InventoryView extends JPanel {
     }
 
     private class ItemPanel extends JPanel{
-        //public String itemName="ItemName";
         public JLabel itemName;
-        //public String itemDescription = "";
         public JButton useButton;
         public JButton dropButton;
 
@@ -123,14 +120,6 @@ public class InventoryView extends JPanel {
 
             }
         }
-        /*
-         
-        if(person.getInventory().size()<5) {
-            for (int i = 0; i < 5-person.getInventory().size(); i++) {
-                ((ItemPanel)itemPanels.getComponents()[i]).setVisible(false);
-            }
-        }
-        */
     }
 
     /**
@@ -156,7 +145,6 @@ public class InventoryView extends JPanel {
         for (int i = 0; i < 5; i++) {
             ItemPanel itemPanel = new ItemPanel();
             itemPanels.add(itemPanel);
-            //add(itemPanel);
         }
         add(itemPanels);
     }

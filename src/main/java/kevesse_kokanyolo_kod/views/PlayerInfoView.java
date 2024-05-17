@@ -19,7 +19,6 @@ import kevesse_kokanyolo_kod.people.Cleaner;
 public class PlayerInfoView extends JPanel {
 
     String playerNameString;
-    //int souls; //???
     Controller controller;
     JLabel playerInfoLabel;
     JLabel playerNameLabel;

@@ -3,8 +3,6 @@ package kevesse_kokanyolo_kod.views;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -13,9 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import kevesse_kokanyolo_kod.controllers.Controller;
-import kevesse_kokanyolo_kod.items.FFP2; //TODO torlendo
-import kevesse_kokanyolo_kod.items.TVSZ; //TODO torlendo
 import kevesse_kokanyolo_kod.room.Room;
 
 public class ItemsInRoomView extends JPanel{

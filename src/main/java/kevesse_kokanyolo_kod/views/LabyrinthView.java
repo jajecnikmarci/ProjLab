@@ -60,67 +60,13 @@ public class LabyrinthView extends JPanel {
      * @param position a pozíció, ahova kirajzolja
      */
     private void createRoomPanel(Room room, IntPair position) {
-        RoomPanel roomPanel = new RoomPanel(room);
-        roomPanel.setLayout(new GridLayout(4, 3));
-        roomPanel.setBounds(position.x(), position.y(), 80, 80);
-
-        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
-        Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
-        Border blueBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
-        Border yellowBorder = BorderFactory.createLineBorder(Color.YELLOW, 2);
-        List<Boolean> flags = Arrays.asList(
-            room.isPoisonous(), room.isSticky(), room.hasStunEffect()
-        );
-        
-        int count = flags.stream().mapToInt(b -> b ? 1 : 0).sum(); // calculate flag count
-        // ronda, de működik
-        if (count == 1) {
-            if (room.isPoisonous()) {
-                roomPanel.setBorder(greenBorder);
-            } else if (room.isSticky()) {
-                roomPanel.setBorder(blueBorder);
-            } else if (room.hasStunEffect()) {
-                roomPanel.setBorder(yellowBorder);
-            }
-        } else if (count == 2) {
-            if (room.isPoisonous() && room.isSticky()) {
-                roomPanel.setBorder(new CompoundBorder(greenBorder, blueBorder));
-            } else if (room.isPoisonous() && room.hasStunEffect()) {
-                roomPanel.setBorder(new CompoundBorder(greenBorder, yellowBorder));
-            } else if (room.isSticky() && room.hasStunEffect()) {
-                roomPanel.setBorder(new CompoundBorder(blueBorder, yellowBorder));
-            }
-        } else if (count == 3) {
-            roomPanel.setBorder(new CompoundBorder(new CompoundBorder(greenBorder, blueBorder), yellowBorder));
-        } else {
-            roomPanel.setBorder(blackBorder);
-        }
-
-        
-        for (int j = 0; j < 12; j++) {
-            roomPanel.slots.add(new JPanel());
-            if (j == 11) {
-                JLabel capacityLabel = new JLabel(String.valueOf(room.getCapacity()));
-                capacityLabel.setFont(new Font("Arial", Font.BOLD, 12));
-                roomPanel.slots.get(j).add(capacityLabel);
-            }
-            roomPanel.add(roomPanel.slots.get(j));
-        }
-        roomPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                onRoomClicked(room, roomPanel);
-            }
-        });
-        roomPanels.add(roomPanel);
+        RoomPanel roomPanel = new RoomPanel(room, position);
         add(roomPanel);
+        roomPanels.add(roomPanel);
+        
     }
 
-    private void onRoomClicked(Room room, JPanel roomPanel) {
-        for (var entry : controller.getLabyrinthBuilder().getRooms().entrySet()) {
-            if (room == entry.getValue()) controller.goToRoom(entry.getKey());
-        }
-    }
+
 
     /**
      * Kirajzolja az ajtót a két végpontja közé.
@@ -189,16 +135,8 @@ public class LabyrinthView extends JPanel {
     }
 
 
-    /**
-     * Egy játékosra kattintva kijelölt állapotba helyezi a kattintott játékost,
-     * megjelennek a játékoshoz tartozó információk, az elérhető cselekvések, amiket
-     * a játékossal csinálhatunk (tárgy használata, elejtése, tárgy felvétele). Ha
-     * ki van jelölve egy játékos és egy szobára kattintunk a programban, a játékost
-     * megpróbálja átküldeni a kattintott szobába, ha nincs kijelölve játékos, nem
-     * történik semmi.
-     */
-    private void handleClick() {
-    }
+   
+
 
     private void drawPlayers(LabyrinthBuilder labyrinthBuilder){
         for (RoomPanel roomPanel : roomPanels) {
@@ -246,10 +184,77 @@ public class LabyrinthView extends JPanel {
     // jelennek meg a játékosok, szoba kapacitása
     private class RoomPanel extends JPanel { 
         private List<JPanel> slots = new ArrayList<>();
-        public int playerCount=0;
         public Room room;
-        public RoomPanel(Room room) {
+         
+        /**
+         * Egy játékosra kattintva kijelölt állapotba helyezi a kattintott játékost,
+         * megjelennek a játékoshoz tartozó információk, az elérhető cselekvések, amiket
+         * a játékossal csinálhatunk (tárgy használata, elejtése, tárgy felvétele). Ha
+         * ki van jelölve egy játékos és egy szobára kattintunk a programban, a játékost
+         * megpróbálja átküldeni a kattintott szobába, ha nincs kijelölve játékos, nem
+         * történik semmi.
+         * 
+         */
+        private void onRoomClicked(Room room, RoomPanel roomPanel) {
+            for (var entry : controller.getLabyrinthBuilder().getRooms().entrySet()) {
+                if (room == entry.getValue()) controller.goToRoom(entry.getKey());
+            }
+        }
+        
+        public RoomPanel(Room room, IntPair position) {
             this.room = room;
+            setLayout(new GridLayout(4, 3));
+            setBounds(position.x(), position.y(), 80, 80);
+
+            Border blackBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
+            Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
+            Border blueBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
+            Border yellowBorder = BorderFactory.createLineBorder(Color.YELLOW, 2);
+            List<Boolean> flags = Arrays.asList(
+                room.isPoisonous(), room.isSticky(), room.hasStunEffect()
+            );
+            
+            int count = flags.stream().mapToInt(b -> b ? 1 : 0).sum(); // calculate flag count
+            // ronda, de működik
+            if (count == 1) {
+                if (room.isPoisonous()) {
+                    setBorder(greenBorder);
+                } else if (room.isSticky()) {
+                    setBorder(blueBorder);
+                } else if (room.hasStunEffect()) {
+                    setBorder(yellowBorder);
+                }
+            } else if (count == 2) {
+                if (room.isPoisonous() && room.isSticky()) {
+                    setBorder(new CompoundBorder(greenBorder, blueBorder));
+                } else if (room.isPoisonous() && room.hasStunEffect()) {
+                    setBorder(new CompoundBorder(greenBorder, yellowBorder));
+                } else if (room.isSticky() && room.hasStunEffect()) {
+                    setBorder(new CompoundBorder(blueBorder, yellowBorder));
+                }
+            } else if (count == 3) {
+                setBorder(new CompoundBorder(new CompoundBorder(greenBorder, blueBorder), yellowBorder));
+            } else {
+                setBorder(blackBorder);
+            }
+
+            
+            for (int j = 0; j < 12; j++) {
+                slots.add(new JPanel());
+                if (j == 11) {
+                    JLabel capacityLabel = new JLabel(String.valueOf(room.getCapacity()));
+                    capacityLabel.setFont(new Font("Arial", Font.BOLD, 12));
+                    slots.get(j).add(capacityLabel);
+                }
+                add(slots.get(j));
+            }
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    onRoomClicked(room, RoomPanel.this);
+                }
+            });
+
         }
         public void addPlayer(Person person){
 
