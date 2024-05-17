@@ -94,10 +94,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     }
 
     public boolean isPoisonous() {
-        if(poisonEffects.isEmpty()) 
-            return false;
-        else
-            return true;
+        return !poisonEffects.isEmpty(); 
     }
 
     public int getCapacity() {
@@ -251,11 +248,8 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
             Person person = this.people.get(i);
             if(person != cleaner) person.meet(cleaner);
         }
-        this.poisonEffects.clear();
-        if (stickiness!=null) stickiness.clean();
-        else {
-            stickiness=new StickinessEffect();
-        }
+        clearPoisonEffects();
+       
         SkeletonMenu.endCall();
     }
     /**
@@ -480,6 +474,9 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void clearPoisonEffects() {
         SkeletonMenu.startCall("Room.clearPoisonEffects()");
         poisonEffects.clear();
+        if (stickiness!=null) stickiness.clean();
+        else stickiness=new StickinessEffect();
+        
         stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }

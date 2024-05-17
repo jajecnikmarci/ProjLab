@@ -26,7 +26,6 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.*;
 
 public class LabyrinthView extends JPanel {
     private List<RoomPanel> roomPanels = new ArrayList<>();
@@ -35,9 +34,8 @@ public class LabyrinthView extends JPanel {
     public LabyrinthView(Controller controller) {
         setLayout(null); // Kell a setBounds() használatához
         this.controller = controller;
-        createLabyrinth();
-        //controller.createStudent("room1", "S1"); //TODO torlendo, csak teszt
         drawPlayers(controller.getLabyrinthBuilder());
+        createLabyrinth();
     }
 
     /**
@@ -45,7 +43,11 @@ public class LabyrinthView extends JPanel {
      * 
      * @param labyrinth
      */
-    public void display(LabyrinthBuilder labyrinthBuilder) {
+    public void redisplay(LabyrinthBuilder labyrinthBuilder) {
+        // TODO: ki lehetne találni valami okosab update mechanizmust, mert ez lassú
+        removeAll(); 
+        roomPanels.clear();
+
         makeRooms(labyrinthBuilder);
         drawPlayers(labyrinthBuilder);
         repaint();
@@ -256,9 +258,9 @@ public class LabyrinthView extends JPanel {
 
     private final int roomWidth = 80;
     private final int roomHeight = 80;
+
     // Szobák megjelenítése
     private void createLabyrinth() {
-        //ez már lackó féle
         makeRooms(controller.getLabyrinthBuilder());
     }
 

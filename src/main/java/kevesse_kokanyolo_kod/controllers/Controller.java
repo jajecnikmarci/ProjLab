@@ -14,14 +14,10 @@ import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.views.*;
 import kevesse_kokanyolo_kod.windows.GameWindow;
-import kevesse_kokanyolo_kod.windows.MenuWindow;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
-import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import javax.swing.SwingUtilities;
 
 public class Controller implements StudentObserver, RoomObserver {
     /**
@@ -47,13 +43,8 @@ public class Controller implements StudentObserver, RoomObserver {
     Printer printer;
     
     public Controller() {
-        // menuWindow = new MenuWindow(this);
         printer = new Printer();
         labyrinthBuilder = new LabyrinthBuilder(printer);
-        
-
-        // TODO: EZEK itt példák az eseménykezelésre.  
-        // personStateChangedObserver = new StateChangedObserver<Person>((Person p) -> redisplay(p));
         personStateChangedObserver = new StateChangedObserver<Person>(person->{
             System.out.println("Player changed");
             String name = labyrinthBuilder.getSelectedPerson();
@@ -64,9 +55,6 @@ public class Controller implements StudentObserver, RoomObserver {
                 redisplayItemsInRoom(person.getLocation());
             }
         } );
-
-
-        //itemStateChangedObserver = new StateChangedObserver<Item>(i -> redisplay(i));
         itemStateChangedObserver = new StateChangedObserver<Item>(i->{
             System.out.println("Item changed");
             String name = labyrinthBuilder.getSelectedPerson();
@@ -89,12 +77,11 @@ public class Controller implements StudentObserver, RoomObserver {
         doorStateChangedObserver = new StateChangedObserver<Door>(d->{
             System.out.println("Door changed");
             redisplayLabyrinth();
-            //labyrinthView.repaint(); // nem redisplayLabyrinth() ?
         } 
         );
-        // roomStateChangedObserver = new StateChangedObserver<Room>(redisplay);
         roomStateChangedObserver = new StateChangedObserver<Room>(room->{
                 System.out.println("Room changed");
+                System.out.println("poisonous: " +room.isPoisonous());
                 redisplayLabyrinth();
                 String name = labyrinthBuilder.getSelectedPerson();
                 if(name!=null){
@@ -210,65 +197,19 @@ public class Controller implements StudentObserver, RoomObserver {
         createStudent("room1", "S1");
         createCleaner("room1", "C3");
         createProfessor("room3", "P3");
-        try {
-            createItem("room1", "FFP2", "FFP2");
-        } catch (InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+            
+        createItem("room1", "FFP2", "FFP2");
+        createItem("room1", "Camembert", "Camembert");
+       
 
-        try {
-            createItem("room1", "Camembert", "Camembert");
-        } catch (InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-    }
-
-
-    private void redisplayLabyrinth(Person p) { //TODO miért kap person-t?
-        labyrinthView.display(labyrinthBuilder);
-        //többi view frissítése
     }
 
     private void redisplayLabyrinth() {
-        labyrinthView.display(labyrinthBuilder);
-        //többi view frissítése
+        labyrinthView.redisplay(labyrinthBuilder);
     }
 
     private void redisplayInventory(Person person){
-        if(labyrinthBuilder.getStudents().get(labyrinthBuilder.getPersonName(person))!=null || labyrinthBuilder.getProfessors().get(labyrinthBuilder.getPersonName(person))!=null) {
+        if(labyrinthBuilder.getStudents().get(labyrinthBuilder.getPersonName(person)) !=null || labyrinthBuilder.getProfessors().get(labyrinthBuilder.getPersonName(person)) != null) {
             AcademicPerson academicPerson = (AcademicPerson) person;
             inventoryView.display(academicPerson);
         }
@@ -291,7 +232,6 @@ public class Controller implements StudentObserver, RoomObserver {
             Cleaner cleaner = (Cleaner) person;
             playerInfoView.display(cleaner);
         }
-        //playerInfoView.display(person);
     }
 
 
@@ -392,10 +332,14 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param itemType a tárgy típusa
      * @param itemName a tárgy neve
      */
-    public void createItem(String roomName, String itemType, String itemName) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-            NoSuchMethodException, SecurityException{
+    public void createItem(String roomName, String itemType, String itemName) {
+        Item item = null;
+        try {
+            item = labyrinthBuilder.addItem(roomName, itemType, itemName);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 
-        Item item = labyrinthBuilder.addItem(roomName, itemType, itemName);
         if(item != null) {
             item.addObserver(itemStateChangedObserver);
         }
@@ -447,10 +391,8 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     public void selectPerson(String personName) {
         labyrinthBuilder.setSelectedPerson(personName);
-        //labyrinthView.display(labyrinthBuilder);
         redisplayLabyrinth();
         redisplayItemsInRoom(labyrinthBuilder.getPerson(personName).getLocation());
-        //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         redisplayInventory(labyrinthBuilder.getPerson(personName));
         redisplayPlayerInfo(labyrinthBuilder.getPerson(personName));
     }

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -12,12 +11,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.*;
 
 import kevesse_kokanyolo_kod.controllers.Controller;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Cleaner;
-import kevesse_kokanyolo_kod.people.Student;
 
 public class PlayerInfoView extends JPanel {
 

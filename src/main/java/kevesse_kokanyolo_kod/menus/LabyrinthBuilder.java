@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.*;
-import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.people.Professor;
 import kevesse_kokanyolo_kod.people.Student;
 import kevesse_kokanyolo_kod.room.Door;
