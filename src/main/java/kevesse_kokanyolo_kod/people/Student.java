@@ -63,6 +63,7 @@ public class Student extends AcademicPerson implements IStudentObservable {
         if (killImmunities.isEmpty()) {
             souls--;
             if (souls == 0) {
+                dropAll();
                 studentObservable.notifyStudentKilled(this);
                 SkeletonMenu.endCall(" A játékos meghalt");
                 return;

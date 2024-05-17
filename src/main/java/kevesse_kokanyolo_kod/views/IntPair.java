@@ -10,6 +10,10 @@ public class IntPair {
             this.x = x;
             this.y = y;
         }
+        public void set(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
 
         public IntPair scale(double scalar) {
             double l = x * x  + y * y;
@@ -22,7 +26,9 @@ public class IntPair {
         public IntPair sub(IntPair other) {
             return new IntPair(x - other.x, y - other.y);
         }
-
+        public IntPair mult(double scalar) {
+            return new IntPair((int)(x* scalar),(int) (y*scalar));
+        }
         public double length() {
             return Math.sqrt(x * x + y * y);
         }

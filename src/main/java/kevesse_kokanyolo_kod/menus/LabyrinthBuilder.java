@@ -66,21 +66,6 @@ public class LabyrinthBuilder {
         return selectedPerson;
     }
 
-    /**
-     * Visszaadja a tárolt szobák számát
-     * @return tárolt szobák száma
-     */
-    public int getRoomMapSize(){
-        return rooms.size();
-    }
-
-    /**
-     * Visszaadja a tárolt ajtók számát
-     * @return tárolt ajtók száma
-     */
-    public int getDoorMapSize(){
-        return doors.size();
-    }
     public Map<String, Door> getDoors() {
         return doors;
     }
@@ -121,6 +106,9 @@ public class LabyrinthBuilder {
         // TODO: error handling
         doorOffsets.put(doors.get(doorName), new IntPair [] {startOffset, endOffset});
     }
+    public void removeDoorEndpointOffsets(String doorName){
+        doorOffsets.remove(doors.get(doorName));
+    }
 
     public Person getPerson(String personName){
         if(students.get(personName) != null){
@@ -154,7 +142,18 @@ public class LabyrinthBuilder {
         return null;
     }
 
-
+    /** 
+     * Nyilvántartjuk a kiosztott ajtók és szobák számait, 
+     * hogy ne legyen ütközés merge utáni split esetén. 
+     */
+    private int lastRoomId = 0;
+    private int lastDoorId = 0;
+    public int getNextDoorId() {
+        return lastDoorId+1;
+    }
+    public int getNextRoomId() {
+        return lastRoomId+1;
+    }
     /**
      * Először ellenőrzi, hogy a szoba neve már szerepel-e a listában, ha nem akkor
      * létrehozza és hozzáadja
@@ -164,15 +163,12 @@ public class LabyrinthBuilder {
      * @param printer  Printer objektum
      */
     public Room addRoom(String name, int capacity, boolean isPoisonous) {
-
-        for (String key : rooms.keySet()) {
-            if (rooms.get(key).equals(name)) {
-                printer.printError("A szoba már szerepel a listában!");
-                return null;
-            }
+        if (rooms.keySet().contains(name)) {
+            printer.printError("A szoba már szerepel a listában!");
+            return null;
         }
         Room room = new Room(capacity, isPoisonous);
-        rooms.put(name, room);
+        addRoom(name, room);
         return room;
     }
 
@@ -184,14 +180,13 @@ public class LabyrinthBuilder {
      * @param Room     Kész Szoba 
      */
     public void addRoom(String name, Room room) {
-        for (String key : rooms.keySet()) {
-            if (rooms.get(key).equals(name)) {
-                printer.printError("A szoba már szerepel a listában!");
-                return;
-            }
+        if (rooms.keySet().contains(name)) {
+            printer.printError("A szoba már szerepel a listában!");
+            return;
         }
 
         rooms.put(name, room);
+        lastRoomId++;
     }
 
     /**
@@ -256,6 +251,7 @@ public class LabyrinthBuilder {
 
         Door door = new Door(room1, room2, true, passable, true, cursed);
         doors.put(doorName, door);
+        lastDoorId++;
         return door;
     }
 
@@ -267,6 +263,7 @@ public class LabyrinthBuilder {
      */
     public void addDoor(String doorName, Door door) {
         doors.put(doorName, door);
+        lastDoorId++;
     }
 
     /**
@@ -278,6 +275,7 @@ public class LabyrinthBuilder {
         for (var doorEntry : doors.entrySet()) {
             if(doorEntry.getValue().equals(door)) {
                 doors.remove(doorEntry.getKey());
+                break;
             }
         }
     }
@@ -429,9 +427,9 @@ public class LabyrinthBuilder {
             while ((roomToMerge = rooms.get(ProtoMenu.readString("Melyik szoba olvadjon bele a másikba?"))) == null) {
                 printer.printError("Nincs ilyen nevű szoba.");
             }
-            List<Room> roms = rooms.values().stream().collect(Collectors.toList());
-            for(int i = 0; i < roms.size(); i++) {
-                roms.get(i).onShake(roomToSplit, roomToMergeInto, roomToMerge);
+            List<Room> roomList = rooms.values().stream().collect(Collectors.toList());
+            for(int i = 0; i < roomList.size(); i++) {
+                roomList.get(i).onShake(roomToSplit, roomToMergeInto, roomToMerge);
             }
             
         } else {

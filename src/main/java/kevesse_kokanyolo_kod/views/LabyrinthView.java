@@ -261,8 +261,8 @@ public class LabyrinthView extends JPanel {
         }
     }
 
-    private final int roomWidth = 80;
-    private final int roomHeight = 80;
+    public static final int roomWidth = 80;
+    public static final int roomHeight = 80;
 
     // Szobák megjelenítése
     private void createLabyrinth() {
