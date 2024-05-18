@@ -37,58 +37,58 @@ public class DefaultLabyrinth {
         final IntPair leftOffset = new IntPair(-1, 0);
 
         controller.createDoor("room0", "room1", true, "door0", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door0", rightOffset, leftOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door0", rightOffset, leftOffset);
         
         controller.createDoor("room0", "room2", true, "door1", true);
-        labyrinthBuilder.setDoorEndpointOffsets("door1", leftOffset, topOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door1", leftOffset, topOffset);
         
         controller.createDoor("room0", "room3", false, "door2", true);
-        labyrinthBuilder.setDoorEndpointOffsets("door2", rightOffset, topOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door2", rightOffset, topOffset);
         
         controller.createDoor("room2", "room5", true, "door3", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door3", leftOffset, rightOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door3", leftOffset, rightOffset);
 
         controller.createDoor("room1", "room4", true, "door4", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door4", rightOffset, topOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door4", rightOffset, topOffset);
         
         controller.createDoor("room2", "room3", false, "door5", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door5", rightOffset, leftOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door5", rightOffset, leftOffset);
         
         controller.createDoor("room7", "room1", false, "door6", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door6", topOffset, bottomOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door6", topOffset, bottomOffset);
         
         controller.createDoor("room2", "room6", true, "door7", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door7", bottomOffset, topOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door7", bottomOffset, topOffset);
         
         controller.createDoor("room8", "room3", false, "door8", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door8", rightOffset, bottomOffset );
+        // labyrinthBuilder.setDoorEndpointOffsets("door8", rightOffset, bottomOffset );
 
         controller.createDoor("room4", "room7", false, "door9", true);
-        labyrinthBuilder.setDoorEndpointOffsets("door9", bottomOffset, rightOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door9", bottomOffset, rightOffset);
         
         controller.createDoor("room5", "room8", true, "door10", true);
-        labyrinthBuilder.setDoorEndpointOffsets("door10", rightOffset, leftOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door10", rightOffset, leftOffset);
         
         controller.createDoor("room6", "room8", false, "door11", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door11", bottomOffset, topOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door11", bottomOffset, topOffset);
         
         controller.createDoor("room8", "room9", true, "door12", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door12", rightOffset, leftOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door12", rightOffset, leftOffset);
         
         controller.createDoor("room7", "room9", true, "door13", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door13", bottomOffset, rightOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door13", bottomOffset, rightOffset);
 
         controller.createDoor("room10", "room8", false, "door14", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door14", rightOffset, bottomOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door14", rightOffset, bottomOffset);
         
         controller.createDoor("room9", "room11", false, "door15", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door15", leftOffset, topOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door15", leftOffset, topOffset);
         
         controller.createDoor("room11", "room10", false, "door16", false);
-        labyrinthBuilder.setDoorEndpointOffsets("door16", leftOffset, rightOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door16", leftOffset, rightOffset);
         
         controller.createDoor("room11", "room12", true, "door17", true);
-        labyrinthBuilder.setDoorEndpointOffsets("door17", rightOffset, leftOffset);
+        // labyrinthBuilder.setDoorEndpointOffsets("door17", rightOffset, leftOffset);
 
         controller.createStudent("room1", "S1");
         controller.createCleaner("room1", "C3");

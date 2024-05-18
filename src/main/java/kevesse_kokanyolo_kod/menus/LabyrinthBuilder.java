@@ -197,7 +197,7 @@ public class LabyrinthBuilder {
     public void removeRoom(Room room){
         for (var roomEntry : rooms.entrySet()) {
             if(roomEntry.getValue().equals(room)) {
-                doors.remove(roomEntry.getKey());
+                rooms.remove(roomEntry.getKey());
             }
         }
     }

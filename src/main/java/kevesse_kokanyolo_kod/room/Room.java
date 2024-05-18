@@ -345,18 +345,23 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         this.stunEffects.addAll(room.stunEffects);
 
         doors.addAll(room.doors); 
+        // Keep doors not between these 2 rooms
         doors = doors.stream()
+                .distinct()
                 .filter(d -> {
                     if (!d.isBetween(this, room)) {
+
                         return true;
                     } else {
                         room.doors.remove(d);
-                        roomObservable.notifyRoomsMerged(room, d);
+                        notifyRoomsMerged(room, d);
                         return false;
                     }
                 })
-                .distinct()
                 .collect(Collectors.toList());
+        // Semmi nem tiltja a párhuzamos ajtókat a specifikációban... ezek létrejöhetnek
+        
+
         doors.forEach(d -> {
             if (d.getRoom1() == room) d.setRoom1(this);
             if (d.getRoom2() == room) d.setRoom2(this);

@@ -32,4 +32,7 @@ public class IntPair {
         public double length() {
             return Math.sqrt(x * x + y * y);
         }
+        public static double distance(IntPair a, IntPair b) {
+            return a.sub(b).length();
+        }
 }

@@ -1,6 +1,8 @@
 package kevesse_kokanyolo_kod.people;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
@@ -98,17 +100,26 @@ public abstract class Person implements IStateChangedObservable<Person> {
      */
     public void goToRoom(Room room) {
         SkeletonMenu.startCall("Person.goToRoom(Room)");
-        Optional<Door> door = location.getDoors()
+        // There might be multiple doors between 2 rooms
+        List<Door> doors = location.getDoors()
                 .stream()
                 .filter(d -> d.isBetween(location, room))
-                .findFirst();
-
-        if (door.isPresent() && door.get().goThrough(this)) {
-            callOnEnter(room);
-            stateChangedObservable.notifyStateChanged();
-            SkeletonMenu.endCall("A személy átment a szobába.");
+                .collect(Collectors.toList());
+                
+        if (doors.isEmpty()) { 
+            SkeletonMenu.endCall("A személy nem ment át a szobába.");
             return;
         }
+        // If person can go through any door, they should.
+        for (Door door : doors) { 
+            if (door.goThrough(this)) {
+                callOnEnter(room);
+                stateChangedObservable.notifyStateChanged();
+                SkeletonMenu.endCall("A személy átment a szobába.");
+                return;
+            }
+        }
+
         SkeletonMenu.endCall("A személy nem ment át a szobába.");
     }
     public abstract void printState(Printer printer, LabyrinthBuilder builder);

@@ -221,6 +221,7 @@ public class Controller implements StudentObserver, RoomObserver {
     /**
      * Hozzáad egy ajtót a labyrinthBuilderhez, valamint feliratkoztatja a
      * doorStateChangedObservert a ajtó StateChanged eseményeire.
+     * Automatiokusan beállítja az ajtó végpontjainak elhelyezkedését.
      * @param roomname1 a szoba, amit a roomname2 szobával köt össze
      * @param roomname2 a szoba, amit a roomname1 szobával köt össze
      * @param passable az ajtó átjárhatósága
@@ -230,9 +231,40 @@ public class Controller implements StudentObserver, RoomObserver {
     public void createDoor(String roomname1, String roomname2, boolean passable, String doorName, boolean cursed) {
         Door door = labyrinthBuilder.addDoor(roomname1, roomname2, passable, doorName, cursed);
         if(door != null) {
+            Room r1 = door.getRoom1();
+            Room r2 = door.getRoom2();
+            IntPair l1 = labyrinthBuilder.getRoomLocations().get(r1);
+            IntPair l2 = labyrinthBuilder.getRoomLocations().get(r2);
+            var offsets = findMinOffset(l1, l2);
+            labyrinthBuilder.setDoorEndpointOffsets(doorName, offsets[0], offsets[1]);
+
             door.addObserver(doorStateChangedObserver);
         }
     }
+
+    private IntPair[] findMinOffset(IntPair pos1, IntPair pos2) {
+        // Offset from center
+        final IntPair topOffset = new IntPair(0, -1);
+        final IntPair rightOffset = new IntPair(1, 0);
+        final IntPair bottomOffset = new IntPair(0, 1);
+        final IntPair leftOffset = new IntPair(-1, 0);
+
+        IntPair[] offsets = {topOffset, rightOffset, bottomOffset, leftOffset};
+
+        double minDistance = Double.MAX_VALUE;
+        IntPair[] minOffsets = new IntPair[2];
+        for (int i = 0; i < offsets.length; i++) {
+            for (int j = 0; j < offsets.length; j++) {
+                // Does not matter that offsets are not scaled
+                double distance = IntPair.distance(pos1.add(offsets[i]), pos2.add(offsets[j]));
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    minOffsets = new IntPair[]{offsets[i], offsets[j]};
+                }
+            }
+        }
+        return minOffsets;
+    } 
 
     /**
      * Hozzáad egy tárgyat a labyrinthBuilderhez, valamint feliratkoztatja a
@@ -338,9 +370,32 @@ public class Controller implements StudentObserver, RoomObserver {
         labyrinthBuilder.setRoomLocation(newRoom, 
         oldLocation.add(new IntPair(LabyrinthView.roomWidth, 0)));
         oldLocation.set(oldLocation.x()- 20 -LabyrinthView.roomWidth, oldLocation.y()- 20);
-        labyrinthBuilder.setDoorEndpointOffsets(doorName, new IntPair(1,0), new IntPair(-1, 0));
-
+        arrangeRooms();
         labyrinthView.redisplay(labyrinthBuilder);
+    }
+
+    /**
+     * Áthelyezi a szobákat, ha kell, úgy, hogy ne fedjék egymást és legyen köztük legalább 20px távolság
+     */
+    private void arrangeRooms() {
+        Map<Room, IntPair> roomLocations = labyrinthBuilder.getRoomLocations();
+        for (Room room : roomLocations.keySet()) {
+            IntPair location = roomLocations.get(room);
+            for (Room otherRoom : roomLocations.keySet()) {
+                if (room == otherRoom) continue;
+                
+                IntPair otherLocation = roomLocations.get(otherRoom);
+                // Supposing rooms are square
+                if(IntPair.distance(otherLocation, location) < LabyrinthView.roomHeight + 20) { 
+                    // Apply  repulsive force
+                    IntPair direction = otherLocation.sub(location).scale(LabyrinthView.roomHeight + 20);
+                    location = location.sub(direction);
+                    otherLocation = otherLocation.add(direction);
+                }
+                
+            }
+        }
+
     }
 
     /**
@@ -350,10 +405,12 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     @Override
     public void roomsMerged(Room mergedRoom, Door mergedDoor) {
-        labyrinthBuilder.removeRoom(mergedRoom);
-        labyrinthBuilder.removeDoor(mergedDoor);
+        
+        //labyrinthBuilder.getRoomLocations().remove(mergedRoom);
+
         IntPair r1l = labyrinthBuilder.getRoomLocations().get(mergedDoor.getRoom1());
         IntPair r2l = labyrinthBuilder.getRoomLocations().get(mergedDoor.getRoom2());
+
         IntPair newLocation = r1l.add(r2l).mult(0.5);
 
         Room changedRoom = mergedDoor.getRoom1() == mergedRoom ? mergedDoor.getRoom2() : mergedDoor.getRoom1();
@@ -368,7 +425,12 @@ public class Controller implements StudentObserver, RoomObserver {
                 entry-> labyrinthBuilder.removeDoorEndpointOffsets(entry.getKey())
             );
 
+        labyrinthBuilder.removeDoor(mergedDoor); // Itt van valami gubanc
+        labyrinthBuilder.removeRoom(mergedRoom);
+        arrangeRooms();
         redisplayLabyrinth();
+
+
     }
 
     public LabyrinthBuilder getLabyrinthBuilder() {
