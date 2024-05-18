@@ -405,8 +405,8 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     @Override
     public void roomsMerged(Room mergedRoom, Door mergedDoor) {
-        
-        //labyrinthBuilder.getRoomLocations().remove(mergedRoom);
+        labyrinthBuilder.removeDoor(mergedDoor);
+        labyrinthBuilder.removeRoom(mergedRoom);
 
         IntPair r1l = labyrinthBuilder.getRoomLocations().get(mergedDoor.getRoom1());
         IntPair r2l = labyrinthBuilder.getRoomLocations().get(mergedDoor.getRoom2());
@@ -425,12 +425,8 @@ public class Controller implements StudentObserver, RoomObserver {
                 entry-> labyrinthBuilder.removeDoorEndpointOffsets(entry.getKey())
             );
 
-        labyrinthBuilder.removeDoor(mergedDoor); // Itt van valami gubanc
-        labyrinthBuilder.removeRoom(mergedRoom);
         arrangeRooms();
         redisplayLabyrinth();
-
-
     }
 
     public LabyrinthBuilder getLabyrinthBuilder() {

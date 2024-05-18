@@ -45,7 +45,7 @@ public class LabyrinthView extends JPanel {
      */
     public void redisplay(LabyrinthBuilder labyrinthBuilder) {
         // TODO: ki lehetne találni valami okosab update mechanizmust, mert ez lassú
-        removeAll(); 
+        removeAll();
         roomPanels.clear();
 
         makeRooms(labyrinthBuilder);

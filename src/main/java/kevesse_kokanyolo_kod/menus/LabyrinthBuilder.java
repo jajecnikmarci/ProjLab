@@ -198,6 +198,7 @@ public class LabyrinthBuilder {
         for (var roomEntry : rooms.entrySet()) {
             if(roomEntry.getValue().equals(room)) {
                 rooms.remove(roomEntry.getKey());
+                break;
             }
         }
     }
@@ -402,7 +403,6 @@ public class LabyrinthBuilder {
             cleaners.get(personName).goToRoom(rooms.get(roomName));
     }
 
-
     public String newRoomName, newDoorName;
     public void shake() {
         boolean isRandom = ProtoMenu.getRandomness();
@@ -436,9 +436,7 @@ public class LabyrinthBuilder {
 
         }
         doors.values().forEach(door -> door.onShake());
-        
     }
-
 
     public String getInstanceName(Item item) {
         return items.keySet()
