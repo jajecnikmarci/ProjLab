@@ -1,9 +1,7 @@
 package kevesse_kokanyolo_kod.menus;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.items.*;
@@ -403,39 +401,39 @@ public class LabyrinthBuilder {
             cleaners.get(personName).goToRoom(rooms.get(roomName));
     }
 
+    /**
+     * Ez a függvény feltételezi, hogy vannak ajtók a labirintusban
+     */
+    private Door chooseRandomDoor() {
+        List<Door> doorList = new ArrayList<>(doors.values());
+        Random random = new Random();
+        return doorList.get(random.nextInt(doorList.size()));
+    }
+
+    /**
+     * Ez a függvény feltételezi, hogy vannak szobák a labirintusban
+     */
+    private Room chooseRandomRoom() {
+        List<Room> roomList = new ArrayList<>(rooms.values());
+        Random random = new Random();
+        return roomList.get(random.nextInt(roomList.size()));
+    }
+
     public String newRoomName, newDoorName;
     public void shake() {
         boolean isRandom = ProtoMenu.getRandomness();
-        Room roomToMergeInto, roomToMerge, roomToSplit;
-        if(!isRandom) {
-            while (true) {
-                String input[] = ProtoMenu.readString("Melyik szoba osztódjon, mi legyen a neve? <RoomToSplit> <NewRoomName> <NewDoorName>").split(" ");
-                if (input.length < 3) printer.printError("Nem adott meg paramétert.");
-                if(rooms.containsKey(input[0])) {
-                    roomToSplit = rooms.get(input[0]);
-                    newRoomName = input[1];
-                    newDoorName = input[2];
-                    break;
-                } else {
-                    printer.printError("Nincs ilyen nevű szoba.");
-                }
-                printer.printError("Nincs ilyen nevű szoba.");
-            }
-            while ((roomToMergeInto = rooms.get(ProtoMenu.readString("Melyik szobába olvadjon bele a másik?"))) == null) {
-                printer.printError("Nincs ilyen nevű szoba.");
-            }
-            while ((roomToMerge = rooms.get(ProtoMenu.readString("Melyik szoba olvadjon bele a másikba?"))) == null) {
-                printer.printError("Nincs ilyen nevű szoba.");
-            }
-            List<Room> roomList = rooms.values().stream().collect(Collectors.toList());
-            for(int i = 0; i < roomList.size(); i++) {
-                roomList.get(i).onShake(roomToSplit, roomToMergeInto, roomToMerge);
-            }
-            
-        } else {
+        Door randomDoor = chooseRandomDoor();
 
+        Room roomToMergeInto, roomToMerge, roomToSplit;
+        roomToMergeInto = randomDoor.getRoom1();
+        roomToMerge = randomDoor.getRoom2();
+        roomToSplit = chooseRandomRoom();
+
+        List<Room> roomList = new ArrayList<>(rooms.values());
+        for (int i = 0; i < roomList.size(); i++) {
+            var room = roomList.get(i);
+            room.onShake(null, roomToMergeInto, roomToMerge);
         }
-        doors.values().forEach(door -> door.onShake());
     }
 
     public String getInstanceName(Item item) {

@@ -101,16 +101,16 @@ public class Controller implements StudentObserver, RoomObserver {
         DefaultLabyrinth.create(this, labyrinthBuilder);
 
         // Test shake
-        Room r0 = labyrinthBuilder.getRooms().get("room0");
-        Room r1 = labyrinthBuilder.getRooms().get("room1");
+       /* Room r0 = labyrinthBuilder.getRooms().get("room0");
         Room r2 = labyrinthBuilder.getRooms().get("room2");
-        Room r5 = labyrinthBuilder.getRooms().get("room5");
         List<Room> rooms = labyrinthBuilder.getRooms().values().stream().collect(Collectors.toList());
         for (int i = 0; i < rooms.size(); i++) {
             var room = rooms.get(i); 
             room.onShake(null, r0, r2);
-        }
-
+        }*/
+        labyrinthBuilder.shake();
+        labyrinthBuilder.shake();
+        labyrinthBuilder.shake();
     }
 
     private void redisplayLabyrinth() {
