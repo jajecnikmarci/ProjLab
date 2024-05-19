@@ -16,6 +16,7 @@ public class GameWindow extends JFrame {
     public LabyrinthView labyrinthView;    
     public PlayerInfoView playerInfoView;
     public InventoryView inventoryView;
+    public InfoView infoView;
     Controller controller;
 
     public GameWindow(Controller controller) {
@@ -41,5 +42,9 @@ public class GameWindow extends JFrame {
 
         itemsInRoomView = new ItemsInRoomView();
         menuContainer.add(itemsInRoomView);
+
+        infoView = new InfoView();
+        menuContainer.add(infoView);
+      
     }
 }

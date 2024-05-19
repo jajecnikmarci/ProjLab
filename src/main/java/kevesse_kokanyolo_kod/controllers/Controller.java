@@ -16,9 +16,9 @@ import kevesse_kokanyolo_kod.views.*;
 import kevesse_kokanyolo_kod.windows.GameWindow;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Controller implements StudentObserver, RoomObserver {
@@ -95,22 +95,21 @@ public class Controller implements StudentObserver, RoomObserver {
         inventoryView = gameWindow.inventoryView;
         itemsInRoomView = gameWindow.itemsInRoomView;
         playerInfoView = gameWindow.playerInfoView;
+
+        TimerTask shakeTask = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("SHAKE");
+                shake();
+            }
+        };
+        Timer shakeTimer = new Timer();
+        shakeTimer.scheduleAtFixedRate(shakeTask, 10000, 30000);
+
     }
 
     public void init() {
         DefaultLabyrinth.create(this, labyrinthBuilder);
-
-        // Test shake
-       /* Room r0 = labyrinthBuilder.getRooms().get("room0");
-        Room r2 = labyrinthBuilder.getRooms().get("room2");
-        List<Room> rooms = labyrinthBuilder.getRooms().values().stream().collect(Collectors.toList());
-        for (int i = 0; i < rooms.size(); i++) {
-            var room = rooms.get(i); 
-            room.onShake(null, r0, r2);
-        }*/
-        labyrinthBuilder.shake();
-        labyrinthBuilder.shake();
-        labyrinthBuilder.shake();
     }
 
     private void redisplayLabyrinth() {
@@ -190,6 +189,7 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     public void shake() {
         labyrinthBuilder.shake();
+        gameWindow.infoView.addMessage("SHAKE");
     }
 
     /**
@@ -370,14 +370,16 @@ public class Controller implements StudentObserver, RoomObserver {
         labyrinthBuilder.setRoomLocation(newRoom, 
         oldLocation.add(new IntPair(LabyrinthView.roomWidth, 0)));
         oldLocation.set(oldLocation.x()- 20 -LabyrinthView.roomWidth, oldLocation.y()- 20);
-        arrangeRooms();
+        rearrangeLabyrinth();
         labyrinthView.redisplay(labyrinthBuilder);
     }
 
     /**
-     * Áthelyezi a szobákat, ha kell, úgy, hogy ne fedjék egymást és legyen köztük legalább 20px távolság
+     * Áthelyezi a szobákat, ha kell, 
+     * úgy, hogy ne fedjék egymást és legyen köztük legalább 20px távolság,
+     * valamint az ajtókat a szobák között úgy helyezi el, hogy a lehető legkisebb legyen a hoszuk.
      */
-    private void arrangeRooms() {
+    private void rearrangeLabyrinth() {
         Map<Room, IntPair> roomLocations = labyrinthBuilder.getRoomLocations();
         for (Room room : roomLocations.keySet()) {
             IntPair location = roomLocations.get(room);
@@ -394,6 +396,15 @@ public class Controller implements StudentObserver, RoomObserver {
                 }
                 
             }
+        }
+        for (var doorEntry: labyrinthBuilder.getDoors().entrySet()) {
+            Door door = doorEntry.getValue();
+            Room r1 = door.getRoom1();
+            Room r2 = door.getRoom2();
+            IntPair l1 = labyrinthBuilder.getRoomLocations().get(r1);
+            IntPair l2 = labyrinthBuilder.getRoomLocations().get(r2);
+            var offsets = findMinOffset(l1, l2);
+            labyrinthBuilder.setDoorEndpointOffsets(doorEntry.getKey(), offsets[0], offsets[1]);
         }
 
     }
@@ -425,7 +436,7 @@ public class Controller implements StudentObserver, RoomObserver {
                 entry-> labyrinthBuilder.removeDoorEndpointOffsets(entry.getKey())
             );
 
-        arrangeRooms();
+        rearrangeLabyrinth();
         redisplayLabyrinth();
     }
 

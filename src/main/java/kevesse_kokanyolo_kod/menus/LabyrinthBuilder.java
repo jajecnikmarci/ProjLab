@@ -432,7 +432,7 @@ public class LabyrinthBuilder {
         List<Room> roomList = new ArrayList<>(rooms.values());
         for (int i = 0; i < roomList.size(); i++) {
             var room = roomList.get(i);
-            room.onShake(null, roomToMergeInto, roomToMerge);
+            room.onShake(roomToSplit, roomToMergeInto, roomToMerge);
         }
         doors.values().forEach(door -> door.onShake());
     }

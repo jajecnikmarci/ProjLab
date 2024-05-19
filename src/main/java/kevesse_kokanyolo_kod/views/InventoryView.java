@@ -36,7 +36,7 @@ public class InventoryView extends JPanel {
             this.setLayout(new BorderLayout());
             this.setBorder(BorderFactory.createEmptyBorder(10, 5, 0, 5));
             
-            itemName = new JLabel("ItemName");
+            itemName = new JLabel("");
             itemName.setBorder(new EmptyBorder(0, 0, 0, 60));
             itemName.setFont(itemName.getFont().deriveFont(20f));
             this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -49,32 +49,10 @@ public class InventoryView extends JPanel {
             dropButton = new JButton("Drop");
             dropButton.setFont(dropButton.getFont().deriveFont(18f));
             
-            
-            /*
-            useButton.addActionListener(new ActionListener() {
-                
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    itemName.setText("xd");;
-                }
-                
-            });
-
-            dropButton.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    itemName.setText("ItemName");;
-                }
-                
-            });
-            */
-            
             this.add(itemName,BorderLayout.WEST);
             buttonPanel.add(useButton);
             buttonPanel.add(dropButton);
             this.add(buttonPanel,BorderLayout.EAST);
-
             this.setPreferredSize(new Dimension(330, 40));
         }
     }
@@ -90,6 +68,7 @@ public class InventoryView extends JPanel {
                 String fullString = nameString.substring(nameString.lastIndexOf(".")+1);
                 if(selectedItem.getDescription() != null) fullString = fullString + selectedItem.getDescription();
                 ((ItemPanel)itemPanels.getComponents()[i]).setVisible(true);
+
                 ((ItemPanel)itemPanels.getComponents()[i]).itemName.setText(fullString); 
                 JButton useShort = ((ItemPanel)itemPanels.getComponents()[i]).useButton;
                 if(useShort.getActionListeners().length !=0) useShort.removeActionListener(useShort.getActionListeners()[0]);
@@ -111,7 +90,7 @@ public class InventoryView extends JPanel {
                 ((ItemPanel)itemPanels.getComponents()[i]).dropButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        person.dropItem(selectedItem); //TODO ha eldobunk egy tárgyat akkor el kell tűnnie
+                        person.dropItem(selectedItem); 
                     }
                 });
             }
@@ -145,6 +124,7 @@ public class InventoryView extends JPanel {
         for (int i = 0; i < 5; i++) {
             ItemPanel itemPanel = new ItemPanel();
             itemPanels.add(itemPanel);
+            itemPanel.setVisible(false);
         }
         add(itemPanels);
     }

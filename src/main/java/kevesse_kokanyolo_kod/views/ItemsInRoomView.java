@@ -30,6 +30,7 @@ public class ItemsInRoomView extends JPanel{
             ItemPanel itemPanel = new ItemPanel();
             String nameString = room.getItems().get(i).getClass().getName();
             itemPanel.itemName.setText(nameString.substring(nameString.lastIndexOf(".")+1)); 
+            itemPanel.setVisible(true);
             itemPanels.add(itemPanel);
         }
     }
@@ -42,12 +43,12 @@ public class ItemsInRoomView extends JPanel{
             this.setLayout(new FlowLayout(FlowLayout.LEFT));
             this.setBorder(BorderFactory.createEmptyBorder(10, 5, 0, 5));
             
-            itemName = new JLabel("ItemName");
+            itemName = new JLabel("");
             itemName.setBorder(new EmptyBorder(0, 0, 0, 0));
             itemName.setFont(itemName.getFont().deriveFont(20f));
             this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-
             this.add(itemName);
+            setVisible(false);
             
             this.setPreferredSize(new Dimension(180, 40));
         }

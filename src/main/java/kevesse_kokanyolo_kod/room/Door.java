@@ -88,6 +88,10 @@ public class Door implements IStateChangedObservable<Door> {
      */
     public boolean goThrough(Person person) {
         SkeletonMenu.startCall("Door.goThrough(Player)");
+        if (!visible)  {
+            SkeletonMenu.endCall("Az ajtó nem látható.");
+            return false;
+        }
         if (person.getLocation() == room1 && room2Open && room2.canPlayerEnter()) {
             room1.removePlayer(person);
             room2.addPlayer(person);
