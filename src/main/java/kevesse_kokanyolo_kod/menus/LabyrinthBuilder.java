@@ -434,6 +434,7 @@ public class LabyrinthBuilder {
             var room = roomList.get(i);
             room.onShake(null, roomToMergeInto, roomToMerge);
         }
+        doors.values().forEach(door -> door.onShake());
     }
 
     public String getInstanceName(Item item) {

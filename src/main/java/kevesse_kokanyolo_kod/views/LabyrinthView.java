@@ -134,10 +134,6 @@ public class LabyrinthView extends JPanel {
         g2d.setColor(savedColor);
     }
 
-
-   
-
-
     private void drawPlayers(LabyrinthBuilder labyrinthBuilder){
         for (RoomPanel roomPanel : roomPanels) {
             for (int i = 0; i < 11; i++) {
