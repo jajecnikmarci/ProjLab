@@ -44,7 +44,6 @@ public class LabyrinthView extends JPanel {
      * @param labyrinth
      */
     public void redisplay(LabyrinthBuilder labyrinthBuilder) {
-        // TODO: ki lehetne találni valami okosab update mechanizmust, mert ez lassú
         removeAll();
         roomPanels.clear();
 
@@ -135,7 +134,8 @@ public class LabyrinthView extends JPanel {
     }
 
     private void drawPlayers(LabyrinthBuilder labyrinthBuilder){
-        for (RoomPanel roomPanel : roomPanels) {
+        for (int j = 0; j <  roomPanels.size(); j++) { 
+            RoomPanel roomPanel = roomPanels.get(j);
             for (int i = 0; i < 11; i++) {
                 JPanel panel = roomPanel.slots.get(i);
                 panel.removeAll();
@@ -252,9 +252,6 @@ public class LabyrinthView extends JPanel {
             });
 
         }
-        public void addPlayer(Person person){
-
-        }
     }
 
     public static final int roomWidth = 80;
@@ -266,9 +263,11 @@ public class LabyrinthView extends JPanel {
     }
 
     private void makeRooms(LabyrinthBuilder labyrinthBuilder){
-        for (var roomEntry : labyrinthBuilder.getRooms().entrySet()) {
-            IntPair position = labyrinthBuilder.getRoomLocations().get(roomEntry.getValue());
-            createRoomPanel(roomEntry.getValue(), position);
+        List<Room> roomList = new ArrayList<>(labyrinthBuilder.getRooms().values());
+        for (int i = 0; i < roomList.size(); i++) {
+            var room = roomList.get(i);
+            IntPair position = labyrinthBuilder.getRoomLocations().get(room);
+            createRoomPanel(room, position);
         }
     }
 

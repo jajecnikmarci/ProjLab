@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.menus;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.*;
@@ -101,7 +100,6 @@ public class LabyrinthBuilder {
     }
 
     public void setDoorEndpointOffsets(String doorName, IntPair startOffset, IntPair endOffset){
-        // TODO: error handling
         doorOffsets.put(doors.get(doorName), new IntPair [] {startOffset, endOffset});
     }
     public void removeDoorEndpointOffsets(String doorName){
@@ -443,7 +441,6 @@ public class LabyrinthBuilder {
         roomToMergeInto = randomDoor.getRoom1();
         roomToMerge = randomDoor.getRoom2();
         roomToSplit = chooseRandomRoom();
-
         List<Room> roomList = new ArrayList<>(rooms.values());
         for (int i = 0; i < roomList.size(); i++) {
             var room = roomList.get(i);
@@ -458,7 +455,7 @@ public class LabyrinthBuilder {
             .filter(key -> items.get(key)
             .equals(item))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
     public String getInstanceName(Room room) {
         return rooms.keySet()
@@ -466,7 +463,7 @@ public class LabyrinthBuilder {
             .filter(key -> rooms.get(key)
             .equals(room))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
     public String getInstanceName(AcademicPerson person) {
         return academicPeople.keySet()
@@ -474,7 +471,7 @@ public class LabyrinthBuilder {
             .filter(key -> academicPeople.get(key)
             .equals(person))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
     public String getInstanceName(Cleaner cleaner) {
         return cleaners.keySet()
@@ -482,7 +479,7 @@ public class LabyrinthBuilder {
             .filter(key -> cleaners.get(key)
             .equals(cleaner))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
     public String getInstanceName(Door door) {
         return doors.keySet()
@@ -490,7 +487,7 @@ public class LabyrinthBuilder {
             .filter(key -> doors.get(key)
             .equals(door))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
 
     /**

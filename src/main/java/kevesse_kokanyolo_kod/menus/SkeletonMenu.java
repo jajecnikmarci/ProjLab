@@ -295,7 +295,6 @@ public class SkeletonMenu {
     }
 
     public void testDropTransistor() {
-        // TODO: ujrairni pairTransistors nelkul
         // verbose = false;
         // Room room1 = new Room(10, ProtoMenu.roomObservable);
 
@@ -319,7 +318,6 @@ public class SkeletonMenu {
     }
 
     public void testTeleportWithTransistor() {
-        // TODO: ujrairni pairTransistors nelkul
         // verbose = false;
         // Room room1 = new Room(10, ProtoMenu.roomObservable);
         // Room room2;

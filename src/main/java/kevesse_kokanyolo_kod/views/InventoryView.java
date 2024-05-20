@@ -32,7 +32,6 @@ public class InventoryView extends JPanel {
         public JButton dropButton;
 
         public ItemPanel(){
-            //TODO Borderek még nem jók ha jól látom
             this.setLayout(new BorderLayout());
             this.setBorder(BorderFactory.createEmptyBorder(10, 5, 0, 5));
             
