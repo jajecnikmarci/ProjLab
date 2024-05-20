@@ -202,8 +202,8 @@ public class Controller implements StudentObserver, RoomObserver {
             professor.goToRoom(professor.getLocation().getDoors().get(random.nextInt(professor.getLocation().getDoors().size())).getRoom1());
             professor.pickUpItem();
             if(!professor.getInventory().isEmpty()) {
-                if(random.nextInt(2) % 2 == 0) professor.useItem((Item) professor.getInventory().getFirst());
-                else professor.dropItem((Item) professor.getInventory().getFirst());
+                if(random.nextInt(2) % 2 == 0) professor.useItem((Item) professor.getInventory().get(0));
+                else professor.dropItem((Item) professor.getInventory().get(0));
             }
         }
     }
@@ -448,15 +448,8 @@ public class Controller implements StudentObserver, RoomObserver {
     public void roomsMerged(Room mergedRoom, Door mergedDoor) {
         String mergedRoomName = labyrinthBuilder.getRoomName(mergedRoom);
         String roomName = (mergedDoor.getRoom1() == mergedRoom) ? labyrinthBuilder.getRoomName(mergedDoor.getRoom2()) : labyrinthBuilder.getRoomName(mergedDoor.getRoom1());
-
-        List<Door> doorList = new ArrayList<>(labyrinthBuilder.getDoors().values());
-        for (int i = 0; i < doorList.size(); i++) {
-            if(doorList.get(i).getRoom1() == mergedDoor.getRoom1() || doorList.get(i).getRoom1() == mergedDoor.getRoom2() &&
-                ((doorList.get(i).getRoom1() == mergedDoor.getRoom1() && doorList.get(i).getRoom2() == mergedDoor.getRoom2()) ||
-                        (doorList.get(i).getRoom1() == mergedDoor.getRoom2() && doorList.get(i).getRoom2() == mergedDoor.getRoom1()))) {
-                    labyrinthBuilder.removeDoor(doorList.get(i));
-            }
-        }
+        Room changedRoom = mergedDoor.getRoom1() == mergedRoom ? mergedDoor.getRoom2() : mergedDoor.getRoom1();
+       
 
         labyrinthBuilder.removeDoor(mergedDoor);
         labyrinthBuilder.removeRoom(mergedRoom);
@@ -466,7 +459,6 @@ public class Controller implements StudentObserver, RoomObserver {
 
         IntPair newLocation = r1l.add(r2l).mult(0.5);
 
-        Room changedRoom = mergedDoor.getRoom1() == mergedRoom ? mergedDoor.getRoom2() : mergedDoor.getRoom1();
         labyrinthBuilder.setRoomLocation(changedRoom, newLocation);
         // Remove door endpoint offsets from the labyrinthBuilder
         labyrinthBuilder.getDoors()
