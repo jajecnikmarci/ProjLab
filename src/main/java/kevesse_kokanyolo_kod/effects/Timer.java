@@ -6,7 +6,6 @@ import kevesse_kokanyolo_kod.menus.SkeletonMenu;
 
 /**
  * Időzítő osztály. Elindítása után a megadott időtartamig várakozik, majd értesíti a hívó objektumot.
- * // TODO: timercontrol
  */
 public class Timer {
 

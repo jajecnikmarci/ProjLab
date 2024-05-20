@@ -101,7 +101,6 @@ public class LabyrinthBuilder {
     }
 
     public void setDoorEndpointOffsets(String doorName, IntPair startOffset, IntPair endOffset){
-        // TODO: error handling
         doorOffsets.put(doors.get(doorName), new IntPair [] {startOffset, endOffset});
     }
     public void removeDoorEndpointOffsets(String doorName){

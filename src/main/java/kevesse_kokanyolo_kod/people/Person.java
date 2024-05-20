@@ -1,7 +1,6 @@
 package kevesse_kokanyolo_kod.people;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.menus.Printer;

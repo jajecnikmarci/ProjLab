@@ -44,7 +44,6 @@ public class LabyrinthView extends JPanel {
      * @param labyrinth
      */
     public void redisplay(LabyrinthBuilder labyrinthBuilder) {
-        // TODO: ki lehetne találni valami okosab update mechanizmust, mert ez lassú
         removeAll();
         roomPanels.clear();
 
@@ -253,9 +252,6 @@ public class LabyrinthView extends JPanel {
             });
 
         }
-        public void addPlayer(Person person){
-
-        }
     }
 
     public static final int roomWidth = 80;
@@ -267,7 +263,7 @@ public class LabyrinthView extends JPanel {
     }
 
     private void makeRooms(LabyrinthBuilder labyrinthBuilder){
-        for (var roomEntry : labyrinthBuilder.getRooms().entrySet()) { // TODO: concurrentModificationException
+        for (var roomEntry : labyrinthBuilder.getRooms().entrySet()) { // concurrentModificationException (másik szálról?)
             IntPair position = labyrinthBuilder.getRoomLocations().get(roomEntry.getValue());
             createRoomPanel(roomEntry.getValue(), position);
         }

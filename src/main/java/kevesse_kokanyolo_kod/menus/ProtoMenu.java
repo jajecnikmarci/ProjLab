@@ -15,7 +15,6 @@ import kevesse_kokanyolo_kod.observer.StudentObservable;
 import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.observer.RoomObservable;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 

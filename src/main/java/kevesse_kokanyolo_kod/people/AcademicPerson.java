@@ -226,7 +226,6 @@ public abstract class AcademicPerson extends Person implements PickUpVisitor, Ef
      */
     public void stun(int duration) {
         SkeletonMenu.startCall("Player.stun(Duration)");
-        // TODO: timercontrol
         Timer timer = new Timer();
         stunned=true;
         notifyStateChanged();

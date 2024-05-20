@@ -348,7 +348,6 @@ public class Controller implements StudentObserver, RoomObserver {
         infoView.addMessage("A " + labyrinthBuilder.getPersonName(student) + " hallgató meghalt.");
     }
 
-    // TODO
     @Override
     public void slideRulePicked() {
         int result = JOptionPane.showConfirmDialog(gameWindow, "A hallgatók megnyerték a játékot!","Message",JOptionPane.PLAIN_MESSAGE);
