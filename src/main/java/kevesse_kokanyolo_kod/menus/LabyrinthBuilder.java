@@ -140,6 +140,22 @@ public class LabyrinthBuilder {
         return null;
     }
 
+    public String getRoomName(Room room){
+        for (var roomEntry : rooms.entrySet()) {
+            if(roomEntry.getValue() == room) return roomEntry.getKey();
+        }
+
+        return null;
+    }
+
+    public String getDoorName(Door door){
+        for (var doorEntry : doors.entrySet()) {
+            if(doorEntry.getValue() == door) return doorEntry.getKey();
+        }
+
+        return null;
+    }
+
     /** 
      * Nyilvántartjuk a kiosztott ajtók és szobák számait, 
      * hogy ne legyen ütközés merge utáni split esetén. 
@@ -421,7 +437,6 @@ public class LabyrinthBuilder {
 
     public String newRoomName, newDoorName;
     public void shake() {
-        boolean isRandom = ProtoMenu.getRandomness();
         Door randomDoor = chooseRandomDoor();
 
         Room roomToMergeInto, roomToMerge, roomToSplit;

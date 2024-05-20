@@ -372,6 +372,11 @@ public class Controller implements StudentObserver, RoomObserver {
         oldLocation.set(oldLocation.x()- 20 -LabyrinthView.roomWidth, oldLocation.y()- 20);
         rearrangeLabyrinth();
         labyrinthView.redisplay(labyrinthBuilder);
+        String originalRoomName = (newDoor.getRoom1() == newRoom) ? labyrinthBuilder.getRoomName(newDoor.getRoom2()) : labyrinthBuilder.getRoomName(newDoor.getRoom1());
+        String newRoomName = labyrinthBuilder.getRoomName(newRoom);
+        String newDoorName = labyrinthBuilder.getDoorName(newDoor);
+        gameWindow.infoView.addMessage("A " + originalRoomName + " szoba osztódott, létrejött a " + newRoomName + " szoba és");
+        gameWindow.infoView.addMessage("létrejött a " + newDoorName + " ajtó.");
     }
 
     /**
@@ -416,6 +421,9 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     @Override
     public void roomsMerged(Room mergedRoom, Door mergedDoor) {
+        String mergedRoomName = labyrinthBuilder.getRoomName(mergedRoom);
+        String roomName = (mergedDoor.getRoom1() == mergedRoom) ? labyrinthBuilder.getRoomName(mergedDoor.getRoom2()) : labyrinthBuilder.getRoomName(mergedDoor.getRoom1());
+
         labyrinthBuilder.removeDoor(mergedDoor);
         labyrinthBuilder.removeRoom(mergedRoom);
 
@@ -438,6 +446,8 @@ public class Controller implements StudentObserver, RoomObserver {
 
         rearrangeLabyrinth();
         redisplayLabyrinth();
+
+        gameWindow.infoView.addMessage("A " + mergedRoomName + " szoba beleolvadt a " + roomName + " szobába.");
     }
 
     public LabyrinthBuilder getLabyrinthBuilder() {
