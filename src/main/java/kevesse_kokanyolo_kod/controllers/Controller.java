@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JOptionPane;
+
 
 public class Controller implements StudentObserver, RoomObserver {
 
@@ -175,7 +177,7 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param roomName a szoba, ahova a játékos megy
      */
     public void goToRoom(String roomName) {
-        if(!labyrinthBuilder.getSelectedPerson().isEmpty())
+        if(labyrinthBuilder.getSelectedPerson()!=null)
             labyrinthBuilder.gotoroom(labyrinthBuilder.getSelectedPerson(), roomName);
     }
 
@@ -193,6 +195,12 @@ public class Controller implements StudentObserver, RoomObserver {
      */
     public void studentKilled() {
         labyrinthBuilder.studentDied();
+        if(labyrinthBuilder.getStudentCount()==0) {
+            int result = JOptionPane.showConfirmDialog(gameWindow, "Az oktatók megnyerték a játékot, mert eltanácsolták az összes hallgatót!","Message",JOptionPane.PLAIN_MESSAGE);
+            if(result == JOptionPane.OK_OPTION){
+                System.exit(0);
+            }
+        }
     }
 
     /**
@@ -343,7 +351,10 @@ public class Controller implements StudentObserver, RoomObserver {
     // TODO
     @Override
     public void slideRulePicked() {
-
+        int result = JOptionPane.showConfirmDialog(gameWindow, "A hallgatók megnyerték a játékot!","Message",JOptionPane.PLAIN_MESSAGE);
+        if(result == JOptionPane.OK_OPTION){
+            System.exit(0);
+        }
     }
 
     /**
