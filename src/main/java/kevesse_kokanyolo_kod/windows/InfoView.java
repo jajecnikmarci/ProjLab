@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.windows;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

@@ -14,6 +14,7 @@ import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 import kevesse_kokanyolo_kod.views.*;
 import kevesse_kokanyolo_kod.windows.GameWindow;
+import kevesse_kokanyolo_kod.windows.InfoView;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 import java.util.Map;
@@ -35,8 +36,8 @@ public class Controller implements StudentObserver, RoomObserver {
     private ItemsInRoomView itemsInRoomView;
     private LabyrinthView labyrinthView;
     private PlayerInfoView playerInfoView;
+    private InfoView infoView;
 
-    // private MenuWindow menuWindow;
     private GameWindow gameWindow;
     Printer printer;
 
@@ -44,7 +45,6 @@ public class Controller implements StudentObserver, RoomObserver {
         printer = new Printer();
         labyrinthBuilder = new LabyrinthBuilder(printer);
         personStateChangedObserver = new StateChangedObserver<Person>(person->{
-            System.out.println("Player changed");
             String name = labyrinthBuilder.getSelectedPerson();
             redisplayLabyrinth();
             if(labyrinthBuilder.getPerson(name) == person){
@@ -54,11 +54,11 @@ public class Controller implements StudentObserver, RoomObserver {
             }
         } );
         itemStateChangedObserver = new StateChangedObserver<Item>(i -> {
-            System.out.println("Item changed");
             String name = labyrinthBuilder.getSelectedPerson();
 
             if(labyrinthBuilder.getStudents().get(name) != null){
-                if(labyrinthBuilder.getStudents().get(name).getInventory().contains(i)) redisplayInventory(labyrinthBuilder.getStudents().get(name));
+                if(labyrinthBuilder.getStudents().get(name).getInventory().contains(i)) 
+                    redisplayInventory(labyrinthBuilder.getStudents().get(name));
             }
             else if(labyrinthBuilder.getProfessors().get(name) != null){
                 if(labyrinthBuilder.getProfessors().get(name).getInventory().contains(i)) redisplayInventory(labyrinthBuilder.getProfessors().get(name));
@@ -66,19 +66,14 @@ public class Controller implements StudentObserver, RoomObserver {
             else if (labyrinthBuilder.getCleaners().get(name) != null) {
                 redisplayInventory(labyrinthBuilder.getCleaners().get(name));
             }
-            else{
-                System.out.println("Nem talált xd");
-            }
         }
         );
 
         doorStateChangedObserver = new StateChangedObserver<Door>(d->{
-            System.out.println("Door changed");
             redisplayLabyrinth();
         }
         );
         roomStateChangedObserver = new StateChangedObserver<Room>(room->{
-                System.out.println("Room changed");
                 redisplayLabyrinth();
                 String name = labyrinthBuilder.getSelectedPerson();
                 if(name!=null){
@@ -95,16 +90,16 @@ public class Controller implements StudentObserver, RoomObserver {
         inventoryView = gameWindow.inventoryView;
         itemsInRoomView = gameWindow.itemsInRoomView;
         playerInfoView = gameWindow.playerInfoView;
+        infoView = gameWindow.infoView;
 
         TimerTask shakeTask = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("SHAKE");
                 shake();
             }
         };
         Timer shakeTimer = new Timer();
-        shakeTimer.scheduleAtFixedRate(shakeTask, 10000, 30000);
+        shakeTimer.scheduleAtFixedRate(shakeTask, 30000, 30000);
 
     }
 
@@ -188,8 +183,8 @@ public class Controller implements StudentObserver, RoomObserver {
      * A labirintus tér-idő rengését valósítja meg.
      */
     public void shake() {
+        infoView.addMessage("Tér-idő rengés történt.");
         labyrinthBuilder.shake();
-        gameWindow.infoView.addMessage("SHAKE");
     }
 
     /**
@@ -338,16 +333,17 @@ public class Controller implements StudentObserver, RoomObserver {
         redisplayPlayerInfo(labyrinthBuilder.getPerson(personName));
     }
 
-    // TODO
     @Override
     public void studentKilled(Student student) {
         student.getLocation().removePlayer(student);
         labyrinthBuilder.getStudents().remove(labyrinthBuilder.getPersonName(student));
+        infoView.addMessage("A " + labyrinthBuilder.getPersonName(student) + " hallgató meghalt.");
     }
 
     // TODO
     @Override
     public void slideRulePicked() {
+
     }
 
     /**
@@ -375,8 +371,8 @@ public class Controller implements StudentObserver, RoomObserver {
         String originalRoomName = (newDoor.getRoom1() == newRoom) ? labyrinthBuilder.getRoomName(newDoor.getRoom2()) : labyrinthBuilder.getRoomName(newDoor.getRoom1());
         String newRoomName = labyrinthBuilder.getRoomName(newRoom);
         String newDoorName = labyrinthBuilder.getDoorName(newDoor);
-        gameWindow.infoView.addMessage("A " + originalRoomName + " szoba osztódott, létrejött a " + newRoomName + " szoba és");
-        gameWindow.infoView.addMessage("létrejött a " + newDoorName + " ajtó.");
+        infoView.addMessage("A " + originalRoomName + " szoba osztódott, létrejött a " + newRoomName + " szoba és");
+        infoView.addMessage("létrejött a " + newDoorName + " ajtó.");
     }
 
     /**
@@ -447,7 +443,7 @@ public class Controller implements StudentObserver, RoomObserver {
         rearrangeLabyrinth();
         redisplayLabyrinth();
 
-        gameWindow.infoView.addMessage("A " + mergedRoomName + " szoba beleolvadt a " + roomName + " szobába.");
+        infoView.addMessage("A " + mergedRoomName + " szoba beleolvadt a " + roomName + " szobába.");
     }
 
     public LabyrinthBuilder getLabyrinthBuilder() {

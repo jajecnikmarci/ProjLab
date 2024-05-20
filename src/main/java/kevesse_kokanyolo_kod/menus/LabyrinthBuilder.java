@@ -458,7 +458,7 @@ public class LabyrinthBuilder {
             .filter(key -> items.get(key)
             .equals(item))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
     public String getInstanceName(Room room) {
         return rooms.keySet()
@@ -466,7 +466,7 @@ public class LabyrinthBuilder {
             .filter(key -> rooms.get(key)
             .equals(room))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
     public String getInstanceName(AcademicPerson person) {
         return academicPeople.keySet()
@@ -474,7 +474,7 @@ public class LabyrinthBuilder {
             .filter(key -> academicPeople.get(key)
             .equals(person))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
     public String getInstanceName(Cleaner cleaner) {
         return cleaners.keySet()
@@ -482,7 +482,7 @@ public class LabyrinthBuilder {
             .filter(key -> cleaners.get(key)
             .equals(cleaner))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
     public String getInstanceName(Door door) {
         return doors.keySet()
@@ -490,7 +490,7 @@ public class LabyrinthBuilder {
             .filter(key -> doors.get(key)
             .equals(door))
             .findFirst()
-            .orElse("");
+            .orElse(null);
     }
 
     /**

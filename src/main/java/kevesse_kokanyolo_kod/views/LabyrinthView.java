@@ -135,7 +135,8 @@ public class LabyrinthView extends JPanel {
     }
 
     private void drawPlayers(LabyrinthBuilder labyrinthBuilder){
-        for (RoomPanel roomPanel : roomPanels) {
+        for (int j = 0; j <  roomPanels.size(); j++) { 
+            RoomPanel roomPanel = roomPanels.get(j);
             for (int i = 0; i < 11; i++) {
                 JPanel panel = roomPanel.slots.get(i);
                 panel.removeAll();
@@ -266,7 +267,7 @@ public class LabyrinthView extends JPanel {
     }
 
     private void makeRooms(LabyrinthBuilder labyrinthBuilder){
-        for (var roomEntry : labyrinthBuilder.getRooms().entrySet()) {
+        for (var roomEntry : labyrinthBuilder.getRooms().entrySet()) { // TODO: concurrentModificationException
             IntPair position = labyrinthBuilder.getRoomLocations().get(roomEntry.getValue());
             createRoomPanel(roomEntry.getValue(), position);
         }

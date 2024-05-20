@@ -29,11 +29,6 @@ public class DefaultLabyrinth {
             controller.createRoom("room" + i, 4, poisonousRooms[i], location);
         }
 
-        final IntPair topOffset = new IntPair(0, -1);
-        final IntPair rightOffset = new IntPair(1, 0);
-        final IntPair bottomOffset = new IntPair(0, 1);
-        final IntPair leftOffset = new IntPair(-1, 0);
-
         controller.createDoor("room0", "room1", true, "door0", false);
         controller.createDoor("room0", "room2", true, "door1", true);
         controller.createDoor("room0", "room3", false, "door2", true);
@@ -54,16 +49,55 @@ public class DefaultLabyrinth {
         controller.createDoor("room11", "room12", true, "door17", true);
 
         controller.createStudent("room1", "S1");
-        controller.createCleaner("room1", "C3");
-        controller.createProfessor("room3", "P3");
+        controller.createStudent("room5", "S2");
 
-        controller.createItem("room1", "FFP2", "FFP2");
-        controller.createItem("room1", "Camembert", "Camembert");
+        controller.createCleaner("room2", "C1");
 
-        controller.createItem("room1", "FakeSlideRule", "FakeSlideRule");
-        controller.createItem("room12", "SlideRule", "SlideRule");
 
-        controller.createItem("room4", "Transistor", "Transistor1");
-        controller.createItem("room5", "Transistor", "Transistor2");
+        controller.createProfessor("room3", "P1");
+        controller.createProfessor("room7", "P2");
+        
+
+
+        controller.createItem("room0", "Glass", "Glass_0");
+        controller.createItem("room0", "FFP2", "FFP2_0");
+
+        
+
+        controller.createItem("room1", "FFP2", "FFP2_1");
+        controller.createItem("room1", "Camembert", "Camembert_0");
+        controller.createItem("room1", "FakeSlideRule", "FakeSlideRule_0");
+        
+        controller.createItem("room2", "FakeTVSZ", "FakeTVSZ_0");
+        controller.createItem("room2", "FFP2", "FFP2_2");
+        controller.createItem("room2", "TVSZ", "TVSZ_0");
+        controller.createItem("room2", "AirFreshener", "AirFreshener_0");
+        controller.createItem("room2", "FakeFFP2", "FakeFFP2_0");
+        controller.createItem("room2", "Rug", "Rug_0");
+
+        controller.createItem("room3", "Rug", "Rug_1");
+        controller.createItem("room3", "FakeSlideRule", "FakeSlideRule_1");
+
+
+        controller.createItem("room4", "Transistor", "Transistor_0");
+        
+        controller.createItem("room5", "Transistor", "Transistor_1");
+        
+        // room6 üres        
+
+        controller.createItem("room7", "Glass", "Glass_1");
+        controller.createItem("room7", "Camembert", "Camembert_1");
+        
+        controller.createItem("room8", "AirFreshener", "AirFreshener_1");
+        
+        // 9 üres
+
+        controller.createItem("room10", "TVSZ", "TVSZ_1");
+        controller.createItem("room10", "FakeTVSZ", "FakeTVSZ_1");
+
+        controller.createItem("room11", "Rug", "Rug_2");
+
+        controller.createItem("room12", "SlideRule", "SlideRule_0");
+
     }
 }

@@ -99,7 +99,7 @@ public class Transistor extends Item {
      * @return ha van leírás akkor a leírás (String), ha nincs null
      */
     public String getDescription(){
-        if(metTransistor) return "(paired)";
+        if(this.pair!=null) return "(paired)";
         else return "(unpaired)";
     }
 
@@ -155,9 +155,9 @@ public class Transistor extends Item {
             metTransistor = false;
             return true;
         }
-        notifyStateChanged();
         this.pair = transistor;
         transistor.pair = this;
+        notifyStateChanged();
 
         return true;
     }
@@ -170,6 +170,20 @@ public class Transistor extends Item {
     public boolean interact(IItem item) {
 
         return  item.interactItem(this);
+    }
+
+    // Ha egy párosított tranzisztort eldobnak, ugyanaz történik, mintha használnák.
+    public void onDrop(AcademicPerson person) {
+        if(this.pair != null ) {
+            this.setRoom(owner.getLocation());
+            this.room.removeItem(this); // ilyenkor már el van dobva, nem veheti fel más, nem adjuk a szobához.
+        } else {
+            this.owner = null;
+            
+        }
+
+
+
     }
 
     @Override
