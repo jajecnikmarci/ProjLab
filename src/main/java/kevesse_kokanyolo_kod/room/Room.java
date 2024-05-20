@@ -294,18 +294,20 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         }
 
         Room newRoom = new Room(capacity / 2);
+        // Az ajtók felét átkötjük az új szobába.
         for (int i = 0; i < doors.size(); i += 2) {
             Door door = doors.remove(i);
-            newRoom.doors.add(door);
             if(door.getRoom1() == this) {
-                door.setRoom1(this);
-                door.setRoom2(newRoom);
-            } else {
-                door.setRoom2(this);
                 door.setRoom1(newRoom);
+                // A Room2 marad
+            } else {
+                door.setRoom2(newRoom);
+                // A Room1 marad
             }
+            newRoom.addDoor(door);
+            System.out.println("door: "+ door.getRoom1() + " " + door.getRoom2());
         }
-
+        
         for (int i = 0; i < items.size(); i += 2) {
             newRoom.items.add(items.remove(i));
         }
@@ -320,6 +322,8 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         // Jöhetne létre elátkozott ajtó...
         Door newDoor = new Door(this, newRoom, true, true, true, false);
         roomObservable.notifyRoomSplit(newRoom, newDoor);
+        System.out.println("newDoor: "+ newDoor.getRoom1() + " " + newDoor.getRoom2());
+
         SkeletonMenu.endCall("A szoba osztódott.");
     }
 

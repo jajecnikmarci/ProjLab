@@ -101,7 +101,7 @@ public class Controller implements StudentObserver, RoomObserver {
             }
         };
         Timer shakeTimer = new Timer();
-        shakeTimer.scheduleAtFixedRate(shakeTask, 30000, 30000);
+        shakeTimer.scheduleAtFixedRate(shakeTask, 30000, 30000  );
 
     }
 
@@ -367,10 +367,12 @@ public class Controller implements StudentObserver, RoomObserver {
         newRoom.addObserver(this);
         newRoom.addObserver(roomStateChangedObserver);
         newDoor.addObserver(doorStateChangedObserver);
+
         String doorName = "door"+String.valueOf(labyrinthBuilder.getNextDoorId());
         String roomName = "room"+String.valueOf(labyrinthBuilder.getNextRoomId());
         labyrinthBuilder.addRoom(roomName, newRoom);
         labyrinthBuilder.addDoor(doorName, newDoor);
+
         Room oldRoom = newDoor.getRoom1() == newRoom ? newDoor.getRoom2() : newDoor.getRoom1();
         IntPair oldLocation = labyrinthBuilder.getRoomLocations().get(oldRoom);
         labyrinthBuilder.setRoomLocation(newRoom, 
@@ -378,9 +380,11 @@ public class Controller implements StudentObserver, RoomObserver {
         oldLocation.set(oldLocation.x()- 20 -LabyrinthView.roomWidth, oldLocation.y()- 20);
         rearrangeLabyrinth();
         labyrinthView.redisplay(labyrinthBuilder);
+        
         String originalRoomName = (newDoor.getRoom1() == newRoom) ? labyrinthBuilder.getRoomName(newDoor.getRoom2()) : labyrinthBuilder.getRoomName(newDoor.getRoom1());
         String newRoomName = labyrinthBuilder.getRoomName(newRoom);
         String newDoorName = labyrinthBuilder.getDoorName(newDoor);
+
         infoView.addMessage("A " + originalRoomName + " szoba osztódott, létrejött a " + newRoomName + " szoba és");
         infoView.addMessage("létrejött a " + newDoorName + " ajtó.");
     }

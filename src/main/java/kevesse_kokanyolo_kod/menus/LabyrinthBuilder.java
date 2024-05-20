@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.menus;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import kevesse_kokanyolo_kod.items.*;
 import kevesse_kokanyolo_kod.items.fakes.*;
@@ -442,7 +441,6 @@ public class LabyrinthBuilder {
         roomToMergeInto = randomDoor.getRoom1();
         roomToMerge = randomDoor.getRoom2();
         roomToSplit = chooseRandomRoom();
-
         List<Room> roomList = new ArrayList<>(rooms.values());
         for (int i = 0; i < roomList.size(); i++) {
             var room = roomList.get(i);

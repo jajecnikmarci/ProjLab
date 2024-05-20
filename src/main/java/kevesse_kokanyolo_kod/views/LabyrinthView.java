@@ -263,9 +263,11 @@ public class LabyrinthView extends JPanel {
     }
 
     private void makeRooms(LabyrinthBuilder labyrinthBuilder){
-        for (var roomEntry : labyrinthBuilder.getRooms().entrySet()) { // concurrentModificationException (másik szálról?)
-            IntPair position = labyrinthBuilder.getRoomLocations().get(roomEntry.getValue());
-            createRoomPanel(roomEntry.getValue(), position);
+        List<Room> roomList = new ArrayList<>(labyrinthBuilder.getRooms().values());
+        for (int i = 0; i < roomList.size(); i++) {
+            var room = roomList.get(i);
+            IntPair position = labyrinthBuilder.getRoomLocations().get(room);
+            createRoomPanel(room, position);
         }
     }
 
