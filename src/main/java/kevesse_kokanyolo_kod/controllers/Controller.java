@@ -17,10 +17,7 @@ import kevesse_kokanyolo_kod.windows.GameWindow;
 import kevesse_kokanyolo_kod.windows.InfoView;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
-import java.util.Map;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import javax.swing.JOptionPane;
 
@@ -451,6 +448,15 @@ public class Controller implements StudentObserver, RoomObserver {
     public void roomsMerged(Room mergedRoom, Door mergedDoor) {
         String mergedRoomName = labyrinthBuilder.getRoomName(mergedRoom);
         String roomName = (mergedDoor.getRoom1() == mergedRoom) ? labyrinthBuilder.getRoomName(mergedDoor.getRoom2()) : labyrinthBuilder.getRoomName(mergedDoor.getRoom1());
+
+        List<Door> doorList = new ArrayList<>(labyrinthBuilder.getDoors().values());
+        for (int i = 0; i < doorList.size(); i++) {
+            if(doorList.get(i).getRoom1() == mergedDoor.getRoom1() || doorList.get(i).getRoom1() == mergedDoor.getRoom2() &&
+                ((doorList.get(i).getRoom1() == mergedDoor.getRoom1() && doorList.get(i).getRoom2() == mergedDoor.getRoom2()) ||
+                        (doorList.get(i).getRoom1() == mergedDoor.getRoom2() && doorList.get(i).getRoom2() == mergedDoor.getRoom1()))) {
+                    labyrinthBuilder.removeDoor(doorList.get(i));
+            }
+        }
 
         labyrinthBuilder.removeDoor(mergedDoor);
         labyrinthBuilder.removeRoom(mergedRoom);
