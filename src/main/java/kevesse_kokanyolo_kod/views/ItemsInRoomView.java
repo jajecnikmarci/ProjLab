@@ -25,6 +25,10 @@ public class ItemsInRoomView extends JPanel{
      */
     public void display(Room room) {
         itemPanels.removeAll();
+        if(room == null){ 
+            itemPanels.add(new JPanel()); 
+            return;
+        }
         if(room.getItems().size()==0) itemPanels.add(new JPanel());
         for (int i = room.getItems().size()-1; i >= 0; i--) {
             ItemPanel itemPanel = new ItemPanel();

@@ -61,6 +61,12 @@ public class InventoryView extends JPanel {
      * Megjeleníti a kapott AcademicPerson tárgylistáját.
      */
     public void display(AcademicPerson person) {
+        if(person == null) {
+            for (int i = 0; i < 5; i++) {
+                ((ItemPanel)itemPanels.getComponents()[i]).setVisible(false);
+            }
+            return;
+        }
         for (int i = 0; i < 5; i++) {
             if(i<person.getInventory().size()){
                 IItem selectedItem = person.getInventory().get(i);

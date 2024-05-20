@@ -119,7 +119,11 @@ public class Controller implements StudentObserver, RoomObserver {
     }
 
     private void redisplayInventory(Person person){
-        if(labyrinthBuilder.getStudents().get(labyrinthBuilder.getPersonName(person)) !=null || labyrinthBuilder.getProfessors().get(labyrinthBuilder.getPersonName(person)) != null) {
+        if(person == null){
+            AcademicPerson nullPerson = null;
+            inventoryView.display(nullPerson);
+        }
+        else if(labyrinthBuilder.getStudents().get(labyrinthBuilder.getPersonName(person)) !=null || labyrinthBuilder.getProfessors().get(labyrinthBuilder.getPersonName(person)) != null) {
             AcademicPerson academicPerson = (AcademicPerson) person;
             inventoryView.display(academicPerson);
         }
@@ -134,7 +138,11 @@ public class Controller implements StudentObserver, RoomObserver {
     }
 
     private void redisplayPlayerInfo(Person person){
-        if(labyrinthBuilder.getStudents().get(labyrinthBuilder.getPersonName(person))!=null || labyrinthBuilder.getProfessors().get(labyrinthBuilder.getPersonName(person))!=null) {
+        if(person == null){
+            AcademicPerson nullPerson = null;
+            playerInfoView.display(nullPerson);
+        }
+        else if(labyrinthBuilder.getStudents().get(labyrinthBuilder.getPersonName(person))!=null || labyrinthBuilder.getProfessors().get(labyrinthBuilder.getPersonName(person))!=null) {
             AcademicPerson academicPerson = (AcademicPerson) person;
             playerInfoView.display(academicPerson);
         }
@@ -346,7 +354,14 @@ public class Controller implements StudentObserver, RoomObserver {
         redisplayPlayerInfo(labyrinthBuilder.getPerson(personName));
     }
 
-    // TODO
+    public void deselectPerson(){
+        labyrinthBuilder.setSelectedPerson(null);
+        redisplayLabyrinth();
+        redisplayItemsInRoom(null);
+        redisplayInventory(null);
+        redisplayPlayerInfo(null);
+    }
+
     @Override
     public void studentKilled(Student student) {
         student.getLocation().removePlayer(student);
