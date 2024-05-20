@@ -182,7 +182,7 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param roomName a szoba, ahova a játékos megy
      */
     public void goToRoom(String roomName) {
-        if(!labyrinthBuilder.getSelectedPerson().isEmpty())
+        if(labyrinthBuilder.getSelectedPerson()!=null)
             labyrinthBuilder.gotoroom(labyrinthBuilder.getSelectedPerson(), roomName);
     }
 
