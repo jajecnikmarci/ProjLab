@@ -1,6 +1,9 @@
 package kevesse_kokanyolo_kod.windows;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import kevesse_kokanyolo_kod.controllers.Controller;
 import kevesse_kokanyolo_kod.views.InventoryView;
@@ -12,10 +15,11 @@ import java.awt.*;
 
 public class GameWindow extends JFrame {
     private JPanel menuContainer;
-    private ItemsInRoomView itemsInRoomView;
+    public ItemsInRoomView itemsInRoomView;
     public LabyrinthView labyrinthView;    
-    private PlayerInfoView playerInfoView;
-    private InventoryView inventoryView;
+    public PlayerInfoView playerInfoView;
+    public InventoryView inventoryView;
+    public InfoView infoView;
     Controller controller;
 
     public GameWindow(Controller controller) {
@@ -41,5 +45,31 @@ public class GameWindow extends JFrame {
 
         itemsInRoomView = new ItemsInRoomView();
         menuContainer.add(itemsInRoomView);
+
+        infoView = new InfoView();
+        menuContainer.add(infoView);
+
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // Not used
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // Check if the Escape key was pressed
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    controller.deselectPerson();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // Not used
+            }
+        });
+
     }
 }

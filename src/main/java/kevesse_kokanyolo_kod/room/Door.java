@@ -25,12 +25,12 @@ public class Door implements IStateChangedObservable<Door> {
     /**
      * Az ajtó első szobából a másodikba nyitva van-e.
      */
-    private final boolean room1Open;
+    private boolean room1Open;
 
     /**
      * Az ajtó második szobából az elsőbe nyitva van-e.
      */
-    private final boolean room2Open;
+    private boolean room2Open;
 
     /**
      * Az ajtó látható-e.
@@ -67,6 +67,17 @@ public class Door implements IStateChangedObservable<Door> {
         stateChangedObservable = new StateChangedObservable<>(this);
     }
 
+    public void setDoor(Room room1, Room room2, boolean room1Open, boolean room2Open, boolean visible, boolean cursed) {
+        this.room1 = room1;
+        this.room2 = room2;
+        room1.addDoor(this);
+        room2.addDoor(this);
+        this.room1Open = room1Open;
+        this.room2Open = room2Open;
+        this.visible = visible;
+        this.cursed = cursed;
+    }
+
     /**
      * Segédfüggvény. Megmondja, hogy az ajtó room1 és room2 között van-e.
      *
@@ -88,6 +99,10 @@ public class Door implements IStateChangedObservable<Door> {
      */
     public boolean goThrough(Person person) {
         SkeletonMenu.startCall("Door.goThrough(Player)");
+        if (!visible)  {
+            SkeletonMenu.endCall("Az ajtó nem látható.");
+            return false;
+        }
         if (person.getLocation() == room1 && room2Open && room2.canPlayerEnter()) {
             room1.removePlayer(person);
             room2.addPlayer(person);

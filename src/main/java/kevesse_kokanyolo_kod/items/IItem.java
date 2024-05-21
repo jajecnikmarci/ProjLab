@@ -193,6 +193,15 @@ public interface IItem {
     public default boolean isPassive(){
         return false;
     }
+    
+    /**
+     * Visszaadja a tárgy leírását (ha van)
+     * 
+     * @return ha van leírás akkor a leírás (String), ha nincs null
+     */
+    public default String getDescription(){
+        return null;
+    }
 
     /**
      * Törli a tárgyhoz tartozó Effect-et

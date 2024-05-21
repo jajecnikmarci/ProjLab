@@ -15,7 +15,6 @@ import kevesse_kokanyolo_kod.observer.StudentObservable;
 import kevesse_kokanyolo_kod.observer.StudentObserver;
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
-import kevesse_kokanyolo_kod.observer.RoomObservable;
 import kevesse_kokanyolo_kod.observer.RoomObserver;
 
 
@@ -515,9 +514,11 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
     }
 
     @Override
-    public void roomsMerged(Room room, Door door) {
+    public void roomsMerged(Room room, ArrayList<Door> doors) {
         labyrinthBuilder.rooms.entrySet().removeIf(entry -> entry.getValue().equals(room));
-        labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(door));
+        for (Door door : doors) {
+            labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(door));
+        }
     }
 
     class Option {

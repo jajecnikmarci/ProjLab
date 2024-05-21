@@ -94,16 +94,16 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     }
 
     public boolean isPoisonous() {
-        if(poisonEffects.isEmpty()) 
-            return false;
-        else
-            return true;
+        return !poisonEffects.isEmpty(); 
     }
 
     public int getCapacity() {
         return capacity;
     }
 
+    public List<IItem> getItems() {
+        return items;
+    }
 
     /**
      * Hozzáadja a szoba ajtóihoz a kapott ajtót.
@@ -118,6 +118,10 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
      */
     public List<Door> getDoors() {
         return doors;
+    }
+
+    public List<Person> getPeople() {
+        return people;
     }
 
     /**
@@ -163,11 +167,12 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
      */
     public void popItem(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("Room.popItem(Player)");
-        IItem topItem = items.get(items.size() - 1);
-         if (items.isEmpty()) {
+        if (items.isEmpty()) {
             SkeletonMenu.endCall("Nincs több tárgy a szobában.");
             return;
-        } else if (stickiness != null && stickiness.isSticky()) {
+        }
+        IItem topItem = items.get(items.size() - 1);
+        if (stickiness != null && stickiness.isSticky()) {
             SkeletonMenu.endCall("Túl rég volt takarítás a szobában így a tárgyak ragacsosak lettek");
             return;
         } else if(academicPerson.checkHasItem(topItem)){  
@@ -243,11 +248,8 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
             Person person = this.people.get(i);
             if(person != cleaner) person.meet(cleaner);
         }
-        this.poisonEffects.clear();
-        if (stickiness!=null) stickiness.clean();
-        else {
-            stickiness=new StickinessEffect();
-        }
+        clearPoisonEffects();
+       
         SkeletonMenu.endCall();
     }
     /**
@@ -292,18 +294,20 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         }
 
         Room newRoom = new Room(capacity / 2);
+        // Az ajtók felét átkötjük az új szobába.
         for (int i = 0; i < doors.size(); i += 2) {
             Door door = doors.remove(i);
-            newRoom.doors.add(door);
             if(door.getRoom1() == this) {
-                door.setRoom1(this);
-                door.setRoom2(newRoom);
-            } else {
-                door.setRoom2(this);
                 door.setRoom1(newRoom);
+                // A Room2 marad
+            } else {
+                door.setRoom2(newRoom);
+                // A Room1 marad
             }
+            newRoom.addDoor(door);
         }
 
+        
         for (int i = 0; i < items.size(); i += 2) {
             newRoom.items.add(items.remove(i));
         }
@@ -318,6 +322,7 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         // Jöhetne létre elátkozott ajtó...
         Door newDoor = new Door(this, newRoom, true, true, true, false);
         roomObservable.notifyRoomSplit(newRoom, newDoor);
+
         SkeletonMenu.endCall("A szoba osztódott.");
     }
 
@@ -342,19 +347,64 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         this.poisonEffects.addAll(room.poisonEffects);
         this.stunEffects.addAll(room.stunEffects);
 
-        doors.addAll(room.doors); 
-        doors = doors.stream()
-                .filter(d -> {
-                    if (!d.isBetween(this, room)) {
-                        return true;
-                    } else {
-                        room.doors.remove(d);
-                        roomObservable.notifyRoomsMerged(room, d);
-                        return false;
+        //Eltávolítandó ajtók listája
+        ArrayList<Door> doorsToRemove = new ArrayList<>();
+
+        for (int i =0; i< doors.size(); i++) {
+
+            //A két szoba közötti ajtókat eldobjuk
+            if(doors.get(i).isBetween(this, room)){
+                doorsToRemove.add(0,doors.get(i));
+            }else{
+
+                for(int k =0; k< room.doors.size(); k++){
+
+                    //A két szoba közötti ajtókat eldobjuk
+                    if(room.doors.get(k).isBetween(this, room)){
+                        doorsToRemove.add(room.doors.get(k));
                     }
-                })
+                    else{
+                        if(doors.get(i).getRoom1() == room.doors.get(k).getRoom1() || doors.get(i).getRoom1() == room.doors.get(k).getRoom2() 
+                          || doors.get(i).getRoom2() == room.doors.get(k).getRoom1() || doors.get(i).getRoom2() == room.doors.get(k).getRoom2()){
+                        
+                            //Itt doors.get(i) és a room.doors.get(k) párhuzamos ajtók
+
+                            //Azt összevont ajtó tulajdonságainak beállítása
+                            boolean cursed = doors.get(i).isCursed() || room.doors.get(k).isCursed();
+                            boolean room1Open = doors.get(i).isRoom1Open() || room.doors.get(k).isRoom1Open();
+                            boolean room2Open = doors.get(i).isRoom2Open() || room.doors.get(k).isRoom2Open();
+
+                            //A tulajdonságok beállítása a doors.get(i) ajtóra
+                            doors.get(i).setDoor(room, room, room1Open, room2Open, room2Open, cursed);
+
+                            //A másik ajtót el kell távolítani
+                            doorsToRemove.add(room.doors.get(k));
+
+                            //Az ajtó másik szobájából is törölni kell az ajtót
+                            if(room.doors.get(k).getRoom1() == room)
+                                room.doors.get(k).getRoom2().doors.remove(room.doors.get(k));
+                            else
+                                room.doors.get(k).getRoom1().doors.remove(room.doors.get(k));
+
+                            break;
+                        }
+                    }
+                }
+            
+            }
+        }
+
+        room.doors.removeAll(doorsToRemove);
+        doors.removeAll(doorsToRemove);
+        doors.addAll(room.doors); //Ajtók összesítése
+
+        //duplikált ajtók eltávolítása
+        doors = doors.stream()
                 .distinct()
                 .collect(Collectors.toList());
+
+        notifyRoomsMerged(room, doorsToRemove);
+
         doors.forEach(d -> {
             if (d.getRoom1() == room) d.setRoom1(this);
             if (d.getRoom2() == room) d.setRoom2(this);
@@ -371,6 +421,12 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         SkeletonMenu.startCall("Room.addPlayer(Player)");
         this.people.add(person);
         stateChangedObservable.notifyStateChanged();
+        SkeletonMenu.endCall();
+    }
+
+    public void addNewPlayer(Person person) {
+        SkeletonMenu.startCall("Room.addPlayer(Player)");
+        this.people.add(person);
         SkeletonMenu.endCall();
     }
 
@@ -466,6 +522,9 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     public void clearPoisonEffects() {
         SkeletonMenu.startCall("Room.clearPoisonEffects()");
         poisonEffects.clear();
+        if (stickiness!=null) stickiness.clean();
+        else stickiness=new StickinessEffect();
+        
         stateChangedObservable.notifyStateChanged();
         SkeletonMenu.endCall();
     }
@@ -489,8 +548,8 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     }
 
     @Override
-    public void notifyRoomsMerged(Room room, Door door) {
-        roomObservable.notifyRoomsMerged(room, door);
+    public void notifyRoomsMerged(Room room, ArrayList<Door> doors) {
+        roomObservable.notifyRoomsMerged(room, doors);
     }
 
     @Override

@@ -2,7 +2,6 @@ package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
 import kevesse_kokanyolo_kod.menus.Printer;
-import kevesse_kokanyolo_kod.observer.StateChangedObserver;
 import kevesse_kokanyolo_kod.room.Room;
 
 public class Cleaner extends Person {

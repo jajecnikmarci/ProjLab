@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -12,23 +11,18 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.*;
 
 import kevesse_kokanyolo_kod.controllers.Controller;
 import kevesse_kokanyolo_kod.people.AcademicPerson;
 import kevesse_kokanyolo_kod.people.Cleaner;
-import kevesse_kokanyolo_kod.people.Student;
 
 public class PlayerInfoView extends JPanel {
 
     String playerNameString;
-    int souls; //???
     Controller controller;
     JLabel playerInfoLabel;
     JLabel playerNameLabel;
-    JLabel playerName;
     JLabel playerSoulsLabel;
-    JLabel playerSouls;
     JButton pickUpButton;
 
 
@@ -42,11 +36,26 @@ public class PlayerInfoView extends JPanel {
      * @param person a személy, akinek az információit meg kell jeleníteni
      */
     public void display(AcademicPerson person) {
+        playerInfoLabel.setText("");
+        playerNameLabel.setText("");
+        playerSoulsLabel.setText("");
+
+        if(person == null){
+                playerInfoLabel.setText("Player");
+                playerNameLabel.setText("Name: ");
+                playerSoulsLabel.setVisible(true);
+                pickUpButton.setVisible(false);
+                playerSoulsLabel.setText("Souls: ");
+        }
+         
         for (var studentEntry : controller.getStudents().entrySet()) {
             if(studentEntry.getValue().equals(person)) {
                 playerInfoLabel.setText("Student");
                 playerNameLabel.setText("Name: "+studentEntry.getKey());
+                playerSoulsLabel.setVisible(true);
+                pickUpButton.setVisible(true);
                 playerSoulsLabel.setText("Souls: "+String.valueOf(studentEntry.getValue().getSouls()));
+                playerNameString=studentEntry.getKey();
             }
         }
         
@@ -55,10 +64,24 @@ public class PlayerInfoView extends JPanel {
                 playerInfoLabel.setText("Professor");
                 playerSoulsLabel.setVisible(false);
                 playerNameLabel.setText("Name: "+professorEntry.getKey());
+                playerSoulsLabel.setText("");
+                pickUpButton.setVisible(true);
+                playerNameString=professorEntry.getKey();
             }
         }
+        
+        pickUpButton.removeActionListener(pickUpButton.getActionListeners()[0]);
+        pickUpButton.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.pickUp(playerNameString);
+                }
+            }
+        );
+        
     }
-
+    
     /**
      * Megjeleníti a megadott takarító információit.
      * @param cleaner
@@ -69,6 +92,7 @@ public class PlayerInfoView extends JPanel {
             if(cleanerEntry.getValue().equals(cleaner)) {
                 playerInfoLabel.setText("Cleaner");
                 playerNameLabel.setText("Name: "+cleanerEntry.getKey());
+                pickUpButton.setVisible(false);
             }
         }
     }

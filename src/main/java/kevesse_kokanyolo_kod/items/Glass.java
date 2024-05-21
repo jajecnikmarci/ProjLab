@@ -58,7 +58,19 @@ public class Glass extends Item {
         killImmunity.activate();
         effect = killImmunity;
         hasBeenUsed=true;
+        notifyStateChanged();
+
         SkeletonMenu.endCall();
+    }
+
+    /**
+     * Visszaadja a tárgy leírását (ha van)
+     * 
+     * @return ha van leírás akkor a leírás (String), ha nincs null
+     */
+    public String getDescription(){
+        if(hasBeenUsed) return "(used)";
+        else return "(unused)";
     }
 
     /**
@@ -101,7 +113,7 @@ public class Glass extends Item {
     @Override
     public void onDrop(AcademicPerson person) {
         SkeletonMenu.startCall("Glass.onDrop(AcademicPerson)");
-        if(effect.isActive()) {
+        if(effect !=null && effect.isActive()) {
             person.getLocation().removeItem(this);
         }
         SkeletonMenu.endCall();

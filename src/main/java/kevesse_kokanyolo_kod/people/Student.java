@@ -63,6 +63,7 @@ public class Student extends AcademicPerson implements IStudentObservable {
         if (killImmunities.isEmpty()) {
             souls--;
             if (souls == 0) {
+                dropAll();
                 studentObservable.notifyStudentKilled(this);
                 SkeletonMenu.endCall(" A játékos meghalt");
                 return;
@@ -87,7 +88,7 @@ public class Student extends AcademicPerson implements IStudentObservable {
     @Override
     public void dropRandomItem() {
         SkeletonMenu.startCall("Student.dropRandomItem()");
-        int rand = (int) (Math.random() * inventory.size()); // TODO: randomness disable
+        int rand = (int) (Math.random() * inventory.size()); 
         IItem item = inventory.get(rand);
         dropItem(item);
         SkeletonMenu.endCall();

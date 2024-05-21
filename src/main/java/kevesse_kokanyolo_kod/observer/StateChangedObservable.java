@@ -13,8 +13,6 @@ public class StateChangedObservable<T> {
      * A vizsgált objektum.
      */
     T observable;
-
-
     
     public StateChangedObservable(T observable) {
         this.observers = new ArrayList<>();
