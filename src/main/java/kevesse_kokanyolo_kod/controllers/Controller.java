@@ -393,9 +393,9 @@ public class Controller implements StudentObserver, RoomObserver {
     @Override
     public void slideRulePicked() {
         int result = JOptionPane.showConfirmDialog(gameWindow, "A hallgatók megnyerték a játékot!","Message",JOptionPane.PLAIN_MESSAGE);
-        if(result == JOptionPane.OK_OPTION){
-            System.exit(0);
-        }
+        // if(result == JOptionPane.OK_OPTION){
+            System.exit(0); // mindenképpen kilépünk
+        // }
     }
 
     /**
