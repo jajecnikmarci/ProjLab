@@ -514,9 +514,11 @@ public class ProtoMenu implements StudentObserver, RoomObserver {
     }
 
     @Override
-    public void roomsMerged(Room room, Door door) {
+    public void roomsMerged(Room room, ArrayList<Door> doors) {
         labyrinthBuilder.rooms.entrySet().removeIf(entry -> entry.getValue().equals(room));
-        labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(door));
+        for (Door door : doors) {
+            labyrinthBuilder.doors.entrySet().removeIf(entry -> entry.getValue().equals(door));
+        }
     }
 
     class Option {

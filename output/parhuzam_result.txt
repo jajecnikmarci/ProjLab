@@ -1,0 +1,48 @@
+r1
+	- capacity: 3
+	- people: 
+	- doors: 
+		d12
+		d31
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+r2
+	- capacity: 3
+	- people: 
+	- doors: 
+		d12
+		d23
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+r3
+	- capacity: 3
+	- people: 
+	- doors: 
+		d23
+		d31
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+r1
+	- capacity: 3
+	- people: 
+	- doors: 
+		d12
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+r2
+	- capacity: 3
+	- people: 
+	- doors: 
+		d12
+	- items: 
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null

@@ -347,23 +347,63 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
         this.poisonEffects.addAll(room.poisonEffects);
         this.stunEffects.addAll(room.stunEffects);
 
-        doors.addAll(room.doors); 
-        // Keep doors not between these 2 rooms
+        //Eltávolítandó ajtók listája
+        ArrayList<Door> doorsToRemove = new ArrayList<>();
+
+        for (int i =0; i< doors.size(); i++) {
+
+            //A két szoba közötti ajtókat eldobjuk
+            if(doors.get(i).isBetween(this, room)){
+                doorsToRemove.add(0,doors.get(i));
+            }else{
+
+                for(int k =0; k< room.doors.size(); k++){
+
+                    //A két szoba közötti ajtókat eldobjuk
+                    if(room.doors.get(k).isBetween(this, room)){
+                        doorsToRemove.add(room.doors.get(k));
+                    }
+                    else{
+                        if(doors.get(i).getRoom1() == room.doors.get(k).getRoom1() || doors.get(i).getRoom1() == room.doors.get(k).getRoom2() 
+                          || doors.get(i).getRoom2() == room.doors.get(k).getRoom1() || doors.get(i).getRoom2() == room.doors.get(k).getRoom2()){
+                        
+                            //Itt doors.get(i) és a room.doors.get(k) párhuzamos ajtók
+
+                            //Azt összevont ajtó tulajdonságainak beállítása
+                            boolean cursed = doors.get(i).isCursed() || room.doors.get(k).isCursed();
+                            boolean room1Open = doors.get(i).isRoom1Open() || room.doors.get(k).isRoom1Open();
+                            boolean room2Open = doors.get(i).isRoom2Open() || room.doors.get(k).isRoom2Open();
+
+                            //A tulajdonságok beállítása a doors.get(i) ajtóra
+                            doors.get(i).setDoor(room, room, room1Open, room2Open, room2Open, cursed);
+
+                            //A másik ajtót el kell távolítani
+                            doorsToRemove.add(room.doors.get(k));
+
+                            //Az ajtó másik szobájából is törölni kell az ajtót
+                            if(room.doors.get(k).getRoom1() == room)
+                                room.doors.get(k).getRoom2().doors.remove(room.doors.get(k));
+                            else
+                                room.doors.get(k).getRoom1().doors.remove(room.doors.get(k));
+
+                            break;
+                        }
+                    }
+                }
+            
+            }
+        }
+
+        room.doors.removeAll(doorsToRemove);
+        doors.removeAll(doorsToRemove);
+        doors.addAll(room.doors); //Ajtók összesítése
+
+        //duplikált ajtók eltávolítása
         doors = doors.stream()
                 .distinct()
-                .filter(d -> {
-                    if (!d.isBetween(this, room)) {
-
-                        return true;
-                    } else {
-                        room.doors.remove(d);
-                        notifyRoomsMerged(room, d);
-                        return false;
-                    }
-                })
                 .collect(Collectors.toList());
-        // Semmi nem tiltja a párhuzamos ajtókat a specifikációban... ezek létrejöhetnek
-        
+
+        notifyRoomsMerged(room, doorsToRemove);
 
         doors.forEach(d -> {
             if (d.getRoom1() == room) d.setRoom1(this);
@@ -508,8 +548,8 @@ public class Room implements EffectConsumedObserver, IRoomObservable, IStateChan
     }
 
     @Override
-    public void notifyRoomsMerged(Room room, Door door) {
-        roomObservable.notifyRoomsMerged(room, door);
+    public void notifyRoomsMerged(Room room, ArrayList<Door> doors) {
+        roomObservable.notifyRoomsMerged(room, doors);
     }
 
     @Override

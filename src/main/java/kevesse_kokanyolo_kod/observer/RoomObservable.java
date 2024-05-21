@@ -31,9 +31,9 @@ public class RoomObservable implements IRoomObservable {
     /**
      * Értesíti a feliratkozott osztályokat a szobák egyesüléséről.
      */
-    public void notifyRoomsMerged(Room room, Door door) {
+    public void notifyRoomsMerged(Room room, ArrayList<Door> doors) {
         for (RoomObserver observer : observers) {
-            observer.roomsMerged(room, door);
+            observer.roomsMerged(room, doors);
         }
     }
 }

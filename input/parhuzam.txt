@@ -1,0 +1,21 @@
+starttest
+add room r1 3
+add room r2 3
+add room r3 3
+add door r1 r2 d12
+add door r2 r3 d23
+add door r3 r1 d31
+printstate r1
+printstate r2
+printstate r3
+printstate rd12
+printstate rd23
+printstate rd31
+shake
+printstate r1
+printstate r2
+printstate r3
+printstate rd12
+printstate rd23
+printstate rd31
+endtest

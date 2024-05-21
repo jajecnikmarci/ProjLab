@@ -1,5 +1,7 @@
 package kevesse_kokanyolo_kod.observer;
 
+import java.util.ArrayList;
+
 import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 
@@ -14,5 +16,5 @@ public interface RoomObserver {
      * Meghatározza a műveleteket, amelyeket a megfigyelőnek végre kell hajtania, amikor két
      * szoba összeolvad, az interfészből származó osztálynak kell megvalósítani.
      */
-    void roomsMerged(Room room, Door door);
+    void roomsMerged(Room room, ArrayList<Door> doors);
 }

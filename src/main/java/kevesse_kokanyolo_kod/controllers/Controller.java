@@ -445,14 +445,18 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param mergedDoor az ajtó, ami egyesült
      */
     @Override
-    public void roomsMerged(Room mergedRoom, Door mergedDoor) {
+    public void roomsMerged(Room mergedRoom, ArrayList<Door> doorsToRemove) {
+        Door mergedDoor = doorsToRemove.get(0);
         String mergedRoomName = labyrinthBuilder.getRoomName(mergedRoom);
         String roomName = (mergedDoor.getRoom1() == mergedRoom) ? labyrinthBuilder.getRoomName(mergedDoor.getRoom2()) : labyrinthBuilder.getRoomName(mergedDoor.getRoom1());
         Room changedRoom = mergedDoor.getRoom1() == mergedRoom ? mergedDoor.getRoom2() : mergedDoor.getRoom1();
        
 
-        labyrinthBuilder.removeDoor(mergedDoor);
         labyrinthBuilder.removeRoom(mergedRoom);
+
+        for (Door door : doorsToRemove) {
+            labyrinthBuilder.removeDoor(door);
+        }
 
         IntPair r1l = labyrinthBuilder.getRoomLocations().get(mergedDoor.getRoom1());
         IntPair r2l = labyrinthBuilder.getRoomLocations().get(mergedDoor.getRoom2());
@@ -461,15 +465,18 @@ public class Controller implements StudentObserver, RoomObserver {
 
         labyrinthBuilder.setRoomLocation(changedRoom, newLocation);
         // Remove door endpoint offsets from the labyrinthBuilder
-        labyrinthBuilder.getDoors()
+
+        for (Door door : doorsToRemove) {
+        
+            labyrinthBuilder.getDoors()
                 .entrySet()
                 .stream()
-                .filter(entry -> entry.getValue() == mergedDoor)
+                .filter(entry -> entry.getValue() == door)
                 .findFirst()
                 .ifPresent(
                         entry-> labyrinthBuilder.removeDoorEndpointOffsets(entry.getKey())
                 );
-
+        }
         rearrangeLabyrinth();
         redisplayLabyrinth();
 
