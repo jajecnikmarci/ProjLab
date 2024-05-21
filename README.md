@@ -32,31 +32,14 @@ jar cfm labyrinth.jar manifest.mf -C bin/ .
 
 
 # Grafikus vezió fordítás és futtatás
- 
-```
-cd src\main\java\kevesse_kokanyolo_kod
-```
+1. Powershellel lépjünk a `src\main\java\kevesse_kokanyolo_kod` mappába
+2. Futtassuk a következő parancsokat: `$javaFiles = Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName }`
+`javac -d ..\..\..\..\bin $javaFiles`
+3. Navigáljunk a létrejött bin mappába (a projekt gyökérkönnyvtárában lesz)!
+4. Futtassuk a következő parancsokat: `$classes = Get-ChildItem -Recurse -Filter *.class | ForEach-Object { $_.FullName.Replace((Get-Location).Path + "\", "") }`
+`jar cfm ..\Labyrinth.jar ..\manifest.mf $classes`
+5. Létrejött A Labyrinth.jar a gyökérkönyvtárban. Odanavigálva futtathatjuk a `java -jar Labyrinth.jar` segítségével.
 
-```
-$javaFiles = Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName }
-```
-
-```
-javac -d ..\..\..\..\bin $javaFiles
-```
-
-```
-cd ..\..\..\..\bin
-```
-```
-$classes = Get-ChildItem -Recurse -Filter *.class | ForEach-Object { $_.FullName.Replace((Get-Location).Path + "\", "") }
-jar cfm ..\Labyrinth.jar ..\manifest.mf $classes
-```
-
-```
-cd ..
-java -jar Labyrinth.jar
-```
 
 
 # File lista generálása
