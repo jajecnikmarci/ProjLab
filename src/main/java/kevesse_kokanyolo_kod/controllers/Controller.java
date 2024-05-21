@@ -216,19 +216,6 @@ public class Controller implements StudentObserver, RoomObserver {
         }
     }
 
-    /**
-     * Egy hallgató elbocsátása miatt az életben maradt hallgatók
-     * száma csökken. (StudentObserver implementációja)
-     */
-    public void studentKilled() {
-        labyrinthBuilder.studentDied();
-        if(labyrinthBuilder.getStudentCount()==0) {
-            int result = JOptionPane.showConfirmDialog(gameWindow, "Az oktatók megnyerték a játékot, mert eltanácsolták az összes hallgatót!","Message",JOptionPane.PLAIN_MESSAGE);
-            if(result == JOptionPane.OK_OPTION){
-                System.exit(0);
-            }
-        }
-    }
 
     /**
      * Hozzáad egy szobát a labyrinthBuilderhez, valamint feliratkoztatja a
@@ -368,6 +355,12 @@ public class Controller implements StudentObserver, RoomObserver {
         redisplayPlayerInfo(labyrinthBuilder.getPerson(personName));
     }
 
+
+    /**
+     * Egy hallgató elbocsátása miatt az életben maradt hallgatók
+     * száma csökken. (StudentObserver implementációja)
+     */
+
     public void deselectPerson(){
         labyrinthBuilder.setSelectedPerson(null);
         redisplayLabyrinth();
@@ -377,11 +370,24 @@ public class Controller implements StudentObserver, RoomObserver {
     }
 
 
+
     @Override
-    public void studentKilled(Student student) {
+    public void studentKilled(Student student) { // TODO: A  függvény nagy része a builderbhez tartozik.
         student.getLocation().removePlayer(student);
-        labyrinthBuilder.getStudents().remove(labyrinthBuilder.getPersonName(student));
-        infoView.addMessage("A " + labyrinthBuilder.getPersonName(student) + " hallgató meghalt.");
+        String studentName = labyrinthBuilder.getPersonName(student);
+        infoView.addMessage("A " + studentName + " hallgató meghalt.");
+        labyrinthBuilder.getStudents().remove(studentName);
+        if (labyrinthBuilder.getSelectedPerson() == studentName) {
+            labyrinthBuilder.setSelectedPerson(null);
+        }
+
+        labyrinthBuilder.studentDied();
+        if(labyrinthBuilder.getStudentCount()==0) {
+            int result = JOptionPane.showConfirmDialog(gameWindow, "Az oktatók megnyerték a játékot, mert eltanácsolták az összes hallgatót!","Message",JOptionPane.PLAIN_MESSAGE);
+            //if(result == JOptionPane.OK_OPTION){
+                System.exit(0); // mindenképpen kilépünk
+            //}
+        }
     }
 
     @Override
@@ -462,14 +468,18 @@ public class Controller implements StudentObserver, RoomObserver {
      * @param mergedDoor az ajtó, ami egyesült
      */
     @Override
-    public void roomsMerged(Room mergedRoom, Door mergedDoor) {
+    public void roomsMerged(Room mergedRoom, ArrayList<Door> doorsToRemove) {
+        Door mergedDoor = doorsToRemove.get(0);
         String mergedRoomName = labyrinthBuilder.getRoomName(mergedRoom);
         String roomName = (mergedDoor.getRoom1() == mergedRoom) ? labyrinthBuilder.getRoomName(mergedDoor.getRoom2()) : labyrinthBuilder.getRoomName(mergedDoor.getRoom1());
         Room changedRoom = mergedDoor.getRoom1() == mergedRoom ? mergedDoor.getRoom2() : mergedDoor.getRoom1();
        
 
-        labyrinthBuilder.removeDoor(mergedDoor);
         labyrinthBuilder.removeRoom(mergedRoom);
+
+        for (Door door : doorsToRemove) {
+            labyrinthBuilder.removeDoor(door);
+        }
 
         IntPair r1l = labyrinthBuilder.getRoomLocations().get(mergedDoor.getRoom1());
         IntPair r2l = labyrinthBuilder.getRoomLocations().get(mergedDoor.getRoom2());
@@ -478,15 +488,18 @@ public class Controller implements StudentObserver, RoomObserver {
 
         labyrinthBuilder.setRoomLocation(changedRoom, newLocation);
         // Remove door endpoint offsets from the labyrinthBuilder
-        labyrinthBuilder.getDoors()
+
+        for (Door door : doorsToRemove) {
+        
+            labyrinthBuilder.getDoors()
                 .entrySet()
                 .stream()
-                .filter(entry -> entry.getValue() == mergedDoor)
+                .filter(entry -> entry.getValue() == door)
                 .findFirst()
                 .ifPresent(
                         entry-> labyrinthBuilder.removeDoorEndpointOffsets(entry.getKey())
                 );
-
+        }
         rearrangeLabyrinth();
         redisplayLabyrinth();
 
