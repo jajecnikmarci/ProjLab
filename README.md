@@ -31,7 +31,7 @@ jar cfm labyrinth.jar manifest.mf -C bin/ .
 
 
 
-# Grafikus vezió fordítás és futtatás
+# Grafikus verzió fordítás és futtatás
 1. Powershellel lépjünk a `src\main\java\kevesse_kokanyolo_kod` mappába
 2. Futtassuk a következő parancsokat: `$javaFiles = Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName }`
 `javac -d ..\..\..\..\bin $javaFiles`
