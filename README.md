@@ -28,3 +28,32 @@ jar cfm labyrinth.jar manifest.mf -C bin/ .
 3. Navigáljunk a létrejött bin mappába (a projekt gyökérkönnyvtárában lesz)!
 4. Ezután hozzuk létre a jar file-t az alábbi paranccsal `jar cfm ../Labyrinth.jar ../manifest.mf kevesse_kokanyolo_kod/*.class kevesse_kokanyolo_kod/effects/*.class kevesse_kokanyolo_kod/menus/*.class kevesse_kokanyolo_kod/people/*.class kevesse_kokanyolo_kod/room/*.class kevesse_kokanyolo_kod/items/*.class kevesse_kokanyolo_kod/items/fakes/*.class`
 5. Létrejött A Labyrinth.jar a gyökérkönyvtárban. Odanavigálva futtathatjuk a `java -jar Labyrinth.jar` segítségével.
+
+
+
+# Grafikus vezió fordítás és futtatás
+ 
+```
+cd src\main\java\kevesse_kokanyolo_kod
+```
+
+```
+$javaFiles = Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName }
+```
+
+```
+javac -d ..\..\..\..\bin $javaFiles
+```
+
+```
+cd ..\..\..\..\bin
+```
+```
+$classes = Get-ChildItem -Recurse -Filter *.class | ForEach-Object { $_.FullName.Replace((Get-Location).Path + "\", "") }
+jar cfm ..\Labyrinth.jar ..\manifest.mf $classes
+```
+
+```
+cd ..
+java -jar Labyrinth.jar
+```
