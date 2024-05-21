@@ -1,6 +1,9 @@
 package kevesse_kokanyolo_kod.windows;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import kevesse_kokanyolo_kod.controllers.Controller;
 import kevesse_kokanyolo_kod.views.InventoryView;
@@ -45,6 +48,28 @@ public class GameWindow extends JFrame {
 
         infoView = new InfoView();
         menuContainer.add(infoView);
-      
+
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // Not used
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // Check if the Escape key was pressed
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    controller.deselectPerson();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // Not used
+            }
+        });
+
     }
 }

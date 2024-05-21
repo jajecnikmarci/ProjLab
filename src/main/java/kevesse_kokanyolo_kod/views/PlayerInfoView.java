@@ -40,7 +40,13 @@ public class PlayerInfoView extends JPanel {
         playerNameLabel.setText("");
         playerSoulsLabel.setText("");
 
-    
+        if(person == null){
+                playerInfoLabel.setText("Player");
+                playerNameLabel.setText("Name: ");
+                playerSoulsLabel.setVisible(true);
+                pickUpButton.setVisible(false);
+                playerSoulsLabel.setText("Souls: ");
+        }
          
         for (var studentEntry : controller.getStudents().entrySet()) {
             if(studentEntry.getValue().equals(person)) {
