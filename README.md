@@ -57,3 +57,16 @@ jar cfm ..\Labyrinth.jar ..\manifest.mf $classes
 cd ..
 java -jar Labyrinth.jar
 ```
+
+
+# File lista generálása
+```
+Get-ChildItem -Recurse -Filter *.java | ForEach-Object {
+    $file = $_
+    $fileName = $file.Name
+    $fileSize = $file.Length
+    $creationDate = $file.CreationTime
+    "$fileName, $fileSize, $creationDate, Description"
+} | Out-File -FilePath java_files_list.csv
+```
+A java_files_list.csv-ben jeleninek meg a fileok
