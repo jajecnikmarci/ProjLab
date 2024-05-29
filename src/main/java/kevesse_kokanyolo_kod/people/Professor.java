@@ -1,50 +1,51 @@
 package kevesse_kokanyolo_kod.people;
 
 import kevesse_kokanyolo_kod.items.*;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.room.Door;
 import kevesse_kokanyolo_kod.room.Room;
 
-import java.util.Optional;
 
 /**
  * A professzort reprezentáló osztály
  */
-public class Professor extends AcamedicPerson {
-
-    public Professor(Room r) {
-        super(r);
+public class Professor extends AcademicPerson {
+    public Professor(Room room) {
+        super(room);
     }
 
-
     /**
-     * Professzor találkozik egy diákkal, akit megöl.
+     * Professzor találkozik egy diákkal, ha nincs lebénulva megpróbálja megölni.
      *
      * @param student a diák, aki meg fog halni
      */
     @Override
     public void meet(Student student) {
         SkeletonMenu.startCall("Professor.meet(Student)");
-        student.kill();
+        if(!stunned)
+            student.kill();
         SkeletonMenu.endCall();
     }
 
     /**
-     * Professzor találkozik egy professzorral, akivel találkozik
+     * Professzor találkozik egy professzorral, 
+     * ha a belépő professzor nincs lebénulva megpróbálja vele elhagyatni a szobát. 
+     * (A paraméterként átadott oktató a belépő oktató.)  
      *
      * @param professor a professzor, akivel találkozik
      */
     @Override
-    public void meet(Professor professor, Room room) {
+    public void meet(Professor professor) {
         SkeletonMenu.startCall("Professor.meet(Professor, Room)");
-        leaveRoom();
+        if(!professor.stunned)
+            professor.leaveRoom();
+        
         SkeletonMenu.endCall("A professzor elhagyta a szobát.");
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param transistor a felvevendő tárgy
      */
@@ -55,9 +56,7 @@ public class Professor extends AcamedicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param slideRule a felvevendő tárgy
      */
@@ -68,9 +67,7 @@ public class Professor extends AcamedicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param tvsz a felvevendő tárgy
      */
@@ -81,9 +78,7 @@ public class Professor extends AcamedicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param glass a felvevendő tárgy
      */
@@ -94,9 +89,7 @@ public class Professor extends AcamedicPerson {
     }
 
     /**
-     * A paraméterként kapott tárgyat hozzáadja a Player tárgyaihoz, illetve ha kell akkor Effectet ad a játékoshoz,
-     * majd kitörli a tárgyat a jelenlegi szoba tárgylistájából.
-     * Ez a visitor miatt van, ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
+     * Ilyen tárgyat nem vehet fel okató, ezért nem csinál semmit.
      *
      * @param rug a felvevendő tárgy
      */
@@ -107,24 +100,31 @@ public class Professor extends AcamedicPerson {
     }
 
     /**
-     * Belép a megadott szobába, ha a szoba befogadja a játékost.
-     *
-     * @param room a szoba, amibe a játékos be kíván lépni
+     * A professzornál legföljebb 2 tárgy lehet egyszerre.
+     * @returns 2
      */
     @Override
-    public void goToRoom(Room room) {
-        SkeletonMenu.startCall("Professor.goToRoom(Room)");
-        Optional<Door> door = location.getDoors()
-                .stream()
-                .filter(d -> d.isBetween(location, room))
-                .findFirst();
-
-        if (door.isPresent()) {
-            door.get().goThrough(this);
-            room.onEnter(this);
-            SkeletonMenu.endCall("A professzor belépett a szobába.");
-            return;
-        }
-        SkeletonMenu.endCall("A professzor nem lépett be a szobába.");
+    public int getMaxItemCount() {
+        return 2;
     }
+
+    /**
+     * Meghívja a szoba onEnter metódusát átadva magát paraméterként, mint Professzor. 
+     * @param room a szoba, ahova a professzor érkezik
+     */
+    @Override
+    protected void callOnEnter(Room room) {
+        room.onEnter(this);
+    }
+
+    @Override
+    public void printState(Printer printer, LabyrinthBuilder builder){
+        printer.startPrintObject(builder.getInstanceName(this));
+        printer.printField("location", builder.getInstanceName(this.location));
+        printer.printField("stunned", this.stunned);
+        printer.printFields("Inventory", this.inventory, builder);
+        printer.printFields("poisonImmunities", "poisonImmunity", this.poisonImmunities.size());
+        
+        printer.endPrintObject();
+    }   
 }

@@ -1,0 +1,63 @@
+randomness disable
+starttest
+add room dummy 5
+add room roomToMergeIntoHasPlayer 5
+add room roomToMerge 5
+add door roomToMergeIntoHasPlayer roomToMerge door1
+add person roomToMergeIntoHasPlayer Student student1
+printstate roomToMergeIntoHasPlayer
+printstate roomToMerge
+shake
+dummy dummmyDoor dummyRoom
+roomToMergeIntoHasPlayer
+roomToMerge
+printstate roomToMergeIntoHasPlayer
+printstate roomToMerge
+endtest
+randomness disable
+starttest
+add room dummy 5
+add room roomToMergeInto 5
+add room roomToMergeHasPlayer 5
+add door roomToMergeInto roomToMergeHasPlayer door1
+add person roomToMergeInto Student student1
+printstate roomToMergeInto
+printstate roomToMergeHasPlayer
+shake
+dummy dummmyDoor dummyRoom
+roomToMergeInto
+roomToMergeHasPlayer
+printstate roomToMergeInto
+printstate roomToMergeHasPlayer 
+endtest
+randomness disable
+starttest
+add room dummy 5
+add room roomToMergeInto 5
+add room roomToMerge 5 poisonous
+add room neighbour1 4
+add room neighbour2 4
+add room neighbour3 4
+add room neighbour4 4
+add room neighbour5 4
+add room neighbour6 4
+add door roomToMerge roomToMergeInto thisDoorShouldDisappear
+add door roomToMerge neighbour1 door1
+add door !roomToMerge neighbour2 door2
+add door !neighbour3 roomToMerge door3
+add door roomToMergeInto neighbour4 door4 true
+add door !roomToMergeInto neighbour5 door5 
+add door !neighbour6 roomToMergeInto door6
+add item roomToMergeInto FFP2 ffp2
+add item roomToMerge Camembert Camembert
+printstate thisDoorShouldDisappear
+shake
+dummy dummmyDoor dummyRoom
+roomToMergeInto
+roomToMerge
+printstate roomToMergeInto
+printstate roomToMerge
+printstate thisDoorShouldDisappear
+printstate door1
+printstate door4
+endtest

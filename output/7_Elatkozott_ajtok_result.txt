@@ -1,0 +1,49 @@
+door1
+	- room1: room1
+	- room2: room2
+	- room1Open: true
+	- room2Open: true
+	- visible: true
+	- cursed: true
+door2
+	- room1: room3
+	- room2: room2
+	- room1Open: true
+	- room2Open: false
+	- visible: true
+	- cursed: true
+door3
+	- room1: room1
+	- room2: room3
+	- room1Open: true
+	- room2Open: false
+	- visible: true
+	- cursed: false
+door1
+	- room1: room1
+	- room2: room2
+	- room1Open: true
+	- room2Open: true
+	- visible: false
+	- cursed: true
+door2
+	- room1: room3
+	- room2: room2
+	- room1Open: true
+	- room2Open: false
+	- visible: false
+	- cursed: true
+door3
+	- room1: room1
+	- room2: room3
+	- room1Open: true
+	- room2Open: false
+	- visible: true
+	- cursed: false
+door1
+	- room1: room1
+	- room2: room2
+	- room1Open: true
+	- room2Open: true
+	- visible: true
+	- cursed: true

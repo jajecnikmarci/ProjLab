@@ -1,0 +1,21 @@
+starttest
+add room room1 3
+add room room2 3
+add door room1 room2 door1
+add item room1 TVSZ tvsz
+add person room1 Student student1
+add person room1 Student student2
+add person room2 Professor professor1
+pickup student1
+printstate student1
+printstate student2
+gotoroom professor1 room1
+printstate student1
+printstate student2
+gotoroom professor1 room2
+gotoroom professor1 room1
+gotoroom professor1 room2
+gotoroom professor1 room1
+printstate student1
+printstate student2
+endtest

@@ -1,0 +1,61 @@
+room1
+	- capacity: 3
+	- people: 
+		student1
+	- doors: 
+		door1
+		door2
+	- items: 
+		rug
+	- poisonEffects: 
+		poisonEffects
+	- stunEffects: 
+	- lastCleaning: null
+student1
+	- location: room1
+	- stunned: true
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+room1
+	- capacity: 3
+	- people: 
+		student1
+	- doors: 
+		door1
+		door2
+	- items: 
+		rug
+	- poisonEffects: 
+		poisonEffects
+	- stunEffects: 
+	- lastCleaning: null
+student1
+	- location: room1
+	- stunned: true
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+room1
+	- capacity: 3
+	- people: 
+		student1
+		professor1
+	- doors: 
+		door1
+		door2
+	- items: 
+		rug
+	- poisonEffects: 
+		poisonEffects
+	- stunEffects: 
+	- lastCleaning: null
+student1
+	- location: room1
+	- stunned: true
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 2

@@ -1,10 +1,25 @@
 package kevesse_kokanyolo_kod.people;
 
-import kevesse_kokanyolo_kod.room.Room;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public abstract class Person {
-    Person(Room r) {
-        location = r;
+import kevesse_kokanyolo_kod.menus.Printer;
+import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.observer.IStateChangedObservable;
+import kevesse_kokanyolo_kod.observer.StateChangedObservable;
+import kevesse_kokanyolo_kod.observer.StateChangedObserver;
+import kevesse_kokanyolo_kod.room.Door;
+import kevesse_kokanyolo_kod.room.Room;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
+
+/**
+ * A személyeket reprezentáló absztrakt osztály.
+ */
+public abstract class Person implements IStateChangedObservable<Person> {
+    private StateChangedObservable<Person> stateChangedObservable;
+    Person(Room room) {
+        location = room;
+        stateChangedObservable = new StateChangedObservable<>(this);
     }
     /**
      * A szoba amelyben a player jelenleg tartózkodik.
@@ -27,7 +42,6 @@ public abstract class Person {
         this.location = room;
     }
 
-
     /**
      * A játékos találkozik egy hallgatóval.
      *
@@ -36,18 +50,86 @@ public abstract class Person {
     public abstract void meet(Student student);
 
     /**
-     * Professzorral való találkozás esetén a játékos
+     * Professzorral találkozik a játékos
      *
      * @param professor a professzor, akivel találkozik
-     * @param room      a szoba, ahol a találkozás történik
      */
-    public abstract void meet(Professor professor, Room room);
+    public abstract void meet(Professor professor);
 
-    public abstract void meet(Cleaner cleaner, Room room);
+    /**
+     * Takarítóval találkozik a játékos
+     *
+     * @param cleaner a takarító, akivel találkozik
+     */
+    public abstract void meet(Cleaner cleaner);
 
+    /**
+     * Megmérgezi a játékost.
+     */
     public abstract void poison();
 
+    /**
+     * A játékos megpróbálja elhagyni a szobát, addig próbál
+     * a szoba ajtajain kimenni, amíg sikerrel nem jár, vagy
+     * megpróbált az összes ajtón átmenni. 
+     */
     public void leaveRoom() {
-        //TODO
+        SkeletonMenu.startCall("Person.leaveRoom()");
+        for(Door door: location.getDoors()) if(door.goThrough(this)) { 
+            callOnEnter(door.getRoom1() == location ? door.getRoom1() : door.getRoom2());
+            // https://github.com/jajecnikmarci/ProjLab/issues/119
+            break;
+        };
+        SkeletonMenu.endCall();
     }
+    
+    /**
+     * Meghívja a szoba onEnter metódusát, a megfelelő paraméterrel. 
+     * Azért szükséges felülírni, mert az onEntert a megfelelő típusú paraméterrel kell meghívni. (Professor, Student, Cleaner)
+     */
+    protected abstract void callOnEnter(Room room);
+
+    /**
+     * Belép a szobába, ha tud és közli a szobával, hogy belépett a játékos.
+     * 
+     * Megnézi, hogy a szobának van-e olyan ajtaja, amelyiken át tud menni a megadott szobába. (Tehát a két szoba között van és látható.)
+     * Ha van ilyen ajtó, megpróbál átmenni rajta, 
+     * ha sikerül közli a szobával, hogy belépett a megfelelő típusú játékos (callOnEnter felülírt verzióját meghívja)
+     * @param room a szoba, amibe a játékos belépni kíván
+     */
+    public void goToRoom(Room room) {
+        SkeletonMenu.startCall("Person.goToRoom(Room)");
+        // There might be multiple doors between 2 rooms
+        List<Door> doors = location.getDoors()
+                .stream()
+                .filter(d -> d.isBetween(location, room))
+                .collect(Collectors.toList());
+                
+        if (doors.isEmpty()) { 
+            SkeletonMenu.endCall("A személy nem ment át a szobába.");
+            return;
+        }
+        // If person can go through any door, they should.
+        for (Door door : doors) { 
+            if (door.goThrough(this)) {
+                callOnEnter(room);
+                stateChangedObservable.notifyStateChanged();
+                SkeletonMenu.endCall("A személy átment a szobába.");
+                return;
+            }
+        }
+
+        SkeletonMenu.endCall("A személy nem ment át a szobába.");
     }
+    public abstract void printState(Printer printer, LabyrinthBuilder builder);
+
+    @Override
+    public void addObserver(StateChangedObserver<Person> observer) {
+        stateChangedObservable.addObserver(observer);
+    }
+
+    @Override
+    public void notifyStateChanged() {
+        stateChangedObservable.notifyStateChanged();
+    }
+}

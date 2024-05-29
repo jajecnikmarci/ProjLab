@@ -33,19 +33,19 @@ class Student extends Player implements StudentVisitor {
     }
 }
 class room {
-    + void popItem(Player acamedicPerson){
-        if(acamedicPerson.acceptItem(Item item))
+    + void popItem(Player academicPerson){
+        if(academicPerson.acceptItem(Item item))
             items.pop()
     }
 }
 
 class UseItemVisitor {
-    Player acamedicPerson;
+    Player academicPerson;
     + void use(FFP2 ffp2){
         ffp2.use(Player)
     }
     + void use(Rug rug){
-        rug.use(acamedicPerson.getRoom());
+        rug.use(academicPerson.getRoom());
     }
     + void use()
     + void use()

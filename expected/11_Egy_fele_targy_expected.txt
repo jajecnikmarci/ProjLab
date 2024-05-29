@@ -1,0 +1,75 @@
+room1
+	- capacity: 3
+	- people: 
+		student1
+		student2
+	- doors: 
+	- items: 
+		ffp2
+		transistor1
+		transistor2
+		transistor3
+		glass1
+		glass2
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+room1
+	- capacity: 3
+	- people: 
+		student1
+		student2
+	- doors: 
+	- items: 
+		ffp2
+		transistor1
+		transistor2
+		transistor3
+		glass1
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+student1
+	- location: room1
+	- stunned: false
+	- inventory: 
+		glass2
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+student2
+	- location: room1
+	- stunned: false
+	- inventory: 
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3
+room1
+	- capacity: 3
+	- people: 
+		student1
+		student2
+	- doors: 
+	- items: 
+		ffp2
+		transistor1
+	- poisonEffects: 
+	- stunEffects: 
+	- lastCleaning: null
+student2
+	- location: room1
+	- stunned: false
+	- inventory: 
+		glass1
+		transistor3
+		transistor2
+	- killImmunities: 
+	- poisonImmunities: 
+	- souls: 3

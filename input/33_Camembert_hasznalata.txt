@@ -1,0 +1,12 @@
+timercontrol enable
+starttest
+add room room1 3
+add item room1 Camembert camembert
+add person room1 Student student1
+pickup student1
+printstate room1
+use student1 camembert
+printstate room1
+endtimer timer1
+printstate room1
+endtest

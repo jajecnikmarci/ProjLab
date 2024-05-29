@@ -1,40 +1,40 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
+import kevesse_kokanyolo_kod.menus.Printer;
 import kevesse_kokanyolo_kod.menus.SkeletonMenu;
-import kevesse_kokanyolo_kod.people.Professor;
-import kevesse_kokanyolo_kod.people.Student;
+import kevesse_kokanyolo_kod.people.AcademicPerson;
 
 /**
- * Mérgezés hatású effektum.
+ * A szoba mérgezés hatású effektuma.
  */
 public class PoisonEffect extends RoomEffect {
-
+    /**
+     * Létrehozza a PoisonEffect-et a paraméterül kapott értékekkel.
+     */
     public PoisonEffect(Item givenBy, int duration, EffectConsumedObserver observer) {
         super(givenBy, duration, observer);
     }
 
     /**
-     * Az oktatót megmérgezi.
-     *
-     * @param professor A hatást elszenvedő oktató
+     * A mérgezés effekt mérgezés hatást gyakorol a paraméterül kapott
+     * játékosra.
+     * @param academicPerson a játékos, akit érint az effektum
      */
     @Override
-    public void affect(Professor professor) {
+    public void affect(AcademicPerson academicPerson) {
         SkeletonMenu.startCall("PoisonEffect.affect(Professor)");
-        professor.poison();
+        academicPerson.poison();
         SkeletonMenu.endCall();
     }
 
-    /**
-     * A hallgatót megmérgezi.
-     *
-     * @param student A hatást elszenvedő hallgató
-     */
     @Override
-    public void affect(Student student) {
-        SkeletonMenu.startCall("PoisonEffect.affect(Student)");
-        student.poison();
-        SkeletonMenu.endCall();
+    public void printState(Printer printer, LabyrinthBuilder builder) {
+        printer.startPrintObject("PoisonEffect");
+        printer.printField("givenBy", builder.getInstanceName(this.givenBy));
+        printer.printField("duration", this.duration);        
+        printer.printField("active", this.active);  
+        printer.endPrintObject();      
     }
 }

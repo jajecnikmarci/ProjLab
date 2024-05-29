@@ -1,29 +1,26 @@
 package kevesse_kokanyolo_kod.effects;
 
 import kevesse_kokanyolo_kod.items.Item;
-import kevesse_kokanyolo_kod.menus.SkeletonMenu;
+import kevesse_kokanyolo_kod.menus.LabyrinthBuilder;
+import kevesse_kokanyolo_kod.menus.Printer;
 
 /**
- * A méreg elleni védettséget biztosító hatás.
+ * Az AcademicPlyer-ek számára méreg elleni védettséget biztosító hatás, ha aktív állapotban van.
  */
 public class PoisonImmunity extends Effect {
-
+    /**
+     * Létrehozza a PoisonImmunity-t a paraméterül kapott értékekkel.
+     */
     public PoisonImmunity(Item givenBy, int duration, EffectConsumedObserver observer) {
         super(givenBy, duration, observer);
     }
-
-    /**
-     * A méreg immunitás aktiválásakor, egy időzítő indul el,
-     * az időzítő lejártáig a játékosnak mérgezés elleni
-     * védettséget nyújt.
-     */
+    
     @Override
-    public void activate() {
-        SkeletonMenu.startCall("PoisonImmunity.activate()");
-        timer = new Timer(this);
-        active = true;
-        timer.start(getDuration());
-
-        SkeletonMenu.endCall();
+    public void printState(Printer printer, LabyrinthBuilder builder) {
+        printer.startPrintObject("PoisonImmunity");
+        printer.printField("givenBy", builder.getInstanceName(this.givenBy));
+        printer.printField("duration", this.duration);
+        printer.printField("active", this.active);  
+        printer.endPrintObject();      
     }
 }
